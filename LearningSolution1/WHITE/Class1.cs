@@ -13,7 +13,7 @@ namespace WHITE
 {
     public class Class1
     {
-        const string executatble = "c:\\LEARNINGANDRAND\\LearningSolution1\\WhiteWinFormApp\\bin\\debug\\WhiteWinFormApp.exe";
+        const string executatble = "c:\\LEARNINGANDRAND\\Tyrion_Steve\\LearningSolution1\\WhiteWinFormApp\\bin\\debug\\WhiteWinFormApp.exe";
 
         private static Application InvokeApplication()
         {
