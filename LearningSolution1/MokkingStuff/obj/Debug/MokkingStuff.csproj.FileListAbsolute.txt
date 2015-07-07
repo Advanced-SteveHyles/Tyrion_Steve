@@ -1,0 +1,6 @@
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\bin\Debug\MokkingStuff.dll
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\bin\Debug\MokkingStuff.pdb
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\obj\Debug\MokkingStuff.csprojResolveAssemblyReference.cache
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\obj\Debug\MokkingStuff.dll
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\obj\Debug\MokkingStuff.pdb
+c:\LEARNINGANDRAND\LearningSolution1\MokkingStuff\bin\Debug\NCrunch.Framework.dll

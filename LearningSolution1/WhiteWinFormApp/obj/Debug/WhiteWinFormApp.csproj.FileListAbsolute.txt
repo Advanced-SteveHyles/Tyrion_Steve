@@ -1,0 +1,10 @@
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\bin\Debug\WhiteWinFormApp.exe.config
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.Properties.Resources.resources
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.csproj.GenerateResource.Cache
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\bin\Debug\WhiteWinFormApp.exe
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\bin\Debug\WhiteWinFormApp.pdb
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.exe
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.pdb
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.frmMain.resources
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.csprojResolveAssemblyReference.cache
+c:\LEARNINGANDRAND\LearningSolution1\WhiteWinFormApp\obj\Debug\WhiteWinFormApp.frmMDIParent.resources

@@ -1,0 +1,5 @@
+c:\LEARNINGANDRAND\LearningSolution1\CSharpMashUp_Resharper\bin\Debug\CSharpMashUp_Resharper.dll
+c:\LEARNINGANDRAND\LearningSolution1\CSharpMashUp_Resharper\bin\Debug\CSharpMashUp_Resharper.pdb
+c:\LEARNINGANDRAND\LearningSolution1\CSharpMashUp_Resharper\obj\Debug\CSharpMashUp_Resharper.dll
+c:\LEARNINGANDRAND\LearningSolution1\CSharpMashUp_Resharper\obj\Debug\CSharpMashUp_Resharper.pdb
+c:\LEARNINGANDRAND\LearningSolution1\CSharpMashUp_Resharper\bin\Debug\NCrunch.Framework.dll
