@@ -19,6 +19,12 @@ namespace ProductsApp
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+             name: "CarSearchAPI",
+             routeTemplate: "api/{controller}/{Make}",
+             defaults: new { make = RouteParameter.Optional }
+         );
             
         }
     }
