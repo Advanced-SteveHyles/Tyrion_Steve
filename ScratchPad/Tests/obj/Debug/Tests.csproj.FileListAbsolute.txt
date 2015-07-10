@@ -1,0 +1,16 @@
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\obj\Debug\Tests.csprojResolveAssemblyReference.cache
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.execution.desktop.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\Tests.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\Tests.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\ResharperOnly.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.abstractions.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.assert.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.core.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\ResharperOnly.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.abstractions.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.assert.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.assert.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.core.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\bin\Debug\xunit.core.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\obj\Debug\Tests.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\Tests\obj\Debug\Tests.pdb

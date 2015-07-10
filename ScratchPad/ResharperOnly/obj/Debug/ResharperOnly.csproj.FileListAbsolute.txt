@@ -1,0 +1,5 @@
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\ResharperOnly\obj\Debug\ResharperOnly.csprojResolveAssemblyReference.cache
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\ResharperOnly\bin\Debug\ResharperOnly.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\ResharperOnly\bin\Debug\ResharperOnly.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\ResharperOnly\obj\Debug\ResharperOnly.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\ScratchPad\ResharperOnly\obj\Debug\ResharperOnly.pdb
