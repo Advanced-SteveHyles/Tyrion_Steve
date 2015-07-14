@@ -1,0 +1,10 @@
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\bin\Debug\IOC.exe.config
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\obj\Debug\IOC.csprojResolveAssemblyReference.cache
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\obj\Debug\IOC.Properties.Resources.resources
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\obj\Debug\IOC.csproj.GenerateResource.Cache
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\bin\Debug\IOC.exe
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\bin\Debug\IOC.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\obj\Debug\IOC.exe
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\obj\Debug\IOC.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\bin\Debug\Autofac.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\IOC\bin\Debug\Autofac.xml
