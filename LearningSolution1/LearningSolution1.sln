@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOCTests", "IOCTests\IOCTes
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpConsole", "FSharpConsole\FSharpConsole.fsproj", "{F9541360-E440-4670-B085-4893C36FE5CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLID1", "SOLID1\SOLID1.csproj", "{AF298CB0-ABC1-43BF-A253-BB7F9A874CA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLID1UnitTests", "SOLID1UnitTests\SOLID1UnitTests.csproj", "{40D376E3-040C-45AB-BAB8-1959A32A3F8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{F9541360-E440-4670-B085-4893C36FE5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9541360-E440-4670-B085-4893C36FE5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9541360-E440-4670-B085-4893C36FE5CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF298CB0-ABC1-43BF-A253-BB7F9A874CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF298CB0-ABC1-43BF-A253-BB7F9A874CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF298CB0-ABC1-43BF-A253-BB7F9A874CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF298CB0-ABC1-43BF-A253-BB7F9A874CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40D376E3-040C-45AB-BAB8-1959A32A3F8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40D376E3-040C-45AB-BAB8-1959A32A3F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40D376E3-040C-45AB-BAB8-1959A32A3F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40D376E3-040C-45AB-BAB8-1959A32A3F8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
