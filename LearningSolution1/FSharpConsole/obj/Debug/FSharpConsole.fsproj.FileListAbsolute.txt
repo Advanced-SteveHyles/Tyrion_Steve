@@ -1,0 +1,8 @@
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharpConsole.exe.config
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharpConsole.XML
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharpConsole.exe
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharpConsole.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharp.Core.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\bin\Debug\FSharp.Core.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\obj\Debug\FSharpConsole.exe
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\FSharpConsole\obj\Debug\FSharpConsole.pdb

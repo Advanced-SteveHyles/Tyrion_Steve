@@ -1,6 +1,6 @@
 namespace IOC
 {
-    public class LoadParameters : ILoadParameters
+    public class LoadParameters : IParameters
     {
     }
 }

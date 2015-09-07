@@ -4,7 +4,7 @@
     {
         public static void Run()
         {
-            throw new System.NotImplementedException();
+         
         }
     }
 }

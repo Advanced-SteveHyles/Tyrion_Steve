@@ -1,6 +1,6 @@
 ﻿namespace IOC
 {
-    internal interface IStarter
+    public interface IStarter
     {
     }
 }

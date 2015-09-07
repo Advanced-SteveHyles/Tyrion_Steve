@@ -34,7 +34,7 @@ namespace IOC
             builder.RegisterType<Cleaner>().As<ICleaner>().SingleInstance();
             builder.RegisterType<Reporter>().As<IReporter>().SingleInstance();
             builder.RegisterType<Terminator>().As<ITerminator>().SingleInstance();
-            builder.RegisterType<LoadParameters>().As<ILoadParameters>().SingleInstance();
+            builder.RegisterType<LoadParameters>().As<IParameters>().SingleInstance();
             builder.RegisterType<Starter>().As<IStarter>().SingleInstance();
         }
     }

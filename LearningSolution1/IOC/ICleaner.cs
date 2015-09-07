@@ -1,6 +1,6 @@
 ﻿namespace IOC
 {
-    internal interface ICleaner
+    public interface ICleaner
     {
     }
 }

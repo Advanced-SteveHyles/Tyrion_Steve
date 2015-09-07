@@ -1,6 +1,6 @@
 ﻿namespace IOC
 {
-    internal interface IReporter
+    public interface IReporter
     {
     }
 }

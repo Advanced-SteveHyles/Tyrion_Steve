@@ -12,3 +12,17 @@ c:\LEARNINGANDRAND\LearningSolution1\ProductsApp\bin\System.Web.Http.WebHost.xml
 c:\LEARNINGANDRAND\LearningSolution1\ProductsApp\obj\Debug\WEBAPI.csprojResolveAssemblyReference.cache
 c:\LEARNINGANDRAND\LearningSolution1\ProductsApp\obj\Debug\ProductsApp.dll
 c:\LEARNINGANDRAND\LearningSolution1\ProductsApp\obj\Debug\ProductsApp.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\ProductsApp.dll.config
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\ProductsApp.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\ProductsApp.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\Newtonsoft.Json.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Net.Http.Formatting.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Web.Http.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Web.Http.WebHost.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\Newtonsoft.Json.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Net.Http.Formatting.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Web.Http.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\bin\System.Web.Http.WebHost.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\obj\Debug\WEBAPI.csprojResolveAssemblyReference.cache
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\obj\Debug\ProductsApp.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\LearningSolution1\ProductsApp\obj\Debug\ProductsApp.pdb

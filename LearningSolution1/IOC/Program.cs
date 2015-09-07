@@ -8,6 +8,7 @@ using Autofac;
 namespace IOC
 {
     //http://docs.autofac.org/en/latest/getting-started/
+    //http://www.codeproject.com/Articles/25380/Dependency-Injection-with-Autofac
 
     static class Program
     {
@@ -20,15 +21,17 @@ namespace IOC
         static void Main()
         {
             var builder = new ContainerBuilder();
-            var iocModule = new IocBuilder(builder);
             Container = builder.Build();
                         
             using (var scope = Container.BeginLifetimeScope())
             {
-                //scope.Resolve(ILoadParameters),  scope.Resolve (IStarter),  scope.Resolve(IReporter), scope.Resolve(ITerminator),  scope.Resolve(ICleaner)  
+                var driver = new Driver(scope.Resolve<IParameters>(), scope.Resolve<IStarter>(), scope.Resolve<IReporter>(), scope.Resolve<ITerminator>(), scope.Resolve<ICleaner>());
+                driver.Invoke();                
+            }
 
-
-                var driver = new Driver(scope.Resolve<ILoadParameters>(), scope.Resolve<IStarter>(), scope.Resolve<IReporter>(), scope.Resolve<ITerminator>(), scope.Resolve<ICleaner>());
+            using (Container)
+            {
+                var driver = new Driver(Container);
                 driver.Invoke();
             }
         }

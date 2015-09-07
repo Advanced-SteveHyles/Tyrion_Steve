@@ -55,7 +55,7 @@
     <Compile Include="Driver.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="ICleaner.cs" />
-    <Compile Include="ILoadParameters.cs" />
+    <Compile Include="IParameters.cs" />
     <Compile Include="IOCModule.cs" />
     <Compile Include="IReporter.cs" />
     <Compile Include="IStarter.cs" />

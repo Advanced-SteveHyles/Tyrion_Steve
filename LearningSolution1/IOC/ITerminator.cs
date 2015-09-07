@@ -1,6 +1,6 @@
 ﻿namespace IOC
 {
-    internal interface ITerminator
+    public interface ITerminator
     {
     }
 }
