@@ -136,6 +136,19 @@ namespace ClassLibrary1
                         }
                     }
                 }
+
+
+                if (_linesToParse[0][index] == ' ' && _linesToParse[0][index + 1] == ' ' && _linesToParse[0][index + 2] == ' ')
+                {
+                    if (_linesToParse[1][index] == ' ' && _linesToParse[1][index + 1] == ' ' && _linesToParse[1][index + 2] == '|')
+                    {
+                        if (_linesToParse[2][index] == ' ' && _linesToParse[2][index + 1] == ' ' && _linesToParse[2][index + 2] == '|')
+                        {
+                            _accountNumber.Append("1");
+                        }
+                    }
+                }
+
             }
             
             return this;
