@@ -1,0 +1,14 @@
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\obj\Debug\ClassLibrary1.csprojResolveAssemblyReference.cache
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.execution.desktop.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.abstractions.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.assert.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.core.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.abstractions.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.assert.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.assert.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.core.pdb
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\bin\Debug\xunit.core.xml
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
