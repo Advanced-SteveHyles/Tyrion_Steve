@@ -22,6 +22,7 @@ namespace ClassLibrary1
         */
 
 
+
         [Fact]
         public void TestCase1_InputHas4Lines()
         {
@@ -77,7 +78,7 @@ namespace ClassLibrary1
 
             Assert.Equal("111111111", lineParser.AccountNumber);
         }
-        
+
 
     }
 
@@ -86,9 +87,20 @@ namespace ClassLibrary1
         private string[] _linesToParse;
         public bool LinesAreValid;
         private StringBuilder _accountNumber;
+        private Dictionary<string, int> _ocrMapping;
+
+        const string space = " ";
+        const string pipe = "|";
+        const string dash = "_";
+
 
         public LineParser(string[] scenario1)
         {
+            _ocrMapping = new Dictionary<string, int>();
+            _ocrMapping.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", space, dash, space, pipe, space, pipe, pipe, dash, pipe), 0);
+            _ocrMapping.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", space, space, space, space, space, pipe, space, space, pipe), 1);
+
+
             _linesToParse = scenario1;
             _accountNumber = new StringBuilder();
         }
@@ -124,31 +136,17 @@ namespace ClassLibrary1
         {
             for (var index = 0; index < 27; index += 3)
             {
-                //Check for Zero.
-                if (_linesToParse[0][index] == ' ' && _linesToParse[0][index + 1] == '_' && _linesToParse[0][index + 2] == ' ')
-                {
-                    //Either Zero or 8
-                    if (_linesToParse[1][index] == '|' && _linesToParse[1][index + 1] == ' ' && _linesToParse[1][index + 2] == '|')
-                    {
-                        if (_linesToParse[2][index] == '|' && _linesToParse[2][index + 1] == '_' && _linesToParse[2][index + 2] == '|')
-                        {
-                            _accountNumber.Append("0");
-                        }
-                    }
-                }
+
+                var testString = 
+                    string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
+                    _linesToParse[0][index], _linesToParse[0][index + 1], _linesToParse[0][index + 2],
+                    _linesToParse[1][index] , _linesToParse[1][index + 1] ,_linesToParse[1][index + 2] ,
+                    _linesToParse[2][index] , _linesToParse[2][index + 1], _linesToParse[2][index + 2])
+                ;
 
 
-                if (_linesToParse[0][index] == ' ' && _linesToParse[0][index + 1] == ' ' && _linesToParse[0][index + 2] == ' ')
-                {
-                    if (_linesToParse[1][index] == ' ' && _linesToParse[1][index + 1] == ' ' && _linesToParse[1][index + 2] == '|')
-                    {
-                        if (_linesToParse[2][index] == ' ' && _linesToParse[2][index + 1] == ' ' && _linesToParse[2][index + 2] == '|')
-                        {
-                            _accountNumber.Append("1");
-                        }
-                    }
-                }
-
+                _accountNumber.Append(_ocrMapping[testString]);
+                
             }
             
             return this;
