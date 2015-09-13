@@ -16,7 +16,7 @@ namespace ClassLibrary1
                                                  "| || || || || || || || || |", 
                                                  "|_||_||_||_||_||_||_||_||_|", 
                                                  "                           " };
-        
+
         private readonly string[] _scenario2 = { "                           ", 
                                                  "  |  |  |  |  |  |  |  |  |", 
                                                  "  |  |  |  |  |  |  |  |  |", 
@@ -26,7 +26,7 @@ namespace ClassLibrary1
                                                  " _| _| _| _| _| _| _| _| _|",
                                                  "|_ |_ |_ |_ |_ |_ |_ |_ |_ ",
                                                  "                           " };
-        
+
         private readonly string[] _scenario4 = { " _  _  _  _  _  _  _  _  _ ",
                                                  " _| _| _| _| _| _| _| _| _|", 
                                                  " _| _| _| _| _| _| _| _| _|",
@@ -38,7 +38,7 @@ namespace ClassLibrary1
                                                  "                           " };
 
 
-        
+
 
         [Fact]
         public void TestCase1_InputHas4Lines()
@@ -158,7 +158,7 @@ namespace ClassLibrary1
         {
             _ocrMapping = new Dictionary<string, int>();
             _ocrMapping.Add(SetupMatrix(space, dash, space, pipe, space, pipe, pipe, dash, pipe, space, space, space), 0);
-            _ocrMapping.Add(SetupMatrix( space, space, space, space, space, pipe, space, space,pipe, space, space, space), 1);
+            _ocrMapping.Add(SetupMatrix(space, space, space, space, space, pipe, space, space, pipe, space, space, space), 1);
             _ocrMapping.Add(SetupMatrix(space, dash, space, space, dash, pipe, pipe, dash, space, space, space, space), 2);
             _ocrMapping.Add(SetupMatrix(space, dash, space, space, dash, pipe, space, dash, pipe, space, space, space), 3);
             _ocrMapping.Add(SetupMatrix(space, space, space, pipe, dash, pipe, space, space, pipe, space, space, space), 4);
@@ -212,9 +212,7 @@ namespace ClassLibrary1
                     _linesToParse[3][index], _linesToParse[3][index + 1], _linesToParse[3][index + 2])
                 ;
 
-                    _accountNumber.Append(_ocrMapping[testString]);
-      
-                
+                _accountNumber.Append(_ocrMapping[testString]);
 
             }
 
