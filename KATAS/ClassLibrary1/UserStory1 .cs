@@ -12,19 +12,33 @@ namespace ClassLibrary1
     {
         private const string url = @"http://codingdojo.org/cgi-bin/index.pl?KataBankOCR";
 
-        private readonly string[] _scenario1 = { " _  _  _  _  _  _  _  _  _ ", "| || || || || || || || || |", "|_||_||_||_||_||_||_||_||_|", "                           " };
-        private readonly string[] _scenario2 = { "                           ", "  |  |  |  |  |  |  |  |  |", "  |  |  |  |  |  |  |  |  |", "                           " };
-        private readonly string[] _scenario3 = { " _  _  _  _  _  _  _  _  _ ", " _| _| _| _| _| _| _| _| _|", "|_ |_ |_ |_ |_ |_ |_ |_ |_ ", "                           " };
-        private readonly string[] _scenario4 = { " _  _  _  _  _  _  _  _  _ ", " _| _| _| _| _| _| _| _| _|", " _| _| _| _| _| _| _| _| _|", "                           " };
+        private readonly string[] _scenario1 = { " _  _  _  _  _  _  _  _  _ ", 
+                                                 "| || || || || || || || || |", 
+                                                 "|_||_||_||_||_||_||_||_||_|", 
+                                                 "                           " };
+        
+        private readonly string[] _scenario2 = { "                           ", 
+                                                 "  |  |  |  |  |  |  |  |  |", 
+                                                 "  |  |  |  |  |  |  |  |  |", 
+                                                 "                           " };
 
-        /*
-          " _  _  _  _  _  _  _  _  _ ", 
-          "| || || || || || || || || |", 
-          "|_||_||_||_||_||_||_||_||_|", 
-          "                           " };
-        */
+        private readonly string[] _scenario3 = { " _  _  _  _  _  _  _  _  _ ", 
+                                                 " _| _| _| _| _| _| _| _| _|",
+                                                 "|_ |_ |_ |_ |_ |_ |_ |_ |_ ",
+                                                 "                           " };
+        
+        private readonly string[] _scenario4 = { " _  _  _  _  _  _  _  _  _ ",
+                                                 " _| _| _| _| _| _| _| _| _|", 
+                                                 " _| _| _| _| _| _| _| _| _|",
+                                                 "                           " };
+
+        private readonly string[] _scenario5 = { "                           ",
+                                                 "|_||_||_||_||_||_||_||_||_|", 
+                                                 "  |  |  |  |  |  |  |  |  |",
+                                                 "                           " };
 
 
+        
 
         [Fact]
         public void TestCase1_InputHas4Lines()
@@ -105,6 +119,17 @@ namespace ClassLibrary1
             Assert.Equal("333333333", lineParser.AccountNumber);
         }
 
+        [Fact]
+        public void Scenario5_AccountNumberIsAllFours()
+        {
+            var lineParser = new LineParser(_scenario5);
+            lineParser
+                .Validate()
+                .Parse();
+
+            Assert.Equal("444444444", lineParser.AccountNumber);
+        }
+
 
     }
 
@@ -136,6 +161,7 @@ namespace ClassLibrary1
             _ocrMapping.Add(SetupMatrix( space, space, space, space, space, pipe, space, space,pipe, space, space, space), 1);
             _ocrMapping.Add(SetupMatrix(space, dash, space, space, dash, pipe, pipe, dash, space, space, space, space), 2);
             _ocrMapping.Add(SetupMatrix(space, dash, space, space, dash, pipe, space, dash, pipe, space, space, space), 3);
+            _ocrMapping.Add(SetupMatrix(space, space, space, pipe, dash, pipe, space, space, pipe, space, space, space), 4);
 
         }
 
