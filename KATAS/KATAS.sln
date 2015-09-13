@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{E3C054A2-30F2-4400-A80B-5AF46DF83F5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR", "ClassLibrary1\OCR.csproj", "{E3C054A2-30F2-4400-A80B-5AF46DF83F5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
