@@ -59,7 +59,6 @@
     </Compile>
     <Compile Include="UserStory1 .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VirtualTestFiles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

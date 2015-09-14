@@ -15,7 +15,7 @@ namespace ClassLibrary1
         public UserStory1()
         {
             _lineParser = new LineParser();
-            _fileData = _lineParser.ReadFile(1);
+            _lineParser.ReadFile(1);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-            Assert.Equal('0', _lineParser.AccountNumber[0]);
+            Assert.Equal('0', _lineParser.AccountNumbers[0][0]);
         }
 
 
@@ -59,7 +59,7 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-            Assert.Equal("000000000", _lineParser.AccountNumber);
+            Assert.Equal("000000000", _lineParser.AccountNumbers[0]);
         }
 
 
@@ -70,7 +70,7 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-           Assert.Equal("111111111", _lineParser.AccountNumber);
+           Assert.Equal("111111111", _lineParser.AccountNumbers[1]);
         }
 
         [Fact]
@@ -80,8 +80,9 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-            Assert.Equal("222222222", _lineParser.AccountNumber);
+            Assert.Equal("222222222", _lineParser.AccountNumbers[2]);
         }
+
 
         [Fact]
         public void Scenario4_AccountNumberIsAllThrees()
@@ -90,7 +91,7 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-            Assert.Equal("333333333", _lineParser.AccountNumber);
+            Assert.Equal("333333333", _lineParser.AccountNumbers[3]);
         }
 
         [Fact]
@@ -100,9 +101,8 @@ namespace ClassLibrary1
                 .Validate()
                 .Parse();
 
-            Assert.Equal("444444444", _lineParser.AccountNumber);
+            Assert.Equal("444444444", _lineParser.AccountNumbers[4]);
         }
     }
 }
-
 

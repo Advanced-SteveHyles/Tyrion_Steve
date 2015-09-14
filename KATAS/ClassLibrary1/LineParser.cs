@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Resources;
 using System.Text;
 using ClassLibrary1.Properties;
 
@@ -12,15 +10,14 @@ namespace ClassLibrary1
     {
         private string[] _linesToParse;
         public bool LinesAreValid;
-        private StringBuilder _accountNumber;
+        private List<string> _accountNumbers;
         private Dictionary<string, int> _ocrMapping;
 
 
-        public LineParser(string[] scenario1)
+        public LineParser()
         {
             SetUpDictionary();
-            _linesToParse = scenario1;
-            _accountNumber = new StringBuilder();
+            _accountNumbers = new List<string>();
         }
 
         private void SetUpDictionary()
@@ -60,9 +57,9 @@ namespace ClassLibrary1
 
 
 
-        public string AccountNumber
+        public List<string> AccountNumbers
         {
-            get { return _accountNumber.ToString(); }
+            get { return _accountNumbers; }
         }
 
 
@@ -87,36 +84,47 @@ namespace ClassLibrary1
             return _linesToParse.Count();
         }
 
-        public LineParser Parse(int line)
+        public LineParser Parse()
         {
+            StringBuilder accountNumber = new StringBuilder();
 
-            for (var index = 0; index < 27; index += 3)
+            for (var block = 0; block < _linesToParse.Count()-1; block += 3)
             {
 
-                var testString =
-                    string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}",
-                        _linesToParse[0][index], _linesToParse[0][index + 1], _linesToParse[0][index + 2],
-                        _linesToParse[1][index], _linesToParse[1][index + 1], _linesToParse[1][index + 2],
-                        _linesToParse[2][index], _linesToParse[2][index + 1], _linesToParse[2][index + 2],
-                        _linesToParse[3][index], _linesToParse[3][index + 1], _linesToParse[3][index + 2])
-                    ;
 
-                _accountNumber.Append(_ocrMapping[testString]);
 
+                for (var index = 0; index < 27; index += 3)
+                {
+
+                    var testString =
+                        string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}",
+                            _linesToParse[block][index], _linesToParse[block][index + 1], _linesToParse[block][index + 2],
+                            _linesToParse[block + 1][index], _linesToParse[block + 1][index + 1], _linesToParse[block + 1][index + 2],
+                            _linesToParse[block + 2][index], _linesToParse[block + 2][index + 1], _linesToParse[block + 2][index + 2],
+                            _linesToParse[block + 3][index], _linesToParse[block + 3][index + 1], _linesToParse[block + 3][index + 2])
+                        ;
+                    accountNumber.Append(_ocrMapping[testString]);
+
+                }
             }
-
             return this;
         }
 
-        public string ReadFile(int useCase)
+        public void ReadFile(int useCase)
         {
+            string data = string.Empty;
             switch (useCase)
-            {   
-            case 1 ,2:
-                {
-            return Resources.UseCase1_2;                    
+            {
+                case 1:
+                case 2:
+                    {
+                        data = Resources.UseCase1_2;
+                        break;
                     }
-            }    
-    }
+            }
+
+            char[] splitter = { };
+            _linesToParse = data.Split(splitter);
+        }
     }
 }
