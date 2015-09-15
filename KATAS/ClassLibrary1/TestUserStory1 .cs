@@ -22,7 +22,7 @@ namespace ClassLibrary1
         public void TestCase1_InputHas43Lines()
         {
             _lineParser
-                .Validate();
+                .ValidateFormat();
 
             Assert.Equal(44, _lineParser.LinesFound);
         }
@@ -32,7 +32,7 @@ namespace ClassLibrary1
         {
 
             _lineParser
-                .Validate();
+                .ValidateFormat();
                 
             Assert.True(_lineParser.LinesAreValid);
         }
@@ -42,7 +42,7 @@ namespace ClassLibrary1
         {
 
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal('0', _lineParser.AccountNumbers[0][0]);
@@ -54,7 +54,7 @@ namespace ClassLibrary1
         {
 
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal("000000000", _lineParser.AccountNumbers[0]);
@@ -65,7 +65,7 @@ namespace ClassLibrary1
         public void TestCase1_AccountNumberIsAllOnes()
         {
            _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
            Assert.Equal("111111111", _lineParser.AccountNumbers[1]);
@@ -75,7 +75,7 @@ namespace ClassLibrary1
         public void Scenario3_FirstCharacterLine3IsATwo()
         {
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal('2', _lineParser.AccountNumbers[2][0]);
@@ -85,7 +85,7 @@ namespace ClassLibrary1
         public void Scenario3_AccountNumberIsAllTwos()
         {
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal("222222222", _lineParser.AccountNumbers[2]);
@@ -96,7 +96,7 @@ namespace ClassLibrary1
         public void Scenario4_AccountNumberIsAllThrees()
         {
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal("333333333", _lineParser.AccountNumbers[3]);
@@ -106,7 +106,7 @@ namespace ClassLibrary1
         public void Scenario5_AccountNumberIsAllFours()
         {
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal("444444444", _lineParser.AccountNumbers[4]);
@@ -116,11 +116,75 @@ namespace ClassLibrary1
         public void Line6_AccountNumberIsAllFives()
         {
             _lineParser
-                .Validate()
+                .ValidateFormat()
                 .Parse();
 
             Assert.Equal("555555555", _lineParser.AccountNumbers[5]);
         }
+
+        [Fact]
+        public void Line7_AccountNumberIsAllSixes()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse();
+
+            Assert.Equal("666666666", _lineParser.AccountNumbers[6]);
+        }
+
+        [Fact]
+        public void Line8_AccountNumberIsAllSevens()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse();
+
+            Assert.Equal("777777777", _lineParser.AccountNumbers[7]);
+        }
+
+        [Fact]
+        public void Line9_AccountNumberIsAllEights()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse();
+
+            Assert.Equal("888888888", _lineParser.AccountNumbers[8]);
+        }
+
+               [Fact]
+        public void Line10_AccountNumberIsAllNines()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse();
+
+            Assert.Equal("999999999", _lineParser.AccountNumbers[9]);
+        }
+
+
+        [Fact]
+        public void Line11_AccountNumberIs123456789()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse();
+
+            Assert.Equal("123456789", _lineParser.AccountNumbers[10]);
+        }
+
+
+        [Fact]
+        public void Lines_ValidateChecksums()
+        {
+            _lineParser
+                .ValidateFormat()
+                .Parse()
+                .ValidateCheckSums();
+
+            Assert.True(_lineParser.CheckSumsValid);
+        }
+
     }
 }
 

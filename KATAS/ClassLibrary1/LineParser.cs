@@ -53,6 +53,26 @@ namespace ClassLibrary1
                                         "|", "_", " ",
                                         " ", "_", "|",
                                         " ", " ", " "), 5);
+
+            _ocrMapping.Add(SetupMatrix(" ", "_", " ",
+                                        "|", "_", " ",
+                                        "|", "_", "|",
+                                        " ", " ", " "), 6);
+
+            _ocrMapping.Add(SetupMatrix(" ", "_", " ",
+                                        " ", " ", "|",
+                                        " ", " ", "|",
+                                        " ", " ", " "), 7);
+
+            _ocrMapping.Add(SetupMatrix(" ", "_", " ",
+                                        "|", "_", "|",
+                                        "|", "_", "|",
+                                        " ", " ", " "), 8);
+
+            _ocrMapping.Add(SetupMatrix(" ", "_", " ",
+                                        "|", "_", "|",
+                                        " ", "_", "|",
+                                        " ", " ", " "), 9);
         }
 
         private string SetupMatrix(string char1, string char2, string char3, string char4, string char5, string char6, string char7, string char8, string char9, string char10, string char11, string char12)
@@ -68,7 +88,7 @@ namespace ClassLibrary1
         }
 
 
-        public LineParser Validate()
+        public LineParser ValidateFormat()
         {
             var linesChecked = 0;
             LineInError = 0;
@@ -92,6 +112,8 @@ namespace ClassLibrary1
         {
             get { return _linesToParse.Count(); }
         }
+
+        public bool CheckSumsValid { get; private set; }
 
         public LineParser Parse()
         {
@@ -133,6 +155,11 @@ namespace ClassLibrary1
         public void ReadFile(string fileName)
         {
             _linesToParse = System.IO.File.ReadAllLines(fileName);
+        }
+
+        public void ValidateCheckSums()
+        {
+                
         }
     }
 }
