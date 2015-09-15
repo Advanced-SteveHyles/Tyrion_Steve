@@ -15,16 +15,16 @@ namespace ClassLibrary1
         public UserStory1()
         {
             _lineParser = new LineParser();
-            _lineParser.ReadFile(1);
+            _lineParser.ReadFile(@"C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\UseCase1_2.txt");
         }
 
         [Fact]
-        public void TestCase1_InputHas4Lines()
+        public void TestCase1_InputHas43Lines()
         {
             _lineParser
                 .Validate();
 
-            Assert.Equal(4, _lineParser.LinesFound());
+            Assert.Equal(44, _lineParser.LinesFound);
         }
 
         [Fact]
@@ -32,10 +32,8 @@ namespace ClassLibrary1
         {
 
             _lineParser
-                .Validate()
-                .Parse();
-
-
+                .Validate();
+                
             Assert.True(_lineParser.LinesAreValid);
         }
 
@@ -74,6 +72,16 @@ namespace ClassLibrary1
         }
 
         [Fact]
+        public void Scenario3_FirstCharacterLine3IsATwo()
+        {
+            _lineParser
+                .Validate()
+                .Parse();
+
+            Assert.Equal('2', _lineParser.AccountNumbers[2][0]);
+        }
+
+        [Fact]
         public void Scenario3_AccountNumberIsAllTwos()
         {
             _lineParser
@@ -102,6 +110,16 @@ namespace ClassLibrary1
                 .Parse();
 
             Assert.Equal("444444444", _lineParser.AccountNumbers[4]);
+        }
+
+        [Fact]
+        public void Line6_AccountNumberIsAllFives()
+        {
+            _lineParser
+                .Validate()
+                .Parse();
+
+            Assert.Equal("555555555", _lineParser.AccountNumbers[5]);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace ClassLibrary1
         public bool LinesAreValid;
         private List<string> _accountNumbers;
         private Dictionary<string, int> _ocrMapping;
+        public int LineInError { get; set; }
 
 
         public LineParser()
@@ -48,6 +49,10 @@ namespace ClassLibrary1
                                         " ", " ", "|",
                                         " ", " ", " "), 4);
 
+            _ocrMapping.Add(SetupMatrix(" ", "_", " ",
+                                        "|", "_", " ",
+                                        " ", "_", "|",
+                                        " ", " ", " "), 5);
         }
 
         private string SetupMatrix(string char1, string char2, string char3, string char4, string char5, string char6, string char7, string char8, string char9, string char10, string char11, string char12)
@@ -65,6 +70,8 @@ namespace ClassLibrary1
 
         public LineParser Validate()
         {
+            var linesChecked = 0;
+            LineInError = 0;
             LinesAreValid = true;
 
             foreach (string line in _linesToParse)
@@ -72,59 +79,60 @@ namespace ClassLibrary1
                 if (line.Length != 27)
                 {
                     LinesAreValid = false;
+                    LineInError = linesChecked;
                     return this;
                 }
+                linesChecked ++;
             }
 
             return this;
         }
 
-        public int LinesFound()
+        public int LinesFound
         {
-            return _linesToParse.Count();
+            get { return _linesToParse.Count(); }
         }
 
         public LineParser Parse()
         {
             StringBuilder accountNumber = new StringBuilder();
 
-            for (var block = 0; block < _linesToParse.Count()-1; block += 3)
+            for (var block = 0; block < _linesToParse.Count() - 1; block += 4)
             {
-
-
-
+             
                 for (var index = 0; index < 27; index += 3)
                 {
 
                     var testString =
                         string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}",
-                            _linesToParse[block][index], _linesToParse[block][index + 1], _linesToParse[block][index + 2],
+                            _linesToParse[block + 0][index], _linesToParse[block + 0][index + 1], _linesToParse[block + 0][index + 2],
                             _linesToParse[block + 1][index], _linesToParse[block + 1][index + 1], _linesToParse[block + 1][index + 2],
                             _linesToParse[block + 2][index], _linesToParse[block + 2][index + 1], _linesToParse[block + 2][index + 2],
                             _linesToParse[block + 3][index], _linesToParse[block + 3][index + 1], _linesToParse[block + 3][index + 2])
                         ;
-                    accountNumber.Append(_ocrMapping[testString]);
 
+                    try
+                    {
+                        accountNumber.Append(_ocrMapping[testString]);
+                    }
+                    catch (Exception)
+                    {
+                        accountNumber.Append(testString);
+                    }
                 }
+                _accountNumbers.Add(accountNumber.ToString());
+                accountNumber.Clear();
             }
+
+          
+
             return this;
         }
 
-        public void ReadFile(int useCase)
-        {
-            string data = string.Empty;
-            switch (useCase)
-            {
-                case 1:
-                case 2:
-                    {
-                        data = Resources.UseCase1_2;
-                        break;
-                    }
-            }
 
-            char[] splitter = { };
-            _linesToParse = data.Split(splitter);
+        public void ReadFile(string fileName)
+        {
+            _linesToParse = System.IO.File.ReadAllLines(fileName);
         }
     }
 }
