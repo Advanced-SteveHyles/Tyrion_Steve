@@ -8,13 +8,13 @@ namespace ClassLibrary1
 {
     public class UserStory1
     {
-        private LineParser _lineParser;
+        private LineParser1_2 _lineParser;
         private string _fileData;
         private const string url = @"http://codingdojo.org/cgi-bin/index.pl?KataBankOCR";
 
         public UserStory1()
         {
-            _lineParser = new LineParser();
+            _lineParser = new LineParser1_2();
             _lineParser.ReadFile(@"C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\UseCase1_2.txt");
         }
 
@@ -174,17 +174,34 @@ namespace ClassLibrary1
         }
 
 
-        [Fact]
-        public void Lines_ValidateChecksums()
-        {
-            _lineParser
-                .ValidateFormat()
-                .Parse()
-                .ValidateCheckSums();
+        //[Fact]
+        //public void Lines_ValidateChecksums()
+        //{
+        //    _lineParser
+        //        .ValidateFormat()
+        //        .Parse()
+        //        .ValidateCheckSums();
 
-            Assert.True(_lineParser.CheckSumsValid);
+        //    Assert.True(_lineParser.CheckSumsValid);
+        //}
+
+        [Fact]
+        public void AccountHasValidChecksum_000000000()
+        {
+            Assert.True(_lineParser.ValidateCheckSum("000000000"));            
         }
 
+        [Fact]
+        public void AccountHasInValidChecksum_111111111()
+        {
+            Assert.False(_lineParser.ValidateCheckSum("111111111"));
+        }
+
+        [Fact]
+        public void AccountHasValidChecksum_8888888889()
+        {
+            Assert.False(_lineParser.ValidateCheckSum("888888888"));
+        }
     }
 }
 

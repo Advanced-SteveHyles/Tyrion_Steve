@@ -6,7 +6,7 @@ using ClassLibrary1.Properties;
 
 namespace ClassLibrary1
 {
-    public class LineParser
+    public class LineParser1_2
     {
         private string[] _linesToParse;
         public bool LinesAreValid;
@@ -15,7 +15,7 @@ namespace ClassLibrary1
         public int LineInError { get; set; }
 
 
-        public LineParser()
+        public LineParser1_2()
         {
             SetUpDictionary();
             _accountNumbers = new List<string>();
@@ -88,7 +88,7 @@ namespace ClassLibrary1
         }
 
 
-        public LineParser ValidateFormat()
+        public LineParser1_2 ValidateFormat()
         {
             var linesChecked = 0;
             LineInError = 0;
@@ -102,7 +102,7 @@ namespace ClassLibrary1
                     LineInError = linesChecked;
                     return this;
                 }
-                linesChecked ++;
+                linesChecked++;
             }
 
             return this;
@@ -115,13 +115,13 @@ namespace ClassLibrary1
 
         public bool CheckSumsValid { get; private set; }
 
-        public LineParser Parse()
+        public LineParser1_2 Parse()
         {
             StringBuilder accountNumber = new StringBuilder();
 
             for (var block = 0; block < _linesToParse.Count() - 1; block += 4)
             {
-             
+
                 for (var index = 0; index < 27; index += 3)
                 {
 
@@ -146,8 +146,6 @@ namespace ClassLibrary1
                 accountNumber.Clear();
             }
 
-          
-
             return this;
         }
 
@@ -159,7 +157,54 @@ namespace ClassLibrary1
 
         public void ValidateCheckSums()
         {
-                
+            //  account number:  3  4  5  8  8  2  8  6  5
+            //position names:   d9 d8 d7 d6 d5 d4 d3 d2 d1
+            
+            // checksum calculation:
+            // (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
+            
+            foreach (var accountNumber in _accountNumbers)
+            {
+                if (ValidateCheckSum(accountNumber))
+                {
+                    CheckSumsValid = false;
+                    return;
+                }                    
+            }
+
+            CheckSumsValid = true;
+        }
+
+        public bool ValidateCheckSum(string accountNumber)
+        {
+            int checksum = 0;
+
+            var testAccountNumber = accountNumber.Reverse().ToList();
+
+            for (var i = 0; i < 8; i++)
+            {
+                if (checksum == 0)
+                {
+                    int value;
+                    int.TryParse(testAccountNumber[i].ToString(), out value);
+                    checksum = value + (i + 2);
+                }
+                else
+                {
+                    int value;
+                    int.TryParse(testAccountNumber[i].ToString(), out value);
+                    checksum *= value + (i + 2);
+                }
+            }
+            int value1;
+            int.TryParse(testAccountNumber[8].ToString(), out value1);
+            checksum *= value1;
+
+            if (checksum%11 != 0)
+            {                
+                return false;
+            }
+            return true;
         }
     }
 }
