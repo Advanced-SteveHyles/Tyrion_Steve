@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="Program.fs" />
     <None Include="App.config" />
-    <Compile Include="File1.fs" />
+    <Compile Include="RecursiveFunction.fs" />
+    <Compile Include="Immutable.fs" />
+    <Compile Include="Loops.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
