@@ -4,7 +4,7 @@
 
 type Proposition = 
                 | True 
-                | False of Proposition
+                | StevesFalse
                 | Not of Proposition 
                 | And of Proposition * Proposition 
                 | Or of Proposition * Proposition
@@ -13,7 +13,7 @@ type Proposition =
 
 let rec eval x = match x with 
                | True -> true    
-               | False ->  (eval not True)               
+               | StevesFalse -> not (eval True)
                | Not (prop) -> not (eval prop)     
                | And (prop1, prop2) -> (eval prop1) && (eval prop2)     
                | Or (prop1, prop2) -> (eval prop1) || (eval prop2)
@@ -29,7 +29,7 @@ let XorTrue = Xor (True, Not True);
 let XorFalse = Xor (True, True);
 
 let And3True = And3 (True, True, True);
-let And3False = And3 (True, False, True);
+let And3False = And3 (True, StevesFalse, True);
 
 printfn "shouldBeFalse : %b" (eval shouldBeFalse)
 printfn "shouldBeTrue : %b" (eval shouldBeTrue)
