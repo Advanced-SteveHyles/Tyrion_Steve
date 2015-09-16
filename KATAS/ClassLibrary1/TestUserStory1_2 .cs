@@ -173,18 +173,6 @@ namespace ClassLibrary1
             Assert.Equal("123456789", _lineParser.AccountNumbers[10]);
         }
 
-
-        //[Fact]
-        //public void Lines_ValidateChecksums()
-        //{
-        //    _lineParser
-        //        .ValidateFormat()
-        //        .Parse()
-        //        .ValidateCheckSums();
-
-        //    Assert.True(_lineParser.CheckSumsValid);
-        //}
-
         [Fact]
         public void AccountHasValidChecksum_000000000()
         {
