@@ -6,15 +6,16 @@ using Xunit;
 
 namespace ClassLibrary1
 {
-    public class UserStory1
+    public class UserStory1_2
     {
-        private LineParser1_2 _lineParser;
-        private string _fileData;
+        //Tests changed to incoporate Validation rules from UserStory3
+
+        private FileReaderParserAndValidator _lineParser;
         private const string url = @"http://codingdojo.org/cgi-bin/index.pl?KataBankOCR";
 
-        public UserStory1()
+        public UserStory1_2()
         {
-            _lineParser = new LineParser1_2();
+            _lineParser = new FileReaderParserAndValidator();
             _lineParser.ReadFile(@"C:\LEARNINGANDRAND\Tyrion_Steve\KATAS\ClassLibrary1\UseCase1_2.txt");
         }
 
@@ -48,7 +49,6 @@ namespace ClassLibrary1
             Assert.Equal('0', _lineParser.AccountNumbers[0][0]);
         }
 
-
         [Fact]
         public void Scenario1_AccountNumberIsAllZeros()
         {
@@ -60,15 +60,14 @@ namespace ClassLibrary1
             Assert.Equal("000000000", _lineParser.AccountNumbers[0]);
         }
 
-
         [Fact]
-        public void TestCase1_AccountNumberIsAllOnes()
+        public void TestCase1_AccountNumberIsAllOnesWithERR()
         {
            _lineParser
                 .ValidateFormat()
                 .Parse();
 
-           Assert.Equal("111111111", _lineParser.AccountNumbers[1]);
+           Assert.Equal("111111111 ERR", _lineParser.AccountNumbers[1]);
         }
 
         [Fact]
@@ -90,7 +89,6 @@ namespace ClassLibrary1
 
             Assert.Equal("222222222", _lineParser.AccountNumbers[2]);
         }
-
 
         [Fact]
         public void Scenario4_AccountNumberIsAllThrees()
@@ -133,33 +131,33 @@ namespace ClassLibrary1
         }
 
         [Fact]
-        public void Line8_AccountNumberIsAllSevens()
+        public void Line8_AccountNumberIsAllSevensWithERR()
         {
             _lineParser
                 .ValidateFormat()
                 .Parse();
 
-            Assert.Equal("777777777", _lineParser.AccountNumbers[7]);
+            Assert.Equal("777777777 ERR", _lineParser.AccountNumbers[7]);
         }
 
         [Fact]
-        public void Line9_AccountNumberIsAllEights()
+        public void Line9_AccountNumberIsAllEightsWithERR()
         {
             _lineParser
                 .ValidateFormat()
                 .Parse();
 
-            Assert.Equal("888888888", _lineParser.AccountNumbers[8]);
+            Assert.Equal("888888888 ERR", _lineParser.AccountNumbers[8]);
         }
 
-               [Fact]
-        public void Line10_AccountNumberIsAllNines()
+        [Fact]
+        public void Line10_AccountNumberIsAllNinesWithERR()
         {
             _lineParser
                 .ValidateFormat()
                 .Parse();
 
-            Assert.Equal("999999999", _lineParser.AccountNumbers[9]);
+            Assert.Equal("999999999 ERR", _lineParser.AccountNumbers[9]);
         }
 
 

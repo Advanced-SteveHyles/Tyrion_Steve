@@ -6,16 +6,15 @@ using ClassLibrary1.Properties;
 
 namespace ClassLibrary1
 {
-    public class LineParser1_2
+    public class FileReaderParserAndValidator //Breask SRP!!
     {
-        private string[] _linesToParse;
+        private string[] _fileLinesToParse;
         public bool LinesAreValid;
-        private List<string> _accountNumbers;
+        private readonly List<string> _accountNumbers;
         private Dictionary<string, int> _ocrMapping;
         public int LineInError { get; set; }
 
-
-        public LineParser1_2()
+        public FileReaderParserAndValidator()
         {
             SetUpDictionary();
             _accountNumbers = new List<string>();
@@ -88,13 +87,13 @@ namespace ClassLibrary1
         }
 
 
-        public LineParser1_2 ValidateFormat()
+        public FileReaderParserAndValidator ValidateFormat()
         {
             var linesChecked = 0;
             LineInError = 0;
             LinesAreValid = true;
 
-            foreach (string line in _linesToParse)
+            foreach (string line in _fileLinesToParse)
             {
                 if (line.Length != 27)
                 {
@@ -110,24 +109,26 @@ namespace ClassLibrary1
 
         public int LinesFound
         {
-            get { return _linesToParse.Count(); }
+            get { return _fileLinesToParse.Count(); }
         }
 
         public bool CheckSumsValid { get; private set; }
 
-        public LineParser1_2 Parse()
+        public FileReaderParserAndValidator Parse()
         {
             StringBuilder accountNumber = new StringBuilder();
 
-            for (var block = 0; block < _linesToParse.Count() - 1; block += 4)
+            for (var fileLine = 0; fileLine < _fileLinesToParse.Count() - 1; fileLine += 4)
             {
-                for (var index = 0; index < 27; index += 3)
-                {
+                var err = false;
+    
+                for (var linePosition = 0; linePosition < 27; linePosition += 3)
+                {            
                     var testString =FormatLine (                        
-                            _linesToParse[block + 0][index], _linesToParse[block + 0][index + 1], _linesToParse[block + 0][index + 2],
-                            _linesToParse[block + 1][index], _linesToParse[block + 1][index + 1], _linesToParse[block + 1][index + 2],
-                            _linesToParse[block + 2][index], _linesToParse[block + 2][index + 1], _linesToParse[block + 2][index + 2],
-                            _linesToParse[block + 3][index], _linesToParse[block + 3][index + 1], _linesToParse[block + 3][index + 2]
+                            _fileLinesToParse[fileLine + 0][linePosition], _fileLinesToParse[fileLine + 0][linePosition + 1], _fileLinesToParse[fileLine + 0][linePosition + 2],
+                            _fileLinesToParse[fileLine + 1][linePosition], _fileLinesToParse[fileLine + 1][linePosition + 1], _fileLinesToParse[fileLine + 1][linePosition + 2],
+                            _fileLinesToParse[fileLine + 2][linePosition], _fileLinesToParse[fileLine + 2][linePosition + 1], _fileLinesToParse[fileLine + 2][linePosition + 2],
+                            _fileLinesToParse[fileLine + 3][linePosition], _fileLinesToParse[fileLine + 3][linePosition + 1], _fileLinesToParse[fileLine + 3][linePosition + 2]
                             );
 
                     try
@@ -136,9 +137,20 @@ namespace ClassLibrary1
                     }
                     catch (Exception)
                     {
-                        accountNumber.Append(testString);
-                    }
+                        err = true;
+                        accountNumber.Append("?");                        
+                    }                    
                 }
+
+                if (err)
+                {
+                    accountNumber.Append(" ILL");
+                }
+                else if (!ValidateCheckSum(accountNumber.ToString()))
+                {
+                    accountNumber.Append(" ERR");
+                }
+                
                 _accountNumbers.Add(accountNumber.ToString());
                 accountNumber.Clear();
             }
@@ -146,26 +158,11 @@ namespace ClassLibrary1
             return this;
         }
 
-
         public void ReadFile(string fileName)
         {
-            _linesToParse = System.IO.File.ReadAllLines(fileName);
+            _fileLinesToParse = System.IO.File.ReadAllLines(fileName);
         }
-
-        public void ValidateCheckSums()
-        {            
-            foreach (var accountNumber in _accountNumbers)
-            {
-                if (ValidateCheckSum(accountNumber))
-                {
-                    CheckSumsValid = false;
-                    return;
-                }                    
-            }
-
-            CheckSumsValid = true;
-        }
-
+        
         public bool ValidateCheckSum(string accountNumber)
         {
             // account number:  3  4  5  8  8  2  8  6  5
