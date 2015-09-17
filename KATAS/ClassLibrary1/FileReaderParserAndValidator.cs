@@ -9,10 +9,9 @@ namespace ClassLibrary1
     public class FileReaderParserAndValidator //Breask SRP!!
     {
         private string[] _fileLinesToParse;
-        public bool LinesAreValid;
+        public bool AllLinesAreValid;
         private readonly List<string> _accountNumbers;
         private Dictionary<string, int> _ocrMapping;
-        public int LineInError { get; set; }
 
         public FileReaderParserAndValidator()
         {
@@ -79,8 +78,6 @@ namespace ClassLibrary1
             return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}", char1, char2, char3, char4, char5, char6, char7, char8, char9, char10, char11, char12);
         }
 
-
-
         public List<string> AccountNumbers
         {
             get { return _accountNumbers; }
@@ -89,21 +86,13 @@ namespace ClassLibrary1
 
         public FileReaderParserAndValidator ValidateFormat()
         {
-            var linesChecked = 0;
-            LineInError = 0;
-            LinesAreValid = true;
+            AllLinesAreValid = true;
 
-            foreach (string line in _fileLinesToParse)
+            if (_fileLinesToParse.Any(f => f.Length != 27))
             {
-                if (line.Length != 27)
-                {
-                    LinesAreValid = false;
-                    LineInError = linesChecked;
-                    return this;
-                }
-                linesChecked++;
+                AllLinesAreValid = false;
             }
-
+            
             return this;
         }
 
@@ -135,7 +124,7 @@ namespace ClassLibrary1
                     {
                         accountNumber.Append(_ocrMapping[testString]);
                     }
-                    catch (Exception)
+                    catch (KeyNotFoundException)
                     {
                         err = true;
                         accountNumber.Append("?");                        

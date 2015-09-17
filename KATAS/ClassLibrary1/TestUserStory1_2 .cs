@@ -35,7 +35,7 @@ namespace ClassLibrary1
             _lineParser
                 .ValidateFormat();
                 
-            Assert.True(_lineParser.LinesAreValid);
+            Assert.True(_lineParser.AllLinesAreValid);
         }
 
         [Fact]
