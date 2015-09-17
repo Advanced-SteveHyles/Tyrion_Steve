@@ -1,4 +1,4 @@
-﻿Module UnitTests.UnitTest
+﻿namespace  UnitTests
 
 open Xunit
 open MathsFunctions
