@@ -60,6 +60,7 @@
     <Compile Include="TestUserStory1_2 .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUserStory_3.cs" />
+    <Compile Include="ValidPatternDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
