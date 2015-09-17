@@ -118,7 +118,6 @@ namespace ClassLibrary1
 
             return checksum % 11 == 0;
         }
-
         private static int ExtractInt(char testAccountNumber)
         {
             int value;
