@@ -25,7 +25,9 @@ namespace ClassLibrary1
               .ValidateFormat()
               .Parse();
 
-          Assert.Equal("111111111", _lineParser.AccountNumbers[0]);
+          _lineParser.CorrectLine(0);
+
+          Assert.Equal("711111111", _lineParser.AccountNumbers[0]);
       }
     }
 }

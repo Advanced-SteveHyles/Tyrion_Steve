@@ -11,13 +11,15 @@ namespace ClassLibrary1
         private string[] _fileLinesToParse;
         public bool AllLinesAreValid;
         private readonly List<string> _accountNumbers;
-        private Dictionary<string, int> _ocrMapping;
+        private readonly Dictionary<string, int> _ocrMapping;
         private readonly ValidPatternDictionary _validPatternDictionary;
+        private readonly Dictionary<int, LineInError> _badLineData;
 
         public FileReaderParserAndValidator()
         {
             _accountNumbers = new List<string>();
             _ocrMapping = ValidPatternDictionary.GetDictionary(this);
+            _badLineData = new Dictionary<int, LineInError>();
         }
         
         public List<string> AccountNumbers
@@ -51,6 +53,8 @@ namespace ClassLibrary1
             StringBuilder characters = new StringBuilder();
             for (var fileLine = 0; fileLine < _fileLinesToParse.Count() - 1; fileLine += 4)
             {
+                var lineInError = new LineInError();
+
                 var characterError = false;
     
                 for (var linePosition = 0; linePosition < 27; linePosition += 3)
@@ -77,13 +81,21 @@ namespace ClassLibrary1
 
                 if (characterError)
                 {
-                    accountNumber.Append("ILL");
-                    accountNumber = CharacterResolver(accountNumber.ToString(), characters.ToString(), "ILL");
+                    lineInError.AccountNumber = accountNumber.ToString();
+                    lineInError.ErrorType = " ILL";
+                    lineInError.AccountId = _accountNumbers.Count;
+                    lineInError.RawData = characters;
+                    accountNumber.Append(lineInError.ErrorType);
+                    _badLineData.Add(lineInError.AccountId, lineInError);
                 }
                 else if (!ValidateCheckSum(accountNumber.ToString()))
                 {
-                    accountNumber.Append(" ERR");
-                    accountNumber = CharacterResolver(accountNumber.ToString(), characters.ToString(), "ERR");
+                    lineInError.AccountNumber = accountNumber.ToString();
+                    lineInError.ErrorType = " ERR";
+                    lineInError.AccountId = _accountNumbers.Count;
+                    lineInError.RawData = characters;
+                    accountNumber.Append(lineInError.ErrorType);
+                    _badLineData.Add(lineInError.AccountId, lineInError);
                 }
                 
                 _accountNumbers.Add(accountNumber.ToString());
@@ -93,18 +105,6 @@ namespace ClassLibrary1
             return this;
         }
 
-        private StringBuilder CharacterResolver(string accountNumber, string  characters, string failureType)
-        {
-            //We are allowed to change 1 character to fix the problem.
-            //In the case of a ILL, then an invalid character has been found
-            //In the case of an ERR, then a valid character has morphed into a another valid one.
-
-            // The question is WTF should I do here????
-
-
-        }
-
-
         public void ReadFile(string fileName)
         {
             _fileLinesToParse = System.IO.File.ReadAllLines(fileName);
@@ -112,12 +112,7 @@ namespace ClassLibrary1
         
         public bool ValidateCheckSum(string accountNumber)
         {
-            // account number:  3  4  5  8  8  2  8  6  5
-            // position names:   d9 d8 d7 d6 d5 d4 d3 d2 d1
-            // checksum calculation:
-            // (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
-
-            int checksum = 0;
+            var checksum = 0;
             var testAccountNumber = accountNumber.Reverse().ToList();
             var value = ExtractInt(testAccountNumber[0]);
 
@@ -140,5 +135,32 @@ namespace ClassLibrary1
             int.TryParse(testAccountNumber.ToString(), out value);
             return value;
         }
+
+        public void CorrectLine(int i)
+        {
+            var lineInError = _badLineData.Single(f => f.Key == i).Value;
+
+            if  (lineInError.ErrorType == "ILL")
+            {                
+                //Make Account Number Valid
+
+                //Test Checksum
+
+                //If more than 1, apply AMB
+            }
+            else
+            {
+                
+            }
+
+        }
+    }
+
+    public class LineInError
+    {
+        public string AccountNumber  { get; set; }
+        public string ErrorType { get; set; }
+        public int AccountId     { get; set; }
+        public StringBuilder RawData { get; set; }
     }
 }
