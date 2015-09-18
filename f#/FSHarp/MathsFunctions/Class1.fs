@@ -14,9 +14,14 @@ type MathClass() =
             | n when n < 0.00 -> failwith "value cannot be < 0"
             | n  -> n * factorialf (n - 1.00)
 
+    let AddAndMakeString x y =
+        (x + y).ToString()
+
     member this.GetFactorial x =
         factorial x
 
     member this.GetFactorialF x =
         factorialf x
 
+    member this.AddAndReturnAsString x y =
+        AddAndMakeString x y

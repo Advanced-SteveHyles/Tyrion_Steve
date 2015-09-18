@@ -2,8 +2,12 @@ Open is equivalent of using
 
 The result of the last statement is the "return" value
 
-unit is returned from all functions and its value is always ()
+unit is returned from all functions and its value is always () and is akin to void in C#
 
 Syntax for inner pattern matching
  | n when n < 0 -> -120
 
+ #F functions only ever have a single argument, when multiple are supplied these are curried back to1.
+
+ Operators
+ =========

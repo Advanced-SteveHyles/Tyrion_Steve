@@ -39,3 +39,14 @@
         let c = new MathClass()
        
         Assert.Equal<float> (120.00, c.GetFactorialF 5.00)
+
+
+    [<Fact>]
+    let Adding3and2Returns5AsAString() = 
+                
+        let c = new MathClass()
+        
+        Assert.Equal<string> ("5", c.AddAndReturnAsString 3  2)
+
+
+    
