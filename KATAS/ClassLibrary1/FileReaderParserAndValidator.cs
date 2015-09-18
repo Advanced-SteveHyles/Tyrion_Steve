@@ -48,10 +48,10 @@ namespace ClassLibrary1
         public FileReaderParserAndValidator Parse()
         {
             StringBuilder accountNumber = new StringBuilder();
-
+            StringBuilder characters = new StringBuilder();
             for (var fileLine = 0; fileLine < _fileLinesToParse.Count() - 1; fileLine += 4)
             {
-                var err = false;
+                var characterError = false;
     
                 for (var linePosition = 0; linePosition < 27; linePosition += 3)
                 {            
@@ -62,24 +62,28 @@ namespace ClassLibrary1
                             _fileLinesToParse[fileLine + 3][linePosition], _fileLinesToParse[fileLine + 3][linePosition + 1], _fileLinesToParse[fileLine + 3][linePosition + 2]
                             );
 
+                    characters.Append(testString);
+
                     try
                     {
                         accountNumber.Append(_ocrMapping[testString]);
                     }
                     catch (KeyNotFoundException)
                     {
-                        err = true;
+                        characterError = true;
                         accountNumber.Append("?");                        
-                    }                    
+                    }                  
                 }
 
-                if (err)
+                if (characterError)
                 {
-                    accountNumber.Append(" ILL");
+                    accountNumber.Append("ILL");
+                    accountNumber = CharacterResolver(accountNumber.ToString(), characters.ToString(), "ILL");
                 }
                 else if (!ValidateCheckSum(accountNumber.ToString()))
                 {
                     accountNumber.Append(" ERR");
+                    accountNumber = CharacterResolver(accountNumber.ToString(), characters.ToString(), "ERR");
                 }
                 
                 _accountNumbers.Add(accountNumber.ToString());
@@ -88,6 +92,18 @@ namespace ClassLibrary1
 
             return this;
         }
+
+        private StringBuilder CharacterResolver(string accountNumber, string  characters, string failureType)
+        {
+            //We are allowed to change 1 character to fix the problem.
+            //In the case of a ILL, then an invalid character has been found
+            //In the case of an ERR, then a valid character has morphed into a another valid one.
+
+            // The question is WTF should I do here????
+
+
+        }
+
 
         public void ReadFile(string fileName)
         {
