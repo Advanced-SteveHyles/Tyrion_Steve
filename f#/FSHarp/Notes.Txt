@@ -1,1 +1,9 @@
 Open is equivalent of using
+
+The result of the last statement is the "return" value
+
+unit is returned from all functions and its value is always ()
+
+Syntax for inner pattern matching
+ | n when n < 0 -> -120
+
