@@ -35,6 +35,18 @@ module TestRomanNumerals
         Assert.Equal ("VI", c.toRoman(6))    
 
     [<Fact>]
+    let Roman8IsVIII () =
+        let c = new Roman()
+            
+        Assert.Equal ("VIII", c.toRoman(8))    
+
+    [<Fact>]
+    let Roman9IsIX () =
+        let c = new Roman()
+            
+        Assert.Equal ("IX", c.toRoman(9))  
+
+    [<Fact>]
     let Roman10IsX () =
         let c = new Roman()
             
@@ -59,10 +71,16 @@ module TestRomanNumerals
         Assert.Equal ("XX", c.toRoman(20))  
 
     [<Fact>]
-    let Roman49IsIL () =
+    let Roman49IsXLIX () =
         let c = new Roman()
             
-        Assert.Equal ("IL", c.toRoman(49))  
+        Assert.Equal ("XLIX", c.toRoman(49))  
+
+    [<Fact>]
+    let Roman61IsLXI () =
+        let c = new Roman()
+            
+        Assert.Equal ("LXI", c.toRoman(61))  
 
     [<Fact>]
     let Roman90IsXC () =
@@ -71,10 +89,10 @@ module TestRomanNumerals
         Assert.Equal ("XC", c.toRoman(90))  
 
     [<Fact>]
-    let Roman99IsIC () =
+    let Roman99IsXCIX () =
         let c = new Roman()
             
-        Assert.Equal ("IC", c.toRoman(99))  
+        Assert.Equal ("XCIX", c.toRoman(99))  
 
     [<Fact>]
     let Roman100IsC () =
