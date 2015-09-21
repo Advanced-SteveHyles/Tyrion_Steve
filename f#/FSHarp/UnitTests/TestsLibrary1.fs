@@ -1,7 +1,8 @@
-﻿module Tests
+﻿module BasicTests
 
     open Xunit
     open MathsFunctions
+    open RomanNumerals
 
     [<Fact>]
     let SimpleTest() =
@@ -24,15 +25,15 @@
         let c = new MathClass()
        
         Assert.Equal<int> (120, c.GetFactorial 5)
+//
+//    [<Fact>]
+//    let ApplyingTheFactorialFunctionToTheValueNegative5DoesSomething() = 
+//                
+//        let c = new MathClass()
+//       
+//        Assert.ThrowsAny(c.GetFactorial -5)
 
-    [<Fact>]
-    let ApplyingTheFactorialFunctionToTheValueNegative5DoesSomething() = 
-                
-        let c = new MathClass()
-       
-        Assert.Equal<int> (120, c.GetFactorial -5)
-
-
+        
     [<Fact>]
     let ApplyingTheFactorialFunctionToTheValue5p00Yields120() = 
                 
@@ -47,6 +48,3 @@
         let c = new MathClass()
         
         Assert.Equal<string> ("5", c.AddAndReturnAsString 3  2)
-
-
-    

@@ -3,6 +3,7 @@
 
 #load "Library1.fs"
 open MathsFunctions
+open RomanNumerals
 
 // Define your library scripting code here
 

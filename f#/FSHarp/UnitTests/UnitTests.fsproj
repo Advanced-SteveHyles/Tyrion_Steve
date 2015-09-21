@@ -65,9 +65,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library1.fs" />
+    <Compile Include="TestsLibrary1.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
+    <Compile Include="TestsRomanNumerals.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathsFunctions\MathsFunctions.fsproj">

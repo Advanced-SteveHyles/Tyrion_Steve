@@ -3,9 +3,8 @@
 
 open Xunit
 
-#load "Library1.fs"
-open UnitTests
-
+#load "TestsRomanNumerals.fs"
+#load "TestsLibrary1.fs"
 
 // Define your library scripting code here
 

@@ -11,3 +11,21 @@ Syntax for inner pattern matching
 
  Operators
  =========
+
+
+ Deferred Operation (Currying), Partially Application of functions
+ =================================================================
+ let addTwoNumbers x y = x + y  (Adds to number together)
+
+ let add5ToNumber = addTwoNumbers 5 (Returns a function that Adds Two Numbers Together, but has 5 as the first argument)
+
+ > let z = add5ToNumber 6;;
+
+ Effectively this is 
+ let add5ToNumber y = addTwoNumbers 5 y
+
+ Example 2:
+ > let holdOn = addTwoNumbers 7;;
+	val holdOn : (int -> int)   
+ > let okDone = holdOn 8;;   
+	val okDone : int = 15
