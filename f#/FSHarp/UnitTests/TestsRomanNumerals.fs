@@ -119,7 +119,7 @@ module TestRomanNumerals
         Assert.Equal ("MCM", c.toRoman(1900))  
 
     [<Fact>]
-    let Roman19990IsIM () =
+    let Roman1999IsIM () =
         let c = new Roman()
             
-        Assert.Equal ("MIM", c.toRoman(1999))  
+        Assert.Equal ("MCMXCIX", c.toRoman(1999))  
