@@ -29,3 +29,20 @@ Syntax for inner pattern matching
 	val holdOn : (int -> int)   
  > let okDone = holdOn 8;;   
 	val okDone : int = 15
+
+
+Pattern Matching
+================
+Use _ to map the default case e.g. _ -> "do nothing"
+| to delimit values with the same result
+let something = function (*alternative syntax *)
+
+Function always has a single argument, even if it is not shown e.g.
+let getPrice = function
+    | "banana" -> 0.79  (This parameter is not defined, but is implied)
+
+> getPrice "banana";; val it : float = 0.79
+
+
+
+nan -- not a number.

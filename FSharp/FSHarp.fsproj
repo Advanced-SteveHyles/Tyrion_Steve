@@ -53,6 +53,8 @@
     <Compile Include="Immutable.fs" />
     <Compile Include="Loops.fs" />
     <Compile Include="Program2.fs" />
+    <Compile Include="NestedFunctions.fs" />
+    <Compile Include="Generics.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

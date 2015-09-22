@@ -25,6 +25,14 @@
         let c = new MathClass()
        
         Assert.Equal<int> (120, c.GetFactorial 5)
+
+    [<Fact>]
+    let ApplyingTheFactorialMatchToTheValue5Yields120() = 
+                
+        let c = new MathClass()
+       
+        Assert.Equal<int> (120, c.GetFactorialMatch 5)
+        
 //
 //    [<Fact>]
 //    let ApplyingTheFactorialFunctionToTheValueNegative5DoesSomething() = 

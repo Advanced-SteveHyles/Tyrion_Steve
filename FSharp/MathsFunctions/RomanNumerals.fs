@@ -18,7 +18,7 @@ type Roman() =
         | n when n >= 1 ->  "I" + ResolveNumeral (n - 1)
         | 0 -> ""
         | n when n < 0 -> "?"        
-
+    
     member this.toRoman x =
            ResolveNumeral x
            
