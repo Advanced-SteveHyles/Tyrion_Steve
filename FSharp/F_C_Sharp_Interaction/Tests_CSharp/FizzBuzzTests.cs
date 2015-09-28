@@ -22,7 +22,7 @@ namespace Tests_CSharp
         [Fact]
         public void ZeroReturnsFizzBuzz()
         {
-            Assert.Equal("FizzBuzz",  _fizzBuzzController.PlayFizBuzz(0));
+            Assert.Equal("FizzBuzz", _fizzBuzzController.PlayFizBuzz(0));
             //Assert.Equal("FizzBuzz",  _fizzBuzzController.PlayFizBuzz(0));
         }
 
@@ -49,7 +49,7 @@ namespace Tests_CSharp
         [Fact]
         public void ThirteenReturnsFizz()
         {
-            var actual = (_fizzBuzzController.PlayFizBuzz(13)); ;
+            var actual = (_fizzBuzzController.PlayFizBuzz(13));
             Assert.Equal("Fizz", actual);
         }
 

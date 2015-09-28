@@ -16,8 +16,13 @@ type FixBuzzController() =
                         else value                            
                
     let Resolver2 x = 
-        "Not implemented"
-                
+        match x with 
+            | x when (x % 3 = 0)  && (x % 5 = 0) -> "FizzBuzz"
+            | x when x % 3 = 0 -> "Fizz"
+            | x when x % 5 = 0 -> "Buzz"
+            | x when x.ToString().Contains "3" -> "Fizz"
+            | x when x.ToString().Contains "5" -> "Buzz"
+            | _ -> x.ToString();
+                    
     member this.PlayFizBuzz x = 
         Resolver2 x
-

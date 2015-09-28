@@ -43,6 +43,7 @@ let getPrice = function
 
 > getPrice "banana";; val it : float = 0.79
 
+-> failwith (* Throw and exception if this case is met *)
 
 
 nan -- not a number.
