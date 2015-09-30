@@ -58,5 +58,48 @@ let complexFunction1 x = toString (add 5 (square x))
 
 let complexFunction3 x = x |> square |> add 5 |> toString
 
+(* Anonymous *)
+let complexFunction =
+     2                            (* 2 *)     
+     |> ( fun x -> x + 5)         (* 2 + 5 = 7 *)     
+     |> ( fun x -> x * x)         (* 7 * 7 = 49 *)     
+     |> ( fun x -> x.ToString() ) (* 49.ToString = "49" *)
+
+
+let complexFunction2 =
+     2                            (* 2 *)     
+     |> ( fun x -> x + 5)         (* 2 + 5 = 7 *)     
+     |> ( fun x -> x - 1)         (* 2 + 5 -1 = 6 *)
+     |> ( fun x -> x * x)         (* 6 * 6 = 36 *)     
+     |> ( fun x -> x.ToString() ) (* 36.ToString = "36" *)
+
+(* Timer Example *)
+open System   
+let duration f =      
+    let timer = new System.Diagnostics.Stopwatch()     
+    timer.Start()     
+    let returnValue = f()     
+    printfn "Elapsed Time: %i" timer.ElapsedMilliseconds     
+    returnValue   
+    
+let rec fib = function     
+    | 0 -> 0     
+    | 1 -> 1     
+    | n -> fib (n - 1) + fib (n - 2)   
+    
+let rec stv x resolveDepth = function    
+    | 3 -> resolveDepth
+    | x when x % 3 = 0 -> stv (x % 3) (resolveDepth + 1)
+    | x when x % 3 = 1 -> stv (x - 1) (resolveDepth + 1)
+    | x when x % 3 = 2 -> stv (x + 1) (resolveDepth + 1)
+
+    //
+
+let main() =     
+    printfn "fib 5: %i" (duration ( fun() -> fib 5 ))     
+    printfn "fib 30: %i" (duration ( fun() -> fib 30 ))
+    
+    printfn "stv 300: %i" (duration ( fun() -> stv 300 0))
+main()
 
 
