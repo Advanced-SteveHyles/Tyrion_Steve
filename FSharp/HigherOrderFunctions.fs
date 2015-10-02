@@ -79,6 +79,7 @@ let duration f =
     let timer = new System.Diagnostics.Stopwatch()     
     timer.Start()     
     let returnValue = f()     
+    timer.Stop()
     printfn "Elapsed Time: %i" timer.ElapsedMilliseconds     
     returnValue   
     
@@ -87,11 +88,27 @@ let rec fib = function
     | 1 -> 1     
     | n -> fib (n - 1) + fib (n - 2)   
     
+     
 let rec stv x resolveDepth = function    
     | 3 -> resolveDepth
-    | x when x % 3 = 0 -> stv (x % 3) (resolveDepth + 1)
-    | x when x % 3 = 1 -> stv (x - 1) (resolveDepth + 1)
-    | x when x % 3 = 2 -> stv (x + 1) (resolveDepth + 1)
+    | x when x % 3 = 0 -> (stv (x % 3) (resolveDepth + 1))
+    | x when x % 3 = 1 -> (stv (x - 1) (resolveDepth + 1))
+    | x when x % 3 = 2 -> (stv (x + 1) (resolveDepth + 1))
+    | x -> (stv (x + 1) (resolveDepth + 1))
+
+let rec stv1 x resolveDepth = function    
+    | 3 -> resolveDepth
+    | x when x % 3 = 0 -> stv 3 1
+    | x when x % 3 = 1 -> stv -1 1
+    | x when x % 3 = 2 -> stv 1 1
+
+
+let rec tim x = 
+    if x > 0 then
+        tim (x - 1)
+    else
+        1
+
 
     //
 
@@ -100,6 +117,12 @@ let main() =
     printfn "fib 30: %i" (duration ( fun() -> fib 30 ))
     
     printfn "stv 300: %i" (duration ( fun() -> stv 300 0))
+
+    printfn "tim 1: %i" (duration ( fun() -> tim 50000))
+
 main()
 
+
+(* Difference between match and function location 991 *)
+function is replaced by an annoymous function that takes a parameter x.  It is syntatic short cut for Match.
 

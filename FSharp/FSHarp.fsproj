@@ -56,6 +56,7 @@
     <Compile Include="NestedFunctions.fs" />
     <Compile Include="Generics.fs" />
     <Compile Include="HigherOrderFunctions.fs" />
+    <Compile Include="OptionTypes.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
