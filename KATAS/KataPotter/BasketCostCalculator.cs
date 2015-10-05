@@ -24,22 +24,20 @@ namespace KataPotter
 
         public double GetCost()
         {
-            IBook[] booksToEvaluate;
-            booksToEvaluate = _bookBasket.ToArray();
+            var booksToEvaluate = _bookBasket.ToArray();
 
-            var runningTotal = 0.0;
-            var costs = ComputeCosts(booksToEvaluate.ToList());
+            var costs = ComputeCosts(booksToEvaluate.ToList(),5);
             return costs;
         }
 
-        private double ComputeCosts(List<IBook> booksToConsider)
+        private double ComputeCosts(List<IBook> booksToConsider, int maxNumberOfBooksInSet)
         {
             int bookCount = booksToConsider.Count();
             var uniqueBooksToConsider = booksToConsider.GroupBy(f => f.Name).ToList();
 
             var uniqueBookCount = uniqueBooksToConsider.Count();
 
-            if (uniqueBookCount == bookCount && uniqueBookCount < 6)
+            if (uniqueBookCount == bookCount && uniqueBookCount < 6  && uniqueBookCount <= maxNumberOfBooksInSet)
             {
                 return ProcessUniqueBooks(uniqueBookCount, booksToConsider);    
             }
@@ -57,12 +55,12 @@ namespace KataPotter
                 var total = 0.0;
                 if (uniqueBooks.Count > 0)
                 {
-                    total += ComputeCosts(uniqueBooks);
+                    total += ComputeCosts(uniqueBooks, maxNumberOfBooksInSet);
                 }
 
                 if (otherBooks.Count > 0)
                 {
-                    total += ComputeCosts(otherBooks);
+                    total += ComputeCosts(otherBooks, maxNumberOfBooksInSet);
                 }
 
                 return total;
@@ -89,6 +87,24 @@ namespace KataPotter
         private static double GetNoneDiscountedRate()
         {            
             return 0;
+        }
+
+        public double GetCheapestPrice()
+        {
+            var booksToEvaluate = _bookBasket.ToArray();
+
+            var bestPrice = ComputeCosts(booksToEvaluate.ToList(), 5);
+
+            for (int maxNumberOfBooksInSet = 2; maxNumberOfBooksInSet < 5; maxNumberOfBooksInSet ++)
+            {
+                var secondAttempt = ComputeCosts(booksToEvaluate.ToList(), maxNumberOfBooksInSet);
+                if (bestPrice > secondAttempt)
+                {
+                    bestPrice = secondAttempt;
+                }
+            }
+
+            return bestPrice;
         }
     }
 }

@@ -117,27 +117,22 @@ namespace KataPotter
             Assert.Equal(oneBookCost + fiveBookDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
-        /*
-         * def testSeveralDiscounts
-  assert_equal(8 + (8 * 2 * 0.95), price([0, 0, 1]))
-  assert_equal(2 * (8 * 2 * 0.95), price([0, 0, 1, 1]))
-  assert_equal((8 * 4 * 0.8) + (8 * 2 * 0.95), price([0, 0, 1, 2, 2, 3]))
-  assert_equal(8 + (8 * 5 * 0.75), price([0, 1, 1, 2, 3, 4]))
-end
+        public void WhenIHave2Ones2Twos2Threes1Four1Five_TheBasketCosts_51point60()
+        {
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book2());
+            _basket.AddBook(new Book3());
+            _basket.AddBook(new Book4());
+            _basket.AddBook(new Book5());
 
-def testEdgeCases
-  assert_equal(2 * (8 * 4 * 0.8), price([0, 0, 1, 1, 2, 2, 3, 4]))
-  assert_equal(3 * (8 * 5 * 0.75) + 2 * (8 * 4 * 0.8), 
-    price([0, 0, 0, 0, 0, 
-           1, 1, 1, 1, 1, 
-           2, 2, 2, 2, 
-           3, 3, 3, 3, 3, 
-           4, 4, 4, 4]))
-end
-*/
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book2());
+            _basket.AddBook(new Book3());
+            
+            Assert.Equal(51.60, _basket.BasketCostCalculator.GetCost());
+        }
 
-        [Fact(Skip = "Ultimate Test -WIP")]
-        //[Fact]
+        [Fact]
         public void WhenIHave2Ones2Twos2Threes1Four1Five_TheBasketCosts_51point20()
         {
             //Two sets of four is (8 * 4 *.8 * 2) = 51.2
@@ -153,7 +148,8 @@ end
             _basket.AddBook(new Book3());
             _basket.AddBook(new Book5());
 
-            Assert.Equal(51.20, _basket.BasketCostCalculator.GetCost());
+            Assert.Equal(51.20, _basket.BasketCostCalculator.GetCheapestPrice());
+            
         }
     }
 }
