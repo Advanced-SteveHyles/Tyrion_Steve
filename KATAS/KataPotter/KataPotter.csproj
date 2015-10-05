@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasketCostCalculator.cs" />
     <Compile Include="Book1.cs" />
     <Compile Include="Book2.cs" />
     <Compile Include="Book3.cs" />

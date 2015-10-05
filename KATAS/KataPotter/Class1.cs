@@ -29,7 +29,7 @@ namespace KataPotter
                 _basket.AddBook(new Book1());    
             }
                         
-            Assert.Equal(SingleBookPrice * numberofBooks, _basket.GetCost());
+            Assert.Equal(SingleBookPrice * numberofBooks, _basket.BasketCostCalculator.GetCost());
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace KataPotter
 
             _basket.AddBook(new Book1());
             _basket.AddBook(new Book2());
-            Assert.Equal(twoBooksWith5PCDiscount, _basket.GetCost());
+            Assert.Equal(twoBooksWith5PCDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace KataPotter
             _basket.AddBook(new Book1());
             _basket.AddBook(new Book2());
             _basket.AddBook(new Book3());
-            Assert.Equal(threeBooksWith10PCDiscount, _basket.GetCost());
+            Assert.Equal(threeBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace KataPotter
             _basket.AddBook(new Book2());
             _basket.AddBook(new Book3());
             _basket.AddBook(new Book5());
-            Assert.Equal(fourBooksWith10PCDiscount, _basket.GetCost());
+            Assert.Equal(fourBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
         [Fact]
@@ -75,36 +75,85 @@ namespace KataPotter
             _basket.AddBook(new Book3());
             _basket.AddBook(new Book4());
             _basket.AddBook(new Book5());
-            Assert.Equal(fiveBooksWith10PCDiscount, _basket.GetCost());
+            Assert.Equal(fiveBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
         [Fact]
         public void WhenIHave2BooksOfOneTypeAndOneOfAnotherTheBasketHas5PercentDiscountAppliedToTheTwoBooks()
         {
-            const double twoBookDiscount = (SingleBookPrice * 2) * 5 / 100;
+            const double twoBookDiscount = (SingleBookPrice * 2) * 95 / 100;
             const double oneBookCost = SingleBookPrice;
 
             _basket.AddBook(new Book1());
             _basket.AddBook(new Book1());
             _basket.AddBook(new Book2());
-            Assert.Equal(oneBookCost + twoBookDiscount, _basket.GetCost());
+            Assert.Equal(oneBookCost + twoBookDiscount, _basket.BasketCostCalculator.GetCost());
         }
 
+        [Fact]
+        public void WhenIHave2BooksOfOneTypeAndTwoOfAnotherTheBasketHas5PercentTooEachUniquePairOfBooks()
+        {
+            const double twoBookDiscount = (SingleBookPrice * 2) * 95 / 100;
+
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book2());
+            _basket.AddBook(new Book2());
+            Assert.Equal(twoBookDiscount + twoBookDiscount, _basket.BasketCostCalculator.GetCost());
+        }
+
+        [Fact]
+        public void WhenIHave5UniqueBooksAnd1DuplicateTheCostIsReducedBy25PercentOnTheFiveBooksOnlyBooks()
+        {
+            const double fiveBookDiscount = (SingleBookPrice * 5) * 75 / 100;
+            const double oneBookCost = SingleBookPrice;
+
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book2());
+            _basket.AddBook(new Book3());
+            _basket.AddBook(new Book4());
+            _basket.AddBook(new Book5());
+            Assert.Equal(oneBookCost + fiveBookDiscount, _basket.BasketCostCalculator.GetCost());
+        }
+
+        /*
+         * def testSeveralDiscounts
+  assert_equal(8 + (8 * 2 * 0.95), price([0, 0, 1]))
+  assert_equal(2 * (8 * 2 * 0.95), price([0, 0, 1, 1]))
+  assert_equal((8 * 4 * 0.8) + (8 * 2 * 0.95), price([0, 0, 1, 2, 2, 3]))
+  assert_equal(8 + (8 * 5 * 0.75), price([0, 1, 1, 2, 3, 4]))
+end
+
+def testEdgeCases
+  assert_equal(2 * (8 * 4 * 0.8), price([0, 0, 1, 1, 2, 2, 3, 4]))
+  assert_equal(3 * (8 * 5 * 0.75) + 2 * (8 * 4 * 0.8), 
+    price([0, 0, 0, 0, 0, 
+           1, 1, 1, 1, 1, 
+           2, 2, 2, 2, 
+           3, 3, 3, 3, 3, 
+           4, 4, 4, 4]))
+end
+*/
 
         [Fact(Skip = "Ultimate Test -WIP")]
         //[Fact]
         public void WhenIHave2Ones2Twos2Threes1Four1Five_TheBasketCosts_51point20()
         {
-            _basket.AddBook(new Book1());
+            //Two sets of four is (8 * 4 *.8 * 2) = 51.2
+            //One set of five is (8 * 5 * .75) + (8 * 3 * .90) = 51.6
+
             _basket.AddBook(new Book1());
             _basket.AddBook(new Book2());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
             _basket.AddBook(new Book3());
             _basket.AddBook(new Book4());
+
+            _basket.AddBook(new Book1());
+            _basket.AddBook(new Book2());
+            _basket.AddBook(new Book3());
             _basket.AddBook(new Book5());
 
-            Assert.Equal(51.20, _basket.GetCost());
+            Assert.Equal(51.20, _basket.BasketCostCalculator.GetCost());
         }
     }
 }
