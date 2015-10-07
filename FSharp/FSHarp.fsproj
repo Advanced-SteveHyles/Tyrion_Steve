@@ -57,6 +57,7 @@
     <Compile Include="Generics.fs" />
     <Compile Include="HigherOrderFunctions.fs" />
     <Compile Include="OptionTypes.fs" />
+    <Compile Include="Tuples.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
