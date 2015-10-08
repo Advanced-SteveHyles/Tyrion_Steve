@@ -24,58 +24,59 @@ namespace KataPotter
         [InlineData(30)]
         public void WhenIHaveJustBooksOfTheSameTypeTheBasket8EurPerBook(int numberofBooks)
         {
-            for (int bookCount = 0; bookCount < numberofBooks; bookCount ++)
+            for (var bookCount = 0; bookCount < numberofBooks; bookCount++)
             {
-                _basket.AddBook(new Book1());    
+                AddBookToBasket(1);
             }
-                        
-            Assert.Equal(SingleBookPrice * numberofBooks, _basket.BasketCostCalculator.GetCost());
+
+            Assert.Equal(SingleBookPrice * numberofBooks, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
-        public void WhenIHaveTwoBookOfTheDifferentTypesBasketHas5PCDiscountApplied()
+        public void WhenIHaveTwoBookOfTheDifferentTypesBasketHas5PcDiscountApplied()
         {
-            const double twoBooksWith5PCDiscount = (SingleBookPrice * 2) * 95 / 100;
+            const double twoBooksWith5PcDiscount = (SingleBookPrice * 2) * 95 / 100;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            Assert.Equal(twoBooksWith5PCDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+
+            Assert.Equal(twoBooksWith5PcDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
-        public void WhenIHaveThreeBookOfTheDifferentTypesBasketHas10PCDiscountApplied()
+        public void WhenIHaveThreeBookOfTheDifferentTypesBasketHas10PcDiscountApplied()
         {
-            const double threeBooksWith10PCDiscount = (SingleBookPrice * 3) * 90 / 100;
+            const double threeBooksWith10PcDiscount = (SingleBookPrice * 3) * 90 / 100;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            Assert.Equal(threeBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            Assert.Equal(threeBooksWith10PcDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
-        public void WhenIHaveFourBooksOfDifferentTypesBasketHas20PCDiscountApplied()
+        public void WhenIHaveFourBooksOfDifferentTypesBasketHas20PcDiscountApplied()
         {
-            const double fourBooksWith10PCDiscount = (SingleBookPrice * 4) * 80 / 100;
+            const double fourBooksWith10PcDiscount = (SingleBookPrice * 4) * 80 / 100;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book5());
-            Assert.Equal(fourBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(5);
+            Assert.Equal(fourBooksWith10PcDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
-        public void WhenIHaveFiveBooksOfDifferentTypesBasketHas25PCDiscountApplied()
+        public void WhenIHaveFiveBooksOfDifferentTypesBasketHas25PcDiscountApplied()
         {
-            const double fiveBooksWith10PCDiscount = (SingleBookPrice * 5) * 75 / 100;
+            const double fiveBooksWith10PcDiscount = (SingleBookPrice * 5) * 75 / 100;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book4());
-            _basket.AddBook(new Book5());
-            Assert.Equal(fiveBooksWith10PCDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(4);
+            AddBookToBasket(5);
+            Assert.Equal(fiveBooksWith10PcDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
@@ -84,10 +85,10 @@ namespace KataPotter
             const double twoBookDiscount = (SingleBookPrice * 2) * 95 / 100;
             const double oneBookCost = SingleBookPrice;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            Assert.Equal(oneBookCost + twoBookDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            Assert.Equal(oneBookCost + twoBookDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
@@ -95,11 +96,12 @@ namespace KataPotter
         {
             const double twoBookDiscount = (SingleBookPrice * 2) * 95 / 100;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book2());
-            Assert.Equal(twoBookDiscount + twoBookDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(2);
+
+            Assert.Equal(twoBookDiscount + twoBookDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
@@ -108,48 +110,56 @@ namespace KataPotter
             const double fiveBookDiscount = (SingleBookPrice * 5) * 75 / 100;
             const double oneBookCost = SingleBookPrice;
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book4());
-            _basket.AddBook(new Book5());
-            Assert.Equal(oneBookCost + fiveBookDiscount, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(4);
+            AddBookToBasket(5);
+            Assert.Equal(oneBookCost + fiveBookDiscount, _basket.BasketCostCalculator.GetCheapestPrice());
         }
+        
 
         public void WhenIHave2Ones2Twos2Threes1Four1Five_TheBasketCosts_51point60()
         {
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book4());
-            _basket.AddBook(new Book5());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(4);
+            AddBookToBasket(5);
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            
-            Assert.Equal(51.60, _basket.BasketCostCalculator.GetCost());
+            AddBookToBasket(1);    
+            AddBookToBasket(2);
+            AddBookToBasket(3);   
+
+            Assert.Equal(51.60, _basket.BasketCostCalculator.GetCheapestPrice());
         }
 
         [Fact]
         public void WhenIHave2Ones2Twos2Threes1Four1Five_TheBasketCosts_51point20()
         {
-            //Two sets of four is (8 * 4 *.8 * 2) = 51.2
-            //One set of five is (8 * 5 * .75) + (8 * 3 * .90) = 51.6
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(4);    
 
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book4());
-
-            _basket.AddBook(new Book1());
-            _basket.AddBook(new Book2());
-            _basket.AddBook(new Book3());
-            _basket.AddBook(new Book5());
+            AddBookToBasket(1);
+            AddBookToBasket(2);
+            AddBookToBasket(3);
+            AddBookToBasket(5);
 
             Assert.Equal(51.20, _basket.BasketCostCalculator.GetCheapestPrice());
-            
+
+            var bestPriceSetSize = 4;
+            Assert.Equal(bestPriceSetSize, _basket.BasketCostCalculator.BestPriceSetSize);
+
+        }
+
+        
+
+        private void AddBookToBasket(int bookNumber)
+        {
+            _basket.AddBook(new Book(bookNumber, SingleBookPrice));
         }
     }
 }

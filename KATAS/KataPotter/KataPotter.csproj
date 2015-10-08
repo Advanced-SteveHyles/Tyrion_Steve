@@ -51,11 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasketCostCalculator.cs" />
-    <Compile Include="Book1.cs" />
-    <Compile Include="Book2.cs" />
-    <Compile Include="Book3.cs" />
-    <Compile Include="Book4.cs" />
-    <Compile Include="Book5.cs" />
+    <Compile Include="Book.cs" />
     <Compile Include="BookBasket.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="IBook.cs" />
