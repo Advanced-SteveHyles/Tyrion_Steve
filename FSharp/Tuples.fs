@@ -38,3 +38,31 @@ x;;
 y;;
 z;;
 
+// Framework signatures - returns tuple
+System.Math.DivRem(10, 7);;
+
+//Defining Records -> Tuple with named fields (simple class)
+// + means Must occur one or more times
+type recordName = 
+    {  name : string; 
+       url : string; 
+       pages : int}
+
+let x = {name = "Steve"; pages =0 ; url = "www"}
+
+printfn "%i" (x.pages);;
+
+// Records are immutable and must be cloned
+type recordName = 
+    {  name : string; 
+       url : string; 
+       pages : int}
+
+let changerecord item newRecord =
+    {item with pages = newRecord}
+
+let x = {name = "Steve"; pages =0 ; url = "www"}
+let y = changerecord x 10
+
+printfn "%i" (x.pages)
+printfn "%i" (y.pages)

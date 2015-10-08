@@ -37,7 +37,7 @@ namespace KataPotter
 
             var uniqueBookCount = uniqueBooksToConsider.Count();
 
-            if (uniqueBookCount == bookCount && uniqueBookCount < 6  && uniqueBookCount <= maxNumberOfBooksInSet)
+            if (uniqueBookCount == bookCount && uniqueBookCount <= maxNumberOfBooksInSet)
             {
                 return ProcessUniqueBooks(uniqueBookCount, booksToConsider);    
             }
