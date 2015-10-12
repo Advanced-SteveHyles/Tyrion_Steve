@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-public class CircularBufferT<T>
+public class CircularBuffer
 {
-    private readonly T[] _buffer;
+    private double[] _buffer;
     private int _start;
     private int _end;
 
-    public CircularBufferT() : this(capacity: 10)
+    public CircularBuffer() : this(capacity: 10)
     {
         
     }
-    public CircularBufferT(int capacity)
+    public CircularBuffer(int capacity)
     {        
-        _buffer = new T[capacity +1];
+        _buffer = new double[capacity +1];
         _start = 0;
         _end = 0;
     }
 
-    public void Write(T value)
+    public void Write(double value)
     {
         _buffer[_end] = value;
         _end = (_end + 1) %_buffer.Length;
@@ -35,7 +35,7 @@ public class CircularBufferT<T>
         }
     }
 
-    public T Read()
+    public double Read()
     {
         var result = _buffer[_start];
         _start = (_start + 1)%_buffer.Length;
@@ -45,7 +45,7 @@ public class CircularBufferT<T>
     public int Capacity { get { return _buffer.Length;} }
 
 
-    public bool IsFull()
+    public bool isFull()
     {
         return (_end + 1)%_buffer.Length == _start;
     }

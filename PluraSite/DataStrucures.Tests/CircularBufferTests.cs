@@ -37,7 +37,7 @@ namespace DataStrucures.Tests
             Assert.Equal(values[2], buffer.Read);
             Assert.Equal(values[3], buffer.Read);
             Assert.Equal(values[4], buffer.Read);
-            Assert.IsTrue(buffer.isEmpty);
+            Assert.True(buffer.isEmpty);
 
         }
 
