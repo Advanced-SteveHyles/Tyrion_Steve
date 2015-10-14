@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CircularBufferT.cs" />
     <Compile Include="CircularBuffer.cs" />
+    <Compile Include="ClassWithEnumerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

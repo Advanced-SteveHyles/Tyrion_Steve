@@ -9,16 +9,17 @@ namespace DataStrucures.Tests
         public void First_In_First_Out_When_Not_Full()
         {
             var buffer = new CircularBuffer(capacity: 3);
-            var values = new[] { 1.0, 2.0};
+            var values = new[] { 1.0, 2.0,5.0};
 
             foreach (var value in values)
             {
                 buffer.Write(value);
             }
-            
-            Assert.Equal(values[2], buffer.Read);
-            Assert.Equal(values[3], buffer.Read);
-            Assert.True (buffer.isEmpty);
+
+            Assert.Equal(values[0], buffer.Read());
+            Assert.Equal(values[1], buffer.Read());
+            Assert.Equal(values[2], buffer.Read());
+            Assert.True (buffer.isEmpty());
         }
 
         [Fact]
@@ -33,11 +34,11 @@ namespace DataStrucures.Tests
             }
             
             
-            Assert.True(buffer.isFull);
-            Assert.Equal(values[2], buffer.Read);
-            Assert.Equal(values[3], buffer.Read);
-            Assert.Equal(values[4], buffer.Read);
-            Assert.True(buffer.isEmpty);
+            Assert.True(buffer.isFull());
+            Assert.Equal(values[2], buffer.Read());
+            Assert.Equal(values[3], buffer.Read());
+            Assert.Equal(values[4], buffer.Read());
+            Assert.True(buffer.isEmpty());
 
         }
 

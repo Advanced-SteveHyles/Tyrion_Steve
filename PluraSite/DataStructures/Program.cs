@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,14 +64,26 @@ namespace DataStructures
                 var value = 0.0;
                 var parsed = false;
                 var input = Console.ReadLine();
+                
+                if (input != "Q")
+                {
+                    if (double.TryParse(input, out value))
+                    {
+                        var converter = TypeDescriptor.GetConverter(typeof(string));
+                       var  newValue = converter.ConvertTo(input, typeof(T));
 
-                if (double.TryParse(input, out value))
-                {                    
-                    buffer.Write(value);
-                    continue;
+                        AddToBuffer(buffer, (T) newValue);
+                    }
+
                 }
+                             
                 break;
             }
+        }
+
+        private static void AddToBuffer<T>(CircularBufferT<T> buffer, T value)
+        {
+            buffer.Write(value);
         }
     }
 }
