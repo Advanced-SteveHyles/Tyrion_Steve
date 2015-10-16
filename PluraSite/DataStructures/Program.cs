@@ -62,7 +62,6 @@ namespace DataStructures
             while (true)
             {
                 var value = 0.0;
-                var parsed = false;
                 var input = Console.ReadLine();
                 
                 if (input != "Q")
