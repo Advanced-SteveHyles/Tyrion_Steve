@@ -1,5 +1,5 @@
 ﻿using System;
-
+using RestSharp;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -22,9 +22,11 @@ namespace Phoneword
 			// Get our UI controls from the loaded layout:
 			EditText phoneNumberText = FindViewById<EditText>(Resource.Id.PhoneNumberText);
 			EditText NumberText  = FindViewById<EditText>(Resource.Id.NumberText);
+			EditText RestResponse = FindViewById<EditText>(Resource.Id.RestResponseText);
 
 			Button translateButton = FindViewById<Button>(Resource.Id.TranslateButton);
 			Button TranslateToVanityButton = FindViewById<Button>(Resource.Id.TranslateToVanityButton);
+			Button restButton = FindViewById<Button>(Resource.Id.RestButton);
 
 			Button callButton = FindViewById<Button>(Resource.Id.CallButton);
 
@@ -79,6 +81,29 @@ namespace Phoneword
 				// Show the alert dialog to the user and wait for response.
 				callDialog.Show();
 			};
+
+			restButton.Click += (object sender, EventArgs e) => 
+			{
+				var api = new RestCall();
+
+				RestResponse.Text = api.GetBossier();
+			};
+
+		}
+
+		public class RestCall
+		{
+			public string GetBossier()
+			{
+				var client = new RestClient("http://doasyouretold.apphb.com/");
+				var request = new RestRequest("", Method.GET)
+				{
+					RequestFormat = DataFormat.Json
+				};
+
+				var response = client.Execute(request);
+				return response.Content;
+			}
 		}
 	}
 }

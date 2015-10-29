@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "SiteTitle": "MessageBoard"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-MessageBoard-0dc35497-21e3-40f6-a1fa-52b6f0d7df19;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}
