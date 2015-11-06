@@ -6,6 +6,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace ExpenseTracker.API
 {
@@ -27,9 +28,17 @@ namespace ExpenseTracker.API
             //Ny Default web API support both JSON and XML.
         //    ForceDefaultToJson(config);
             TurnOffSupportForXml(config);
-             
+
+            FormatterForJson(config);
+
             return config;
              
+        }
+
+        private static void FormatterForJson(HttpConfiguration config)
+        {
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
         private static void TurnOffSupportForXml(HttpConfiguration config)
