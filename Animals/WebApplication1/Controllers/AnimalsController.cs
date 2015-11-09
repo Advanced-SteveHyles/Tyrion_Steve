@@ -24,5 +24,17 @@ namespace WebApplication1.Controllers
             var animals = _respository.GetAnimals();
             return Ok(_mappers.MapEntityToDto(animals));
         }
+
+        public IHttpActionResult Get(int id)
+        {
+            var animal = _respository.GetAnimal(id);
+
+            if (animal != null)
+            { 
+                return Ok(_mappers.MapEntityToDto(animal));
+            }
+
+            return NotFound();
+        }
     }
 }

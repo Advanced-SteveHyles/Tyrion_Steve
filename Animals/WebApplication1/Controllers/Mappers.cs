@@ -6,19 +6,14 @@ namespace WebApplication1.Controllers
 {
     public class Mappers
     {
-        internal IEnumerable<AnimalDto> MapEntityToDto(List<string> animals)
+        internal IEnumerable<AnimalDto> MapEntityToDto(Dictionary<int, string> animals)
         {
-
-            var animalsDtos = new List<AnimalDto>();
-
-            animalsDtos.AddRange(animals.Select<string, AnimalDto>(a => MapEntityToDto(a)));
-
-            return animalsDtos;
+            return animals.Select(animal => MapEntityToDto(animal.Value)).ToList();
         }
 
-        private AnimalDto MapEntityToDto ( string animal)
+        public AnimalDto MapEntityToDto (string animalType)
         {
-            return new AnimalDto { Type = animal};
+            return new AnimalDto { Type = animalType };
         }
     }
 }
