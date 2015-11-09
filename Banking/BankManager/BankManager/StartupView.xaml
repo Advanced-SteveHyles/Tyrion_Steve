@@ -1,0 +1,137 @@
+﻿<Window x:Class="PortfolioManager.StartupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"      
+        xmlns:i="clr-namespace:Interfaces;assembly=Interfaces"
+        xmlns:local="clr-namespace:PortfolioManager"
+        Title="Portfolio Manager" Height="350" Width="525">        
+    <Grid>                
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!-- 
+        <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedIndex}" Grid.Column="0" ItemsSource="{Binding tabs}" TabStripPlacement="Left">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type i:ITabSelectPortfolioViewModel}">
+                    <TextBlock>Now I am here</TextBlock>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type i:ITabAccountsViewModel}">
+                    <local:TabAccountsView DataContext="{Binding}" />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type i:IMainSystemsSubTabViewModel}">
+                    <local:MainSystemsSubTab DataContext="{Binding}" />
+                </DataTemplate>
+                
+            </TabControl.Resources>
+            
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TabName}"></TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>        
+            <TabControl.ContentTemplate>
+               
+                <DataTemplate  DataType="{x:Type i:ITabSelectPortfolioViewModel}">
+                    <StackPanel>
+                        <TextBlock>Now I am here</TextBlock>
+                        <TextBlock>Now I am here</TextBlock>
+                        <TextBlock Text="{Binding SelectedIndex}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>                
+            </TabControl.ContentTemplate>
+
+        -->
+        <!-- 
+            <TabControl.ContentTemplateSelector>                
+                <DataTemplateSelector>                   
+                </DataTemplateSelector>
+             </TabControl.ContentTemplateSelector>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type t:TabAccountsViewModel}">
+                    <t:TabAccountsView DataContext="{Binding}" />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type t:MainSystemsSubTabViewModel}">
+                    <t:MainSystemsSubTab DataContext="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            -->            
+    <!--
+        </TabControl>
+        -->
+
+        <!-- 
+        <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TabName}"></TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>            
+        -->
+        
+        <TabControl Grid.Row="2" TabStripPlacement="Left">
+            <TabItem DataContext="{Binding TabPortfolioViewModel}" Header="{Binding TabName}">
+                <local:TabPortfolioView></local:TabPortfolioView>
+            </TabItem>
+            <TabItem DataContext="{Binding TabAccountsViewModel}" Header="{Binding TabName}">
+                <local:TabAccountsView></local:TabAccountsView>
+            </TabItem>            
+        </TabControl>
+       <!-- 
+        <TabControl Grid.Column="0" Style="{DynamicResource EMACSectionsTabControl}" SelectedItem="{Binding CurrentTab}" ItemsSource="{Binding Tabs}">
+			<TabControl.Resources>
+				<DataTemplate DataType="{x:Type local:MainSystemsSubTabViewModel}">
+					<local:MainSystemsSubTab DataContext="{Binding}" />
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type local:MainCategoriesSubTabViewModel}">
+					<local:MainCategoriesSubTab DataContext="{Binding}" />
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type local:MainDealerGroupsSubTabViewModel}">
+					<local:MainDealerGroupsSubTab DataContext="{Binding}" />
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type local:MainRolesSubTabViewModel}">
+					<local:MainRolesSubTab DataContext="{Binding}" />
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type local:MainValueListsSubTabViewModel}">
+					<local:MainValueListsSubTab DataContext="{Binding}" />					
+				</DataTemplate>
+			</TabControl.Resources>
+		</TabControl>
+		<ItemsControl Style="{DynamicResource EMACTaskPane}" Grid.Column="1" VerticalAlignment="Stretch" ItemsSource="{Binding Tasks}" />
+        -->
+       
+        <!--
+        
+        <StackPanel>
+            <Menu IsMainMenu="True">
+                <MenuItem>File</MenuItem>
+                <MenuItem></MenuItem>
+                <MenuItem></MenuItem>
+                <MenuItem></MenuItem>
+            </Menu>
+            <Menu>
+                <MenuItem>XX</MenuItem>
+            </Menu>
+            <TextBlock>Summary</TextBlock>
+                <TextBlock>Add Account</TextBlock>
+                <TextBlock>Add Transaction</TextBlock>
+                <TextBlock>Statements</TextBlock>
+                <TextBlock>Reports</TextBlock>
+
+            <l:EnterTransactionView></l:EnterTransactionView>
+        </StackPanel>
+        
+-->
+
+    </Grid>
+</Window>

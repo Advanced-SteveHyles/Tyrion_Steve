@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="PortfolioManager.DataEntryPortfolioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"           
+             xmlns:wpfc="clr-namespace:WPFBase.Components;assembly=WPFBase"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            
+            <TextBlock>Enter name of new Portfolio</TextBlock>
+            <TextBox Text="{Binding PortfolioName, UpdateSourceTrigger=PropertyChanged}"  ></TextBox>
+        </StackPanel>
+        <wpfc:CrudView DataContext="{Binding CrudVM}"  Grid.Row="1"></wpfc:CrudView>
+    </Grid>
+</UserControl>
