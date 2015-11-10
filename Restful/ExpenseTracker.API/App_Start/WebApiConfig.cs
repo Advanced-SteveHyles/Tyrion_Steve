@@ -26,13 +26,21 @@ namespace ExpenseTracker.API
            );
 
             //Ny Default web API support both JSON and XML.
-        //    ForceDefaultToJson(config);
+            //    ForceDefaultToJson(config);
+            
             TurnOffSupportForXml(config);
+            TurnOnPatchJson(config);
 
             FormatterForJson(config);
 
             return config;
              
+        }
+
+        private static void TurnOnPatchJson(HttpConfiguration config)
+        {
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
+                new MediaTypeHeaderValue("application/json-patch+json"));
         }
 
         private static void FormatterForJson(HttpConfiguration config)

@@ -7,6 +7,7 @@ using System.Web.Http;
 using ExpenseTracker.Repository;
 using ExpenseTracker.Repository.Entities;
 using ExpenseTracker.Repository.Factories;
+using Marvin.JsonPatch;
 
 namespace ExpenseTracker.API.Controllers
 {
@@ -87,6 +88,104 @@ namespace ExpenseTracker.API.Controllers
                 {
                     var dtoExpenseGroup = MapEntitiyToDtoModel(result.Entity);
                     return Created(Request.RequestUri + "/" + dtoExpenseGroup.Id, dtoExpenseGroup);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
+        }
+
+        public IHttpActionResult Put(int id, [FromBody] DTO.ExpenseGroup expenseGroup)
+        {
+            try
+            {
+                if (expenseGroup == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
+                if (entityExpenseGroup == null)
+                {
+                    return BadRequest();
+                }
+
+                /*
+                {
+                    "userId": "https://expensetrackeridsrv3/embedded_1",
+                    "title": "STV",
+                    "description": "STV",
+                    "expenseGroupStatusId": 1,
+                }
+                */
+
+                var result = _repository.UpdateExpenseGroup(entityExpenseGroup);
+                if (result.Status == RepositoryActionStatus.Updated)
+                {
+                    var updatedExpenseGrouup = MapEntitiyToDtoModel(result.Entity);
+                    return Ok(updatedExpenseGrouup);
+                }
+                else if (result.Status == RepositoryActionStatus.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
+        }
+
+
+        [HttpPatch]
+        public IHttpActionResult Patch(int id, [FromBody] JsonPatchDocument<DTO.ExpenseGroup> expenseGroupPatchDocument)
+        {
+            //Patch nuget marvin.jsonpatch
+            //[
+            //  {"op" : "copy" , "from": "/title", "path": "/description"},
+            //  {"op" : "replace" , "path": "/title", "value": XX"}
+            //]
+
+            try
+            {
+                if (expenseGroupPatchDocument == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityExpenseGroup = _repository.GetExpenseGroup(id);
+                if (entityExpenseGroup == null)
+                {
+                    return NotFound();
+                }
+
+                var patchedExpenseGroupDTO = _expenseGroupFactory.CreateExpenseGroup(entityExpenseGroup);
+                expenseGroupPatchDocument.ApplyTo(patchedExpenseGroupDTO);
+
+                var expenseGroupEntity = _expenseGroupFactory.CreateExpenseGroup(patchedExpenseGroupDTO);
+
+                var result = _repository.UpdateExpenseGroup(expenseGroupEntity);
+                if (result.Status == RepositoryActionStatus.Updated)
+                {
+                    var returnExpenseGroupDto = MapEntitiyToDtoModel(result.Entity);
+                    return Ok(returnExpenseGroupDto);
+                }
+                else if (result.Status == RepositoryActionStatus.NotFound)
+                {
+                    return NotFound();
                 }
                 else
                 {

@@ -53,9 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Marvin.JsonPatch, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Marvin.JsonPatch.0.3.0.0\lib\portable-net40+win+wpa81\Marvin.JsonPatch.dll</HintPath>
+    <Reference Include="Marvin.JsonPatch, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Marvin.JsonPatch.0.9.0\lib\portable-net40+win+wpa81\Marvin.JsonPatch.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
