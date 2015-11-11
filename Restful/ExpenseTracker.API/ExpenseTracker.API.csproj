@@ -130,6 +130,7 @@
     <Compile Include="Controllers\ExpenseGroupsController_Old.cs" />
     <Compile Include="Controllers\ExpenseGroupStatussesController.cs" />
     <Compile Include="Controllers\ExpensesController.cs" />
+    <Compile Include="Controllers\MappersToDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

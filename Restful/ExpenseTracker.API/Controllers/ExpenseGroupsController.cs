@@ -4,36 +4,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using ExpenseTracker.Repository;
 using ExpenseTracker.Repository.Entities;
 using ExpenseTracker.Repository.Factories;
 using Marvin.JsonPatch;
+using Expense = ExpenseTracker.DTO.Expense;
 
 namespace ExpenseTracker.API.Controllers
 {
+    [RoutePrefix("api")] //All routes have implicit API in them
     public class ExpenseGroupsController : ApiController
     {
-        private readonly IExpenseTrackerRepository _repository;
-        private readonly ExpenseGroupFactory _expenseGroupFactory = new ExpenseGroupFactory();
-
+        private readonly ExpenseTrackerEFRepository _repository;
+        private readonly MappersToDto _mappersToDto;
 
         public ExpenseGroupsController()
         {
-            _repository = new ExpenseTrackerEFRepository(new ExpenseTrackerContext());
+            _repository = new ExpenseTrackerEFRepository(new Repository.Entities.ExpenseTrackerContext());
+            _mappersToDto = new MappersToDto(new ExpenseGroupFactory(), new ExpenseFactory());            
         }
-
-        public ExpenseGroupsController(IExpenseTrackerRepository repository)
-        {
-            _repository = repository;
-        }
-
+        
         public IHttpActionResult Get()
         {
             try
             {
                 var expenseGroups = _repository.GetExpenseGroups();
 
-                return Ok(MapEntitiesToDtoModels(expenseGroups));
+                return Ok(_mappersToDto.MapEntitiesToDtoModels(expenseGroups));
             }
             catch (Exception)
             {
@@ -49,13 +47,15 @@ namespace ExpenseTracker.API.Controllers
             {
                 var expenseGroup = _repository.GetExpenseGroup(id);
 
-                return expenseGroup == null ? (IHttpActionResult)NotFound() : Ok(MapEntitiyToDtoModel(expenseGroup));
+                return expenseGroup == null ? (IHttpActionResult)NotFound() : Ok(_mappersToDto.MapEntitiyToDtoModel(expenseGroup));
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
         }
+
+      
 
 
         [HttpPost]
@@ -68,7 +68,7 @@ namespace ExpenseTracker.API.Controllers
                     return BadRequest();
                 }
 
-                var entityExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
+                var entityExpenseGroup = new ExpenseGroupFactory().CreateExpenseGroup(expenseGroup);
                 if (entityExpenseGroup == null)
                 {
                     return BadRequest();
@@ -86,7 +86,7 @@ namespace ExpenseTracker.API.Controllers
                 var result = _repository.InsertExpenseGroup(entityExpenseGroup);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoExpenseGroup = MapEntitiyToDtoModel(result.Entity);
+                    var dtoExpenseGroup = _mappersToDto.MapEntitiyToDtoModel(result.Entity);
                     return Created(Request.RequestUri + "/" + dtoExpenseGroup.Id, dtoExpenseGroup);
                 }
                 else
@@ -111,7 +111,7 @@ namespace ExpenseTracker.API.Controllers
                     return BadRequest();
                 }
 
-                var entityExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
+                var entityExpenseGroup = new ExpenseGroupFactory().CreateExpenseGroup(expenseGroup);
                 if (entityExpenseGroup == null)
                 {
                     return BadRequest();
@@ -129,7 +129,7 @@ namespace ExpenseTracker.API.Controllers
                 var result = _repository.UpdateExpenseGroup(entityExpenseGroup);
                 if (result.Status == RepositoryActionStatus.Updated)
                 {
-                    var updatedExpenseGrouup = MapEntitiyToDtoModel(result.Entity);
+                    var updatedExpenseGrouup = _mappersToDto.MapEntitiyToDtoModel(result.Entity);
                     return Ok(updatedExpenseGrouup);
                 }
                 else if (result.Status == RepositoryActionStatus.NotFound)
@@ -149,14 +149,13 @@ namespace ExpenseTracker.API.Controllers
             }
         }
 
-
         [HttpPatch]
         public IHttpActionResult Patch(int id, [FromBody] JsonPatchDocument<DTO.ExpenseGroup> expenseGroupPatchDocument)
         {
             //Patch nuget marvin.jsonpatch
             //[
             //  {"op" : "copy" , "from": "/title", "path": "/description"},
-            //  {"op" : "replace" , "path": "/title", "value": XX"}
+            //  {"op" : "replace" , "path": "/title", "value": "XX"}
             //]
 
             try
@@ -172,15 +171,16 @@ namespace ExpenseTracker.API.Controllers
                     return NotFound();
                 }
 
-                var patchedExpenseGroupDTO = _expenseGroupFactory.CreateExpenseGroup(entityExpenseGroup);
+                var expenseGroupFactory = new ExpenseGroupFactory();
+                var patchedExpenseGroupDTO = expenseGroupFactory.CreateExpenseGroup(entityExpenseGroup);
                 expenseGroupPatchDocument.ApplyTo(patchedExpenseGroupDTO);
 
-                var expenseGroupEntity = _expenseGroupFactory.CreateExpenseGroup(patchedExpenseGroupDTO);
+                var expenseGroupEntity = expenseGroupFactory.CreateExpenseGroup(patchedExpenseGroupDTO);
 
                 var result = _repository.UpdateExpenseGroup(expenseGroupEntity);
                 if (result.Status == RepositoryActionStatus.Updated)
                 {
-                    var returnExpenseGroupDto = MapEntitiyToDtoModel(result.Entity);
+                    var returnExpenseGroupDto = _mappersToDto.MapEntitiyToDtoModel(result.Entity);
                     return Ok(returnExpenseGroupDto);
                 }
                 else if (result.Status == RepositoryActionStatus.NotFound)
@@ -198,18 +198,36 @@ namespace ExpenseTracker.API.Controllers
 
                 return InternalServerError();
             }
+
         }
 
-
-        private DTO.ExpenseGroup MapEntitiyToDtoModel(ExpenseGroup expenseGroup)
+        public IHttpActionResult Delete(int id)
         {
-            return _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
-        }
+            
+            try
+            {            
+               var result = _repository.DeleteExpenseGroup(id);
+                if (result.Status == RepositoryActionStatus.Deleted)
+                {                    
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else if (result.Status == RepositoryActionStatus.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
 
 
-        private IEnumerable<DTO.ExpenseGroup> MapEntitiesToDtoModels(IEnumerable<ExpenseGroup> expenseGroups)
-        {
-            return expenseGroups.ToList().Select(eg => _expenseGroupFactory.CreateExpenseGroup(eg));
         }
     }
 }
