@@ -122,7 +122,7 @@ namespace ExpenseTracker.API.Controllers
         //            .Take(pageSize)
         //            .ToList()
         //            .Select(exp => _expenseFactory.CreateDataShapedObject(exp, lstOfFields));
-                
+
 
         //        return Ok(expensesResult);
 
@@ -132,6 +132,49 @@ namespace ExpenseTracker.API.Controllers
         //        return InternalServerError();
         //    }
         //} 
+
+
+        //[VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
+        //[VersionedRoute("expenses/{id}", 1)]
+        [Route ("expenses/{id}")]
+        [Route ("expensegroups/{expenseGroupId}/expenses/{id}")]
+        public IHttpActionResult Get(int id, int? expenseGroupId = null)
+        {
+            try
+            {
+                Repository.Entities.Expense expense = null;
+
+                if (expenseGroupId == null)
+                {
+                    expense = _repository.GetExpense(id);
+                }
+                else
+                {
+                    var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+
+                    // if the group doesn't exist, we shouldn't try to get the expenses
+                    if (expensesForGroup != null)
+                    {
+                        expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+                    }
+                }
+
+                if (expense != null)
+                {
+                    var returnValue = _expenseFactory.CreateExpense(expense);
+                    return Ok(returnValue);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
 
 
         //[VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
@@ -363,6 +406,6 @@ namespace ExpenseTracker.API.Controllers
         //}
 
 
-         
+
     }
 }
