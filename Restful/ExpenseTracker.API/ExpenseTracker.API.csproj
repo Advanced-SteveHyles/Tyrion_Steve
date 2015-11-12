@@ -75,8 +75,9 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="System.Linq.Dynamic">
-      <HintPath>..\packages\System.Linq.Dynamic.1.0.3\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.4\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -134,7 +135,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\IQueryableExtensions.cs" />
+    <Compile Include="Helpers\ExtensionsToIQueryable.cs" />
     <Compile Include="Helpers\VersionConstraint.cs" />
     <Compile Include="Helpers\VersionedRoute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

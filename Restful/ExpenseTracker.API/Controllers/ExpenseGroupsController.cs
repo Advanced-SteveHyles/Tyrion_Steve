@@ -18,28 +18,60 @@ namespace ExpenseTracker.API.Controllers
     {
         private readonly ExpenseTrackerEFRepository _repository;
         private readonly MappersToDto _mappersToDto;
-
+        
         public ExpenseGroupsController()
         {
             _repository = new ExpenseTrackerEFRepository(new Repository.Entities.ExpenseTrackerContext());
             _mappersToDto = new MappersToDto(new ExpenseGroupFactory(), new ExpenseFactory());            
         }
-        
-        public IHttpActionResult Get()
+
+        //// Get without sort
+        //public IHttpActionResult Get()
+        //{
+        //    try
+        //    {
+        //        var expenseGroups = _repository.GetExpenseGroups();
+
+        //        return Ok(_mappersToDto.MapEntitiesToDtoModels(expenseGroups));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return InternalServerError();
+        //    }
+        //}
+
+        // Get with sort
+        //public IHttpActionResult Get(string sort = "id") //This is added to the URI as a querystring
+        //{
+        //    try
+        //    {
+        //        var expenseGroups = _repository.GetExpenseGroups();
+
+        //        return Ok(_mappersToDto.MapEntitiesToDtoModelsSorted(expenseGroups, sort));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return InternalServerError();
+        //    }
+        //}
+
+        // Get with sort and Filtering
+        public IHttpActionResult Get(string sort = "id", string status =null, string userid = null) //This is added to the URI as a querystring
         {
             try
             {
+                var statusId = DomainMappers.MapStatusToId(status);
+                
                 var expenseGroups = _repository.GetExpenseGroups();
 
-                return Ok(_mappersToDto.MapEntitiesToDtoModels(expenseGroups));
+                return Ok(_mappersToDto.MapEntitiesToDtoModelsSorted(expenseGroups, sort, statusId));
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
-
         }
-
+        
 
         public IHttpActionResult Get(int id)
         {
@@ -54,8 +86,6 @@ namespace ExpenseTracker.API.Controllers
                 return InternalServerError();
             }
         }
-
-      
 
 
         [HttpPost]
@@ -228,6 +258,27 @@ namespace ExpenseTracker.API.Controllers
             }
 
 
+        }
+    }
+
+    internal static class DomainMappers
+    {
+        public static int AllStatusus { get; } = -1;
+
+        public static int MapStatusToId(string status)
+        {
+            if (status == null) return AllStatusus;
+            switch (status.ToLower())
+            {
+                case "open":
+                    return 1;
+                case "confirmed":
+                    return 2;
+                case "processed":
+                    return 3;
+                default:
+                    return AllStatusus;
+            }
         }
     }
 }

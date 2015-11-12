@@ -6,7 +6,8 @@ using System.Linq.Dynamic;
 
 namespace ExpenseTracker.API.Helpers
 {
-    public static class IQueryableExtensions
+    //Adding dynamic linq to allow sorting by string!
+    public static class ExtensionsToIQueryable
     {
         public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string sort)
         {
