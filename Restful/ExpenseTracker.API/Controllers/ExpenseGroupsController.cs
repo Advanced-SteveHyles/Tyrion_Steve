@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using ExpenseTracker.Repository;
@@ -18,11 +19,13 @@ namespace ExpenseTracker.API.Controllers
     {
         private readonly ExpenseTrackerEFRepository _repository;
         private readonly MappersToDto _mappersToDto;
-        
+
+        const int MaxPageSize = 10;
+
         public ExpenseGroupsController()
         {
             _repository = new ExpenseTrackerEFRepository(new Repository.Entities.ExpenseTrackerContext());
-            _mappersToDto = new MappersToDto(new ExpenseGroupFactory(), new ExpenseFactory());            
+            _mappersToDto = new MappersToDto(new ExpenseGroupFactory(), new ExpenseFactory());
         }
 
         //// Get without sort
@@ -56,22 +59,95 @@ namespace ExpenseTracker.API.Controllers
         //}
 
         // Get with sort and Filtering
-        public IHttpActionResult Get(string sort = "id", string status =null, string userid = null) //This is added to the URI as a querystring
+        //public IHttpActionResult Get(string sort = "id", string status = null, string userid = null) //This is added to the URI as a querystring
+        //{
+        //    try
+        //    {
+        //        var statusId = DomainMappers.MapStatusToId(status);
+
+        //        var expenseGroups = _repository.GetExpenseGroups();
+
+        //        return Ok(_mappersToDto.MapEntitiesToDtoModelsSorted(expenseGroups, sort, statusId, userid));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return InternalServerError();
+        //    }
+        //}
+
+        //Get with sort, filter and paging
+        [Route("expensegroups", Name = "ExpenseGroupsList")]
+        public IHttpActionResult Get(string sort = "id", string status = null, string userId = null,
+            int page = 1, int pageSize = 5) //This is added to the URI as a querystring
         {
             try
             {
                 var statusId = DomainMappers.MapStatusToId(status);
-                
+
                 var expenseGroups = _repository.GetExpenseGroups();
 
-                return Ok(_mappersToDto.MapEntitiesToDtoModelsSorted(expenseGroups, sort, statusId));
+                var data = _mappersToDto.MapEntitiesToDtoModelsSorted(expenseGroups, sort, statusId, userId);
+
+                if (pageSize > MaxPageSize)
+                {
+                    pageSize = MaxPageSize;
+                }
+
+                var totalCount = data.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                var urlHelper = new UrlHelper(Request);
+                var previousLink = page > 1 ? urlHelper.Link("ExpenseGroupsList",
+                    new
+                    {
+                        page = page - 1,
+                        pageSize = pageSize,
+                        sort = sort,
+                        status = status,
+                        userId = userId
+                    }) : string.Empty;
+
+                var nextLink = page < totalPages ? urlHelper.Link("ExpenseGroupsList",
+                    new
+                    {
+                        page = page + 1,
+                        pageSize = pageSize,
+                        sort = sort,
+                        status = status,
+                        userId = userId
+                    }) : string.Empty;
+
+
+                var paginationHeader = new
+                {
+                    currentPage = page,
+                    pageSize = pageSize,
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+
+                    status = status,
+                    userId = userId,
+
+                    previousPageLink = previousLink,
+                    nextPageLink = nextLink
+                };
+
+                HttpContext.Current.Response.Headers.Add("x-Pagination",
+                    Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
+
+
+                return Ok(
+                    data
+                    .Skip(pageSize * (page-1))
+                    .Take(pageSize)                    
+                     );
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
         }
-        
+
 
         public IHttpActionResult Get(int id)
         {
@@ -233,12 +309,12 @@ namespace ExpenseTracker.API.Controllers
 
         public IHttpActionResult Delete(int id)
         {
-            
+
             try
-            {            
-               var result = _repository.DeleteExpenseGroup(id);
+            {
+                var result = _repository.DeleteExpenseGroup(id);
                 if (result.Status == RepositoryActionStatus.Deleted)
-                {                    
+                {
                     return StatusCode(HttpStatusCode.NoContent);
                 }
                 else if (result.Status == RepositoryActionStatus.NotFound)
