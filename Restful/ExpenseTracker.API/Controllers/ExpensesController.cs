@@ -3,8 +3,13 @@ using ExpenseTracker.Repository.Factories;
 using Marvin.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using ExpenseTracker.API.Helpers;
@@ -35,139 +40,118 @@ namespace ExpenseTracker.API.Controllers
 
         //api/expensegroups/n/expenses
         //[Route ("api/expensegroups/{expenseGroupId}/expenses")]
-        [Route("expensegroups/{expenseGroupId}/expenses")] //Api dropped as it is a route prefix.
-        public IHttpActionResult Get(int expenseGroupId)
-        {
-            try
-            {
-                var expenses = _repository.GetExpenses(expenseGroupId);
-                if (expenses == null)
-                {
-                    return NotFound();
-                }
-
-                var expensesResult = _mappersToDto.MapExpenses(expenses);
-
-                return Ok(expensesResult);
-            }
-            catch
-            {
-                return InternalServerError();
-            }
-        }
-
-
-        //[Route("expensegroups/{expenseGroupId}/expenses", Name = "ExpensesForGroup")]
-        //public IHttpActionResult Get(int expenseGroupId, string fields = null, string sort = "date"
-        //    , int page = 1, int pageSize = maxPageSize)
+        //[Route("expensegroups/{expenseGroupId}/expenses")] //Api dropped as it is a route prefix.
+        //public IHttpActionResult Get(int expenseGroupId)
         //{
         //    try
         //    {
-
-        //        List<string> lstOfFields = new List<string>();
-
-        //        if (fields != null)
-        //        {
-        //            lstOfFields = fields.ToLower().Split(',').ToList();
-        //        }
-
         //        var expenses = _repository.GetExpenses(expenseGroupId);
-
         //        if (expenses == null)
         //        {
-        //            // this means the expensegroup doesn't exist
         //            return NotFound();
         //        }
 
-        //        // ensure the page size isn't larger than the maximum.
-        //        if (pageSize > maxPageSize)
-        //        {
-        //            pageSize = maxPageSize;
-        //        }
-
-        //        // calculate data for metadata
-        //        var totalCount = expenses.Count();
-        //        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-
-        //        var urlHelper = new UrlHelper(Request);
-
-        //        var prevLink = page > 1 ? urlHelper.Link("ExpensesForGroup",
-        //            new { page = page - 1, pageSize = pageSize, expenseGroupId = expenseGroupId,
-        //                fields = fields,
-        //                sort = sort }) : "";
-        //        var nextLink = page < totalPages ? urlHelper.Link("ExpensesForGroup",
-        //            new { page = page + 1, pageSize = pageSize, expenseGroupId = expenseGroupId,
-        //                fields = fields,
-        //                sort = sort }) : "";
-
-
-        //        var paginationHeader = new
-        //        {
-        //            currentPage = page,
-        //            pageSize = pageSize,
-        //            totalCount = totalCount,
-        //            totalPages = totalPages,
-        //            previousPageLink = prevLink,
-        //            nextPageLink = nextLink
-        //        };
-
-        //        HttpContext.Current.Response.Headers.Add("X-Pagination",
-        //        Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
-
-
-
-        //        var expensesResult = expenses
-        //            .ApplySort(sort)
-        //            .Skip(pageSize * (page - 1))
-        //            .Take(pageSize)
-        //            .ToList()
-        //            .Select(exp => _expenseFactory.CreateDataShapedObject(exp, lstOfFields));
-
+        //        var expensesResult = _mappersToDto.MapExpenses(expenses);
 
         //        return Ok(expensesResult);
-
         //    }
-        //    catch (Exception)
+        //    catch
         //    {
         //        return InternalServerError();
         //    }
-        //} 
+        //}
 
 
-        //[VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
-        //[VersionedRoute("expenses/{id}", 1)]
-        [Route ("expenses/{id}")]
-        [Route ("expensegroups/{expenseGroupId}/expenses/{id}")]
-        public IHttpActionResult Get(int id, int? expenseGroupId = null)
+        [Route("expensegroups/{expenseGroupId}/expenses", Name = "ExpensesForGroup")]
+        public IHttpActionResult Get(int expenseGroupId, string fields = null, string sort = "date"
+            , int page = 1, int pageSize = maxPageSize)
         {
             try
             {
-                Repository.Entities.Expense expense = null;
 
-                if (expenseGroupId == null)
-                {
-                    expense = _repository.GetExpense(id);
-                }
-                else
-                {
-                    var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+                List<string> lstOfFields = new List<string>();
 
-                    // if the group doesn't exist, we shouldn't try to get the expenses
-                    if (expensesForGroup != null)
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+
+                    var validateFields = _expenseFactory.ValidateFields<DTO.Expense>(lstOfFields);
+                    if (validateFields != string.Empty)
                     {
-                        expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+                        var httpResponse = new HttpResponseMessage {StatusCode = HttpStatusCode.BadRequest};
+
+                        var error = $"Field {validateFields} not support";
+                        httpResponse.Content = new httpcontent  error;
+
+                        var resp = ResponseMessage(httpResponse);                        
+                        return resp;                        
                     }
                 }
 
-                if (expense != null)
+                var expenses = _repository.GetExpenses(expenseGroupId);
+
+                if (expenses == null)
                 {
-                    var returnValue = _expenseFactory.CreateExpense(expense);
-                    return Ok(returnValue);
-                }
-                else
-                {
+                    // this means the expensegroup doesn't exist
                     return NotFound();
                 }
+
+                // ensure the page size isn't larger than the maximum.
+                if (pageSize > maxPageSize)
+                {
+                    pageSize = maxPageSize;
+                }
+
+                // calculate data for metadata
+                var totalCount = expenses.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                var urlHelper = new UrlHelper(Request);
+
+                var prevLink = page > 1 ? urlHelper.Link("ExpensesForGroup",
+                    new
+                    {
+                        page = page - 1,
+                        pageSize = pageSize,
+                        expenseGroupId = expenseGroupId,
+                        fields = fields,
+                        sort = sort
+                    }) : "";
+                var nextLink = page < totalPages ? urlHelper.Link("ExpensesForGroup",
+                    new
+                    {
+                        page = page + 1,
+                        pageSize = pageSize,
+                        expenseGroupId = expenseGroupId,
+                        fields = fields,
+                        sort = sort
+                    }) : "";
+
+
+                var paginationHeader = new
+                {
+                    currentPage = page,
+                    pageSize = pageSize,
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    previousPageLink = prevLink,
+                    nextPageLink = nextLink
+                };
+
+                HttpContext.Current.Response.Headers.Add("X-Pagination",
+                Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
+
+
+
+                var expensesResult = expenses
+                    .ApplySort(sort)
+                    .Skip(pageSize * (page - 1))
+                    .Take(pageSize)
+                    .ToList()
+                    .Select(exp => _expenseFactory.CreateDataShapedObject(exp, lstOfFields));
+
+
+                return Ok(expensesResult);
 
             }
             catch (Exception)
@@ -175,6 +159,47 @@ namespace ExpenseTracker.API.Controllers
                 return InternalServerError();
             }
         }
+
+        //Get without Fields
+        //[Route ("expenses/{id}")]
+        //[Route ("expensegroups/{expenseGroupId}/expenses/{id}")]
+        //public IHttpActionResult Get(int id, int? expenseGroupId = null)
+        //{
+        //    try
+        //    {
+        //        Repository.Entities.Expense expense = null;
+
+        //        if (expenseGroupId == null)
+        //        {
+        //            expense = _repository.GetExpense(id);
+        //        }
+        //        else
+        //        {
+        //            var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+
+        //            // if the group doesn't exist, we shouldn't try to get the expenses
+        //            if (expensesForGroup != null)
+        //            {
+        //                expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+        //            }
+        //        }
+
+        //        if (expense != null)
+        //        {
+        //            var returnValue = _expenseFactory.CreateExpense(expense);
+        //            return Ok(returnValue);
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return InternalServerError();
+        //    }
+        //}
 
 
         //[VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]

@@ -18,5 +18,6 @@ namespace ExpenseTracker.DTO
         
         public int ExpenseGroupId { get; set; }
 
+        private int Sausage => 10;
     }
 }
