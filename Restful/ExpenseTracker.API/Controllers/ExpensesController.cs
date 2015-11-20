@@ -78,11 +78,11 @@ namespace ExpenseTracker.API.Controllers
                     var validateFields = _expenseFactory.ValidateFields<DTO.Expense>(lstOfFields);
                     if (validateFields != string.Empty)
                     {
-                        var httpResponse = new HttpResponseMessage {StatusCode = HttpStatusCode.BadRequest};
+                        var httpResponse = new HttpResponseMessage {StatusCode = HttpStatusCode.RequestedRangeNotSatisfiable };
 
-                        var error = $"Field {validateFields} not support";
-                        httpResponse.Content = new httpcontent  error;
-
+                        var error = $"Field {validateFields} not supported";
+                        httpResponse.Headers.Add("Error", error);
+                        
                         var resp = ResponseMessage(httpResponse);                        
                         return resp;                        
                     }
