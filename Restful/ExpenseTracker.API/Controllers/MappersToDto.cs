@@ -45,5 +45,18 @@ namespace ExpenseTracker.API.Controllers
                 .Select(eg => _expenseGroupFactory.CreateExpenseGroup(eg)                
                 );
         }
+
+
+        public IEnumerable<object> MapEntitiesToDtoModelsSortedShaped(IQueryable<Entities.ExpenseGroup> expenseGroups, string sort, int statusId, string userId, List<string> fields)
+        {
+            //Uses Dynamic linq
+            return expenseGroups
+                .Where(eg => (statusId == DomainMappers.AllStatusus || eg.ExpenseGroupStatusId == statusId))
+                .Where(eg => (userId == null || eg.UserId == userId))
+                .ApplySort(sort)
+                .ToList()
+                .Select(eg => _expenseGroupFactory.CreateDataShapedObject(eg, fields)
+                );
+        }
     }
 }
