@@ -33,8 +33,17 @@ namespace ExpenseTracker.API
 
             FormatterForJson(config);
 
+            EnabledCaching(config);
+
             return config;
              
+        }
+
+        private static void EnabledCaching(HttpConfiguration config)
+        {
+            //That's all thats needed for In-memory weak tags.
+            //For server farms and strong tags other stuff, you need enhanced cache cow.
+            config.MessageHandlers.Add(new CacheCow.Server.CachingHandler(config));
         }
 
         private static void TurnOnPatchJson(HttpConfiguration config)
