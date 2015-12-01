@@ -27,7 +27,7 @@ namespace ExpenseTracker.API
 
             //Ny Default web API support both JSON and XML.
             //    ForceDefaultToJson(config);
-            
+
             TurnOffSupportForXml(config);
             TurnOnPatchJson(config);
 

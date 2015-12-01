@@ -149,7 +149,7 @@ namespace ExpenseTracker.API.Controllers
         //Get with sort, filter, paging and relationship data
         [Route("expensegroups", Name = "ExpenseGroupsList")]
         public IHttpActionResult Get(string sort = "id", string status = null, string userId = null,
-            string fields =null,
+            string fields = null,
             int page = 1, int pageSize = 5) //This is added to the URI as a querystring
         {
             try
@@ -174,9 +174,10 @@ namespace ExpenseTracker.API.Controllers
                 {
                     expenseGroups = _repository.GetExpenseGroups();
                 }
-                
 
-                var data = _mappersToDto.MapEntitiesToDtoModelsSortedShaped(expenseGroups, sort, statusId, userId, lstofFields);
+
+                var data = _mappersToDto.MapEntitiesToDtoModelsSortedShaped(expenseGroups, sort, statusId, userId,
+                    lstofFields);
 
                 if (pageSize > MaxPageSize)
                 {
@@ -187,27 +188,31 @@ namespace ExpenseTracker.API.Controllers
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
-                var previousLink = page > 1 ? urlHelper.Link("ExpenseGroupsList",
-                    new
-                    {
-                        page = page - 1,
-                        fields = fields,
-                        pageSize = pageSize,
-                        sort = sort,
-                        status = status,
-                        userId = userId
-                    }) : string.Empty;
+                var previousLink = page > 1
+                    ? urlHelper.Link("ExpenseGroupsList",
+                        new
+                        {
+                            page = page - 1,
+                            fields = fields,
+                            pageSize = pageSize,
+                            sort = sort,
+                            status = status,
+                            userId = userId
+                        })
+                    : string.Empty;
 
-                var nextLink = page < totalPages ? urlHelper.Link("ExpenseGroupsList",
-                    new
-                    {
-                        page = page + 1,
-                        fields = fields,
-                        pageSize = pageSize,
-                        sort = sort,
-                        status = status,
-                        userId = userId
-                    }) : string.Empty;
+                var nextLink = page < totalPages
+                    ? urlHelper.Link("ExpenseGroupsList",
+                        new
+                        {
+                            page = page + 1,
+                            fields = fields,
+                            pageSize = pageSize,
+                            sort = sort,
+                            status = status,
+                            userId = userId
+                        })
+                    : string.Empty;
 
 
                 var paginationHeader = new
@@ -230,17 +235,15 @@ namespace ExpenseTracker.API.Controllers
 
                 return Ok(
                     data
-                    .Skip(pageSize * (page - 1))
-                    .Take(pageSize)
-                     );
+                        .Skip(pageSize * (page - 1))
+                        .Take(pageSize)
+                    );
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
         }
-
-
         public IHttpActionResult Get(int id)
         {
             try

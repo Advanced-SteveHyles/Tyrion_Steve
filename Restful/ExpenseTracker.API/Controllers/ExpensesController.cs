@@ -62,7 +62,7 @@ namespace ExpenseTracker.API.Controllers
         //}
 
 
-        [Route("expensegroups/{expenseGroupId}/expenses", Name = "ExpensesForGroup")]
+        [Route("expensegroups/{expenseGroupId}/expenses", Name = "ExpensesForGroup")]        
         public IHttpActionResult Get(int expenseGroupId, string fields = null, string sort = "date"
             , int page = 1, int pageSize = maxPageSize)
         {
@@ -201,9 +201,11 @@ namespace ExpenseTracker.API.Controllers
         //    }
         //}
 
-
-        //[VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
-        //[VersionedRoute("expenses/{id}", 1)]
+        ////*********************
+        ////Versioned via the URI
+        ////*********************
+        //[Route("expenses/v1/{id}")]  // Don't know why these don't work
+        //[Route("expenses/v3/{id}")]  // Don't know why these don't work
         //public IHttpActionResult Get(int id, int? expenseGroupId = null, string fields = null)
         //{
         //    try
@@ -248,6 +250,106 @@ namespace ExpenseTracker.API.Controllers
         //        return InternalServerError();
         //    }
         //}
+
+
+        // Versioning via Headers
+        [VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
+        [VersionedRoute("expenses/{id}", 1)]
+        public IHttpActionResult Get(int id, int? expenseGroupId = null, string fields = null)
+        {
+            try
+            {
+                List<string> lstOfFields = new List<string>();
+
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                }
+
+                Repository.Entities.Expense expense = null;
+
+                if (expenseGroupId == null)
+                {
+                    expense = _repository.GetExpense(id);
+                }
+                else
+                {
+                    var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+
+                    // if the group doesn't exist, we shouldn't try to get the expenses
+                    if (expensesForGroup != null)
+                    {
+                        expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+                    }
+                }
+
+                if (expense != null)
+                {
+                    var returnValue = _expenseFactory.CreateDataShapedObject(expense, lstOfFields);
+                    return Ok(returnValue);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+
+        // Versioning via Headers
+        [VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 2)]
+        [VersionedRoute("expenses/{id}", 2)]
+        public IHttpActionResult GetV2(int id, int? expenseGroupId = null, string fields = null)
+        {
+            try
+            {
+              //Request.Headers -> Can do this but don't as we are calling this method wrongly to route things
+
+                List<string> lstOfFields = new List<string>();
+
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                }
+
+                Repository.Entities.Expense expense = null;
+
+                if (expenseGroupId == null)
+                {
+                    expense = _repository.GetExpense(id);
+                }
+                else
+                {
+                    var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+
+                    // if the group doesn't exist, we shouldn't try to get the expenses
+                    if (expensesForGroup != null)
+                    {
+                        expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+                    }
+                }
+
+                if (expense != null)
+                {
+                    var returnValue = _expenseFactory.CreateDataShapedObject(expense, lstOfFields);
+                    return Ok(returnValue);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
 
 
 
