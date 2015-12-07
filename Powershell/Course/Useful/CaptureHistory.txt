@@ -1,0 +1,1 @@
+ get-history | foreach-object{$_.CommandLine} > c:\temp\SessionLog.txt

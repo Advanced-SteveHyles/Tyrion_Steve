@@ -1,0 +1,1 @@
+foreach ($file in Get-Item .\*) {$file | Where-Object {$_.Attributes -ne "Archive"} | Format-table}
