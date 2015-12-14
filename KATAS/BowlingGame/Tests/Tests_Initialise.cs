@@ -79,7 +79,5 @@ namespace BowlingGame
             RollMany(12,10);
             Assert.Equal(300, _game.Score());
         }
-
     }
-
 }
