@@ -46,13 +46,39 @@ namespace BowlingGame
         [Fact]
         public void TestOneSpare()
         {
-            _game.Roll(5);
-            _game.Roll(5); // spare
+            RollSpare();
             _game.Roll(3);
             RollMany(17,0);
             Assert.Equal(16, _game.Score());
         }
 
+        private void RollSpare()
+        {
+            _game.Roll(5);
+            _game.Roll(5);
+        }
+
+        [Fact]
+        public void TestOneStrike()
+        {
+            RollStrike(); 
+            _game.Roll(3);
+            _game.Roll(4);
+            RollMany(16, 0);
+            Assert.Equal(24, _game.Score());
+        }
+
+        private void RollStrike()
+        {
+            _game.Roll(10);
+        }
+
+        [Fact]
+        public void TestPerfectGame()
+        {
+            RollMany(12,10);
+            Assert.Equal(300, _game.Score());
+        }
 
     }
 

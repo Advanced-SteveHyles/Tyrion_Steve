@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,24 +14,56 @@ namespace BowlingGame.Code
         public int Score()
         {
             var currentScore = 0;
-            int roll = 0;
+            var frameIndex = 0;
 
-            for (int frame = 0; frame < 10; frame++)
+            for (var frame = 0; frame < 10; frame++)
             {
-                if (rolls[roll] + rolls[roll + 1] == 10) // spare
+                if (IsStrike(frameIndex))
                 {
-                    currentScore += 10 + rolls[roll + 2];
-                    roll += 2;
+                    currentScore += 10 + StrikeBonus(frameIndex);
+                    frameIndex += 1;
+                }
+                else if (IsSpare(frameIndex)) 
+                {
+                    currentScore += 10 + SpareBonus(frameIndex);
+                    frameIndex += 2;
                 }
                 else
                 {
-                    currentScore += rolls[roll] + rolls[roll + 1];
-                    roll += 2;
+                    currentScore += SumOfRollsInFrame(frameIndex);
+                    frameIndex += 2;
                 }
+
+                
             }
 
 
             return currentScore;
+        }
+
+        private int SumOfRollsInFrame(int frameIndex)
+        {
+            return rolls[frameIndex] + rolls[frameIndex + 1];
+        }
+
+        private int SpareBonus(int frameIndex)
+        {
+            return rolls[frameIndex + 2];
+        }
+
+        private int StrikeBonus(int frameIndex)
+        {
+            return rolls[frameIndex + 1] + rolls[frameIndex + 2];
+        }
+
+        private bool IsStrike(int roll)
+        {
+            return rolls[roll] == 10;
+        }
+
+        private bool IsSpare(int roll)
+        {
+            return rolls[roll] + rolls[roll + 1] == 10;
         }
 
         private int ProcessRound(int round)
