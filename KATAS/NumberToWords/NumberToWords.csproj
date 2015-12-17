@@ -56,14 +56,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Complex.cs" />
-    <Compile Include="Currency.cs" />
-    <Compile Include="Decimals.cs" />
+    <Compile Include="CurrencyData.cs" />
+    <Compile Include="ITranslatedNumber.cs" />
+    <Compile Include="MissingTranslatedTranslatedNumber.cs" />
+    <Compile Include="NumberData.cs" />
+    <Compile Include="Tests\Complex.cs" />
+    <Compile Include="Tests\Currency.cs" />
+    <Compile Include="Tests\Decimals.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="NumberParser.cs" />
     <Compile Include="NumberSplitter.cs" />
-    <Compile Include="NumberToWords.cs" />
-    <Compile Include="NumberTranslator.cs" />
+    <Compile Include="TranslatedTranslatedNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleTexts.cs" />
+    <Compile Include="Tests\SimpleTexts.cs" />
     <Compile Include="SplitNumber.cs" />
     <Compile Include="SupportedCurrency.cs" />
   </ItemGroup>
