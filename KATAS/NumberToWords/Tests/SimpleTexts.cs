@@ -21,8 +21,9 @@ namespace NumberToWords
         [InlineData("9", "Nine")]
         public void HandlesWholeNumberLessThan10(string number, string result)
         {
-            var x = new NumberSplitter(number);
-            Assert.Equal(result, x.Convert());
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Convert(parsedNumber));
         }
         
         [Theory]        
@@ -36,8 +37,9 @@ namespace NumberToWords
         [InlineData("99", "Ninety nine")]
         public void HandlesWholeNumberLessThan100(string number, string result)
         {
-            var x = new NumberSplitter(number);
-            Assert.Equal(result, x.Convert());
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Convert(parsedNumber));
         }
 
         [Theory]
@@ -47,8 +49,9 @@ namespace NumberToWords
         [InlineData("666", "Six hundred and sixty six")]
         public void HandlesWholeNumberBetween100And1000(string number, string result)
         {
-            var x = new NumberSplitter(number);
-            Assert.Equal(result, x.Convert());
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Convert(parsedNumber));
         }
 
         [Theory]
@@ -64,10 +67,22 @@ namespace NumberToWords
         [InlineData("19", "Nineteen")]
         public void HandlesTeens(string number, string result)
         {
-            var x = new NumberSplitter(number);
-            Assert.Equal(result, x.Convert());
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Convert(parsedNumber));
         }
 
+
+        [Theory]
+        [InlineData("1000", "One thousand")]
+        [InlineData("1220", "One thousand two hundred and twenty")]
+        [InlineData("7025", "Seven thousand and twenty five")]
+        public void HandlesWholeNumberBetween1000(string number, string result)
+        {
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Convert(parsedNumber));
+        }
     }
 
 }

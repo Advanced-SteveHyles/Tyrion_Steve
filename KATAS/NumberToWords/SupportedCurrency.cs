@@ -2,20 +2,24 @@ namespace NumberToWords
 {
     public interface ICurrency    {
         string Symbol { get; }
-        string ToWords { get; }
+        string MainCurrencyMultiple { get; }
+        string MainCurrencySingle { get;}
     }
 
     class SupportedCurrency : ICurrency
     {
-        public SupportedCurrency(string symbol, string toWords)
+        public SupportedCurrency(string symbol, string mainCurrencySingle, string mainCurrencyMultiple)
         {
             Symbol = symbol;
-            ToWords = toWords;
+            MainCurrencySingle = mainCurrencySingle;
+            MainCurrencyMultiple = mainCurrencyMultiple;
         }
+
+        public string MainCurrencySingle { get; set; }
 
         public string Symbol { get; }
 
-        public string ToWords{get;}
+        public string MainCurrencyMultiple{get;}
         
     }
 }

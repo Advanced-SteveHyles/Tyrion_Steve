@@ -8,8 +8,8 @@ namespace NumberToWords
         {
             return new Dictionary<string, ICurrency>()
             {
-                {"$", new SupportedCurrency("$", "dollars") },
-                {"£", new SupportedCurrency("£", "pounds") },
+                {"$", new SupportedCurrency("$", "dollar", "dollars") },
+                {"£", new SupportedCurrency("£", "pound", "pounds") },
                 {"Missing", new MissingCurrency() }
             };
         }

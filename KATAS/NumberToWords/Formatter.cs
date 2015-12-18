@@ -8,12 +8,13 @@ namespace NumberToWords
     class Formatter
     {
         private string _output = string.Empty;
-        public string GetFormattedResult => _output;
+        public string GetFormattedResult =>  _output.Trim();
 
-        public Formatter FormatForCurrency(ICurrency currency)
+        private readonly Dictionary<char, ITranslatedNumber> numberFormatters = NumberData.SetUpNumbers();
+
+        public Formatter FormatForCurrency(ICurrency currency, int value)
         {
-            _output += currency.ToWords;
-
+            _output += value != 1 ? currency.MainCurrencyMultiple : currency.MainCurrencySingle;
             return this;
         }
 
@@ -33,11 +34,10 @@ namespace NumberToWords
             return this;
         }
 
-        public Formatter ProcessDigits(string number, Dictionary<char, ITranslatedNumber> numberFormatters)
+        public Formatter ProcessDigits(string number, int value, bool isFractionalPart)
         {
             var magnitude = number.Length +1;
-            var andNeeded = false;
-            var suppressZero = false;
+            var andMaybeNeeded = false;
 
             for (var index = 0; index < number.Length; index += 1)
             {
@@ -50,40 +50,53 @@ namespace NumberToWords
                     continue;
                 }
 
-                if (magnitude == 3)
+
+                var unit = numberFormatters[item].Unit;
+                if (magnitude == 4 && unit != "Zero")
                 {
-                    _output += numberFormatters[item].Unit + " Hundred ";
-                    suppressZero = true;
-                    andNeeded = true;
+                    _output += unit + " Thousand ";
+                    andMaybeNeeded = true;
+                }
+                else if (magnitude == 3 && unit != "Zero")
+                {
+                    _output += unit + " Hundred ";
+                    andMaybeNeeded = true;
                 }
                 else if (magnitude == 2)
                 {
-                    if (item == '1')
+                    if (unit == "One")
                     {
-                        _output += ApplyAnd(andNeeded);
+                        _output += ApplyAnd(andMaybeNeeded);
                         item = number[index + 1];
                         _output += numberFormatters[item].TeenUnit + " ";
                         break;
                     }
                     else
                     {                      
-                        if (suppressZero && item == '0')
+                        if (unit == "Zero")
                         {
                             continue;
                         }
 
-                        _output += ApplyAnd(andNeeded);
+                        _output += ApplyAnd(andMaybeNeeded);
                         _output += numberFormatters[item].OneMagnitudeUnit + " ";
                     }
+
+                    if (andMaybeNeeded)
+                    {
+                        andMaybeNeeded = false;
+                    }
+
                 }
                 else
                 {
-                    if (suppressZero && item == '0')
+                    if (unit == "Zero" && (value > 0 || isFractionalPart == true))
                     {
                         continue;
                     }
 
-                    _output += numberFormatters[item].Unit + " ";
+                    _output += ApplyAnd(andMaybeNeeded);
+                    _output += unit + " ";
                 }
                 
             }
@@ -95,12 +108,7 @@ namespace NumberToWords
 
         private string ApplyAnd(bool andNeeded)
         {
-            if (andNeeded)
-            {
-                return "and ";
-            }
-
-            return string.Empty;
+            return andNeeded ? "and " : string.Empty;
         }
 
         public Formatter FinaliseFormat()

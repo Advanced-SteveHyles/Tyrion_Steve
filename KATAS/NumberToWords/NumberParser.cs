@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 
 namespace NumberToWords
 {
+    
     public class NumberParser
     {
-        public SplitNumber Parse(string number, Dictionary<string, ICurrency> supportedCurrencies)
+        private readonly Dictionary<string, ICurrency> supportedCurrencies = CurrencyData.SetUpCurrencies();
+
+        public SplitNumber Parse(string number)
         {
             var numberToSplit = number;
             var result = new SplitNumber {Currency = new MissingCurrency()};
@@ -24,12 +28,14 @@ namespace NumberToWords
 
             string[] numberparts = numberToSplit.Split('.');             
 
-            result.Integers = PrefixWithZeroIfRequired(numberparts[0]);
+            result.IntegerPart = PrefixWithZeroIfRequired(numberparts[0]);
+            result.IntegerPartValue = Convert.ToInt32( result.IntegerPart);
 
             if (numberparts.Length > 1)
             {
                 result.HasPoint = true;
-                result.Decimals = numberparts[1];
+                result.FractionalPart = numberparts[1];
+                result.FractionalPartValue = Convert.ToInt32(result.FractionalPart);
             }
 
             return result;

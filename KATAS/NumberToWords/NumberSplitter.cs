@@ -11,47 +11,24 @@ namespace NumberToWords
 {
     public class NumberSplitter
     {
-        private readonly string _number;
-        private string _result = string.Empty;
-        private readonly Dictionary<char, ITranslatedNumber> numberFormatters = NumberData.SetUpNumbers();
-        private readonly Dictionary<string, ICurrency> supportedCurrencies = CurrencyData.SetUpCurrencies();
-
-        public NumberSplitter(string number)
+        public string Convert(SplitNumber parsedNumber)
         {
-            _number = number;
-        }
-
-        private void Parse()
-        {
-           var  numberParser = new NumberParser();
-            var parsedNumber = numberParser.Parse(_number, supportedCurrencies);
-
-            var formatter = new Formatter();
-            _result = formatter
-                        .ProcessDigits(parsedNumber.Integers, numberFormatters)
+            
+            return new Formatter()
+                        .ProcessDigits(parsedNumber.IntegerPart, parsedNumber.IntegerPartValue, false)
                         .AddSpace()
                         .ProcessDecimalPoint(parsedNumber.Currency, parsedNumber.HasPoint)
-                        .FormatForCurrency(parsedNumber.Currency)
-                        .ProcessDigits(parsedNumber.Decimals, numberFormatters)
+                        .FormatForCurrency(parsedNumber.Currency, parsedNumber.IntegerPartValue)
+                        .ProcessDigits(parsedNumber.FractionalPart, parsedNumber.FractionalPartValue, true)
                         .FinaliseFormat()
                         .GetFormattedResult;
-
-            _result = _result.Trim();
-            //Parse(number);
-        }
-        
-
-        public string Convert()
-        {
-            Parse();
-            ;
-            return _result;
         }
     }
 
     internal class MissingCurrency : ICurrency
     {
         public string Symbol => "Missing";
-        public string ToWords => "";
+        public string MainCurrencyMultiple => "";
+        public string MainCurrencySingle => "";
     }
 }

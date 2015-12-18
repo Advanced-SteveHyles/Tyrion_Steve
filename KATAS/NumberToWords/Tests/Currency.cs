@@ -10,27 +10,29 @@ namespace NumberToWords
         public void OneDollarReturns()
         {
             var number = "1 $";
-            var x = new NumberSplitter(number);
+            var parsedNumber = new NumberParser().Parse(number);
+            var x = new NumberSplitter();
 
-            Assert.Equal("One Dollar", x.Convert());
+            Assert.Equal("One dollar", x.Convert(parsedNumber));
         }
 
         [Fact]
         public void OnePoundReturns()
         {
             var number = "1 £";
-            var x = new NumberSplitter(number);
-
-            Assert.Equal("One Pound", x.Convert());
+            var x = new NumberSplitter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal("One pound", x.Convert(parsedNumber));
         }
 
         [Fact]
         public void OneNoCurrency()
         {
             var number = "1";
-            var x = new NumberSplitter(number);
+            var parsedNumber = new NumberParser().Parse(number);
+            var x = new NumberSplitter();
 
-            Assert.Equal("One", x.Convert());
+            Assert.Equal("One", x.Convert(parsedNumber));
         }
     }
 }   
