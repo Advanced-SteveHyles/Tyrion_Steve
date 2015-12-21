@@ -6,29 +6,23 @@ namespace NumberToWords
     
     public class NumberParser
     {
-        private readonly Dictionary<string, ICurrency> supportedCurrencies = CurrencyData.SetUpCurrencies();
+        private readonly Dictionary<string, ICurrency> supportedCurrencies = CurrencyData.SupportedCurrencies();
 
         public SplitNumber Parse(string number)
         {
+            var currencyFormatter = ResolveCurrencyFormatter(number);
+
             var numberToSplit = number;
-            var result = new SplitNumber {Currency = new MissingCurrency()};
-
-            foreach (var currency in supportedCurrencies)
-            {
-                var currencyFormatter = currency.Value;
-                if (numberToSplit.Contains(currencyFormatter.Symbol))
-                {
-                    result.Currency = currencyFormatter;
-                    numberToSplit = numberToSplit.Replace(currencyFormatter.Symbol, string.Empty);
-                    break;
-                }
-            }
-
+            numberToSplit = numberToSplit.Replace(currencyFormatter.Symbol, string.Empty);
             numberToSplit = numberToSplit.Replace(" ", "");
 
-            string[] numberparts = numberToSplit.Split('.');             
+            string[] numberparts = numberToSplit.Split('.');
 
-            result.IntegerPart = PrefixWithZeroIfRequired(numberparts[0]);
+            var result = new SplitNumber
+            {
+                CurrencyFormatter = currencyFormatter,
+                IntegerPart = PrefixWithZeroIfRequired(numberparts[0])
+            };
             result.IntegerPartValue = Convert.ToInt32( result.IntegerPart);
 
             if (numberparts.Length > 1)
@@ -39,6 +33,19 @@ namespace NumberToWords
             }
 
             return result;
+        }
+
+        private ICurrency ResolveCurrencyFormatter(string numberToSplit)
+        {
+            foreach (var currency in supportedCurrencies)
+            {
+                var currencyFormatter = currency.Value;
+                if (numberToSplit.Contains(currencyFormatter.Symbol))
+                {
+                    return currencyFormatter;                                     
+                }
+            }
+            return new MissingCurrency();
         }
 
         private static string PrefixWithZeroIfRequired(string numberparts)

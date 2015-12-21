@@ -1,9 +1,9 @@
 namespace NumberToWords
 {
-    class MissingTranslatedTranslatedNumber : ITranslatedNumber
+    class MissingTranslatedNumber : ITranslatedNumber
     {
 
-        public MissingTranslatedTranslatedNumber(string number)
+        public MissingTranslatedNumber(string number)
         {
             Number = number;
             TeenUnit = string.Empty;

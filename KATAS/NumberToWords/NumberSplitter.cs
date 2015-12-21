@@ -15,11 +15,11 @@ namespace NumberToWords
         {
             
             return new Formatter()
-                        .ProcessDigits(parsedNumber.IntegerPart, parsedNumber.IntegerPartValue, false)
+                        .ProcessIntegerDigits(parsedNumber.IntegerPart, parsedNumber.IntegerPartValue, parsedNumber.CurrencyFormatter)
                         .AddSpace()
-                        .ProcessDecimalPoint(parsedNumber.Currency, parsedNumber.HasPoint)
-                        .FormatForCurrency(parsedNumber.Currency, parsedNumber.IntegerPartValue)
-                        .ProcessDigits(parsedNumber.FractionalPart, parsedNumber.FractionalPartValue, true)
+                        .ProcessDecimalPoint(parsedNumber.CurrencyFormatter, parsedNumber.HasPoint)
+                        .FormatForCurrency(parsedNumber.CurrencyFormatter, parsedNumber.IntegerPartValue)
+                        .ProcessFractionalDigits(parsedNumber.FractionalPart, parsedNumber.FractionalPartValue, parsedNumber.CurrencyFormatter)
                         .FinaliseFormat()
                         .GetFormattedResult;
         }

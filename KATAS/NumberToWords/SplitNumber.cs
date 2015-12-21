@@ -6,7 +6,7 @@
         public int IntegerPartValue { get; set; }
 
         
-        public ICurrency Currency { get ; set; }
+        public ICurrency CurrencyFormatter { get ; set; }
         public bool HasPoint { get; set; }
 
         public string FractionalPart { get; set; }
