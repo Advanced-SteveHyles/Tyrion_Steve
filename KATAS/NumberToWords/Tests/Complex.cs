@@ -10,9 +10,9 @@ namespace NumberToWords
         public void FinalTest()
         {
             var number = "745.00 $";
-            var x = new NumberSplitter();
+            var x = new NumberToWordsFormatter();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal("Seven hundred and forty five dollars", x.Convert(parsedNumber));
+            Assert.Equal("Seven hundred and forty five dollars", x.Format(parsedNumber));
         }
     }
 }

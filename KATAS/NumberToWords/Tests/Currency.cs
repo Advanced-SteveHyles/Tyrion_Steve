@@ -11,18 +11,18 @@ namespace NumberToWords
         {
             var number = "1 $";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberSplitter();
+            var x = new NumberToWordsFormatter();
 
-            Assert.Equal("One dollar", x.Convert(parsedNumber));
+            Assert.Equal("One dollar", x.Format(parsedNumber));
         }
 
         [Fact]
         public void OnePoundReturns()
         {
             var number = "1 £";
-            var x = new NumberSplitter();
+            var x = new NumberToWordsFormatter();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal("One pound", x.Convert(parsedNumber));
+            Assert.Equal("One pound", x.Format(parsedNumber));
         }
 
         [Fact]
@@ -30,9 +30,9 @@ namespace NumberToWords
         {
             var number = "1";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberSplitter();
+            var x = new NumberToWordsFormatter();
 
-            Assert.Equal("One", x.Convert(parsedNumber));
+            Assert.Equal("One", x.Format(parsedNumber));
         }
     }
 }   
