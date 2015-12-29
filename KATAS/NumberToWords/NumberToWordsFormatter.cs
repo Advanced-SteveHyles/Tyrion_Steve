@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit.Abstractions;
 
 namespace NumberToWords
 {
@@ -44,17 +45,17 @@ namespace NumberToWords
 
         private void ProcessIntegerCurrency(string number, int value)
         {
-            int magnitude = number.Length + 1;
+          int magnitude = number.Length + 1;
 
             var andMaybeNeeded = false;
+            bool skipNext = false;
 
-            for (var index = 0; index < number.Length; index += 1)
+            foreach (char item in number)
             {
                 magnitude--;
 
-                if (magnitude <= 0) return;
-
-                var item = number[number.Length - magnitude];
+                if (magnitude < 0) return;
+                
                 if (!numberFormatters.Keys.Contains(item))
                 {
                     _output += '?';
@@ -63,15 +64,70 @@ namespace NumberToWords
 
                 var unit = numberFormatters[item].Unit;
 
-                if (magnitude == 5 && unit != "Zero")
+                if (skipNext)
+                {
+                    skipNext = false;
+                    continue;
+                }
+
+                if (unit == "Zero")
+                {
+                    magnitude --;
+                    continue;
+                }
+                
+                if (andMaybeNeeded)
+                {
+                    _output += ApplyAnd(andMaybeNeeded);
+                    andMaybeNeeded = false;
+                }
+
+                if (magnitude == 9 && unit != "Zero")
+                {
+                    _output += numberFormatters[item].Unit + " hundred million ";                    
+                }
+                else if (magnitude == 8 && unit != "Zero")
                 {
                     if (unit == "One")
-                    {
-                        item = number[index + 1];
-                        _output += numberFormatters[item].TeenUnit + " thousand";
-                        magnitude--;
+                    {                        
+                        var nextItem = number[number.Length - magnitude];
+                        _output += numberFormatters[nextItem].TeenUnit + " million ";
+                        skipNext = true;
                     }
-                    _output += numberFormatters[item].OneMagnitudeUnit + " ";
+                    else
+                    {
+                        _output += numberFormatters[item].OneMagnitudeUnit + " ";
+                    }                      
+                }
+                else if (magnitude == 7 && unit != "Zero")
+                {
+                    _output += numberFormatters[item].Unit + " million ";                    
+                }
+                else if (magnitude == 6 && unit != "Zero")
+                {
+                    var next = numberFormatters[number[magnitude -1]];
+                    if (next.Unit == "Zero")
+                    {                        
+                        _output += numberFormatters[item].Unit + " hundred thousand ";
+                        skipNext = true;
+                    }
+                    else
+                    {
+                        _output += numberFormatters[item].Unit + " hundred ";
+                    }                    
+                }
+                else if (magnitude == 5 && unit != "Zero")
+                {                    
+                    if (unit == "One")
+                    {                        
+                        var nextItem = number[number.Length - magnitude];
+                        _output += numberFormatters[nextItem].TeenUnit + " thousand ";
+                        skipNext=true;                        
+                    }
+                    else
+                    {
+                        _output += numberFormatters[item].OneMagnitudeUnit + " ";
+                    }
                     andMaybeNeeded = true;
                 }
                 else if (magnitude == 4 && unit != "Zero")
@@ -88,32 +144,27 @@ namespace NumberToWords
                 {
                     if (unit == "One")
                     {
-                        _output += ApplyAnd(andMaybeNeeded);
-
-                        item = number[index + 1];
-                        _output += numberFormatters[item].TeenUnit + " ";
-                        magnitude--;
+                        _output += ApplyAnd(andMaybeNeeded);                        
+                        var nextItem= number[number.Length - magnitude];
+                        _output += numberFormatters[nextItem].TeenUnit + " ";
+                        skipNext=true;
                     }
                     else
                     {                        
-                        _output += ApplyAnd(andMaybeNeeded);
                         _output += numberFormatters[item].OneMagnitudeUnit + " ";
-                    }
-
-                    if (andMaybeNeeded)
-                    {
-                        andMaybeNeeded = false;
                     }
                 }
                 else if (magnitude == 1 && unit != "Zero")
-                {                  
-                    _output += ApplyAnd(andMaybeNeeded);
-                    _output += unit + " ";                    
+                {
+                    _output += unit + " ";
                 }
                 else if (magnitude == 1 && unit == "Zero" && value == 0)
+                {                    
+                    _output += unit + " ";
+                }
+                else
                 {
-                    _output += ApplyAnd(andMaybeNeeded);
-                    _output += unit + " ";                
+                    _output += unit + " ";
                 }
             }
         }

@@ -17,16 +17,9 @@ namespace NumberToWords
         [Theory]
         [InlineData("0", "Zero")]
         [InlineData("1", "One")]
+        [InlineData("2", "Two")]
         [InlineData("8", "Eight")]
-        [InlineData("9", "Nine")]
-        public void HandlesWholeNumberLessThan10(string number, string result)
-        {
-            var x = new NumberToWordsFormatter();
-            var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
-        }
-        
-        [Theory]        
+        [InlineData("9", "Nine")]    
         [InlineData("22#", "Twenty two")]
         [InlineData("33#", "Thirty three")]
         [InlineData("44#", "Forty four")]
@@ -55,17 +48,6 @@ namespace NumberToWords
         }
 
 
-        [Theory]
-        [InlineData("10000 #", "Ten thousand")]
-        [InlineData("10005 #", "Ten thousand and five")]
-        [InlineData("11000 #", "Eleven thousand")]
-        [InlineData("99999 #", "Ninety nine thousand nine hundred and ninety nine")]        
-        public void HandlesWholeNumberBetween10000And99999WithCurrency(string number, string result)
-        {
-            var x = new NumberToWordsFormatter();
-            var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
-        }
 
         [Theory]
         [InlineData("10000", "One zero zero zero zero")]
@@ -109,7 +91,7 @@ namespace NumberToWords
         }
 
         [Theory]
-        [InlineData("19 $", "Nineteen dollars")]
+        [InlineData("101 #", "One hundred and one")]
         public void DebugOne(string number, string result)
         {
             var x = new NumberToWordsFormatter();
@@ -127,6 +109,26 @@ namespace NumberToWords
             var parsedNumber = new NumberParser().Parse(number);
             Assert.Equal(result, x.Format(parsedNumber));
         }
+
+
+        [Theory]
+        [InlineData("100000 #", "One hundred thousand")]
+        [InlineData("110000 #", "One hundred and ten thousand")]
+        [InlineData("111000 #", "One hundred and eleven thousand")]
+        [InlineData("111100 #", "One hundred and eleven thousand one hundred")]
+        [InlineData("111110 #", "One hundred and eleven thousand one hundred and ten")]
+        [InlineData("123456 #", "One hundred and twenty three thousand four hundred and fifty six")]
+        [InlineData("123407 #", "One hundred and twenty three thousand four hundred and seven")]
+        [InlineData("1000000 #", "One million")]
+        [InlineData("10000000 #", "Ten million")]
+        [InlineData("100000000 #", "One hundred million")]
+        public void HandlesWholeNumberBetween100000and100Million(string number, string result)
+        {
+            var x = new NumberToWordsFormatter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Format(parsedNumber));
+        }
+
     }
 
 }

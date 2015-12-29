@@ -34,5 +34,28 @@ namespace NumberToWords
 
             Assert.Equal("One", x.Format(parsedNumber));
         }
+
+        [Fact]
+        public void OneYen()
+        {
+            var number = "1Y";
+            var parsedNumber = new NumberParser().Parse(number);
+            var x = new NumberToWordsFormatter();
+
+            Assert.Equal("One yen", x.Format(parsedNumber));
+        }
+
+
+        [Theory]
+        [InlineData("10000 #", "Ten thousand")]
+        [InlineData("10005 #", "Ten thousand and five")]
+        [InlineData("11000 #", "Eleven thousand")]
+        [InlineData("99999 #", "Ninety nine thousand nine hundred and ninety nine")]
+        public void HandlesWholeNumberBetween10000And99999(string number, string result)
+        {
+            var x = new NumberToWordsFormatter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Format(parsedNumber));
+        }
     }
 }   

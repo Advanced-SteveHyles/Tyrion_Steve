@@ -18,8 +18,7 @@ namespace NumberToWords
                 { '6', new TranslatedNumber("6", "Six", "Sixteen", "Sixty")},
                 { '7', new TranslatedNumber("7", "Seven", "Seventeen", "Seventy")},
                 { '8', new TranslatedNumber("8", "Eight", "Eighteen", "Eighty")},
-                { '9', new TranslatedNumber("9", "Nine", "Nineteen", "Ninety")},
-                //{ '.', " and "},            
+                { '9', new TranslatedNumber("9", "Nine", "Nineteen", "Ninety")},                
             };
         }
     }

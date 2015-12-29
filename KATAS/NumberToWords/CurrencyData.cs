@@ -10,6 +10,7 @@ namespace NumberToWords
             {
                 {"$", new SupportedCurrency("$", "dollar", "dollars") },
                 {"£", new SupportedCurrency("£", "pound", "pounds") },
+                {"Y", new SupportedCurrency("Y", "yen", "yen") },
                 {"#", UnspecifiedCurrency() },
             };
         }
