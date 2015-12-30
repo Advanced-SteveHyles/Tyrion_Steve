@@ -45,13 +45,28 @@ namespace NumberToWords
 
         private void ProcessIntegerCurrency(string number, int value)
         {
-          int magnitude = number.Length + 1;
+            const string zero = "Zero";
+            
+            var processingQueue = new Queue<char>();
 
-            var andMaybeNeeded = false;
-            bool skipNext = false;
-
-            foreach (char item in number)
+            foreach (var item in number)
             {
+                processingQueue.Enqueue(item);
+            }
+
+            bool and1Used = false;
+            var and1Needed = false;
+
+            bool and2Used = false;
+            var and2Needed = false;
+
+            int magnitude = number.Length + 1;
+
+            
+            while (processingQueue.Count>0)
+            {
+                var item = processingQueue.Dequeue();
+
                 magnitude--;
 
                 if (magnitude < 0) return;
@@ -62,111 +77,166 @@ namespace NumberToWords
                     continue;
                 }
 
-                var unit = numberFormatters[item].Unit;
-
-                if (skipNext)
+                var digit = numberFormatters[item].Unit;
+                
+                if (digit == zero && number.Length == 1)
                 {
-                    skipNext = false;
-                    continue;
+                        _output += zero + " ";
+                        return;                    
                 }
-
-                if (unit == "Zero")
+                else if (digit == zero)
                 {
-                    magnitude --;
                     continue;
                 }
                 
-                if (andMaybeNeeded)
+                if (magnitude == 9)
                 {
-                    _output += ApplyAnd(andMaybeNeeded);
-                    andMaybeNeeded = false;
+                    ProcessOrder9(digit);                    
                 }
-
-                if (magnitude == 9 && unit != "Zero")
+                else if (magnitude == 8)
                 {
-                    _output += numberFormatters[item].Unit + " hundred million ";                    
+                    ProcessOrder8(digit, processingQueue, item);
                 }
-                else if (magnitude == 8 && unit != "Zero")
+                else if (magnitude == 7)
                 {
-                    if (unit == "One")
-                    {                        
-                        var nextItem = number[number.Length - magnitude];
-                        _output += numberFormatters[nextItem].TeenUnit + " million ";
-                        skipNext = true;
-                    }
-                    else
+                    ProcessOrder7(item);                    
+                }
+                else if (magnitude == 6)
+                {
+                    if (and2Needed && !and2Used)
                     {
-                        _output += numberFormatters[item].OneMagnitudeUnit + " ";
-                    }                      
-                }
-                else if (magnitude == 7 && unit != "Zero")
-                {
-                    _output += numberFormatters[item].Unit + " million ";                    
-                }
-                else if (magnitude == 6 && unit != "Zero")
-                {
-                    var next = numberFormatters[number[magnitude -1]];
-                    if (next.Unit == "Zero")
+                        _output += ApplyAnd();
+                        and2Needed = false;
+                        and2Used = true;
+                    }
+
+                    var next = processingQueue.Peek();
+                    if (next == '0')
                     {                        
                         _output += numberFormatters[item].Unit + " hundred thousand ";
-                        skipNext = true;
+                        and2Needed = true;
                     }
                     else
                     {
                         _output += numberFormatters[item].Unit + " hundred ";
-                    }                    
+                    }
+                    and2Needed = true;
                 }
-                else if (magnitude == 5 && unit != "Zero")
-                {                    
-                    if (unit == "One")
-                    {                        
-                        var nextItem = number[number.Length - magnitude];
+                else if (magnitude == 5)
+                {
+                    if (and2Needed && !and2Used)
+                    {
+                        _output += ApplyAnd();
+                        and2Needed = false;
+                        and2Used = true;
+                    }
+
+                    if (digit == "One")
+                    {
+                        var nextItem = processingQueue.Dequeue();
+                        magnitude --;
                         _output += numberFormatters[nextItem].TeenUnit + " thousand ";
-                        skipNext=true;                        
+                        and2Needed = false;
                     }
                     else
                     {
                         _output += numberFormatters[item].OneMagnitudeUnit + " ";
+                        and2Needed = false;
                     }
-                    andMaybeNeeded = true;
+
+                    and1Needed = true;                    
                 }
-                else if (magnitude == 4 && unit != "Zero")
+                else if (magnitude == 4)
                 {
-                    _output += unit + " thousand ";
-                    andMaybeNeeded = true;
-                }
-                else if (magnitude == 3 && unit != "Zero")
-                {
-                    _output += unit + " Hundred ";
-                    andMaybeNeeded = true;
-                }
-                else if (magnitude == 2 && unit != "Zero")
-                {
-                    if (unit == "One")
+                    if (and2Needed && !and2Used)
                     {
-                        _output += ApplyAnd(andMaybeNeeded);                        
-                        var nextItem= number[number.Length - magnitude];
+                        _output += ApplyAnd();
+                        and2Needed = false;
+                        and2Used = true;
+                    }
+
+
+                    _output += digit + " thousand ";
+                    and2Needed = true;
+                    and1Needed = true;                    
+                }
+                else if (magnitude == 3)
+                {
+                    //if (and2Needed)
+                    //{
+                    //    _output += ApplyAnd();
+                    //    and2Needed = false;
+                    //}
+
+                    _output += digit + " Hundred ";
+                    and1Needed = true;
+                }
+                else if (magnitude == 2)
+                {
+                    if (and1Needed && !and1Used)
+                    {
+                        _output += ApplyAnd();
+                        and2Needed = false;
+                        and1Used = true;
+                    }
+
+
+                    if (digit == "One")
+                    {                        
+                        var nextItem = processingQueue.Dequeue();
                         _output += numberFormatters[nextItem].TeenUnit + " ";
-                        skipNext=true;
                     }
                     else
                     {                        
                         _output += numberFormatters[item].OneMagnitudeUnit + " ";
                     }
                 }
-                else if (magnitude == 1 && unit != "Zero")
+                else if (magnitude == 1)
                 {
-                    _output += unit + " ";
-                }
-                else if (magnitude == 1 && unit == "Zero" && value == 0)
-                {                    
-                    _output += unit + " ";
-                }
+                    if (and1Needed && !and1Used)
+                    {
+                        _output += ApplyAnd();
+                        and1Needed = false;
+                    }
+                    
+                    _output += digit + " ";
+                }                
                 else
                 {
-                    _output += unit + " ";
+                    if (and1Needed && !and1Used)
+                    {
+                        _output += ApplyAnd();
+                        and1Needed = false;
+                    }
+
+                    _output += digit + " ";
                 }
+                
+
             }
+        }
+
+        private void ProcessOrder7(char item)
+        {
+            _output += numberFormatters[item].Unit + " million ";
+        }
+
+        private void ProcessOrder8(string digit, Queue<char> processingQueue, char item)
+        {
+            if (digit == "One")
+            {
+                var nextItem = processingQueue.Dequeue();
+                _output += numberFormatters[nextItem].TeenUnit + " million ";
+            }
+            else
+            {
+                _output += numberFormatters[item].OneMagnitudeUnit + " ";
+            }
+        }
+
+        private void ProcessOrder9(string digit)
+        {
+            _output += digit + " hundred million ";
         }
 
 
@@ -263,9 +333,9 @@ namespace NumberToWords
             }
         }
 
-        private string ApplyAnd(bool andNeeded)
+        private string ApplyAnd()
         {
-            return andNeeded ? "and " : string.Empty;
+            return "and ";
         }
 
         public void UppercaseFirstCharacter()

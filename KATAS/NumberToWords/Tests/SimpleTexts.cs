@@ -91,7 +91,7 @@ namespace NumberToWords
         }
 
         [Theory]
-        [InlineData("101 #", "One hundred and one")]
+        [InlineData("10005 #", "Ten thousand and five")]
         public void DebugOne(string number, string result)
         {
             var x = new NumberToWordsFormatter();
