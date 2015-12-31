@@ -66,6 +66,7 @@
     <Compile Include="Tests\Decimals.cs" />
     <Compile Include="NumberParser.cs" />
     <Compile Include="NumberToWordsFormatter.cs" />
+    <Compile Include="Tests\SingleDebug.cs" />
     <Compile Include="TranslatedNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\SimpleTexts.cs" />

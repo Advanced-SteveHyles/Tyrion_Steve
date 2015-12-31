@@ -16,6 +16,8 @@ namespace NumberToWords
         private string _output = string.Empty;
         public string GetFormattedResult => _output.Trim();
         private readonly Dictionary<char, ITranslatedNumber> numberFormatters = NumberData.SetUpNumbers();
+        private const string Zero = "Zero";
+        private const string One= "One";
 
         public string Format(SplitNumber parsedNumber)
         {
@@ -35,7 +37,7 @@ namespace NumberToWords
 
             if (translateForCurrency)
             {
-                ProcessIntegerCurrency(number, value);
+                ProcessIntegerCurrency(number);
             }
             else
             {
@@ -43,33 +45,22 @@ namespace NumberToWords
             }
         }
 
-        private void ProcessIntegerCurrency(string number, int value)
+        private void ProcessIntegerCurrency(string number)
         {
-            const string zero = "Zero";
-            
-            var processingQueue = new Queue<char>();
+            var processingQueue = ConvertToQueue(number);
 
-            foreach (var item in number)
-            {
-                processingQueue.Enqueue(item);
-            }
-
-            bool and1Used = false;
-            var and1Needed = false;
-
-            bool and2Used = false;
-            var and2Needed = false;
-
-            int magnitude = number.Length + 1;
-
+            var lowerOrderAndApplied = false;
+            var lowerOrderAndNeeded = false;
+            var higherOrderAndApplied = false;
+            var higherOrderAndNeeded = false;
+            var magnitudeOfDigit = number.Length +1;
             
             while (processingQueue.Count>0)
             {
                 var item = processingQueue.Dequeue();
+                magnitudeOfDigit--;
 
-                magnitude--;
-
-                if (magnitude < 0) return;
+                if (magnitudeOfDigit < 0) return;
                 
                 if (!numberFormatters.Keys.Contains(item))
                 {
@@ -77,143 +68,146 @@ namespace NumberToWords
                     continue;
                 }
 
-                var digit = numberFormatters[item].Unit;
-                
-                if (digit == zero && number.Length == 1)
+                var digit = numberFormatters[item].Unit;                
+                if (digit == Zero && number.Length == 1)
                 {
-                        _output += zero + " ";
-                        return;                    
+                    ProcessZeroDigit();
+                    break;
                 }
-                else if (digit == zero)
+                else if (digit == Zero)
                 {
                     continue;
                 }
                 
-                if (magnitude == 9)
+                switch (magnitudeOfDigit)
                 {
-                    ProcessOrder9(digit);                    
-                }
-                else if (magnitude == 8)
-                {
-                    ProcessOrder8(digit, processingQueue, item);
-                }
-                else if (magnitude == 7)
-                {
-                    ProcessOrder7(item);                    
-                }
-                else if (magnitude == 6)
-                {
-                    if (and2Needed && !and2Used)
-                    {
-                        _output += ApplyAnd();
-                        and2Needed = false;
-                        and2Used = true;
-                    }
-
-                    var next = processingQueue.Peek();
-                    if (next == '0')
-                    {                        
-                        _output += numberFormatters[item].Unit + " hundred thousand ";
-                        and2Needed = true;
-                    }
-                    else
-                    {
-                        _output += numberFormatters[item].Unit + " hundred ";
-                    }
-                    and2Needed = true;
-                }
-                else if (magnitude == 5)
-                {
-                    if (and2Needed && !and2Used)
-                    {
-                        _output += ApplyAnd();
-                        and2Needed = false;
-                        and2Used = true;
-                    }
-
-                    if (digit == "One")
-                    {
-                        var nextItem = processingQueue.Dequeue();
-                        magnitude --;
-                        _output += numberFormatters[nextItem].TeenUnit + " thousand ";
-                        and2Needed = false;
-                    }
-                    else
-                    {
-                        _output += numberFormatters[item].OneMagnitudeUnit + " ";
-                        and2Needed = false;
-                    }
-
-                    and1Needed = true;                    
-                }
-                else if (magnitude == 4)
-                {
-                    if (and2Needed && !and2Used)
-                    {
-                        _output += ApplyAnd();
-                        and2Needed = false;
-                        and2Used = true;
-                    }
-
-
-                    _output += digit + " thousand ";
-                    and2Needed = true;
-                    and1Needed = true;                    
-                }
-                else if (magnitude == 3)
-                {
-                    //if (and2Needed)
-                    //{
-                    //    _output += ApplyAnd();
-                    //    and2Needed = false;
-                    //}
-
-                    _output += digit + " Hundred ";
-                    and1Needed = true;
-                }
-                else if (magnitude == 2)
-                {
-                    if (and1Needed && !and1Used)
-                    {
-                        _output += ApplyAnd();
-                        and2Needed = false;
-                        and1Used = true;
-                    }
-
-
-                    if (digit == "One")
-                    {                        
-                        var nextItem = processingQueue.Dequeue();
-                        _output += numberFormatters[nextItem].TeenUnit + " ";
-                    }
-                    else
-                    {                        
-                        _output += numberFormatters[item].OneMagnitudeUnit + " ";
-                    }
-                }
-                else if (magnitude == 1)
-                {
-                    if (and1Needed && !and1Used)
-                    {
-                        _output += ApplyAnd();
-                        and1Needed = false;
-                    }
-                    
-                    _output += digit + " ";
-                }                
-                else
-                {
-                    if (and1Needed && !and1Used)
-                    {
-                        _output += ApplyAnd();
-                        and1Needed = false;
-                    }
-
-                    _output += digit + " ";
+                    case 9:
+                        ProcessOrder9(digit);
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 8:
+                        ProcessOrder8(digit, processingQueue, item);
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 7:
+                        ProcessOrder7(item);
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 6:
+                        higherOrderAndApplied = ProcessOrder6(higherOrderAndNeeded, higherOrderAndApplied, processingQueue, item);
+                        higherOrderAndNeeded = true;
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 5:
+                        higherOrderAndApplied = ProcessOrder5(digit, higherOrderAndNeeded, higherOrderAndApplied, processingQueue, item, ref magnitudeOfDigit);
+                        higherOrderAndNeeded = false;
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 4:
+                        higherOrderAndApplied = ProcessOrder4(digit, higherOrderAndNeeded, higherOrderAndApplied);
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 3:
+                        ProcessOrder3(digit);
+                        lowerOrderAndNeeded = true;
+                        break;
+                    case 2:
+                        lowerOrderAndApplied = ProcessOrder2(lowerOrderAndNeeded, lowerOrderAndApplied, digit, processingQueue, item);
+                        break;
+                    case 1:
+                        lowerOrderAndApplied = ProcessOrder1(lowerOrderAndNeeded, lowerOrderAndApplied, digit);
+                        break;                   
                 }
                 
 
             }
+        }
+
+        private void ProcessZeroDigit()
+        {
+            _output += Zero + " ";
+        }
+
+        private static Queue<char> ConvertToQueue(string number)
+        {
+            var processingQueue = new Queue<char>();
+
+            foreach (var item in number)
+            {
+                processingQueue.Enqueue(item);
+            }
+            return processingQueue;
+        }
+
+        private bool ProcessOrder1(bool andNeeded, bool andIsUsed, string digit)
+        {
+            andIsUsed = ApplyAnd(andNeeded, andIsUsed);
+
+            _output += digit + " ";
+            return andIsUsed;
+        }
+
+        private bool ProcessOrder2(bool andNeeded, bool andIsUsed, string digit, Queue<char> processingQueue, char item)
+        {
+            andIsUsed = ApplyAnd(andNeeded, andIsUsed);
+
+            if (digit == "One")
+            {
+                var nextItem = processingQueue.Dequeue();
+                _output += numberFormatters[nextItem].TeenUnit + " ";
+            }
+            else
+            {
+                _output += numberFormatters[item].OneMagnitudeUnit + " ";
+            }
+            return andIsUsed;
+        }
+
+        private void ProcessOrder3(string digit)
+        {
+            _output += digit + " hundred ";
+        }
+
+        private bool ProcessOrder4(string digit, bool andNeeded, bool andIsUsed)
+        {
+            andIsUsed = ApplyAnd(andNeeded, andIsUsed);
+
+            _output += digit + " thousand ";
+            return andIsUsed;
+        }
+
+        private bool ProcessOrder5(string digit, bool andNeeded, bool andIsUsed, Queue<char> processingQueue, char item,
+            ref int magnitude)
+        {
+            andIsUsed = ApplyAnd(andNeeded, andIsUsed);
+
+            if (digit == "One")
+            {
+                var nextItem = processingQueue.Dequeue();
+                magnitude --;
+                _output += numberFormatters[nextItem].TeenUnit + " thousand ";
+            }
+            else
+            {
+                _output += numberFormatters[item].OneMagnitudeUnit + " ";
+            }
+            return andIsUsed;
+        }
+
+        private bool ProcessOrder6(bool andNeeded, bool andIsUsed, Queue<char> processingQueue, char item)
+        {
+            andIsUsed = ApplyAnd(andNeeded, andIsUsed);
+
+            var next = numberFormatters[processingQueue.Peek()];
+            if (next.Unit == Zero)
+            {
+                _output += numberFormatters[item].Unit + " hundred thousand ";
+            }
+            else
+            {
+                _output += numberFormatters[item].Unit + " hundred ";
+            }
+            return andIsUsed;
         }
 
         private void ProcessOrder7(char item)
@@ -223,7 +217,8 @@ namespace NumberToWords
 
         private void ProcessOrder8(string digit, Queue<char> processingQueue, char item)
         {
-            if (digit == "One")
+        
+            if (digit == One)
             {
                 var nextItem = processingQueue.Dequeue();
                 _output += numberFormatters[nextItem].TeenUnit + " million ";
@@ -237,6 +232,16 @@ namespace NumberToWords
         private void ProcessOrder9(string digit)
         {
             _output += digit + " hundred million ";
+        }
+
+        private bool ApplyAnd(bool andNeeded, bool andIsUsed)
+        {
+            if (andNeeded && !andIsUsed)
+            {
+                _output += ApplyAnd();
+                andIsUsed = true;
+            }
+            return andIsUsed;
         }
 
 

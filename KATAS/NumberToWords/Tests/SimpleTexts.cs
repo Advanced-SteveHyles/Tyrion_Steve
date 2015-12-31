@@ -14,6 +14,8 @@ namespace NumberToWords
 
     public class SimpleTexts
     {
+        private readonly SingleDebug _singleDebug = new SingleDebug();
+
         [Theory]
         [InlineData("0", "Zero")]
         [InlineData("1", "One")]
@@ -73,6 +75,7 @@ namespace NumberToWords
         [InlineData("17 £", "Seventeen pounds")]
         [InlineData("18 $", "Eighteen dollars")]
         [InlineData("19 $", "Nineteen dollars")]
+        [InlineData("19 #", "Nineteen")]
         [InlineData("10", "One zero")]
         [InlineData("11", "One one")]
         [InlineData("12", "One two")]
@@ -84,15 +87,6 @@ namespace NumberToWords
         [InlineData("18", "One eight")]
         [InlineData("19", "One nine")]
         public void HandlesTeens(string number, string result)
-        {
-            var x = new NumberToWordsFormatter();
-            var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
-        }
-
-        [Theory]
-        [InlineData("10005 #", "Ten thousand and five")]
-        public void DebugOne(string number, string result)
         {
             var x = new NumberToWordsFormatter();
             var parsedNumber = new NumberParser().Parse(number);
@@ -121,8 +115,22 @@ namespace NumberToWords
         [InlineData("123407 #", "One hundred and twenty three thousand four hundred and seven")]
         [InlineData("1000000 #", "One million")]
         [InlineData("10000000 #", "Ten million")]
-        [InlineData("100000000 #", "One hundred million")]
+        [InlineData("100000000 #", "One hundred million")]        
         public void HandlesWholeNumberBetween100000and100Million(string number, string result)
+        {
+            var x = new NumberToWordsFormatter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Format(parsedNumber));
+        }
+
+        [Theory]        
+        [InlineData("100000005 #", "One hundred million and five")]
+        [InlineData("100000010 #", "One hundred million and ten")]
+        [InlineData("100000050 #", "One hundred million and fifty")]
+        [InlineData("100000100 #", "One hundred million one hundred")]
+        [InlineData("100000005.53 #", "One hundred million and five fifty three")]
+        [InlineData("5.53 #", "five fifty three")]
+        public void HandlesWholeNumberAboveMillion(string number, string result)
         {
             var x = new NumberToWordsFormatter();
             var parsedNumber = new NumberParser().Parse(number);
