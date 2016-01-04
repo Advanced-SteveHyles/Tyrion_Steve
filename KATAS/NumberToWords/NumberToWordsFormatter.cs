@@ -23,8 +23,9 @@ namespace NumberToWords
         {
             ResolveIntegerDigits(parsedNumber.IntegerPart, parsedNumber.IntegerPartValue, parsedNumber.CurrencyFormatter);
             ResolveDecimalPoint(parsedNumber.CurrencyFormatter, parsedNumber.HasPoint);
-            ResolveCurrencyPluralisation(parsedNumber.CurrencyFormatter, parsedNumber.IntegerPartValue);
+            ResolveCurrencyMajorPluralisation(parsedNumber.CurrencyFormatter, parsedNumber.IntegerPartValue);
             ResolveFractionalDigits(parsedNumber.FractionalPart, parsedNumber.FractionalPartValue, parsedNumber.CurrencyFormatter);
+            ResolveCurrencyMinorPluralisation(parsedNumber.CurrencyFormatter, parsedNumber.FractionalPartValue);
             UppercaseFirstCharacter();
 
             return GetFormattedResult;
@@ -69,12 +70,7 @@ namespace NumberToWords
                 }
 
                 var digit = numberFormatters[item].Unit;                
-                if (digit == Zero && number.Length == 1)
-                {
-                    ProcessZeroDigit();
-                    break;
-                }
-                else if (digit == Zero)
+                if (digit == Zero)
                 {
                     continue;
                 }
@@ -122,12 +118,7 @@ namespace NumberToWords
 
             }
         }
-
-        private void ProcessZeroDigit()
-        {
-            _output += Zero + " ";
-        }
-
+        
         private static Queue<char> ConvertToQueue(string number)
         {
             var processingQueue = new Queue<char>();
@@ -238,7 +229,7 @@ namespace NumberToWords
         {
             if (andNeeded && !andIsUsed)
             {
-                _output += ApplyAnd();
+                ApplyAnd();
                 andIsUsed = true;
             }
             return andIsUsed;
@@ -262,26 +253,38 @@ namespace NumberToWords
             }
         }
 
-        public void ResolveCurrencyPluralisation(ICurrency currency, int value)
+        public void ResolveCurrencyMajorPluralisation(ICurrency currency, int value)
         {
-            _output += (value != 1 ? currency.MainCurrencyMultiple : currency.MainCurrencySingle) + " ";
+            if (value == 0) return;
+
+            _output += (value != 1 ? currency.MajorCurrencyMultiple : currency.MajorCurrencySingle) + " ";
         }
+
+        public void ResolveCurrencyMinorPluralisation(ICurrency currency, int value)
+        {
+            if (value == 0) return;
+
+            _output += (value != 1 ? currency.MinorCurrencyMultiple: currency.MinorCurrencySingle) + " ";
+        }
+
 
         public void ResolveDecimalPoint(ICurrency currency, bool hasDecimalPoint)
         {
             if (currency is MissingCurrency && hasDecimalPoint)
             {
-                _output += "point";
+                _output += "point ";
             }
         }
 
 
         public void ResolveFractionalDigits(string number, int value, ICurrency currency)
-        {
+        {            
             var translateForCurrency = !(currency is MissingCurrency);
 
             if (translateForCurrency)
             {
+                if (_output.Length>0) ProcessFractionalAdd(value);
+
                 ProcessFractionalCurrency(number);
             }
             else
@@ -290,10 +293,15 @@ namespace NumberToWords
             }
         }
 
+        private void ProcessFractionalAdd(decimal value)
+        {
+            if (value != 0) ApplyAnd();
+        }
+
         private void ProcessFractionalCurrency(string number)
         {
             var magnitude = 3;
-
+            
             for (var index = 0; index < number.Length; index += 1)
             {
                 var item = number[index];
@@ -338,9 +346,9 @@ namespace NumberToWords
             }
         }
 
-        private string ApplyAnd()
+        private void ApplyAnd()
         {
-            return "and ";
+            _output +=  "and ";
         }
 
         public void UppercaseFirstCharacter()

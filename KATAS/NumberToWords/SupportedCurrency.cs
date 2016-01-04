@@ -2,24 +2,33 @@ namespace NumberToWords
 {
     public interface ICurrency    {
         string Symbol { get; }
-        string MainCurrencyMultiple { get; }
-        string MainCurrencySingle { get;}
+        string MajorCurrencyMultiple { get; }
+        string MajorCurrencySingle { get;}
+        string MinorCurrencyMultiple { get; }
+        string MinorCurrencySingle { get; }
     }
 
     class SupportedCurrency : ICurrency
     {
-        public SupportedCurrency(string symbol, string mainCurrencySingle, string mainCurrencyMultiple)
+        public SupportedCurrency(string symbol, string majorCurrencySingle, string majorCurrencyMultiple, string minorCurrencySingle, string minorCurrencyMultiple)
         {
             Symbol = symbol;
-            MainCurrencySingle = mainCurrencySingle;
-            MainCurrencyMultiple = mainCurrencyMultiple;
+            MajorCurrencySingle = majorCurrencySingle;
+            MajorCurrencyMultiple = majorCurrencyMultiple;
+
+            MinorCurrencySingle = minorCurrencySingle;
+            MinorCurrencyMultiple = minorCurrencyMultiple;
         }
 
-        public string MainCurrencySingle { get; set; }
+        public string MinorCurrencyMultiple { get; }
+
+        public string MinorCurrencySingle { get; }
+
+        public string MajorCurrencySingle { get; }
 
         public string Symbol { get; }
 
-        public string MainCurrencyMultiple{get;}
+        public string MajorCurrencyMultiple{get;}
         
     }
 }

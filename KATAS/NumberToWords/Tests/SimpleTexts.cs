@@ -21,15 +21,15 @@ namespace NumberToWords
         [InlineData("1", "One")]
         [InlineData("2", "Two")]
         [InlineData("8", "Eight")]
-        [InlineData("9", "Nine")]    
-        [InlineData("22#", "Twenty two")]
-        [InlineData("33#", "Thirty three")]
-        [InlineData("44#", "Forty four")]
-        [InlineData("55#", "Fifty five")]
-        [InlineData("66#", "Sixty six")]
-        [InlineData("77#", "Seventy seven")]
-        [InlineData("88#", "Eighty eight")]
-        [InlineData("99#", "Ninety nine")]
+        [InlineData("9", "Nine")]
+        [InlineData("22 £", "Twenty two pounds")]
+        [InlineData("33 £", "Thirty three pounds")]
+        [InlineData("44 £", "Forty four pounds")]
+        [InlineData("55 £", "Fifty five pounds")]
+        [InlineData("66 £", "Sixty six pounds")]
+        [InlineData("77 £", "Seventy seven pounds")]
+        [InlineData("88 £", "Eighty eight pounds")]
+        [InlineData("99 £", "Ninety nine pounds")]
         public void HandlesWholeNumberLessThan100(string number, string result)
         {
             var x = new NumberToWordsFormatter();
@@ -38,10 +38,10 @@ namespace NumberToWords
         }
 
         [Theory]
-        [InlineData("100 #", "One hundred")]
-        [InlineData("101 #", "One hundred and one")]
-        [InlineData("111 #", "One hundred and eleven")]
-        [InlineData("666 #", "Six hundred and sixty six")]
+        [InlineData("100 £", "One hundred pounds")]
+        [InlineData("101 £", "One hundred and one pounds")]
+        [InlineData("111 £", "One hundred and eleven pounds")]
+        [InlineData("666 £", "Six hundred and sixty six pounds")]
         public void HandlesWholeNumberBetween100And1000(string number, string result)
         {
             var x = new NumberToWordsFormatter();
@@ -75,7 +75,7 @@ namespace NumberToWords
         [InlineData("17 £", "Seventeen pounds")]
         [InlineData("18 $", "Eighteen dollars")]
         [InlineData("19 $", "Nineteen dollars")]
-        [InlineData("19 #", "Nineteen")]
+//        [InlineData("19 #", "Nineteen")]
         [InlineData("10", "One zero")]
         [InlineData("11", "One one")]
         [InlineData("12", "One two")]
@@ -94,9 +94,9 @@ namespace NumberToWords
         }
 
         [Theory]
-        [InlineData("1000 #", "One thousand")]
-        [InlineData("1220 #", "One thousand two hundred and twenty")]
-        [InlineData("7025 #", "Seven thousand and twenty five")]
+        [InlineData("1000 $", "One thousand dollars")]
+        [InlineData("1220 $", "One thousand two hundred and twenty dollars")]
+        [InlineData("7025 $", "Seven thousand and twenty five dollars")]
         public void HandlesWholeNumberBetween1000(string number, string result)
         {
             var x = new NumberToWordsFormatter();
@@ -106,16 +106,16 @@ namespace NumberToWords
 
 
         [Theory]
-        [InlineData("100000 #", "One hundred thousand")]
-        [InlineData("110000 #", "One hundred and ten thousand")]
-        [InlineData("111000 #", "One hundred and eleven thousand")]
-        [InlineData("111100 #", "One hundred and eleven thousand one hundred")]
-        [InlineData("111110 #", "One hundred and eleven thousand one hundred and ten")]
-        [InlineData("123456 #", "One hundred and twenty three thousand four hundred and fifty six")]
-        [InlineData("123407 #", "One hundred and twenty three thousand four hundred and seven")]
-        [InlineData("1000000 #", "One million")]
-        [InlineData("10000000 #", "Ten million")]
-        [InlineData("100000000 #", "One hundred million")]        
+        [InlineData("100000 Y", "One hundred thousand yen")]
+        [InlineData("110000 Y", "One hundred and ten thousand yen")]
+        [InlineData("111000 Y", "One hundred and eleven thousand yen")]
+        [InlineData("111100 Y", "One hundred and eleven thousand one hundred yen")]
+        [InlineData("111110 Y", "One hundred and eleven thousand one hundred and ten yen")]
+        [InlineData("123456 Y", "One hundred and twenty three thousand four hundred and fifty six yen")]
+        [InlineData("123407 Y", "One hundred and twenty three thousand four hundred and seven yen")]
+        [InlineData("1000000 Y", "One million yen")]
+        [InlineData("10000000 Y", "Ten million yen")]
+        [InlineData("100000000 Y", "One hundred million yen")]
         public void HandlesWholeNumberBetween100000and100Million(string number, string result)
         {
             var x = new NumberToWordsFormatter();
@@ -123,13 +123,11 @@ namespace NumberToWords
             Assert.Equal(result, x.Format(parsedNumber));
         }
 
-        [Theory]        
-        [InlineData("100000005 #", "One hundred million and five")]
-        [InlineData("100000010 #", "One hundred million and ten")]
-        [InlineData("100000050 #", "One hundred million and fifty")]
-        [InlineData("100000100 #", "One hundred million one hundred")]
-        [InlineData("100000005.53 #", "One hundred million and five fifty three")]
-        [InlineData("5.53 #", "five fifty three")]
+        [Theory]
+        [InlineData("100000005 Y", "One hundred million and five yen")]
+        [InlineData("100000010 Y", "One hundred million and ten yen")]
+        [InlineData("100000050 Y", "One hundred million and fifty yen")]
+        [InlineData("100000100 Y", "One hundred million one hundred yen")]
         public void HandlesWholeNumberAboveMillion(string number, string result)
         {
             var x = new NumberToWordsFormatter();

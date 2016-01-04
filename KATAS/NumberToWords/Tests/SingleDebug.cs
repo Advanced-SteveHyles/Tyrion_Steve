@@ -5,7 +5,7 @@ namespace NumberToWords
     public class SingleDebug
     {
         [Theory]
-        [InlineData("10005 #", "Ten thousand and five")]
+        [InlineData("5.53 #", "Five fifty three")]
         public void DebugOne(string number, string result)
         {
             var x = new NumberToWordsFormatter();

@@ -33,7 +33,7 @@ namespace NumberToWords
             var parsedNumber = new NumberParser().Parse(number);
             var x = new NumberToWordsFormatter();
 
-            Assert.Equal("Forty four dollars fifty five", x.Format(parsedNumber));
+            Assert.Equal("Forty four dollars and fifty five cents", x.Format(parsedNumber));
         }
 
 
@@ -52,10 +52,9 @@ namespace NumberToWords
             var number = "0.55 £";
             var x = new NumberToWordsFormatter();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal("Zero pounds fifty five", x.Format(parsedNumber));
+            Assert.Equal("Fifty five pence", x.Format(parsedNumber));
         }
-
-
+        
         [Fact]
         public void HandlesP55()
         {
@@ -73,7 +72,7 @@ namespace NumberToWords
             var parsedNumber = new NumberParser().Parse(number);
             var x = new NumberToWordsFormatter();
 
-            Assert.Equal("Zero dollars fifty five", x.Format(parsedNumber));
+            Assert.Equal("Fifty five cents", x.Format(parsedNumber));
         }
 
         [Fact]
@@ -84,6 +83,20 @@ namespace NumberToWords
             var x = new NumberToWordsFormatter();
 
             Assert.Equal("Zero point five five five five", x.Format(parsedNumber));
+        }
+
+        [Theory]
+        [InlineData("100000005.53 £", "One hundred million and five pounds and fifty three pence")]
+        [InlineData("5.53 £", "Five pounds and fifty three pence")]
+        [InlineData("500.03 £", "Five hundred pounds and three pence")]
+        [InlineData("503 £", "Five hundred and three pounds")]
+        [InlineData("500.03 £", "Five hundred pounds and three pence")]
+        [InlineData("503 £", "Five hundred and three pounds")]        
+        public void TroublesomeIrks(string number, string result)
+        {
+            var x = new NumberToWordsFormatter();
+            var parsedNumber = new NumberParser().Parse(number);
+            Assert.Equal(result, x.Format(parsedNumber));
         }
 
     }

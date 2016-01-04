@@ -8,16 +8,10 @@ namespace NumberToWords
         {
             return new Dictionary<string, ICurrency>()
             {
-                {"$", new SupportedCurrency("$", "dollar", "dollars") },
-                {"£", new SupportedCurrency("£", "pound", "pounds") },
-                {"Y", new SupportedCurrency("Y", "yen", "yen") },
-                {"#", UnspecifiedCurrency() },
+                {"$", new SupportedCurrency("$", "dollar", "dollars", "cent", "cents") },
+                {"£", new SupportedCurrency("£", "pound", "pounds", "pence", "pence") },
+                {"Y", new SupportedCurrency("Y", "yen", "yen", "","") },                
             };
-        }
-
-        private static SupportedCurrency UnspecifiedCurrency()
-        {
-            return new SupportedCurrency("#", string.Empty, string.Empty);
         }
     }
 }

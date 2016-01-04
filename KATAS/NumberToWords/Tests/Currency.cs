@@ -47,10 +47,10 @@ namespace NumberToWords
 
 
         [Theory]
-        [InlineData("10000 #", "Ten thousand")]
-        [InlineData("10005 #", "Ten thousand and five")]
-        [InlineData("11000 #", "Eleven thousand")]
-        [InlineData("99999 #", "Ninety nine thousand nine hundred and ninety nine")]
+        [InlineData("10000 £", "Ten thousand pounds")]
+        [InlineData("10005 £", "Ten thousand and five pounds")]
+        [InlineData("11000 £", "Eleven thousand pounds")]
+        [InlineData("99999 £", "Ninety nine thousand nine hundred and ninety nine pounds")]
         public void HandlesWholeNumberBetween10000And99999(string number, string result)
         {
             var x = new NumberToWordsFormatter();
