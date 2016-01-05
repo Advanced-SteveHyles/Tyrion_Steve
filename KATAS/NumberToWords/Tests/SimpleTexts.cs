@@ -32,9 +32,9 @@ namespace NumberToWords
         [InlineData("99 £", "Ninety nine pounds")]
         public void HandlesWholeNumberLessThan100(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
         [Theory]
@@ -44,9 +44,9 @@ namespace NumberToWords
         [InlineData("666 £", "Six hundred and sixty six pounds")]
         public void HandlesWholeNumberBetween100And1000(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
 
@@ -58,9 +58,9 @@ namespace NumberToWords
         [InlineData("99999", "Nine nine nine nine nine")]
         public void HandlesWholeNumberBetween10000And99999(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
 
@@ -88,9 +88,9 @@ namespace NumberToWords
         [InlineData("19", "One nine")]
         public void HandlesTeens(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
         [Theory]
@@ -99,9 +99,9 @@ namespace NumberToWords
         [InlineData("7025 $", "Seven thousand and twenty five dollars")]
         public void HandlesWholeNumberBetween1000(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
 
@@ -118,9 +118,9 @@ namespace NumberToWords
         [InlineData("100000000 Y", "One hundred million yen")]
         public void HandlesWholeNumberBetween100000and100Million(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
         [Theory]
@@ -130,9 +130,9 @@ namespace NumberToWords
         [InlineData("100000100 Y", "One hundred million one hundred yen")]
         public void HandlesWholeNumberAboveMillion(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
     }

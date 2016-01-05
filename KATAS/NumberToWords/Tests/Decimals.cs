@@ -10,9 +10,9 @@ namespace NumberToWords
         {
             var number = "544.55";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-            Assert.Equal("Five four four point five five", x.Format(parsedNumber));
+            Assert.Equal("Five four four point five five", x.ApplyFormat(parsedNumber));
         }
 
 
@@ -21,9 +21,9 @@ namespace NumberToWords
         {
             var number = "44.55";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-        Assert.Equal("Four four point five five", x.Format(parsedNumber));
+          Assert.Equal("Four four point five five", x.ApplyFormat(parsedNumber));
         }
 
         [Fact]
@@ -31,9 +31,9 @@ namespace NumberToWords
         {
             var number = "44.55 $";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-            Assert.Equal("Forty four dollars and fifty five cents", x.Format(parsedNumber));
+            Assert.Equal("Forty four dollars and fifty five cents", x.ApplyFormat(parsedNumber));
         }
 
 
@@ -41,18 +41,18 @@ namespace NumberToWords
         public void HandlesZeroP55()
         {
             var number = "0.55";
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal("Zero point five five", x.Format(parsedNumber));
+            Assert.Equal("Zero point five five", x.ApplyFormat(parsedNumber));
         }
 
         [Fact]
         public void HandlesZeroP55WithCurrency()
         {
             var number = "0.55 £";
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal("Fifty five pence", x.Format(parsedNumber));
+            Assert.Equal("Fifty five pence", x.ApplyFormat(parsedNumber));
         }
         
         [Fact]
@@ -60,9 +60,9 @@ namespace NumberToWords
         {
             var number = ".55";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-            Assert.Equal("Zero point five five", x.Format(parsedNumber));
+            Assert.Equal("Zero point five five", x.ApplyFormat(parsedNumber));
         }
 
         [Fact]
@@ -70,9 +70,9 @@ namespace NumberToWords
         {
             var number = ".5555 $";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-            Assert.Equal("Fifty five cents", x.Format(parsedNumber));
+            Assert.Equal("Fifty five cents", x.ApplyFormat(parsedNumber));
         }
 
         [Fact]
@@ -80,9 +80,9 @@ namespace NumberToWords
         {
             var number = ".5555";
             var parsedNumber = new NumberParser().Parse(number);
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
 
-            Assert.Equal("Zero point five five five five", x.Format(parsedNumber));
+            Assert.Equal("Zero point five five five five", x.ApplyFormat(parsedNumber));
         }
 
         [Theory]
@@ -94,9 +94,9 @@ namespace NumberToWords
         [InlineData("503 £", "Five hundred and three pounds")]        
         public void TroublesomeIrks(string number, string result)
         {
-            var x = new NumberToWordsFormatter();
+            var x = new FormattedNumber();
             var parsedNumber = new NumberParser().Parse(number);
-            Assert.Equal(result, x.Format(parsedNumber));
+            Assert.Equal(result, x.ApplyFormat(parsedNumber));
         }
 
     }

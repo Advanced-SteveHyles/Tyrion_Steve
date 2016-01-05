@@ -1,6 +1,6 @@
 namespace NumberToWords
 {
-    internal interface ITranslatedNumber
+    public interface ITranslatedNumber
     {
         string Number { get; }
 
