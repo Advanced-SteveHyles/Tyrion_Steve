@@ -50,6 +50,7 @@ namespace NumberToWords
         [InlineData("10000 £", "Ten thousand pounds")]
         [InlineData("10005 £", "Ten thousand and five pounds")]
         [InlineData("11000 £", "Eleven thousand pounds")]
+        [InlineData("11000 €", "Eleven thousand euros")]
         [InlineData("99999 £", "Ninety nine thousand nine hundred and ninety nine pounds")]
         public void HandlesWholeNumberBetween10000And99999(string number, string result)
         {
