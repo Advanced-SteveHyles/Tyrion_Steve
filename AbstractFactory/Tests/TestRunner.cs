@@ -15,7 +15,7 @@ namespace AbstractFactory.Tests
         }
 
         [Fact]
-        void WhenThereAreNoCarnivorsThePopulationRises()
+        void WhenThereAreNoCarnivorsAndNoPairsOfHerbivorsThenThePopulationStagnates()
         {
             // Create and run the American animal world
            
@@ -23,8 +23,30 @@ namespace AbstractFactory.Tests
             Assert.Equal(1, _world.Herbivors);
 
             _world.RunFoodChain(1);
-            Assert.Equal(2, _world.Herbivors);
+            Assert.Equal(1, _world.Herbivors);
         }
+
+        [Fact]
+        void WhenThereAreNoCarnivorsAndAtLeastAPairsOfHerbivorsThenThePopulationGrows()
+        {
+            // Create and run the American animal world
+
+            _world.AddHerbivors(2);
+            Assert.Equal(2, _world.Herbivors);
+
+            _world.RunFoodChain(1);
+            Assert.Equal(3, _world.Herbivors);
+
+            _world.RunFoodChain(1);
+            Assert.Equal(4, _world.Herbivors);
+
+            _world.RunFoodChain(1);
+            Assert.Equal(6, _world.Herbivors);
+
+            _world.RunFoodChain(1);
+            Assert.Equal(9, _world.Herbivors);
+        }
+
 
         [Fact]
         void WhenThereAreNoHerbivorsThePopulationFalls()
@@ -34,6 +56,7 @@ namespace AbstractFactory.Tests
 
             _world.RunFoodChain(1);
             Assert.Equal(0, _world.Carnvivors);
+
         }
 
         [Fact]

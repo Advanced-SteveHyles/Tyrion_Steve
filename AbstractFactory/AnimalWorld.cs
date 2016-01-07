@@ -36,20 +36,29 @@ namespace AbstractFactory
         {
             for (var day = 0; day < days; day++)
             {
-                if (Carnvivors > 0 && Herbivors > 0)
+
+                if (Carnvivors > 1)
+                {
+                    Carnvivors += (Carnvivors /2);
+                }
+
+                if (Herbivors > 1)
+                {
+                    Herbivors += (Herbivors /2);
+                }
+                
+                for (var carnivor = 0; carnivor < Carnvivors; carnivor++)
                 {
                     _carnivore.Eat(_herbivore);
                     Herbivors--;
-                }
 
-                if (Carnvivors > Herbivors)
-                {
-                    Carnvivors += 1;
+                    if (Herbivors < 0)
+                    {
+                        Carnvivors--;
+                        Herbivors = 0;
+                    }
                 }
-                else if (Herbivors > Carnvivors)
-                {
-                    Herbivors += 1;
-                }                
+                
             }
         }
     }
