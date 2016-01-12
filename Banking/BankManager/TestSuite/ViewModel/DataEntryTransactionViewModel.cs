@@ -1,15 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Interfaces;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Xunit;
 
 namespace TestSuite.ViewModel
 {
-    [TestClass]
     public class DataEntryTransactionViewModel
     {
-        [TestMethod]
+        [Fact]
         public void EnterTransactionViewModel_TransactionTypesWireUp()
         {
           //  //Mock some dummy TransactionTypes

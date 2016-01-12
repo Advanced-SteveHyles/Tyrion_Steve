@@ -1,33 +1,31 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Interfaces;
+﻿using Interfaces;
 using Interfaces.BusinessInterfaces;
 using BusinessLogic;
 using Factories;
 using Common.Enums;
+using Xunit;
 
 namespace TestSuite
 {
-    [TestClass]
     public class AccountTests
     {
-        [TestMethod]
-        public void AccountBalanceMustBeZero()
+        [Fact]
+        public void InitialAccountBalanceMustBeZero()
         {
             IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            Assert.IsTrue(Account.PredictedBalance == 0);                        
+            Assert.True(Account.PredictedBalance == 0);                        
         }
 
-        [TestMethod]
+        [Fact]
         public void AccountBalanceUpdateBalance()
         {
             IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
             IAccountHandler AccountHandler = new AccountHandler(Account);
             AccountHandler.UpdateBalances();                  
-            Assert.IsTrue(Account.PredictedBalance == 0);
+            Assert.True(Account.PredictedBalance == 0);
         }
 
-        [TestMethod]
+        [Fact]
         public void AccountBalanceWorks()
         {
             IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
@@ -36,10 +34,10 @@ namespace TestSuite
             Transaction.TransactionValue = 20;
              AccountHandler.AddTransaction( Transaction);         
              AccountHandler.UpdateBalances();                  
-            Assert.AreEqual(Account.PredictedBalance , Transaction.TransactionValue);
+            Assert.Equal(Account.PredictedBalance , Transaction.TransactionValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void PredicatedBalanceIncludesAllTransactions()
         {
             IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
@@ -67,10 +65,10 @@ namespace TestSuite
 
           
             AccountHandler.UpdateBalances();                  
-            Assert.AreEqual (Account.PredictedBalance , RunningTotal);
+            Assert.Equal (Account.PredictedBalance , RunningTotal);
         }
 
-        [TestMethod]
+        [Fact]
         public void ActualBalanceIncludesReconciledTransactions()
         {
             IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
@@ -82,7 +80,7 @@ namespace TestSuite
 
             IAccountHandler AccountHandler = new AccountHandler(Account);
              AccountHandler.UpdateBalances();                  
-            Assert.IsTrue(Account.ActualBalance == RunningTotal);
+            Assert.True(Account.ActualBalance == RunningTotal);
         }
 
       

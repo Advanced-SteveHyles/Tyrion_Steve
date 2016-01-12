@@ -1,13 +1,9 @@
 ﻿using Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestSuite.MOK
 {
-   public class RepositoryMOK : IIOCContainer 
+   public class FakeRepository : IIOCContainer 
     {
         public object GetInstance(Type type)
         {

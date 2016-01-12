@@ -1,12 +1,4 @@
-﻿using Common.Enums;
-using Interfaces.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Generators
+﻿namespace Data.Generators
 {
     class EnumToTableFactory
     {

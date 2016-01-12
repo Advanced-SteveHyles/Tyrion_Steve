@@ -1,9 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TestSuite
-{
-    [TestClass]
+﻿namespace TestSuite
+{    
     public class TransactionTests
     {     
     }

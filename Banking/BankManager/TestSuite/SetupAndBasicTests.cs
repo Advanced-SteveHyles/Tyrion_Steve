@@ -1,36 +1,34 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Interfaces;
+﻿using Interfaces;
 using System.Linq;
 using Interfaces.BusinessInterfaces;
 using BusinessLogic;
+using Xunit;
+
 namespace TestSuite
-{
-    [TestClass]
+{    
     public class InitialFundamentals
     {
 
-
-        [TestMethod]
+ 
         public void NewAccountHasNoTransactions()
         {
             IAccount Account = new Data.Accounts.Account();
-            Assert.IsTrue(Account.Transactions.Count == 0);                        
+            Assert.True(Account.Transactions.Count == 0);                        
         }
 
-        [TestMethod]
+        [Fact]
         public void AddingNewTransactions()
         {
             IAccount Account = new Data.Accounts.Account();
             ITransaction Transaction = new Data.Accounts.Transaction();
             IAccountHandler AccountHandler = new AccountHandler(Account);
             AccountHandler.AddTransaction(Transaction);
-            Assert.IsTrue(Account.Transactions.Count == 1);
+            Assert.True(Account.Transactions.Count == 1);
 
             var value = from at in Account.Transactions
                             select at.TransactionValue;
 
-            Assert.IsTrue(value.Sum() == 0);
+            Assert.True(value.Sum() == 0);
 
             Transaction = new Data.Accounts.Transaction();
             Transaction.TransactionValue = 50;
@@ -39,9 +37,8 @@ namespace TestSuite
             value = from at in Account.Transactions
                     select at.TransactionValue;
 
-            Assert.IsTrue(value.Sum() == 50);
+            Assert.True(value.Sum() == 50);
         }
-
 
 
 //#region "Simple Validators"

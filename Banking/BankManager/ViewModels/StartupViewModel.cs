@@ -1,5 +1,4 @@
 ﻿using Interfaces;
-using System.Collections.ObjectModel;
 using WPFBase.ViewModels;
 
 namespace PortfolioManager

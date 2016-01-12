@@ -1,14 +1,8 @@
 ﻿using Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFBase;
-using WPFBase.Components;
 using WPFBase.ViewModels;
 //using System.ComponentModel;
-using System.Collections.ObjectModel;
+
 namespace PortfolioManager
 {
     public class DataEntryPortfolioViewModel : DateEntryViewModel, IDataEntryPortfolioViewModel

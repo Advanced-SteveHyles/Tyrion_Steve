@@ -1,16 +1,14 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WPFBase.Components;
+﻿using WPFBase.Components;
 using System.Windows.Input;
+using Xunit;
 
 namespace TestSuite.ViewModel
 {
-    [TestClass]
     public class CrudViewModelTest
     {
         bool EventFired = false;
 
-        [TestMethod]
+[Fact]
         public void TestRelayCommand()
         {
            ICommand _doSomething;
@@ -18,7 +16,7 @@ namespace TestSuite.ViewModel
 
             _doSomething.Execute(null);
 
-            Assert.IsTrue(EventFired);
+            Assert.True(EventFired);
             //_doSomething.
         }
 

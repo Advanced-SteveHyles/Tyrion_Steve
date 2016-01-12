@@ -1,11 +1,5 @@
 ﻿using Interfaces;
 using PortfolioManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 using TestSuite.MOK;
 namespace TestSuite.ViewModel
 {
@@ -15,7 +9,7 @@ namespace TestSuite.ViewModel
 
         void Setup()
         {
-            RepositoryMOK mok = new RepositoryMOK();
+            FakeRepository mok = new FakeRepository();
 
             //Create a ViewModel
             IDataEntryPortfolioViewModel dmv = new DataEntryPortfolioViewModel(mok);
