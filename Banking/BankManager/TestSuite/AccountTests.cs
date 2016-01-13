@@ -3,84 +3,70 @@ using Interfaces.BusinessInterfaces;
 using BusinessLogic;
 using Factories;
 using Common.Enums;
+using Data.Accounts;
 using Xunit;
 
 namespace TestSuite
 {
     public class AccountTests
     {
+        private readonly IAccount _account;
+        private IAccountHandler _accountHandler;
+
+        public AccountTests()
+        {
+            _account = AccountFactory.CreateAccount(EnumAccountType.Test);
+            _accountHandler = new AccountHandler(_account);
+        }
+
+
         [Fact]
         public void InitialAccountBalanceMustBeZero()
+        {            
+            Assert.True(_account.PredictedBalance == 0);                        
+        }
+        
+        [Fact]
+        public void PredictedAccountBalanceIsSumOfAllTransactions()
         {
-            IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            Assert.True(Account.PredictedBalance == 0);                        
+            decimal amount = 20;
+            AddTransaction(false, amount);
+            var runningTotal = amount;
+
+            amount = 30;
+            AddTransaction(false, amount);
+            runningTotal += amount;
+
+            amount = 20;
+            AddTransaction(true, amount);
+            runningTotal += amount;
+            
+            _accountHandler.UpdateBalances();                  
+            Assert.Equal (_account.PredictedBalance , runningTotal);
+        }
+
+        private void AddTransaction(bool isReconciled, decimal transactionValue)
+        {            
+            ITransaction transaction = new Data.Accounts.Transaction();
+            transaction.TransactionValue = transactionValue;
+            transaction.IsReconciled = isReconciled;
+            
+            _accountHandler.AddTransaction(transaction);
+            
         }
 
         [Fact]
-        public void AccountBalanceUpdateBalance()
-        {
-            IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            IAccountHandler AccountHandler = new AccountHandler(Account);
-            AccountHandler.UpdateBalances();                  
-            Assert.True(Account.PredictedBalance == 0);
-        }
+        public void ActualBalanceExcludesUnReconciledTransactions()
+        {            
+            AddTransaction(false, 20);
+            
+            AddTransaction(false, 30);
+                        
+            AddTransaction(true, 20);
+            var runningTotal = 20;
 
-        [Fact]
-        public void AccountBalanceWorks()
-        {
-            IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            ITransaction Transaction = new Data.Accounts.Transaction(); 
-            IAccountHandler AccountHandler = new AccountHandler(Account);
-            Transaction.TransactionValue = 20;
-             AccountHandler.AddTransaction( Transaction);         
-             AccountHandler.UpdateBalances();                  
-            Assert.Equal(Account.PredictedBalance , Transaction.TransactionValue);
-        }
-
-        [Fact]
-        public void PredicatedBalanceIncludesAllTransactions()
-        {
-            IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            ITransaction Transaction = new Data.Accounts.Transaction(); 
-            IAccountHandler AccountHandler = new AccountHandler(Account);
-
-            decimal RunningTotal;
-
-            Transaction.TransactionValue = 20;
-            RunningTotal = Transaction.TransactionValue;
-           // Account.Transactions.Add(Transaction);
-            AccountHandler.AddTransaction(Transaction);
-
-            Transaction = new Data.Accounts.Transaction(); 
-            Transaction.IsReconciled = false ;
-            Transaction.TransactionValue = 30;
-            RunningTotal += Transaction.TransactionValue;
-            AccountHandler.AddTransaction(Transaction);
-
-            Transaction = new Data.Accounts.Transaction(); 
-            Transaction.TransactionValue = 20;
-            Transaction.IsReconciled = true;
-            RunningTotal += Transaction.TransactionValue;
-            AccountHandler.AddTransaction(Transaction);
-
-          
-            AccountHandler.UpdateBalances();                  
-            Assert.Equal (Account.PredictedBalance , RunningTotal);
-        }
-
-        [Fact]
-        public void ActualBalanceIncludesReconciledTransactions()
-        {
-            IAccount Account = AccountFactory.CreateAccount(EnumAccountType.Test);
-            ITransaction Transaction = new Data.Accounts.Transaction();
-            Transaction.TransactionValue = 20;
-            decimal RunningTotal = Transaction.TransactionValue;
-            Transaction.IsReconciled = true;
-            Account.Transactions.Add(Transaction);
-
-            IAccountHandler AccountHandler = new AccountHandler(Account);
-             AccountHandler.UpdateBalances();                  
-            Assert.True(Account.ActualBalance == RunningTotal);
+            _accountHandler.UpdateBalances();                  
+            Assert.Equal(runningTotal, _account.ActualBalance);
         }
 
       
