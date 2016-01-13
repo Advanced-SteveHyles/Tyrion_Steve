@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System.ComponentModel;
+using Interfaces;
 using WPFBase.ViewModels;
 
 namespace PortfolioManager
@@ -46,7 +47,7 @@ namespace PortfolioManager
 
         private void SetupTabs()
         {
-            _TabAccountsViewModel =  (ITabAccountsViewModel)IOCC.GetInstance("ITabAccountsViewModel");
+            _TabAccountsViewModel = (ITabAccountsViewModel) IOCC.GetInstance("ITabAccountsViewModel");
             _TabPortfolioViewModel = (ITabPortfolioViewModel)IOCC.GetInstance("ITabPortfolioViewModel");
 
 

@@ -1,5 +1,6 @@
 ﻿using Interfaces;
 using System;
+using System.ComponentModel;
 using WPFBase.ViewModels;
 //using System.ComponentModel;
 
@@ -12,8 +13,8 @@ namespace PortfolioManager
 
         private DataEntryPortfolioViewModel() : base(null) { }
         public DataEntryPortfolioViewModel(IIOCContainer iocc) : base(iocc) 
-        {
-            phand = (IPortfolioHandler)IOCC.GetInstance("IPortfolioHandler");
+        {            
+            phand = (IPortfolioHandler) iocc.GetInstance("IPortfolioHandler");
         }
 
         #region "Fields"

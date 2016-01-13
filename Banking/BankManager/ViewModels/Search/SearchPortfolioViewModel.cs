@@ -2,100 +2,95 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WPFBase.Components;
 
 namespace ViewModels
 {
     public class SearchPortfolioViewModel : WPFBase.ViewModels.SearchViewModel, ISearchPortfolioViewModel
     {
-    public SearchPortfolioViewModel(IIOCContainer rep) :base(rep) { }
+        public SearchPortfolioViewModel(IIOCContainer rep) : base(rep) { }
 
-#region "Mediator"
-    public IMediator Mediator { get; set; }
-#endregion
+        public IMediator Mediator { get; set; }
 
-
-    #region "List"
-    private List<IPortfolioDTO> _PortfolioList;
-    public ObservableCollection<IPortfolioDTO> PortfolioList
-    {
-        get
+        private List<IPortfolioDTO> _PortfolioList;
+        public ObservableCollection<IPortfolioDTO> PortfolioList
         {
-            if (_PortfolioList == null)
+            get
             {
-                //
-                var pr = (IPortfolioRepository)IOCC.GetSingleInstance("IPortfolioRepository");
-                _PortfolioList = pr.GetAllPortfolios().ToList();
+                if (_PortfolioList == null)
+                {
+                    //
+                    var pr = (IPortfolioRepository)IOCC.GetSingleInstance("IPortfolioRepository");
+                    _PortfolioList = pr.GetAllPortfolios().ToList();
 
+                }
+                return new ObservableCollection<IPortfolioDTO>(_PortfolioList);
             }
-            return new ObservableCollection<IPortfolioDTO>(_PortfolioList);
         }
-    }
-    #endregion
 
-        private IPortfolioDTO _ItemSelected ;
-        public IPortfolioDTO ItemSelected 
+        private IPortfolioDTO _ItemSelected;
+        public IPortfolioDTO ItemSelected
         {
-            get {return _ItemSelected;}
+            get { return _ItemSelected; }
             set
-            { 
-                _ItemSelected = value; 
+            {
+                _ItemSelected = value;
                 NotifyPropertyChanged();
                 Mediator.InformChange(0, ItemSelected, this);
             }
         }
 
-    //private RelayCommand _SelectPortfolioCommand;
-    //public RelayCommand SelectPortfolioCommand 
-    //{
-    //    get
-    //    {
-    //        if (_SelectPortfolioCommand == null)
-    //        {
-    //            _SelectPortfolioCommand = new RelayCommand(p => SelectPortfolioCmd());
-    //        }
-    //        return _SelectPortfolioCommand;
-    //    }
-    //    set {;}
-    //}
+        //private RelayCommand _SelectPortfolioCommand;
+        //public RelayCommand SelectPortfolioCommand
+        //{
+        //    get
+        //    {
+        //        if (_SelectPortfolioCommand == null)
+        //        {
+        //            _SelectPortfolioCommand = new RelayCommand(p => SelectPortfolioCmd());
+        //        }
+        //        return _SelectPortfolioCommand;
+        //    }
+        //    set {; }
+        //}
 
         void SelectPortfolioCmd() //(IPortfolioDTO i)
-    {
-        int i;
-        Mediator.InformChange(0, ItemSelected, this);
-    }
-
-        
-    private ICrudViewModel _CrudVM;
-    public ICrudViewModel CrudVM
-    {
-        get
         {
-            if (_CrudVM == null)
-            {
-                _CrudVM = (ICrudViewModel)IOCC.GetInstance(typeof(ICrudViewModel));
+            int i;
+            Mediator.InformChange(0, ItemSelected, this);
+        }
 
-                _CrudVM.SetSelectCmd(p => SelectCmd(), p => CanSelectItem());
-                //Wire Up Handlers                
+
+        private ICrudViewModel _CrudVM;
+        public ICrudViewModel CrudVM
+        {
+            get
+            {
+                if (_CrudVM == null)
+                {
+                    _CrudVM = (ICrudViewModel)IOCC.GetInstance(typeof(ICrudViewModel));
+
+                    _CrudVM.SetSelectCmd(p => SelectCmd(), p => CanSelectItem());
+                }
+                _CrudVM.Refresh();
+                return _CrudVM;
             }
-            _CrudVM.Refresh();
-            return _CrudVM;
+        }
+
+        public void SelectCmd()
+        { }
+
+        public bool CanSelectItem()
+        { return true; }
+
+
+        public IPortfolioDTO SelectedPortfolio
+        {
+            get
+            {
+                return _ItemSelected;
+            }
         }
     }
 
- public   void SelectCmd()
-    { }
-
- public bool CanSelectItem()
-    { return true; }
-
-
- public IPortfolioDTO SelectedPortfolio
- {
-     get
-     {
-         return _ItemSelected;
-     }   
- }
-    }
-       
 }

@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System.ComponentModel;
+using Interfaces;
 
 namespace WPFBase.ViewModels
 {

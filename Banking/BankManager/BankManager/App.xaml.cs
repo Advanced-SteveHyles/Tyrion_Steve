@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-
 using Interfaces;
 using Repository;
 
@@ -10,14 +9,16 @@ namespace PortfolioManager
     /// </summary>
     public partial class App : Application
     {
-        
-         private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            IIOCContainer vrm = new ViewModelRepository();
+        readonly IIOCContainer vrm = new ViewModelRepository();
 
-            Current.MainWindow = new StartupView();
-             Current.MainWindow.DataContext = vrm.GetInstance(typeof(IStartupViewModel)); // new MainWindowViewModel();
-             Current.MainWindow.Show();                          
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {                    
+            Current.MainWindow = new StartupView
+            {
+                DataContext = (IStartupViewModel) vrm.GetInstance(typeof(IStartupViewModel))
+            };
+
+            Current.MainWindow.Show();                          
         }
     }
 }

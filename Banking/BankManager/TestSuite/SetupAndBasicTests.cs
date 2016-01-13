@@ -39,16 +39,5 @@ namespace TestSuite
 
             Assert.True(value.Sum() == 50);
         }
-
-
-//#region "Simple Validators"
-//        private void ValidateNewAccount(IAccount Account)
-//        {
-//            //Assert.IsTrue (Account)
-//        }
-
-//#endregion
-
-
     }
 }

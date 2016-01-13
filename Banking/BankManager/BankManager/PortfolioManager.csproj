@@ -165,6 +165,10 @@
       <Project>{13c7aa9e-565a-46e4-9a95-d2437a36ac03}</Project>
       <Name>Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+      <Project>{EE54B81A-AA48-4614-A6BB-AB46CCBA0677}</Project>
+      <Name>ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFBase\WPFBase.csproj">
       <Project>{5ff17b04-2929-4b71-8eef-5ccc0db5d80b}</Project>
       <Name>WPFBase</Name>

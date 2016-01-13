@@ -3,6 +3,6 @@
  public   interface IAccountHandler
     {
      void   UpdateBalances();
-     void AddTransaction(  ITransaction Transaction);
+     void AddTransaction(  ITransaction transaction);
     }
 }

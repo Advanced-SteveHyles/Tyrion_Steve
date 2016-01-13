@@ -7,7 +7,7 @@ namespace WPFBase.ViewModels
 {
    public abstract class ViewModel : INotifyPropertyChanged
     {
-     protected  IIOCContainer IOCC;
+     protected IIOCContainer IOCC;
        public ViewModel() { }
        public ViewModel(IIOCContainer iocc)
        {

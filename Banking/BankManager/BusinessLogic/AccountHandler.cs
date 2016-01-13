@@ -6,24 +6,22 @@ namespace BusinessLogic
 {
  public   class AccountHandler : IAccountHandler
     {
-
-     IAccount Account;
+     readonly IAccount _account;
      public AccountHandler(IAccount account)
      {
-         this.Account = account;       
+         this._account = account;       
      }
     
 
      public void UpdateBalances()
      {
-         Account.PredictedBalance = Account.Transactions.Select(p => p.TransactionValue).Sum();
-         Account.ActualBalance = Account.Transactions.Where(p => p.IsReconciled).Select(p => p.TransactionValue).Sum();
+         _account.PredictedBalance = _account.Transactions.Select(p => p.TransactionValue).Sum();
+         _account.ActualBalance = _account.Transactions.Where(p => p.IsReconciled).Select(p => p.TransactionValue).Sum();
      }
 
-     public void AddTransaction(ITransaction Transaction)
-     {
-         
-         Account.Transactions.Add(Transaction);
+     public void AddTransaction(ITransaction transaction)
+     {         
+         _account.Transactions.Add(transaction);
              }
     }
 }
