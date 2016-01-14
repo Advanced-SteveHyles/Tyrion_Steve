@@ -24,7 +24,6 @@ namespace Data.Tests
 
         [Fact(DisplayName = "DB:PortfolioCreate")]
         [Trait("Database", "Brute")]
-        //[Fact(DisplayName = "DB:BasicRead")]
         public void CreatePortfolio()
         {
             var x = new PortfolioManagerContext();
