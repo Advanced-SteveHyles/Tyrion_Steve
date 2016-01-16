@@ -1,6 +1,8 @@
 ﻿using Interfaces;
 using PortfolioManager;
 using TestSuite.MOK;
+using Xunit;
+
 namespace TestSuite.ViewModel
 {
     public class DataEntryPortfolioViewModelTests
@@ -16,12 +18,12 @@ namespace TestSuite.ViewModel
             
         }
 
-      //  [Trait("ViewModels", "DataReading")]
-      //  [Fact]
-      //public  void CanGetPortfolioList()
-      //  {
-      //      Setup();
-      //      Assert.NotEmpty(dmv.PortfolioList);
-      //  }
+        [Trait("ViewModels", "DataReading")]
+        [Fact]
+        public void CanGetPortfolioList()
+        {
+            Setup();
+         //   Assert.NotEmpty(dmv.PortfolioList);
+        }
     }
 }
