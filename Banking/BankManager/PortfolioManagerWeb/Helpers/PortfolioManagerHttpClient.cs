@@ -35,6 +35,6 @@ namespace PortfolioManagerWeb.Controllers
 
     public class PortfolioManagerConstants
     {
-        public static string PortfolioManagerApi => "";
+        public static string PortfolioManagerApi => "http://localhost:59274/";
     }
 }

@@ -15,7 +15,7 @@ using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers
 {
-    public class PortfolioController : Controller
+    public class PortfoliosController : Controller
     {
         public async Task<ActionResult> Index(int? page = 1)
         {
@@ -42,8 +42,8 @@ namespace PortfolioManagerWeb.Controllers
             //HttpResponseMessage response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid"
             //    + ",title&page=" + page + "&pagesize=5&userid=" + userId);
 
-            HttpResponseMessage response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid"
-                + ",title&page=" + page + "&pagesize=5");
+            HttpResponseMessage response = await client.GetAsync("api/Portfolio");
+                //"?sort=expensegroupstatusid"+ ",title&page=" + page + "&pagesize=5");
 
 
             if (response.IsSuccessStatusCode)

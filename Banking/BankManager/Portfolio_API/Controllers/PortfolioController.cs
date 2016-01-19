@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using PortfolioManager.DTO;
 
 namespace Portfolio_API.Controllers
 {
@@ -21,17 +22,17 @@ namespace Portfolio_API.Controllers
         {
             try
             {
-                var results = new List<DummyData>
+                var results = new List<PortfolioDTO>
                 {
                     {
-                        new DummyData
+                        new PortfolioDTO
                         {
                             ID = 1,
                             Name = "Portfolio 1"
                         }
                     },
                     {
-                        new DummyData
+                        new PortfolioDTO
                         {
                             ID = 2,
                             Name = "Portfolio 1"

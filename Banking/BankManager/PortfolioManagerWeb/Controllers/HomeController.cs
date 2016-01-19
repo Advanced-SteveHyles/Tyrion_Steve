@@ -26,5 +26,12 @@ namespace PortfolioManagerWeb.Controllers
 
             return View();
         }
+
+        public ActionResult Portfolios()
+        {
+            ViewBag.Message = "Your portfolio page.";
+            
+            return View();
+        }
     }
 }
