@@ -10,7 +10,7 @@ using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers
 {
-    public class PortfoliosController : Controller
+    public class PortfoliosController : Controller  //Ensure this is NOT APIController
     {
         public async Task<ActionResult> Index(int? page = 1)
         {
