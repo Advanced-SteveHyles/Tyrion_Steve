@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
@@ -10,8 +11,9 @@ namespace Portfolio_API.Controllers
 {
     public class PortfoliosController : ApiController
     {
-        const int maxPageSize = 5;
-        
+        const int maxPageSize = 1;
+
+        [Route("api/portfolios", Name = "PortfoliosList")]
         public IHttpActionResult Get(int page = 1, int pageSize = maxPageSize)
         {
             try
@@ -47,13 +49,13 @@ namespace Portfolio_API.Controllers
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
-                var prevLink = page > 1 ? urlHelper.Link("Portfolios",
+                var prevLink = page > 1 ? urlHelper.Link("PortfoliosList",
                     new
                     {
                         page = page - 1,
                         pageSize = pageSize,                        
                     }) : "";
-                var nextLink = page < totalPages ? urlHelper.Link("Portfolios",
+                var nextLink = page < totalPages ? urlHelper.Link("PortfoliosList",
                     new
                     {
                         page = page + 1,
@@ -76,7 +78,11 @@ namespace Portfolio_API.Controllers
 
 
 
-                return Ok(results);
+                return Ok(
+                    results
+                    .Skip(pageSize * (page - 1))
+                    .Take(pageSize)
+                    );
             }
             catch (Exception)
             {

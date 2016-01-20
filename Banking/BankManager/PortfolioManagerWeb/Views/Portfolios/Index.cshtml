@@ -54,7 +54,7 @@
 
     Page @(Model.PagingInfo.CurrentPage) of @Model.PagingInfo.TotalPages
 
-    @*@Html.PagedListPager(Model.ExpenseGroups, page => Url.Action("Index",
-    new { page }))*@
+    @Html.PagedListPager(Model.Portfolios, page => Url.Action("Index",
+    new { page }))
 
 
