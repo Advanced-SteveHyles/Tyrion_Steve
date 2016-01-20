@@ -33,5 +33,12 @@ namespace PortfolioManagerWeb.Controllers
             
             return View();
         }
+
+        public ActionResult Investments()
+        {
+            ViewBag.Message = "Investments page.";
+
+            return View();
+        }
     }
 }

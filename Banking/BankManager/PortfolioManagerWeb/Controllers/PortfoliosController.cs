@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web.Http;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using PagedList;
 using PortfolioManager.DTO;
@@ -42,7 +37,7 @@ namespace PortfolioManagerWeb.Controllers
             //HttpResponseMessage response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid"
             //    + ",title&page=" + page + "&pagesize=5&userid=" + userId);
 
-            HttpResponseMessage response = await client.GetAsync("api/Portfolio");
+            HttpResponseMessage response = await client.GetAsync("api/Portfolios?page=" + page + "&pagesize=5");
                 //"?sort=expensegroupstatusid"+ ",title&page=" + page + "&pagesize=5");
 
 

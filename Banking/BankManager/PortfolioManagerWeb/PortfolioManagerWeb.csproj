@@ -218,6 +218,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvestmentsController.cs" />
+    <Compile Include="Models\InvestmentsViewModel.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Helpers\HeaderParser.cs" />
@@ -296,6 +298,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Portfolios\Index.cshtml" />
     <Content Include="Views\Home\Portfolios.cshtml" />
+    <Content Include="Views\Investments\Index.cshtml" />
+    <Content Include="Views\Home\Investments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

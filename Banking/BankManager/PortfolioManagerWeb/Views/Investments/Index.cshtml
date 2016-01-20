@@ -1,0 +1,13 @@
+﻿@model PortfolioManagerWeb.Models.InvestmentsViewModel
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+Page @(Model.PagingInfo.CurrentPage) of @Model.PagingInfo.TotalPages
