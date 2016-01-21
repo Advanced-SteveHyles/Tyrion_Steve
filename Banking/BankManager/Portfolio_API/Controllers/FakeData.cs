@@ -55,7 +55,7 @@ namespace Portfolio_API.Controllers
 
         public static Entities.PortfolioEnt GetPortfolio(int id)
         {
-            throw new System.NotImplementedException();
+            return Portfolios.SingleOrDefault(p => p.Id == id);
         }
 
         public static object CreateDataShapedObject(Entities.AccountEnt accountEnt, List<string> lstOfFields)
