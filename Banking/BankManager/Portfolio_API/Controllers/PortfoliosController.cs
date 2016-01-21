@@ -12,32 +12,13 @@ namespace Portfolio_API.Controllers
     public class PortfoliosController : ApiController
     {
         const int maxPageSize = 1;
+        
 
         [Route("api/portfolios", Name = "PortfoliosList")]
         public IHttpActionResult Get(int page = 1, int pageSize = maxPageSize)
         {
             try
-            {
-                var results = new List<PortfolioDTO>
-                {
-                    {
-                        new PortfolioDTO
-                        {
-                            ID = 1,
-                            Name = "Portfolio 1"
-                        }
-                    },
-                    {
-                        new PortfolioDTO
-                        {
-                            ID = 2,
-                            Name = "Portfolio 1"
-                        }
-                    }
-                };
-
-
-                
+            {                
                 // ensure the page size isn't larger than the maximum.
                 if (pageSize > maxPageSize)
                 {
@@ -45,7 +26,7 @@ namespace Portfolio_API.Controllers
                 }
 
                 // calculate data for metadata
-                var totalCount = results.Count ;
+                var totalCount = FakeData.Portfolios.Count ;
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
@@ -79,7 +60,7 @@ namespace Portfolio_API.Controllers
 
 
                 return Ok(
-                    results
+                    FakeData.Portfolios
                     .Skip(pageSize * (page - 1))
                     .Take(pageSize)
                     );
@@ -89,5 +70,49 @@ namespace Portfolio_API.Controllers
                 return InternalServerError();
             }
         }
+
+        public IHttpActionResult Get(int id, string fields = null)
+        {
+            try
+            {
+                bool includeAccounts = false;
+                List<string> lstOfFields = new List<string>();
+
+                // we should include expenses when the fields-string contains "expenses"
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                    includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
+                }
+
+
+                //Repository.Entities.ExpenseGroup expenseGroup;
+                if (includeAccounts)
+                {
+                    portfolio = FakeData.GetPortfolioWithAccounts(id);
+                }
+                else
+                {
+                    portfolio = FakeData.GetPortfolio(id);
+                }
+
+                var result = FakeData.Portfolios.SingleOrDefault(r => r.Id == id);
+              
+                if (result != null)
+                {
+                    //  return Ok(_expenseGroupFactory.CreateDataShapedObject(expenseGroup, lstOfFields));
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
     }
 }

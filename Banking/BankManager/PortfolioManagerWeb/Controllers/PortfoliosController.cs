@@ -65,5 +65,23 @@ namespace PortfolioManagerWeb.Controllers
             return View(model);
 
         }
+
+        // GET: ExpenseGroups/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            var client = PortfolioManagerHttpClient.GetClient();
+
+            HttpResponseMessage response = await client.GetAsync("api/portfolios/" + id
+                                + "?fields=name");
+            string content = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var model = JsonConvert.DeserializeObject<PortfolioDTO>(content);
+                return View(model);
+            }
+
+            return Content("An error occurred");
+        }
     }
 }
