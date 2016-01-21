@@ -6,7 +6,7 @@ namespace PortfolioManagerWeb.Models
 {
     public class PortfoliosViewModel
     {
-        public StaticPagedList<PortfolioDTO> Portfolios { get; set; }
+        public StaticPagedList<PortfolioDto> Portfolios { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
 }

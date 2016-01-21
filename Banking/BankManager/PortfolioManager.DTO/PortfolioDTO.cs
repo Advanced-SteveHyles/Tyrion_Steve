@@ -5,9 +5,10 @@ using System.Text;
 
 namespace PortfolioManager.DTO
 {
-    public class PortfolioDTO
+    public class PortfolioDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-    }
+        public string Name { get; set; }        
+        public ICollection<AccountDto> Accounts { get; set; }
+    }    
 }

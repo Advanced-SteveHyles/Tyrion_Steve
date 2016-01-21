@@ -84,24 +84,23 @@ namespace Portfolio_API.Controllers
                     lstOfFields = fields.ToLower().Split(',').ToList();
                     includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
                 }
-
-
-                //Repository.Entities.ExpenseGroup expenseGroup;
+                
+                Entities.PortfolioEnt portfolioEnt;
                 if (includeAccounts)
                 {
-                    portfolio = FakeData.GetPortfolioWithAccounts(id);
+                    portfolioEnt = FakeData.GetPortfolioWithAccounts(id);
                 }
                 else
                 {
-                    portfolio = FakeData.GetPortfolio(id);
+                    portfolioEnt = FakeData.GetPortfolio(id);
                 }
 
                 var result = FakeData.Portfolios.SingleOrDefault(r => r.Id == id);
               
                 if (result != null)
                 {
-                    //  return Ok(_expenseGroupFactory.CreateDataShapedObject(expenseGroup, lstOfFields));
-                    return Ok(result);
+
+                    return Ok(FakeData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
                 }
                 else
                 {
@@ -116,3 +115,5 @@ namespace Portfolio_API.Controllers
 
     }
 }
+
+

@@ -48,9 +48,9 @@ namespace PortfolioManagerWeb.Controllers
                 // get the paging info from the header
                 var pagingInfo = HeaderParser.FindAndParsePagingInfo(response.Headers);
 
-                var portfolios = JsonConvert.DeserializeObject<IEnumerable<PortfolioDTO>>(content);
+                var portfolios = JsonConvert.DeserializeObject<IEnumerable<PortfolioDto>>(content);
 
-                var pagedExpenseGroupsList = new StaticPagedList<PortfolioDTO>(portfolios, pagingInfo.CurrentPage,
+                var pagedExpenseGroupsList = new StaticPagedList<PortfolioDto>(portfolios, pagingInfo.CurrentPage,
                     pagingInfo.PageSize, pagingInfo.TotalCount);
 
                 model.Portfolios = pagedExpenseGroupsList;
@@ -77,7 +77,7 @@ namespace PortfolioManagerWeb.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var model = JsonConvert.DeserializeObject<PortfolioDTO>(content);
+                var model = JsonConvert.DeserializeObject<PortfolioDto>(content);
                 return View(model);
             }
 
