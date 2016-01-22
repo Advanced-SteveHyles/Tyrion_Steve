@@ -111,7 +111,18 @@ namespace Portfolio_API.Controllers
                             SubType2 = "Mixed"
 
                         }
-                    }
+                    },
+            { new InvestmentEnt
+                        {
+                            ID = 4,
+                            Name = "Legal & General US Index",
+                            Symbol = "C1235",
+                            Type = "OEIC",
+                            Class ="C",
+                            Income = "Income",
+                            SubType2 = "Core tracker"
+                        }
+                    },
     };
 
         public static List<InvestmentMapEnt> InvestmentsMap { get; } = new List<InvestmentMapEnt>
