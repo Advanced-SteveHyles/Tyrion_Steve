@@ -8,7 +8,7 @@ using Portfolio_API.Controllers.Entities;
 using Portfolio_API.Helpers;
 
 namespace Portfolio_API.Controllers
-{    
+{
     internal class FakeData
     {
         public static List<PortfolioEnt> Portfolios { get; } = new List<PortfolioEnt>
@@ -17,46 +17,80 @@ namespace Portfolio_API.Controllers
                 new PortfolioEnt
                 {
                     Id = 1,
-                    Name = "Portfolio 1"
+                    Name = "Steve"
                 }
             },
             {
                 new PortfolioEnt
                 {
                     Id = 2,
-                    Name = "Portfolio 1"
+                    Name = "Maggie"
                 }
             }
         };
 
-        public List<AccountEnt> Accounts { get; } = new List<AccountEnt>
+        public static List<AccountEnt> Accounts { get; } = new List<AccountEnt>
         {
             new AccountEnt
             {
                 Id = 1,
-                Name="Account 1"
+                PortfolioId = 1,
+                Name="Stocks & Shares",
+                Valuation = 10,
+                Type ="ISA"
             },
             new AccountEnt
             {
                 Id = 2,
-                Name="Account 2"
+                PortfolioId = 1,
+                Name="SIPP",
+                Valuation = 12,
+                Type ="SIPP"
             },
             new AccountEnt
             {
                 Id = 3,
-                Name="Account 3"
+                PortfolioId = 2,
+                Name="SIPP",
+                Valuation = 0,
+                  Type ="SIPP"
+            },
+            new AccountEnt
+            {
+                Id = 4,
+                PortfolioId = 1,
+                Name="Company Pension",
+                Cash =0,
+                Valuation = 0,
+                Type ="Pension"
+            }
+            ,
+            new AccountEnt
+            {
+                Id = 5,
+                PortfolioId = 1,
+                Name="Trading Account",
+                Valuation = 0,
+                Type ="Self-Exec-Trading"
             },
         };
 
-        public static Entities.PortfolioEnt GetPortfolioWithAccounts(int id)
+        public static Entities.PortfolioEnt GetPortfolioWithAccounts(int portfolioId)
         {
-            throw new System.NotImplementedException();
+            var x = GetPortfolio(portfolioId);
+            x.Accounts = GetAccounts(portfolioId);
+            return x;
         }
 
         public static Entities.PortfolioEnt GetPortfolio(int id)
         {
             return Portfolios.SingleOrDefault(p => p.Id == id);
         }
+        public static ICollection<AccountEnt> GetAccounts(int portfolioId)
+        {
+            return (ICollection<AccountEnt>)Accounts.Where(p => p.PortfolioId == portfolioId).ToList();
+        }
+
 
         public static object CreateDataShapedObject(Entities.AccountEnt accountEnt, List<string> lstOfFields)
         {
@@ -65,8 +99,8 @@ namespace Portfolio_API.Controllers
 
 
         public static object CreateDataShapedObject(Entities.PortfolioEnt portfolioEnt, List<string> lstOfFields)
-        { 
-           // work with a new instance, as we'll manipulate this list in this method
+        {
+            // work with a new instance, as we'll manipulate this list in this method
             List<string> lstOfFieldsToWorkWith = new List<string>(lstOfFields);
 
             if (!lstOfFieldsToWorkWith.Any())
@@ -79,10 +113,10 @@ namespace Portfolio_API.Controllers
                 // does it include any expense-related field?
                 var lstOfAccountFields = lstOfFieldsToWorkWith.Where(f => f.Contains("accounts")).ToList();
 
-    // if one of those fields is "expenses", we need to ensure the FULL expense is returned.  If
-    // it's only subfields, only those subfields have to be returned.
+                // if one of those fields is "expenses", we need to ensure the FULL expense is returned.  If
+                // it's only subfields, only those subfields have to be returned.
 
-    bool returnPartialAccounts = lstOfAccountFields.Any() && !lstOfAccountFields.Contains("accounts");
+                bool returnPartialAccounts = lstOfAccountFields.Any() && !lstOfAccountFields.Contains("accounts");
 
                 // if we don't want to return the full expense, we need to know which fields
                 if (returnPartialAccounts)
@@ -94,13 +128,13 @@ namespace Portfolio_API.Controllers
                     lstOfFieldsToWorkWith.RemoveRange(lstOfAccountFields);
                     lstOfAccountFields = lstOfAccountFields.Select(f => f.Substring(f.IndexOf(".") + 1)).ToList();
 
-}
+                }
                 else
                 {
                     // we shouldn't return a partial expense, but the consumer might still have
                     // asked for a subfield together with the main field, ie: expense,expense.id.  We 
                     // need to remove those subfields in that case.
-                    
+
                     lstOfAccountFields.Remove("accounts");
                     lstOfFieldsToWorkWith.RemoveRange(lstOfAccountFields);
                 }
@@ -111,17 +145,17 @@ namespace Portfolio_API.Controllers
 
                 ExpandoObject objectToReturn = new ExpandoObject();
                 foreach (var field in lstOfFieldsToWorkWith)
-	            {
+                {
                     // need to include public and instance, b/c specifying a binding flag overwrites the
                     // already-existing binding flags.
 
                     var fieldValue = portfolioEnt.GetType()
                         .GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)
                         .GetValue(portfolioEnt, null);
-               
+
                     // add the field to the ExpandoObject
-                     ((IDictionary<String, Object>)objectToReturn).Add(field, fieldValue);
-	            }
+                    ((IDictionary<String, Object>)objectToReturn).Add(field, fieldValue);
+                }
 
                 if (returnPartialAccounts)
                 {
@@ -134,14 +168,14 @@ namespace Portfolio_API.Controllers
 
                     ((IDictionary<String, Object>)objectToReturn).Add("accounts", accounts);
                 }
-                
 
-                return objectToReturn;          
+
+                return objectToReturn;
             }
         }
 
 
-        public IEnumerable<PortfolioDto> MapEntitiesToDtoModelsSorted(Entities.PortfolioEnt portfolioEnt  , string sort, int statusId, string userId)
+        public IEnumerable<PortfolioDto> MapEntitiesToDtoModelsSorted(Entities.PortfolioEnt portfolioEnt, string sort, int statusId, string userId)
         {
             //Uses Dynamic linq
             return Portfolios
@@ -182,8 +216,10 @@ namespace Portfolio_API.Controllers
         {
             return new AccountDto()
             {
-                Id = -100,
-                Name = accountEnt.Name,                
+                Id = accountEnt.Id,
+                Name = accountEnt.Name,
+                Cash = accountEnt.Cash,
+                Valuation = accountEnt.Valuation
             };
         }
 
@@ -207,6 +243,13 @@ namespace Portfolio_API.Controllers
             public int Id { get; set; }
 
             public string Name { get; set; }
+
+            public int Cash { get; set; }
+            public decimal Valuation { get; set; }
+
+            public int PortfolioId { get; set; }
+            public string Type { get; set; }
+
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Portfolio_API.Controllers
                     return NotFound();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return InternalServerError();
             }
