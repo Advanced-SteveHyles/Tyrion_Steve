@@ -26,7 +26,7 @@ namespace Portfolio_API.Controllers
                 }
 
                 // calculate data for metadata
-                var totalCount = FakeData.Portfolios.Count ;
+                var totalCount = FakeData.GetPortfolios().Count ;
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
@@ -60,7 +60,7 @@ namespace Portfolio_API.Controllers
 
 
                 return Ok(
-                    FakeData.Portfolios
+                    FakeData.GetPortfolios()
                     .Skip(pageSize * (page - 1))
                     .Take(pageSize)
                     );
@@ -95,12 +95,12 @@ namespace Portfolio_API.Controllers
                     portfolioEnt = FakeData.GetPortfolio(id);
                 }
 
-                var result = FakeData.Portfolios.SingleOrDefault(r => r.Id == id);
+                var result = FakeData.GetPortfolios().SingleOrDefault(r => r.Id == id);
               
                 if (result != null)
                 {
 
-                    return Ok(FakeData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
+                    return Ok(ShapedData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
                 }
                 else
                 {

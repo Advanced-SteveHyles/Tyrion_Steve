@@ -9,5 +9,10 @@ namespace PortfolioManagerWeb.Controllers
         {
             return null;
         }
+
+        public ActionResult Details(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

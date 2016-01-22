@@ -19,49 +19,7 @@ namespace Portfolio_API.Controllers
         {
             try
             {
-                var results = new List<InvestmentDto>
-                {
-                    {
-                        new InvestmentDto
-                        {
-                            ID = 1,
-                            Name = "Legal & General US Index",
-                            Symbol = "T1235",
-                            Type = "OEIC",
-                            Class ="C",
-                            Income = "Accumulation",
-                            SubType2 = "Core tracker"
-                        }
-                    },
-                    {
-                        new InvestmentDto
-                        {
-                            ID = 2,
-                            Name = "Investment 2",
-                            Symbol = "X1235",
-                            Type = "OEIC",
-                             Class ="C",
-                            Income = "Income",
-                            SubType2 = "Core tracker"
-                        }
-                    },
-                    {
-                        new InvestmentDto
-                        {
-                            ID = 3,
-                            Name = " HL Multi - Manager Equity & Bond Trust",
-                            Symbol = "X1234",
-                            Type = "Fund",
-                             Class ="M",
-                            Income = "Accumulation",
-                            SubType2 = "Mixed"
-
-                        }
-                    }
-                };
-
-
-
+                var results = FakeData.GetInvestments();
                 // ensure the page size isn't larger than the maximum.
                 if (pageSize > maxPageSize)
                 {
