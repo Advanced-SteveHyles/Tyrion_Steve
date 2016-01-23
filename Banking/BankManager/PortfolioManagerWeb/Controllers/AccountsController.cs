@@ -12,7 +12,7 @@ namespace PortfolioManagerWeb.Controllers
 
         public ActionResult Details(int id)
         {
-            throw new System.NotImplementedException();
+           return View();
         }
     }
 }

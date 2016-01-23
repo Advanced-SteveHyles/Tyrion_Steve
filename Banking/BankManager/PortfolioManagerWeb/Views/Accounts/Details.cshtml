@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Investment Details</h2>
+
+@*@foreach (var item in Model.Accounts)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valuation)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", "Accounts", new { id = item.Id }, null) |
+            @Html.ActionLink("Edit", "Edit", "Accounts", new { id = item.Id }, null) |
+            @*@Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)*@
+        </td>
+    </tr>
+}*@
+

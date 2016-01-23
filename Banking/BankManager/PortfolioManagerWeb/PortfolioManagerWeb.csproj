@@ -302,6 +302,7 @@
     <Content Include="Views\Investments\Index.cshtml" />
     <Content Include="Views\Home\Investments.cshtml" />
     <Content Include="Views\Portfolios\Details.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
