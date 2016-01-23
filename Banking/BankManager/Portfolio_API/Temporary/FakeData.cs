@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -166,6 +167,24 @@ namespace Portfolio_API.Controllers
         public static List<PortfolioEnt> GetPortfolios()
         {
             return Portfolios;
+        }
+
+        public static AccountEnt GetAccountWithInvestments(int id)
+        {
+            var accountWithInvestments = GetAccount(id);
+            accountWithInvestments.Investments = GetInvestments(id);
+
+            return accountWithInvestments;
+        }
+
+        private static ICollection<InvestmentMapEnt> GetInvestments(int id)
+        {
+            return InvestmentsMap.Where(i => i.AccountId == id).ToList();
+        }
+
+        public static AccountEnt GetAccount(int id)
+        {
+            return Accounts.SingleOrDefault(p => p.Id == id);
         }
     }
 

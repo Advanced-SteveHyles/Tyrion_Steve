@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using Entities;
 using Portfolio_API.Helpers;
 
 namespace Portfolio_API.Controllers
 {
     internal class ShapedData
     {
-        public static object CreateDataShapedObject(Entities.AccountEnt accountEnt, List<string> lstOfFields)
-        {
-            return string.Empty;
-        }
+
         
         public static object CreateDataShapedObject(Entities.PortfolioEnt portfolioEnt, List<string> lstOfFields)
         {
@@ -88,6 +86,87 @@ namespace Portfolio_API.Controllers
 
                 return objectToReturn;
             }
+        }
+
+        public static object CreateDataShapedObject(Entities.AccountEnt accountEnt, List<string> lstOfFields)
+        {
+            // work with a new instance, as we'll manipulate this list in this method
+            List<string> lstOfFieldsToWorkWith = new List<string>(lstOfFields);
+
+            if (!lstOfFieldsToWorkWith.Any())
+            {
+                return accountEnt;
+            }
+            else
+            {
+
+                // does it include any expense-related field?
+                var lstOfInvestmentColumns = lstOfFieldsToWorkWith.Where(f => f.Contains("investments")).ToList();
+
+                // if one of those fields is "expenses", we need to ensure the FULL expense is returned.  If
+                // it's only subfields, only those subfields have to be returned.
+
+                bool returnPartialInvestments = lstOfInvestmentColumns.Any() && !lstOfInvestmentColumns.Contains("investments");
+
+                // if we don't want to return the full expense, we need to know which fields
+                if (returnPartialInvestments)
+                {
+                    // remove all expense-related fields from the list of fields,
+                    // as we will use the CreateDateShapedObject function in ExpenseFactory
+                    // for that.
+
+                    lstOfFieldsToWorkWith.RemoveRange(lstOfInvestmentColumns);
+                    lstOfInvestmentColumns = lstOfInvestmentColumns.Select(f => f.Substring(f.IndexOf(".") + 1)).ToList();
+
+                }
+                else
+                {
+                    // we shouldn't return a partial expense, but the consumer might still have
+                    // asked for a subfield together with the main field, ie: expense,expense.id.  We 
+                    // need to remove those subfields in that case.
+
+                    lstOfInvestmentColumns.Remove("investments");
+                    lstOfFieldsToWorkWith.RemoveRange(lstOfInvestmentColumns);
+                }
+
+                // create a new ExpandoObject & dynamically create the properties for this object
+
+                // if we have an expense
+
+                ExpandoObject objectToReturn = new ExpandoObject();
+                foreach (var field in lstOfFieldsToWorkWith)
+                {
+                    // need to include public and instance, b/c specifying a binding flag overwrites the
+                    // already-existing binding flags.
+
+                    var fieldValue = accountEnt.GetType()
+                        .GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)
+                        .GetValue(accountEnt, null);
+
+                    // add the field to the ExpandoObject
+                    ((IDictionary<String, Object>)objectToReturn).Add(field, fieldValue);
+                }
+
+                if (returnPartialInvestments)
+                {
+                    // add a list of investments, and in that, add all those investments
+                    List<object> investments = new List<object>();
+                    foreach (var investment in accountEnt.Investments)
+                    {
+                        investments.Add(ShapedData.CreateDataShapedObject(investment, lstOfInvestmentColumns));
+                    }
+
+                    ((IDictionary<String, Object>)objectToReturn).Add("investements", investments);
+                }
+
+
+                return objectToReturn;
+            }
+        }
+
+        private static object CreateDataShapedObject(InvestmentMapEnt portfolioEnt, List<string> lstOfInvestmentColumns)
+        {
+            return portfolioEnt;
         }
     }
 }

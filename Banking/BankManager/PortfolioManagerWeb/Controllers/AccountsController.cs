@@ -25,7 +25,7 @@ namespace PortfolioManagerWeb.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var model = JsonConvert.DeserializeObject<PortfolioDto>(content);
+                var model = JsonConvert.DeserializeObject<AccountDto>(content);
                 return View(model);
             }
 
