@@ -30,6 +30,7 @@ namespace Portfolio_API.Controllers
                 Id =investmentMapEnt.Id,
                 AccountId = investmentMapEnt.AccountId,
                 InvestmentId = investmentMapEnt.InvestmentId,
+                InvestmentName = investmentMapEnt.InvestmentName,
                 Quantity = investmentMapEnt.Quantity,
                 SellPrice = investmentMapEnt.SellPrice,
                 Valuation = investmentMapEnt.Valuation,

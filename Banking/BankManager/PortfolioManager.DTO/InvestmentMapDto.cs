@@ -5,7 +5,7 @@
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
 
-        public int InvestmentName { get; set; }
+        public string InvestmentName { get; set; }
 
         public int Quantity { get; set; }
         public int SellPrice { get; set; }

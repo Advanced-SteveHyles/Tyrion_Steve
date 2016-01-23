@@ -136,6 +136,24 @@ namespace Portfolio_API.Controllers
                 Quantity =100,
                 SellPrice =1,
                 Valuation = 100
+            },
+            new InvestmentMapEnt
+            {
+                Id = 2,
+                AccountId = 1,
+                InvestmentId = 2,
+                Quantity =100,
+                SellPrice =1,
+                Valuation = 100
+            },
+            new InvestmentMapEnt
+            {
+                Id = 3,
+                AccountId = 1,
+                InvestmentId = 3,
+                Quantity =100,
+                SellPrice =1,
+                Valuation = 100
             }
         };
         
@@ -179,7 +197,15 @@ namespace Portfolio_API.Controllers
 
         private static ICollection<InvestmentMapEnt> GetInvestments(int id)
         {
-            return InvestmentsMap.Where(i => i.AccountId == id).ToList();
+            var investmentMapEnts = InvestmentsMap.Where(i => i.AccountId == id).ToList();
+            InvestmentEnt investmentName;
+            foreach (var  inv in investmentMapEnts)
+            {
+                investmentName = Investments.SingleOrDefault(i => i.ID == inv.InvestmentId);
+                inv.InvestmentName = investmentName == null ? string.Empty : investmentName.Name;
+            }
+
+            return investmentMapEnts;
         }
 
         public static AccountEnt GetAccount(int id)
