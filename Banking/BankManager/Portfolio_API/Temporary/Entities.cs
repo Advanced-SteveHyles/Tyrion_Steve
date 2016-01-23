@@ -22,13 +22,17 @@ namespace Entities
 
         public int PortfolioId { get; set; }
         public string Type { get; set; }
-
+        public virtual ICollection<InvestmentMapEnt> Investments { get; set; }
     }
 
     internal class InvestmentMapEnt
     {
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
+        public int Quantity { get; set; }
+        public int SellPrice { get; set; }
+        public int Valuation { get; set; }
+        public int Id { get; set; }
     }
 
     internal class InvestmentEnt

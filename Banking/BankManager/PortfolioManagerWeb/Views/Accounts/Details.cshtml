@@ -1,31 +1,43 @@
-﻿
+﻿@model PortfolioManager.DTO.AccountDto
+
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h4>Account Details</h4>
+<hr />
+<dl class="dl-horizontal">
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+
+
+</dl>
+
 <h2>Investment Details</h2>
 
-@*@foreach (var item in Model.Accounts)
+@foreach (var item in Model.Investments)
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.InvestmentName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.Quantity)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Cash)
+            @Html.DisplayFor(modelItem => item.SellPrice)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Valuation)
         </td>
-        <td>
-            @Html.ActionLink("Details", "Details", "Accounts", new { id = item.Id }, null) |
-            @Html.ActionLink("Edit", "Edit", "Accounts", new { id = item.Id }, null) |
-            @*@Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)*@
+        <td>            
+            @*@Html.ActionLink("Details", "Details", "Accounts", new {id = item.Id}, null) |
+            @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.Id}, null) |
+            @Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)**@
         </td>
     </tr>
-}*@
+}
 

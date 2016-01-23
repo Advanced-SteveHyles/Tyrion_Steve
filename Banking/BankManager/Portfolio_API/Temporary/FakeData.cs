@@ -7,7 +7,7 @@ namespace Portfolio_API.Controllers
 {
     internal class FakeData
     {
-        private readonly Map _map = new Map();
+        private readonly EntityToDtoMap _entityToDtoMap = new EntityToDtoMap();
 
         private static List<PortfolioEnt> Portfolios { get; } = new List<PortfolioEnt>
         {
@@ -129,11 +129,15 @@ namespace Portfolio_API.Controllers
         {
             new InvestmentMapEnt
             {
+                Id = 1,
                 AccountId = 1,
-                InvestmentId = 1
+                InvestmentId = 1,
+                Quantity =100,
+                SellPrice =1,
+                Valuation = 100
             }
         };
-
+        
 
         public static Entities.PortfolioEnt GetPortfolioWithAccounts(int portfolioId)
         {
@@ -157,30 +161,7 @@ namespace Portfolio_API.Controllers
             return Investments;                         
         }
 
-        public IEnumerable<PortfolioDto> MapEntitiesToDtoModelsSorted(Entities.PortfolioEnt portfolioEnt, string sort, int statusId, string userId)
-        {
-            //Uses Dynamic linq
-            return Portfolios
-                //.Where(eg => (statusId == DomainMappers.AllStatusus || eg.ExpenseGroupStatusId == statusId))
-                //.Where(eg => (userId == null || eg.UserId == userId))
-                //.ApplySort(sort)
-                .ToList()
-                .Select(p => Map.CreatePortfolio(p)
-                );
-        }
-
-
-        public IEnumerable<object> MapEntitiesToDtoModelsSortedShaped(IQueryable<Entities.PortfolioEnt> portfolio, string sort, int statusId, string userId, List<string> fields)
-        {
-            //Uses Dynamic linq
-            return portfolio
-                //.Where(eg => (statusId == DomainMappers.AllStatusus || eg.ExpenseGroupStatusId == statusId))
-                //.Where(eg => (userId == null || eg.UserId == userId))
-                //.ApplySort(sort)
-                .ToList()
-                .Select(eg => ShapedData.CreateDataShapedObject(eg, fields)
-                );
-        }
+    
 
         public static List<PortfolioEnt> GetPortfolios()
         {

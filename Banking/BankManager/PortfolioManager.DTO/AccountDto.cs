@@ -15,5 +15,8 @@ namespace PortfolioManager.DTO
         public decimal Valuation { get; set; }
 
         public string Type { get; set; }
+
+        public ICollection<InvestmentMapDto>  Investments { get; set; }
+            
     }
 }

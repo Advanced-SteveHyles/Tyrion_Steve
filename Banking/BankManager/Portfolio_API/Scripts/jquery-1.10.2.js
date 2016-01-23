@@ -48,10 +48,10 @@ var
 	document = window.document,
 	docElem = document.documentElement,
 
-	// Map over jQuery in case of overwrite
+	// EntityToDtoMap over jQuery in case of overwrite
 	_jQuery = window.jQuery,
 
-	// Map over the $ in case of overwrite
+	// EntityToDtoMap over the $ in case of overwrite
 	_$ = window.$,
 
 	// [[Class]] -> type pairs

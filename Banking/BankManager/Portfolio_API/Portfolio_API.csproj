@@ -238,7 +238,7 @@
     <Compile Include="Temporary\FakeData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestmentsController.cs" />
-    <Compile Include="Temporary\Map.cs" />
+    <Compile Include="Temporary\EntityToDtoMap.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Temporary\ShapedData.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
