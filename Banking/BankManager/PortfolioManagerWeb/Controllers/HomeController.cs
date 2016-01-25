@@ -19,14 +19,7 @@ namespace PortfolioManagerWeb.Controllers
 
             return View();
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
+        
         public ActionResult Portfolios()
         {
             ViewBag.Message = "Your portfolio page.";

@@ -54,12 +54,13 @@
                 @Html.DisplayFor(modelItem => item.Valuation)
             </td>
             <td>
-                @*@Html.ActionLink("Details", "Details", "Accounts", new {id = item.Id}, null) |
+           
+                @*
                     @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.Id}, null) |
                     @Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)**@
 
                 @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new {id = item.Id}, null)
-                @Html.ActionLink("Sell", "Sell", "InvestmentsMap")
+                @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.Id }, null)
                 @Html.ActionLink("Dividend", "Div", "InvestmentsMap")
 
             </td>

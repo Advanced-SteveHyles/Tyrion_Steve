@@ -14,7 +14,7 @@ namespace PortfolioManagerWeb.Controllers
 
         public async Task<ActionResult> Sell(int id)
         {
-            return null;
+            return View();
         }
 
 

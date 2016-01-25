@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace PortfolioManagerWeb.Models
+namespace PortfolioManager.DTO.Transactions
 {
-    public class InvestmentBuyDTO
+    public class InvestmentBuyDto
     {
         public decimal Quantity { get; set; }
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
+        public bool UpdatePriceHistory { get; set; } = true;
     }
 }
