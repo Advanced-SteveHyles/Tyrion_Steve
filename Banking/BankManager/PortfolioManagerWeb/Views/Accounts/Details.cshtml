@@ -3,26 +3,6 @@
 @using PortfolioManagerWeb.Controllers
 @model PortfolioManager.DTO.AccountDto
 
-@functions {
-
-    public List<SelectListItem> listItems =>
-        new List<SelectListItem>
-        {
-            {
-            new SelectListItem() {Text = "Buy", Value= "Buy"}
-            }
-            ,
-            {
-             new SelectListItem() {Text = "Sell", Value= "Sell"}
-            }
-            ,
-            {
-                new SelectListItem() {Text = "Dividend", Value= "Dividend"}
-            }
-        };
-
-}
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -79,15 +59,17 @@
                 @Html.DisplayFor(modelItem => item.Valuation)
             </td>
             <td>                
-                @Html.DropDownList(() => { }, listItems, "-- Select Status --")
-
                 @*
                     @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.Id}, null) |
                     @Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)**@
 
                 @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new { id = item.Id }, null)
                 @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.Id }, null)
-                @Html.ActionLink("Dividend", "Div", "InvestmentsMap")
+
+                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new {id = item.Id}, null))
+                @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.Id }, null))
+                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new {id = item.Id}, null))
+                @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.Id }, null))
 
             </td>
         </tr>
