@@ -8,7 +8,7 @@ namespace PortfolioManagerWeb.Controllers
 
         public async Task<ActionResult> Buy(int id)
         {
-            return null;
+            return View();
         }
 
 

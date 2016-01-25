@@ -58,7 +58,7 @@
                     @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.Id}, null) |
                     @Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)**@
 
-                @Html.ActionLink("Buy", "Buy", "InvestmentsMap")
+                @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new {id = item.Id}, null)
                 @Html.ActionLink("Sell", "Sell", "InvestmentsMap")
                 @Html.ActionLink("Dividend", "Div", "InvestmentsMap")
 
