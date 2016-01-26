@@ -85,49 +85,48 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        //public IHttpActionResult Get(int id, string fields = null)
-        //{
-        //    try
-        //    {
-        //        bool includeAccounts = false;
-        //        List<string> lstOfFields = new List<string>();
+        public IHttpActionResult Get(int id, string fields = null)
+        {
+            try
+            {
+                bool includeAccounts = false;
+                List<string> lstOfFields = new List<string>();
 
-        //        // we should include expenses when the fields-string contains "expenses"
-        //        if (fields != null)
-        //        {
-        //            lstOfFields = fields.ToLower().Split(',').ToList();
-        //            includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
-        //        }
+                // we should include expenses when the fields-string contains "expenses"
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                    includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
+                }
 
 
-        //        IQueryable<Portfolio> portfolios = _repository.GetPortfolio();
-                
-        //        if (includeAccounts)
-        //        {
-        //            //_repository.GetPortfolioWithAccounts();
-        //        }
-        //        else
-        //        {
-        //            portfolios = _repository.GetPortfolios();
-        //        }
+                Portfolio portfolio = null;
 
-        //        var result = FakeData.GetPortfolios().SingleOrDefault(r => r.Id == id);
-              
-        //        if (result != null)
-        //        {
+                if (includeAccounts)
+                {
+                    portfolio = _repository.GetPortfolioWithAccounts(id).FirstOrDefault();
+                }
+                else
+                {
+                    portfolio = _repository.GetPortfolio(id).FirstOrDefault();
+                }
 
-        //            return Ok(ShapedData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
-        //        }
-        //        else
-        //        {
-        //            return NotFound();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return InternalServerError();
-        //    }
-        //}
+                var result = _repository.GetPortfolios().SingleOrDefault(r => r.Id == id);
+
+                if (result != null)
+                {
+                    return Ok(ShapedData.CreateDataShapedObject(portfolio, lstOfFields));
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }
 

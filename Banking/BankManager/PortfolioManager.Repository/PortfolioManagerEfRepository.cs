@@ -26,5 +26,15 @@ namespace PortfolioManager.Repository
         {
             return _context.Portfolios;
         }
+
+        public IQueryable<Portfolio> GetPortfolio(int id)
+        {
+            return _context.Portfolios.Where(p => p.Id == id);
+        }
+
+        public IQueryable<Portfolio> GetPortfolioWithAccounts(int id)
+        {
+            return _context.Portfolios.Where(p => p.Id == id);
+        }
     }
 }
