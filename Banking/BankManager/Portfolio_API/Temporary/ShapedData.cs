@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Entities;
+using PortfolioManager.Repository.Entities;
 using Portfolio_API.Helpers;
 
 namespace Portfolio_API.Controllers
@@ -12,7 +13,7 @@ namespace Portfolio_API.Controllers
     {
 
         
-        public static object CreateDataShapedObject(Entities.PortfolioEnt portfolioEnt, List<string> lstOfFields)
+        public static object CreateDataShapedObject(Portfolio portfolioEnt, List<string> lstOfFields)
         {
             // work with a new instance, as we'll manipulate this list in this method
             List<string> lstOfFieldsToWorkWith = new List<string>(lstOfFields);
@@ -88,7 +89,7 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        public static object CreateDataShapedObject(Entities.AccountEnt accountEnt, List<string> lstOfFields)
+        public static object CreateDataShapedObject(Account accountEnt, List<string> lstOfFields)
         {
             // work with a new instance, as we'll manipulate this list in this method
             List<string> lstOfFieldsToWorkWith = new List<string>(lstOfFields);
@@ -164,7 +165,7 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        private static object CreateDataShapedObject(InvestmentMapEnt portfolioEnt, List<string> lstOfInvestmentColumns)
+        private static object CreateDataShapedObject(InvestmentMap portfolioEnt, List<string> lstOfInvestmentColumns)
         {
             return portfolioEnt;
         }

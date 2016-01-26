@@ -236,7 +236,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Temporary\Entities.cs" />
-    <Compile Include="Temporary\FakeData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestmentsController.cs" />
     <Compile Include="Temporary\EntityToDtoMap.cs" />
@@ -256,6 +255,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\PortfolioManagerDummy.mdf" />
+    <Content Include="App_Data\PortfolioManagerDummy_log.ldf">
+      <DependentUpon>PortfolioManagerDummy.mdf</DependentUpon>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -315,9 +318,7 @@
     <Content Include="Views\Portfolios\Error.cshtml" />
     <Content Include="Views\Portfolios\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -327,9 +328,17 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{323B4F4B-6264-40C5-88AC-AF508909DFE6}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PortfolioManager.DTO\PortfolioManager.DTO.csproj">
       <Project>{51c5255f-8785-406d-8f4e-1dc6824e630b}</Project>
       <Name>PortfolioManager.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PortfolioManager.Repository\PortfolioManager.Repository.csproj">
+      <Project>{77b12de0-53ea-43cd-8e33-06af1de7a8b6}</Project>
+      <Name>PortfolioManager.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

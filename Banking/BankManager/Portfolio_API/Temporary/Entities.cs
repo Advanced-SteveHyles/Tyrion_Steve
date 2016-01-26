@@ -3,38 +3,9 @@ using System.Collections.Generic;
 
 namespace Entities
 {
-    internal class PortfolioEnt
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<AccountEnt> Accounts { get; set; }
-    }
 
 
-    internal class AccountEnt
-    {
-        public int Id { get; set; }
 
-        public string Name { get; set; }
-
-        public int Cash { get; set; }
-        public decimal Valuation { get; set; }
-
-        public int PortfolioId { get; set; }
-        public string Type { get; set; }
-        public virtual ICollection<InvestmentMapEnt> Investments { get; set; }
-    }
-
-    internal class InvestmentMapEnt
-    {
-        public int AccountId { get; set; }
-        public int InvestmentId { get; set; }
-        public string InvestmentName { get; set; }
-        public int Quantity { get; set; }
-        public int SellPrice { get; set; }
-        public int Valuation { get; set; }
-        public int Id { get; set; }
-    }
 
     internal class InvestmentEnt
     {

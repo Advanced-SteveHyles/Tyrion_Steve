@@ -7,61 +7,61 @@ namespace Portfolio_API.Controllers
 {
     internal class EntityToDtoMap
     {
-        public static AccountDto CreateAccount(Entities.AccountEnt accountEnt, bool includeInvestments)
-        {
-            var accountDto = new AccountDto
-            {
-                Id = accountEnt.Id,
-                Name = accountEnt.Name,
-                Cash = accountEnt.Cash,
-                Valuation = accountEnt.Valuation              
-            };
+        //public static AccountDto CreateAccount(AccountEnt accountEnt, bool includeInvestments)
+        //{
+        //    var accountDto = new AccountDto
+        //    {
+        //        Id = accountEnt.Id,
+        //        Name = accountEnt.Name,
+        //        Cash = accountEnt.Cash,
+        //        Valuation = accountEnt.Valuation              
+        //    };
 
-            if (includeInvestments)
-                accountDto.Investments = accountEnt.Investments.Select(e => CreateInvestmentMap(e)).ToList();
+        //    if (includeInvestments)
+        //        accountDto.Investments = accountEnt.Investments.Select(e => CreateInvestmentMap(e)).ToList();
 
-            return accountDto;
-        }
+        //    return accountDto;
+        //}
 
-        public static InvestmentMapDto CreateInvestmentMap(InvestmentMapEnt investmentMapEnt)
-        {
-            return new InvestmentMapDto
-            {
-                Id =investmentMapEnt.Id,
-                AccountId = investmentMapEnt.AccountId,
-                InvestmentId = investmentMapEnt.InvestmentId,
-                InvestmentName = investmentMapEnt.InvestmentName,
-                Quantity = investmentMapEnt.Quantity,
-                SellPrice = investmentMapEnt.SellPrice,
-                Valuation = investmentMapEnt.Valuation,
+        //public static InvestmentMapDto CreateInvestmentMap(InvestmentMapEnt investmentMapEnt)
+        //{
+        //    return new InvestmentMapDto
+        //    {
+        //        Id =investmentMapEnt.Id,
+        //        AccountId = investmentMapEnt.AccountId,
+        //        InvestmentId = investmentMapEnt.InvestmentId,
+        //        InvestmentName = investmentMapEnt.InvestmentName,
+        //        Quantity = investmentMapEnt.Quantity,
+        //        SellPrice = investmentMapEnt.SellPrice,
+        //        Valuation = investmentMapEnt.Valuation,
 
-            };
-        }
+        //    };
+        //}
 
-        public static PortfolioDto CreatePortfolio(Entities.PortfolioEnt portfolioEnt)
-        {
-            return new PortfolioDto()
-            {
-                Id = portfolioEnt.Id,
-                Name = portfolioEnt.Name,
-                //UserId = portfolio.UserId,
-                Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
-            };
-        }
+        //public static PortfolioDto CreatePortfolio(Entities.PortfolioEnt portfolioEnt)
+        //{
+        //    return new PortfolioDto()
+        //    {
+        //        Id = portfolioEnt.Id,
+        //        Name = portfolioEnt.Name,
+        //        //UserId = portfolio.UserId,
+        //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+        //    };
+        //}
 
-        public static InvestmentDto CreateInvestment(InvestmentEnt investmentEnt)
-        {
-            return new InvestmentDto()
-            {
-                Id = investmentEnt.ID,
-                Name = investmentEnt.Name,
-                Symbol = investmentEnt.Symbol,
-                Type = investmentEnt.Type,
-                Class = investmentEnt.Class,
-                Income = investmentEnt.Income,
-                SubType2 = investmentEnt.SubType2
-            };
-        }
+        //public static InvestmentDto CreateInvestment(InvestmentEnt investmentEnt)
+        //{
+        //    return new InvestmentDto()
+        //    {
+        //        Id = investmentEnt.ID,
+        //        Name = investmentEnt.Name,
+        //        Symbol = investmentEnt.Symbol,
+        //        Type = investmentEnt.Type,
+        //        Class = investmentEnt.Class,
+        //        Income = investmentEnt.Income,
+        //        SubType2 = investmentEnt.SubType2
+        //    };
+        //}
 
         //public IEnumerable<PortfolioDto> MapEntitiesToDtoModelsSorted(Entities.PortfolioEnt portfolioEnt, string sort, int statusId, string userId)
         //{

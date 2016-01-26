@@ -6,12 +6,21 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using PortfolioManager.DTO;
+using PortfolioManager.Repository;
+using PortfolioManager.Repository.Entities;
 
 namespace Portfolio_API.Controllers
 {
     public class PortfoliosController : ApiController
     {
         const int maxPageSize = 1;
+
+        IPortfolioManagerRepository _repository;
+
+        public PortfoliosController()
+        {
+            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+        }
         
 
         [Route("api/portfolios", Name = "PortfoliosList")]
@@ -25,8 +34,10 @@ namespace Portfolio_API.Controllers
                     pageSize = maxPageSize;
                 }
 
+                IQueryable<Portfolio> portfolios = _repository.GetPortfolios();
+
                 // calculate data for metadata
-                var totalCount = FakeData.GetPortfolios().Count ;
+                var totalCount = portfolios.Count() ;
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
@@ -56,14 +67,17 @@ namespace Portfolio_API.Controllers
 
                 HttpContext.Current.Response.Headers.Add("X-Pagination",
                    Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
-
-
+                
+                //return Ok(
+                //    portfolios
+                //    .Skip(pageSize * (page - 1))
+                //    .Take(pageSize)
+                //    );
 
                 return Ok(
-                    FakeData.GetPortfolios()
-                    .Skip(pageSize * (page - 1))
-                    .Take(pageSize)
+                    portfolios
                     );
+
             }
             catch (Exception)
             {
@@ -71,49 +85,51 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        public IHttpActionResult Get(int id, string fields = null)
-        {
-            try
-            {
-                bool includeAccounts = false;
-                List<string> lstOfFields = new List<string>();
+        //public IHttpActionResult Get(int id, string fields = null)
+        //{
+        //    try
+        //    {
+        //        bool includeAccounts = false;
+        //        List<string> lstOfFields = new List<string>();
 
-                // we should include expenses when the fields-string contains "expenses"
-                if (fields != null)
-                {
-                    lstOfFields = fields.ToLower().Split(',').ToList();
-                    includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
-                }
+        //        // we should include expenses when the fields-string contains "expenses"
+        //        if (fields != null)
+        //        {
+        //            lstOfFields = fields.ToLower().Split(',').ToList();
+        //            includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
+        //        }
+
+
+        //        IQueryable<Portfolio> portfolios = _repository.GetPortfolio();
                 
-                Entities.PortfolioEnt portfolioEnt;
-                if (includeAccounts)
-                {
-                    portfolioEnt = FakeData.GetPortfolioWithAccounts(id);
-                }
-                else
-                {
-                    portfolioEnt = FakeData.GetPortfolio(id);
-                }
+        //        if (includeAccounts)
+        //        {
+        //            //_repository.GetPortfolioWithAccounts();
+        //        }
+        //        else
+        //        {
+        //            portfolios = _repository.GetPortfolios();
+        //        }
 
-                var result = FakeData.GetPortfolios().SingleOrDefault(r => r.Id == id);
+        //        var result = FakeData.GetPortfolios().SingleOrDefault(r => r.Id == id);
               
-                if (result != null)
-                {
+        //        if (result != null)
+        //        {
 
-                    return Ok(ShapedData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError();
-            }
-        }
-
+        //            return Ok(ShapedData.CreateDataShapedObject(portfolioEnt, lstOfFields));                    
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError();
+        //    }
+        //}
     }
 }
+
 
 
