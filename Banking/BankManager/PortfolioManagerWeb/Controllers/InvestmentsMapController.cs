@@ -20,8 +20,23 @@ namespace PortfolioManagerWeb.Controllers
 
         public async Task<ActionResult> Dividend(int id)
         {
-            return null;
+            return View();
         }
 
+
+        public async Task<ActionResult> CorporateAction(int id)
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> Resolves()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<ActionResult> Resolve(object id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

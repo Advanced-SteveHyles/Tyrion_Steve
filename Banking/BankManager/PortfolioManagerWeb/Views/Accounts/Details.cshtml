@@ -58,17 +58,27 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Valuation)
             </td>
-            <td>                
-                @*
-                    @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.Id}, null) |
-                    @Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupId = item.ExpenseGroupId, id = item.Id }, null)**@
+            <td>
+
+                @{
+                    string fred = "Option 1";
+                }
+                @Html.DropDownList(fred, new List<SelectListItem>
+                {
+                    new SelectListItem{ Text="Option 1", Value = "1" },
+                    new SelectListItem{ Text="Option 2", Value = "2" },
+                    new SelectListItem{ Text="Option 3", Value = "3" },
+                })
+
+                @Html.ActionLink("Create New", "Resolve", "InvestmentsMap",   new { id = item.Id , action= fred}, null)
+                
 
                 @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new { id = item.Id }, null)
                 @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.Id }, null)
 
-                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new {id = item.Id}, null))
+                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.Id }, null))
                 @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.Id }, null))
-                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new {id = item.Id}, null))
+                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.Id }, null))
                 @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.Id }, null))
 
             </td>

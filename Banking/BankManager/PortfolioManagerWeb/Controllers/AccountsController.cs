@@ -31,5 +31,7 @@ namespace PortfolioManagerWeb.Controllers
 
             return Content("An error occurred");
         }
+
+        
     }
 }
