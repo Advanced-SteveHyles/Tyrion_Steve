@@ -83,5 +83,22 @@ namespace PortfolioManagerWeb.Controllers
 
             return Content("An error occurred");
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> Create(PortfolioDto dto)
+        {
+            var client = PortfolioManagerHttpClient.GetClient();
+
+            //HttpResponseMessage response = await client.PostAsync("api/portfolios/");
+
+
+            return View();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace PortfolioManagerWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Buy(int mapId, InvestmentBuyDto buy)
+        public async Task<ActionResult> Buy(int mapId, InvestmentBuyRequest buy)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace PortfolioManagerWeb.Controllers
             }
         }
 
-        private static async Task<HttpResponseMessage> ProcessBuyTransaction(InvestmentBuyDto buy)
+        private static async Task<HttpResponseMessage> ProcessBuyTransaction(InvestmentBuyRequest buy)
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
