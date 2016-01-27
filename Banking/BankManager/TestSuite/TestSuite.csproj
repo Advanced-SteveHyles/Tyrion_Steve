@@ -80,10 +80,6 @@
     <Compile Include="ViewModel\GetViewModelHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankManager\PortfolioManager.csproj">
-      <Project>{eaaccc34-d65d-42d1-a44c-d42183a8a72a}</Project>
-      <Name>PortfolioManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{d54f38e9-8fbb-473a-ae31-98c85a05e857}</Project>
       <Name>BusinessLogic</Name>

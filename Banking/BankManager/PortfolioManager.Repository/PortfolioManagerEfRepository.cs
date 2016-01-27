@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExpenseTracker.Repository;
+using PortfolioManager.DTO;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
@@ -35,6 +37,27 @@ namespace PortfolioManager.Repository
         public IQueryable<Portfolio> GetPortfolioWithAccounts(int id)
         {
             return _context.Portfolios.Where(p => p.Id == id);
+        }
+
+        public RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio)
+        {
+            try
+            {
+                _context.Portfolios.Add(entityPortfolio);
+                var result = _context.SaveChanges();
+                if (result > 0)
+                {
+                    return new RepositoryActionResult<Portfolio>(entityPortfolio, RepositoryActionStatus.Created);
+                }
+                else
+                {
+                    return new RepositoryActionResult<Portfolio>(entityPortfolio, RepositoryActionStatus.NothingModified, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new RepositoryActionResult<Portfolio>(null, RepositoryActionStatus.Error, ex);
+            }
         }
     }
 }

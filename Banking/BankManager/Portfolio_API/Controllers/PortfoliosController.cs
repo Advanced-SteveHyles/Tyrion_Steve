@@ -5,14 +5,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using ExpenseTracker.Repository;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Factories;
 
 namespace Portfolio_API.Controllers
 {
     public class PortfoliosController : ApiController
     {
-        const int maxPageSize = 1;
+        const int MaxPageSize = 1;
 
         IPortfolioManagerRepository _repository;
 
@@ -20,23 +23,23 @@ namespace Portfolio_API.Controllers
         {
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
         }
-        
+
 
         [Route("api/portfolios", Name = "PortfoliosList")]
-        public IHttpActionResult Get(int page = 1, int pageSize = maxPageSize)
+        public IHttpActionResult Get(int page = 1, int pageSize = MaxPageSize)
         {
             try
-            {                
+            {
                 // ensure the page size isn't larger than the maximum.
-                if (pageSize > maxPageSize)
+                if (pageSize > MaxPageSize)
                 {
-                    pageSize = maxPageSize;
+                    pageSize = MaxPageSize;
                 }
 
                 IQueryable<Portfolio> portfolios = _repository.GetPortfolios();
 
                 // calculate data for metadata
-                var totalCount = portfolios.Count() ;
+                var totalCount = portfolios.Count();
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var urlHelper = new UrlHelper(Request);
@@ -44,13 +47,13 @@ namespace Portfolio_API.Controllers
                     new
                     {
                         page = page - 1,
-                        pageSize = pageSize,                        
+                        pageSize = pageSize,
                     }) : "";
                 var nextLink = page < totalPages ? urlHelper.Link("PortfoliosList",
                     new
                     {
                         page = page + 1,
-                        pageSize = pageSize,                        
+                        pageSize = pageSize,
                     }) : "";
 
                 var paginationHeader = new
@@ -66,7 +69,7 @@ namespace Portfolio_API.Controllers
 
                 HttpContext.Current.Response.Headers.Add("X-Pagination",
                    Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
-                
+
                 //return Ok(
                 //    portfolios
                 //    .Skip(pageSize * (page - 1))
@@ -137,7 +140,7 @@ namespace Portfolio_API.Controllers
                     return BadRequest();
                 }
 
-                var entityPortfolio = new PortFolioFactory().CreatePortfolio(portfolio);
+                var entityPortfolio = new PortfolioFactory().CreatePortfolio(portfolio);
                 if (entityPortfolio == null)
                 {
                     return BadRequest();
@@ -155,7 +158,7 @@ namespace Portfolio_API.Controllers
                 var result = _repository.InsertPortfolio(entityPortfolio);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoPortfolio = _mappersToDto.MapEntitiyToDtoModel(result.Entity);
+                    var dtoPortfolio = DtoMapper.MapPortfolioToDto(result.Entity);
                     return Created(Request.RequestUri + "/" + dtoPortfolio.Id, dtoPortfolio);
                 }
                 else
@@ -174,7 +177,32 @@ namespace Portfolio_API.Controllers
 
 
     }
+
+    public class DtoMapper
+    {
+        public static object MapEntitiyToDtoModel(Portfolio entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static PortfolioDto MapPortfolioToDto(Portfolio entity)
+        {
+            return new PortfolioDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+
+                //Accounts = entity.Accounts ?? new List<AccountDto> 
+
+            };
+        }
+    }
 }
+
+namespace ExpenseTracker.Repository
+{
+}
+
 
 
 
