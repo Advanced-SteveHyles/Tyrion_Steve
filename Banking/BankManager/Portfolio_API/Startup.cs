@@ -12,7 +12,7 @@ namespace Portfolio_API
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            app.UseWebApi(WebApiConfig.Register());
         }
     }
 }

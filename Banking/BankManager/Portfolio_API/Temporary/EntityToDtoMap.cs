@@ -2,11 +2,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using PortfolioManager.DTO;
+using PortfolioManager.Repository.Entities;
 
 namespace Portfolio_API.Controllers
 {
     internal class EntityToDtoMap
     {
+            public static PortfolioDto MapPortfolioToDto(Portfolio entity)
+            {
+                return new PortfolioDto
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+
+                    //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+                };
+            }
+
+
+
         //public static AccountDto CreateAccount(AccountEnt accountEnt, bool includeInvestments)
         //{
         //    var accountDto = new AccountDto
@@ -38,16 +52,7 @@ namespace Portfolio_API.Controllers
         //    };
         //}
 
-        //public static PortfolioDto CreatePortfolio(Entities.PortfolioEnt portfolioEnt)
-        //{
-        //    return new PortfolioDto()
-        //    {
-        //        Id = portfolioEnt.Id,
-        //        Name = portfolioEnt.Name,
-        //        //UserId = portfolio.UserId,
-        //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
-        //    };
-        //}
+
 
         //public static InvestmentDto CreateInvestment(InvestmentEnt investmentEnt)
         //{

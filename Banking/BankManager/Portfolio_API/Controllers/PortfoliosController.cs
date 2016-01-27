@@ -158,7 +158,7 @@ namespace Portfolio_API.Controllers
                 var result = _repository.InsertPortfolio(entityPortfolio);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoPortfolio = DtoMapper.MapPortfolioToDto(result.Entity);
+                    var dtoPortfolio = EntityToDtoMap.MapPortfolioToDto(result.Entity);
                     return Created(Request.RequestUri + "/" + dtoPortfolio.Id, dtoPortfolio);
                 }
                 else
@@ -178,23 +178,5 @@ namespace Portfolio_API.Controllers
 
     }
 
-    public class DtoMapper
-    {
-        public static object MapEntitiyToDtoModel(Portfolio entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static PortfolioDto MapPortfolioToDto(Portfolio entity)
-        {
-            return new PortfolioDto
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-
-                //Accounts = entity.Accounts ?? new List<AccountDto> 
-
-            };
-        }
-    }
+   
 }
