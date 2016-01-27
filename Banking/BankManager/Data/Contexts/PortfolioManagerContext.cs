@@ -12,8 +12,11 @@ namespace Data
         {
             //this.Configuration.LazyLoadingEnabled = false;
             //this.Configuration.ProxyCreationEnabled = false;
-            Database.SetInitializer(
-                new MigrateDatabaseToLatestVersion<PortfolioManagerContext, BankmangerMigrationsConfiguration>());
+            //            Database.SetInitializer(
+            //              new MigrateDatabaseToLatestVersion<PortfolioManagerContext, BankmangerMigrationsConfiguration>());
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
+            Database.SetInitializer<PortfolioManagerContext>(null);
         }
 
         public DbSet<DBGenerator> DBGenerator { get; set; }

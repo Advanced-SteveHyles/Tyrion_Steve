@@ -9,7 +9,9 @@ namespace PortfolioManager.Repository
     {
         public PortfolioManagerContext():base ("name=PortfolioManagerContext")
         {
-            
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
+            Database.SetInitializer<PortfolioManagerContext>(null);
         }
 
         public virtual DbSet <Portfolio> Portfolios { get; set; }

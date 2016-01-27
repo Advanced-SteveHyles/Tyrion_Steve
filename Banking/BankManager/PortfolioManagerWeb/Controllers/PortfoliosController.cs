@@ -91,7 +91,7 @@ namespace PortfolioManagerWeb.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Create(PortfolioDto portfolio)
+        public async Task<ActionResult> Create(PortfolioRequest portfolio)
         {
 
             try

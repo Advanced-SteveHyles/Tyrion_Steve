@@ -17,6 +17,8 @@ namespace PortfolioManager.Repository
         {
             _context = context;
             _context.Configuration.LazyLoadingEnabled = false;
+
+
         }
         
         //public IQueryable<Portfolio> GetPortfolios(int expenseGroupId)

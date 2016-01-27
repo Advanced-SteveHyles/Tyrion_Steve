@@ -81,7 +81,7 @@ namespace Portfolio_API.Controllers
                     );
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return InternalServerError();
             }
@@ -130,8 +130,8 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult Post([FromBody] PortfolioDto portfolio)
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult Post([FromBody] PortfolioRequest portfolio)
         {
             try
             {
@@ -198,11 +198,3 @@ namespace Portfolio_API.Controllers
         }
     }
 }
-
-namespace ExpenseTracker.Repository
-{
-}
-
-
-
-

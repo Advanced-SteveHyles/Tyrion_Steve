@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDto.cs" />
+    <Compile Include="PortfolioRequest.cs" />
     <Compile Include="Transactions\InvestmentBuyRequest.cs" />
     <Compile Include="InvestmentDto.cs" />
     <Compile Include="InvestmentMapDto.cs" />
