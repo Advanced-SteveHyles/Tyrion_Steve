@@ -91,14 +91,40 @@ namespace PortfolioManagerWeb.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Create(PortfolioDto dto)
+        public async Task<ActionResult> Create(PortfolioDto portfolio)
         {
-            var client = PortfolioManagerHttpClient.GetClient();
 
-            //HttpResponseMessage response = await client.PostAsync("api/portfolios/");
+            try
+            {
+                var client = PortfolioManagerHttpClient.GetClient();
 
 
-            return View();
+                //var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+
+                // an expensegroup is created with status "Open", for the current user
+                //expenseGroup.ExpenseGroupStatusId = 1;
+                //expenseGroup.UserId = userId;
+
+                var serializedItemToCreate = JsonConvert.SerializeObject(portfolio);
+
+                var response = await client.PostAsync("api/portfolios",
+                  new StringContent(serializedItemToCreate,
+                  System.Text.Encoding.Unicode, "application/json"));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return Content("An error occurred");
+                }
+            }
+            catch
+            {
+                return Content("An error occurred.");
+            }
         }
     }
 }

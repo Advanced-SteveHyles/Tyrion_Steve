@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Web.Http.Routing;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
-using PortfolioManager.Repository.Entities;
 
 namespace Portfolio_API.Controllers
 {
@@ -127,6 +126,53 @@ namespace Portfolio_API.Controllers
                 return InternalServerError();
             }
         }
+
+        [HttpPost]
+        public IHttpActionResult Post([FromBody] PortfolioDto portfolio)
+        {
+            try
+            {
+                if (portfolio == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityPortfolio = new PortFolioFactory().CreatePortfolio(portfolio);
+                if (entityPortfolio == null)
+                {
+                    return BadRequest();
+                }
+
+                /*
+                {
+                    "userId": "https://expensetrackeridsrv3/embedded_1",
+                    "title": "STV",
+                    "description": "STV",
+                    "expenseGroupStatusId": 1,
+                }
+                */
+
+                var result = _repository.InsertPortfolio(entityPortfolio);
+                if (result.Status == RepositoryActionStatus.Created)
+                {
+                    var dtoPortfolio = _mappersToDto.MapEntitiyToDtoModel(result.Entity);
+                    return Created(Request.RequestUri + "/" + dtoPortfolio.Id, dtoPortfolio);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
+        }
+
+
+
     }
 }
 
