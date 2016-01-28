@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Portfolio_API
 {
@@ -14,10 +16,20 @@ namespace Portfolio_API
             config.Routes.MapHttpRoute(
                name: "DefaultRouting",
                routeTemplate: "api/{controller}/{id}",
-               defaults: new { id = RouteParameter.Optional }
+               defaults: new { id = RouteParameter.Optional }               
            );
+
+            FormatterForJson(config);
 
             return config;
         }
+
+
+        private static void FormatterForJson(HttpConfiguration config)
+        {
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
     }
 }
