@@ -131,6 +131,7 @@ namespace Portfolio_API.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        [Route("api/portfolios")]
         public IHttpActionResult Post([FromBody] PortfolioRequest portfolio)
         {
             try
