@@ -31,14 +31,17 @@ namespace PortfolioManager.Repository
             return _context.Portfolios;
         }
 
-        public IQueryable<Portfolio> GetPortfolio(int id)
+        public Portfolio GetPortfolio(int id)
         {
-            return _context.Portfolios.Where(p => p.Id == id);
+            var portfolio    = _context.Portfolios.SingleOrDefault(p => p.Id == id);
+            return portfolio;
         }
 
-        public IQueryable<Portfolio> GetPortfolioWithAccounts(int id)
+        public Portfolio GetPortfolioWithAccounts(int id)
         {
-            return _context.Portfolios.Where(p => p.Id == id);
+            var portfolio = _context.Portfolios.Include("Accounts").SingleOrDefault(p => p.Id == id);
+            
+            return portfolio ;
         }
 
         public RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio)
@@ -60,6 +63,12 @@ namespace PortfolioManager.Repository
             {
                 return new RepositoryActionResult<Portfolio>(null, RepositoryActionStatus.Error, ex);
             }
+        }
+
+        public IQueryable<Investment> GetInvestments()
+        {
+            var investment = _context.Investments;
+            return investment;
         }
     }
 }

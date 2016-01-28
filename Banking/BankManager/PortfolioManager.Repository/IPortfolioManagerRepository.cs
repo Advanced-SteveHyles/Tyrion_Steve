@@ -12,8 +12,9 @@ namespace PortfolioManager.Repository
     {        
         System.Linq.IQueryable<Entities.Portfolio> GetPortfolios();
 
-        IQueryable<Portfolio> GetPortfolio(int id);
-        IQueryable<Portfolio> GetPortfolioWithAccounts(int id);
+        Portfolio GetPortfolio(int id);
+        Portfolio GetPortfolioWithAccounts(int id);
         RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);
+        System.Linq.IQueryable<Entities.Investment> GetInvestments();
     }
 }

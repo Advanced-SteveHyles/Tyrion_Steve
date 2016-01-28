@@ -1,5 +1,5 @@
-﻿using Data;
-using System.Linq;
+﻿using System.Linq;
+using PortfolioManager.Repository;
 
 namespace DBCreator
 {

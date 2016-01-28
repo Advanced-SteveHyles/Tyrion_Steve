@@ -106,11 +106,11 @@ namespace Portfolio_API.Controllers
 
                 if (includeAccounts)
                 {
-                    portfolio = _repository.GetPortfolioWithAccounts(id).FirstOrDefault();
+                    portfolio = _repository.GetPortfolioWithAccounts(id);
                 }
                 else
                 {
-                    portfolio = _repository.GetPortfolio(id).FirstOrDefault();
+                    portfolio = _repository.GetPortfolio(id);
                 }
 
                 var result = _repository.GetPortfolios().SingleOrDefault(r => r.Id == id);

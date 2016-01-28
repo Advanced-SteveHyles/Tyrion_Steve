@@ -64,13 +64,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{323b4f4b-6264-40c5-88ac-af508909dfe6}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170be89d-025f-4352-9388-72ce26ee12e9}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PortfolioManager.Repository\PortfolioManager.Repository.csproj">
+      <Project>{77b12de0-53ea-43cd-8e33-06af1de7a8b6}</Project>
+      <Name>PortfolioManager.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

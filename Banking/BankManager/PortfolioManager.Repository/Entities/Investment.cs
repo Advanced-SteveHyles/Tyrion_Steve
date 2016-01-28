@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PortfolioManager.Repository.Entities
 {
     [Table ("Investment")]
-    class Investment
+    public class Investment
     {
             public int Id { get; set; }
             public string Name { get; set; }
