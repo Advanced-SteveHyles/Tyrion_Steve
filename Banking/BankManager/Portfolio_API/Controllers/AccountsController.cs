@@ -4,11 +4,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ExpenseTracker.Repository;
+using PortfolioManager.DTO;
+using PortfolioManager.Repository;
+using PortfolioManager.Repository.Factories;
 
 namespace Portfolio_API.Controllers
 {
     public class AccountsController : ApiController
     {
+        IPortfolioManagerRepository _repository;
+
+        public AccountsController()
+        {
+            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+        }
+
         //public IHttpActionResult Get(int id, string fields = null)
         //{
         //    try
@@ -50,6 +61,54 @@ namespace Portfolio_API.Controllers
         //        return InternalServerError();
         //    }
         //}
+
+        [System.Web.Http.HttpPost]
+        [Route("api/accounts")]
+        public IHttpActionResult Post([FromBody] AccountRequest account)
+        {
+            try
+            {
+                if (account == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityAccount   = new AccountFactory().CreateAccount(account);
+                if (entityAccount == null)
+                {
+                    return BadRequest();
+                }
+
+                /*
+                {
+                    "userId": "https://expensetrackeridsrv3/embedded_1",
+                    "title": "STV",
+                    "description": "STV",
+                    "expenseGroupStatusId": 1,
+                }
+                */
+
+                var result = _repository.InsertAccount(entityAccount);
+                if (result.Status == RepositoryActionStatus.Created)
+                {
+                    var dtoAccount = EntityToDtoMap.MapAccountToDto(result.Entity);
+                    return Created(Request.RequestUri + "/" + dtoAccount.Id, dtoAccount);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return InternalServerError();
+            }
+        }
+
+
+
 
     }
 }

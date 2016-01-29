@@ -15,10 +15,40 @@ namespace PortfolioManagerWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(AccountRequest portfolio)
+        public async Task<ActionResult> Create(AccountRequest account)
         {
 
-            return RedirectToAction("Details","Portfolios", new {Id = portfolio.PortfolioId});
+            try
+            {
+                var client = PortfolioManagerHttpClient.GetClient();
+
+
+                //var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+
+                // an expensegroup is created with status "Open", for the current user
+                //expenseGroup.ExpenseGroupStatusId = 1;
+                //expenseGroup.UserId = userId;
+
+                var serializedItemToCreate = JsonConvert.SerializeObject(account);
+
+                var response = await client.PostAsync("api/accounts",
+                  new StringContent(serializedItemToCreate,
+                  System.Text.Encoding.Unicode, "application/json"));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", "Portfolios", new { Id = account.PortfolioId });
+                }
+                else
+                {
+                    return Content("An error occurred");
+                }
+            }
+            catch
+            {
+                return Content("An error occurred.");
+            }            
         }
 
 

@@ -20,24 +20,7 @@ namespace Portfolio_API.Controllers
             }
 
 
-
-        //public static AccountDto CreateAccount(AccountEnt accountEnt, bool includeInvestments)
-        //{
-        //    var accountDto = new AccountDto
-        //    {
-        //        Id = accountEnt.Id,
-        //        Name = accountEnt.Name,
-        //        Cash = accountEnt.Cash,
-        //        Valuation = accountEnt.Valuation              
-        //    };
-
-        //    if (includeInvestments)
-        //        accountDto.Investments = accountEnt.Investments.Select(e => CreateInvestmentMap(e)).ToList();
-
-        //    return accountDto;
-        //}
-
-        //public static InvestmentMapDto CreateInvestmentMap(InvestmentMapEnt investmentMapEnt)
+//public static InvestmentMapDto CreateInvestmentMap(InvestmentMapEnt investmentMapEnt)
         //{
         //    return new InvestmentMapDto
         //    {
@@ -92,5 +75,35 @@ namespace Portfolio_API.Controllers
         //        .Select(eg => ShapedData.CreateDataShapedObject(eg, fields)
         //        );
         //}
+
+
+        public static AccountDto MapAccountToDto(Account entity)
+        {
+            return new AccountDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+
+                // Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+            };
+        }
+
+        //public static AccountDto CreateAccount(AccountEnt accountEnt, bool includeInvestments)
+        //{
+        //    var accountDto = new AccountDto
+        //    {
+        //        Id = accountEnt.Id,
+        //        Name = accountEnt.Name,
+        //        Cash = accountEnt.Cash,
+        //        Valuation = accountEnt.Valuation              
+        //    };
+
+        //    if (includeInvestments)
+        //        accountDto.Investments = accountEnt.Investments.Select(e => CreateInvestmentMap(e)).ToList();
+
+        //    return accountDto;
+        //}
+
+
     }
 }

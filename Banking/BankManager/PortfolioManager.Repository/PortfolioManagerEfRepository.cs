@@ -70,5 +70,26 @@ namespace PortfolioManager.Repository
             var investment = _context.Investments;
             return investment;
         }
+
+        public RepositoryActionResult<Account> InsertAccount(Account entityAccount)
+        {
+            try
+            {
+                _context.Accounts.Add(entityAccount);
+                var result = _context.SaveChanges();
+                if (result > 0)
+                {
+                    return new RepositoryActionResult<Account>(entityAccount, RepositoryActionStatus.Created);
+                }
+                else
+                {
+                    return new RepositoryActionResult<Account>(entityAccount, RepositoryActionStatus.NothingModified, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new RepositoryActionResult<Account>(null, RepositoryActionStatus.Error, ex);
+            }
+        }
     }
 }
