@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -83,6 +82,7 @@ namespace Portfolio_API.Controllers
             }
             catch (Exception ex)
             {
+                ErrorLog.LogError(ex);
                 return InternalServerError();
             }
         }
@@ -168,9 +168,9 @@ namespace Portfolio_API.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                ErrorLog.LogError(ex);
                 return InternalServerError();
             }
         }
@@ -179,5 +179,11 @@ namespace Portfolio_API.Controllers
 
     }
 
-   
+    public class ErrorLog
+    {
+        public static void LogError(Exception exception)
+        {
+            Console.Write(exception.Message);
+        }
+    }
 }

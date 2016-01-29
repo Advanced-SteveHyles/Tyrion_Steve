@@ -308,6 +308,7 @@
     <Content Include="Views\InvestmentsMap\Buy.cshtml" />
     <Content Include="Views\InvestmentsMap\Sell.cshtml" />
     <Content Include="Views\Portfolios\Create.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

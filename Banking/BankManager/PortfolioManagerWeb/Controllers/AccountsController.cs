@@ -9,6 +9,20 @@ namespace PortfolioManagerWeb.Controllers
 {
     public class AccountsController : Controller
     {
+        public ActionResult Create(int? portfolioId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(AccountRequest portfolio)
+        {
+
+            return RedirectToAction("Details","Portfolios", new {Id = portfolio.PortfolioId});
+        }
+
+
+
         public async Task<ActionResult> Edit(int id)
         {
             return null;
