@@ -51,22 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankmangerMigrationsConfiguration.cs" />
-    <Compile Include="DTOs\PortfolioDTO.cs" />
     <Compile Include="Generators\EnumToTableFactory.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="Repositorys\PortfolioRepository.cs" />
-    <Compile Include="Tables\Accounts\Account.cs" />
-    <Compile Include="Tables\Accounts\Portfolio.cs" />
-    <Compile Include="Tables\Accounts\Statement.cs" />
-    <Compile Include="Tables\Accounts\Transaction.cs" />
-    <Compile Include="Contexts\PortfolioManagerContext.cs" />
-    <Compile Include="BasicRepository.cs" />
-    <Compile Include="IBasicRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\Ref\AccountType.cs" />
     <Compile Include="Tables\Ref\DBGenerator.cs" />
-    <Compile Include="Tables\Ref\TransactionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -89,8 +77,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extractors\" />
-    <Folder Include="Tests\" />
+    <Folder Include="Contexts\" />
+    <Folder Include="Tables\Accounts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

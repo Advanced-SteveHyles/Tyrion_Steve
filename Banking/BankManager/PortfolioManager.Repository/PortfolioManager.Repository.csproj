@@ -50,12 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PortfolioMangerMigrationsConfiguration.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Investment.cs" />
     <Compile Include="Entities\InvestmentMap.cs" />
     <Compile Include="Entities\Portfolio.cs" />
     <Compile Include="Factories\AccountFactory.cs" />
-    <Compile Include="Factories\AccountsFactory.cs" />
     <Compile Include="Factories\PortfolioFactory.cs" />
     <Compile Include="PortfolioManagerEfRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -38,13 +38,15 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountDto.cs" />
-    <Compile Include="PortfolioRequest.cs" />
-    <Compile Include="Transactions\InvestmentBuyRequest.cs" />
-    <Compile Include="InvestmentDto.cs" />
-    <Compile Include="InvestmentMapDto.cs" />
-    <Compile Include="Transactions\InvestmentSellDTO.cs" />
-    <Compile Include="PortfolioDTO.cs" />
+    <Compile Include="DTOs\AccountDto.cs" />
+    <Compile Include="Requests\AccountRequest.cs" />
+    <Compile Include="Requests\PortfolioRequest.cs" />
+    <Compile Include="Requests\Transactions\DepositTransactionRequest.cs" />
+    <Compile Include="Requests\Transactions\InvestmentBuyRequest.cs" />
+    <Compile Include="DTOs\InvestmentDto.cs" />
+    <Compile Include="DTOs\InvestmentMapDto.cs" />
+    <Compile Include="Requests\Transactions\InvestmentSellDTO.cs" />
+    <Compile Include="DTOs\PortfolioDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

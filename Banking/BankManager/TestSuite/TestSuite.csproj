@@ -69,13 +69,8 @@
   <ItemGroup>
     <Compile Include="DataEntryPortfolioViewModelTests.cs" />
     <Compile Include="MOK\FakeRepository.cs" />
-    <Compile Include="PortfolioTests.cs" />
-    <Compile Include="SetupAndBasicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AccountTests.cs" />
     <Compile Include="TransactionTests.cs" />
-    <Compile Include="CrudViewModelTest.cs" />
-    <Compile Include="ViewModel\DataEntryPortfolioViewModelTests.cs" />
     <Compile Include="ViewModel\DataEntryTransactionViewModel.cs" />
     <Compile Include="ViewModel\GetViewModelHelper.cs" />
   </ItemGroup>
@@ -99,14 +94,6 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170be89d-025f-4352-9388-72ce26ee12e9}</Project>
       <Name>Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{ee54b81a-aa48-4614-a6bb-ab46ccba0677}</Project>
-      <Name>ViewModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WPFBase\WPFBase.csproj">
-      <Project>{5ff17b04-2929-4b71-8eef-5ccc0db5d80b}</Project>
-      <Name>WPFBase</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

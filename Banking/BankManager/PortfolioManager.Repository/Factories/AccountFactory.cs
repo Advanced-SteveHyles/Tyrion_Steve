@@ -10,9 +10,12 @@ namespace PortfolioManager.Repository.Factories
         {
             return new Account()
             {
-                PortfolioId =   account.PortfolioId,
+                PortfolioId = account.PortfolioId,
                 Name = account.Name,
-                Investments = new List<InvestmentMap>()
+                Investments = new List<InvestmentMap>(),
+                Cash = 0,
+                Valuation = 0,
+                Type = "Not Set"
             };
         }
     }

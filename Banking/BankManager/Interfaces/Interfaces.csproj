@@ -50,25 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\IPortfolioHandler.cs" />
     <Compile Include="Communication\IMediator.cs" />
-    <Compile Include="Data\Contexts\IPortfolioManagerContext.cs" />
-    <Compile Include="Data\Repository\IPortfolioRepository.cs" />
     <Compile Include="IAccountHandler.cs" />
-    <Compile Include="IAccount.cs" />
-    <Compile Include="ICrudViewModel.cs" />
-    <Compile Include="Viewmodels\IDataEntryPortfolioViewModel.cs" />
-    <Compile Include="IMainSystemsSubTabViewModel.cs" />
+    <Compile Include="ICommandRunner.cs" />
+    <Compile Include="Interface1.cs" />
     <Compile Include="INullInterface.cs" />
-    <Compile Include="Viewmodels\ISearchPortfolioViewModel.cs" />
-    <Compile Include="IStartupViewModel.cs" />
-    <Compile Include="IPortfolioDTO.cs" />
     <Compile Include="IIOCContainer.cs" />
     <Compile Include="IStatement.cs" />
-    <Compile Include="Viewmodels\ITabAccountsViewModel.cs" />
-    <Compile Include="Viewmodels\ITabPortfolioViewModel.cs" />
     <Compile Include="ITransaction.cs" />
-    <Compile Include="ITransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
