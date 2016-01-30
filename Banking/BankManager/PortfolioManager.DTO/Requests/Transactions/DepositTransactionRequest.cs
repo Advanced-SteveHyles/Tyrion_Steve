@@ -8,13 +8,13 @@ namespace PortfolioManager.DTO.Requests.Transactions
 {
    public class DepositTransactionRequest
     {
-       private readonly int _accountId;
-       private readonly decimal _value;
+       public int AccountId { get; }
+       public decimal Value { get; }
 
        public DepositTransactionRequest(int accountID, decimal value )
        {
-           _accountId = accountID;
-           _value = value;
+           AccountId = accountID;
+           Value = value;
        }
     }
 }

@@ -1,8 +1,17 @@
-﻿namespace Interfaces.BusinessInterfaces
+﻿using PortfolioManager.DTO.Requests.Transactions;
+
+namespace Interfaces
 {
- public   interface IAccountHandler
+    public interface IAccountHandler
     {
-     void   UpdateBalances();
-     void AddTransaction(  ITransaction transaction);
+        decimal Balance { get; set; }
+
+        void IncreaseBalance(decimal amount);
     }
+
+    public interface ITransactionHandler
+    {
+        void StoreTransaction(DepositTransactionRequest depositTransactionRequest);
+    }
+
 }
