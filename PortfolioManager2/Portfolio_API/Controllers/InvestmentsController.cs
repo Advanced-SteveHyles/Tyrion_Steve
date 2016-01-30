@@ -75,8 +75,8 @@ namespace Portfolio_API.Controllers
 
                 return Ok(
                         results
-                        .Skip(pageSize * (page - 1))
-                        .Take(pageSize)
+                        //.Skip(pageSize * (page - 1))
+                        //.Take(pageSize)
                         );
 
             }

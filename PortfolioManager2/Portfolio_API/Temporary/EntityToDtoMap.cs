@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Entities;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository.Entities;
 

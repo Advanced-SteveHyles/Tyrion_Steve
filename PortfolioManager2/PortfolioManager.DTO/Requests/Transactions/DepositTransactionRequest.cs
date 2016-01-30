@@ -9,12 +9,19 @@ namespace PortfolioManager.DTO.Requests.Transactions
    public class DepositTransactionRequest
     {
        public int AccountId { get; }
+
+       public DateTime TransactionDate { get; }
+        
        public decimal Value { get; }
 
-       public DepositTransactionRequest(int accountID, decimal value )
+       public string Source { get; }
+
+       public DepositTransactionRequest(int accountID, decimal value, DateTime transactionDate, string source)
        {
            AccountId = accountID;
            Value = value;
+           TransactionDate = transactionDate;
+           Source = source;
        }
     }
 }

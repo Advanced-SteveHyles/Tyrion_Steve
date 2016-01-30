@@ -40,7 +40,7 @@ namespace PortfolioManagerWeb.Controllers
             else
             {
                 return Content("An error occurred.");
-    }
+            }
 
             return View(model);
         }

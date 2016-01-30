@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using Entities;
 using PortfolioManager.Repository.Entities;
 using Portfolio_API.Helpers;
 

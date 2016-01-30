@@ -216,11 +216,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\AccountTransactionController.cs" />
+    <Compile Include="Controllers\Accounts\AccountController.cs" />
+    <Compile Include="Controllers\Accounts\AccountsController.cs" />
+    <Compile Include="Controllers\Transactions\AccountTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvestmentsController.cs" />
+    <Compile Include="Controllers\Investments\InvestmentsController.cs" />
     <Compile Include="Controllers\InvestmentsMapController.cs" />
     <Compile Include="Models\AccountsViewModel.cs" />
     <Compile Include="Models\Transactions\InvestmentBuyViewModel.cs" />
