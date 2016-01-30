@@ -7,6 +7,7 @@ using System.Web.Http;
 using ExpenseTracker.Repository;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
 
 namespace Portfolio_API.Controllers
@@ -20,47 +21,47 @@ namespace Portfolio_API.Controllers
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
         }
 
-        //public IHttpActionResult Get(int id, string fields = null)
-        //{
-        //    try
-        //    {
-        //        bool includeInvestments = false;
-        //        List<string> lstOfFields = new List<string>();
+        public IHttpActionResult Get(int id, string fields = null)
+        {
+            try
+            {
+                bool includeInvestments = false;
+                List<string> lstOfFields = new List<string>();
 
-        //        // we should include expenses when the fields-string contains "expenses"
-        //        if (fields != null)
-        //        {
-        //            lstOfFields = fields.ToLower().Split(',').ToList();
-        //            includeInvestments = lstOfFields.Any(f => f.Contains("investments"));
-        //        }
+                // we should include expenses when the fields-string contains "expenses"
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                    includeInvestments = lstOfFields.Any(f => f.Contains("investments"));
+                }
 
-        //        Entities.AccountEnt accountEnt;
-        //        if (includeInvestments)
-        //        {
-        //            accountEnt = FakeData.GetAccountWithInvestments(id);
-        //        }
-        //        else
-        //        {
-        //            accountEnt = FakeData.GetAccount(id);
-        //        }
+                Account accountEnt;
+                if (includeInvestments)
+                {
+                    accountEnt = _repository.GetAccountWithInvestments(id);
+                }
+                else
+                {
+                    accountEnt = _repository.GetAccount(id);
+                }
 
-        //        var result = FakeData.GetAccount(id);
+                var result = _repository.GetAccount(id);
 
-        //        if (result != null)
-        //        {
+                if (result != null)
+                {
 
-        //            return Ok(ShapedData.CreateDataShapedObject(accountEnt, lstOfFields));
-        //        }
-        //        else
-        //        {
-        //            return NotFound();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return InternalServerError();
-        //    }
-        //}
+                    return Ok(ShapedData.CreateDataShapedObject(accountEnt, lstOfFields));
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
 
         [System.Web.Http.HttpPost]
         [Route("api/accounts")]

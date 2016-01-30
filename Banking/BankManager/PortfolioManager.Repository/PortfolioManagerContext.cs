@@ -13,7 +13,8 @@ namespace PortfolioManager.Repository
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
-            Database.SetInitializer<PortfolioManagerContext>(null);
+            Database.SetInitializer<PortfolioManagerContext>(new NullDatabaseInitializer<PortfolioManagerContext>()  );
+            //Database.SetInitializer<PortfolioManagerContext>(new DropCreateDatabaseAlways<PortfolioManagerContext>());
         }
 
         public DbSet<DBGenerator> DBGenerator { get; set; }

@@ -56,6 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeAccountHandler.cs" />
+    <Compile Include="FakeTransactionHandler.cs" />
     <Compile Include="MakingDeposits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

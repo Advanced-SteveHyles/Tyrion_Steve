@@ -17,24 +17,9 @@ namespace PortfolioManagerWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(AccountRequest account)
         {
-
             try
             {
-                var client = PortfolioManagerHttpClient.GetClient();
-
-
-                //var claimsIdentity = this.User.Identity as ClaimsIdentity;
-                //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
-
-                // an expensegroup is created with status "Open", for the current user
-                //expenseGroup.ExpenseGroupStatusId = 1;
-                //expenseGroup.UserId = userId;
-
-                var serializedItemToCreate = JsonConvert.SerializeObject(account);
-
-                var response = await client.PostAsync("api/accounts",
-                  new StringContent(serializedItemToCreate,
-                  System.Text.Encoding.Unicode, "application/json"));
+                var response = await CreateAccount(account);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -51,6 +36,25 @@ namespace PortfolioManagerWeb.Controllers
             }            
         }
 
+        private static async Task<HttpResponseMessage> CreateAccount(AccountRequest account)
+        {
+            var client = PortfolioManagerHttpClient.GetClient();
+
+
+            //var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+
+            // an expensegroup is created with status "Open", for the current user
+            //expenseGroup.ExpenseGroupStatusId = 1;
+            //expenseGroup.UserId = userId;
+
+            var serializedItemToCreate = JsonConvert.SerializeObject(account);
+
+            var response = await client.PostAsync("api/accounts",
+                new StringContent(serializedItemToCreate,
+                    System.Text.Encoding.Unicode, "application/json"));
+            return response;
+        }
 
 
         public async Task<ActionResult> Edit(int id)

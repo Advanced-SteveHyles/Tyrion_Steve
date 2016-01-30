@@ -18,10 +18,8 @@ namespace BusinessLogic
         }
 
         public void Execute()
-        {
-            // Write To Transaction Table
-            _transactionHandler.StoreTransaction(_depositTransactionRequest);
-            // Update Account
+        {            
+            _transactionHandler.StoreTransaction(_depositTransactionRequest);         
             _accountHandler.IncreaseBalance(_depositTransactionRequest.Value);
         }
 

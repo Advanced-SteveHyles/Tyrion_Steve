@@ -9,9 +9,9 @@ namespace DBCreator
         {          
             using (var ctx = new PortfolioManagerContext())
             {
-                var x = from x1 in ctx.DBGenerator select x1;
+                //var x = from x1 in ctx.DBGenerator select x1;
 
-                ctx.SaveChanges();
+                //ctx.SaveChanges();
                                 
             }
             

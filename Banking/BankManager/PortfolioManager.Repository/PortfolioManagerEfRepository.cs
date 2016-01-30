@@ -91,5 +91,18 @@ namespace PortfolioManager.Repository
                 return new RepositoryActionResult<Account>(null, RepositoryActionStatus.Error, ex);
             }
         }
+
+        public Account GetAccountWithInvestments(int id)
+        {
+            var account= _context.Accounts.Include("Investments").SingleOrDefault(p => p.Id == id);
+
+            return account;
+        }
+
+        public Account GetAccount(int id)
+        {
+            var account = _context.Accounts.SingleOrDefault(p => p.Id == id);
+            return account;
+        }
     }
 }
