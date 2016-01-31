@@ -33,13 +33,13 @@ namespace PortfolioManager.Repository
 
         public Portfolio GetPortfolio(int id)
         {
-            var portfolio    = _context.Portfolios.SingleOrDefault(p => p.Id == id);
+            var portfolio    = _context.Portfolios.SingleOrDefault(p => p.PortfolioId == id);
             return portfolio;
         }
 
         public Portfolio GetPortfolioWithAccounts(int id)
         {
-            var portfolio = _context.Portfolios.Include("Accounts").SingleOrDefault(p => p.Id == id);
+            var portfolio = _context.Portfolios.Include("Accounts").SingleOrDefault(p => p.PortfolioId == id);
             
             return portfolio ;
         }
@@ -94,14 +94,14 @@ namespace PortfolioManager.Repository
 
         public Account GetAccountWithInvestments(int id)
         {
-            var account= _context.Accounts.Include("Investments").SingleOrDefault(p => p.Id == id);
+            var account= _context.Accounts.Include("Investments").SingleOrDefault(p => p.AccountId == id);
 
             return account;
         }
 
         public Account GetAccount(int id)
         {
-            var account = _context.Accounts.SingleOrDefault(p => p.Id == id);
+            var account = _context.Accounts.SingleOrDefault(p => p.AccountId == id);
             return account;
         }
     }

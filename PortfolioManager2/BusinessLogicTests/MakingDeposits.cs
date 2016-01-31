@@ -14,7 +14,7 @@ namespace BusinessLogicTests
             private readonly IAccountHandler _accountHandler;
             private ITransactionHandler _transactionHandler;
             const int accountId = 1;
-            const int TransactionValue = 10;
+            const int transactionValue = 10;
 
             public GivenIAmDepositingTenPounds()
             {
@@ -22,7 +22,12 @@ namespace BusinessLogicTests
                 _accountHandler = new FakeAccountHandler();
                 _transactionHandler = new FakeTransactionHandler();
 
-                var depositTransactionRequest = new DepositTransactionRequest(accountId, TransactionValue);
+                var depositTransactionRequest = new DepositTransactionRequest
+                {
+                    AccountId = accountId,
+                    Value = transactionValue
+                };              
+
                 _depositTransaction = new CreateDepositTransaction(depositTransactionRequest,_accountHandler, _transactionHandler );                
             }
 
@@ -38,7 +43,7 @@ namespace BusinessLogicTests
             public void WhenTheTransactionCompletesThereAccountBalanceIsCorrect()
             {               
                 _depositTransaction.Execute();
-                Assert.Equal(TransactionValue, _accountHandler.Balance);
+                Assert.Equal(transactionValue, _accountHandler.Balance);
             }
         }
     }

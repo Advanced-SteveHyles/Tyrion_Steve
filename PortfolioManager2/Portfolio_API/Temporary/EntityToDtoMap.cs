@@ -11,7 +11,7 @@ namespace Portfolio_API.Controllers
             {
                 return new PortfolioDto
                 {
-                    Id = entity.Id,
+                    PortfolioId = entity.PortfolioId,
                     Name = entity.Name,
 
                     //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
@@ -23,7 +23,7 @@ namespace Portfolio_API.Controllers
         //{
         //    return new InvestmentMapDto
         //    {
-        //        Id =investmentMapEnt.Id,
+        //        PortfolioId =investmentMapEnt.PortfolioId,
         //        AccountId = investmentMapEnt.AccountId,
         //        InvestmentId = investmentMapEnt.InvestmentId,
         //        InvestmentName = investmentMapEnt.InvestmentName,
@@ -40,7 +40,7 @@ namespace Portfolio_API.Controllers
         //{
         //    return new InvestmentDto()
         //    {
-        //        Id = investmentEnt.ID,
+        //        PortfolioId = investmentEnt.ID,
         //        Name = investmentEnt.Name,
         //        Symbol = investmentEnt.Symbol,
         //        Type = investmentEnt.Type,
@@ -80,10 +80,12 @@ namespace Portfolio_API.Controllers
         {
             return new AccountDto()
             {
-                Id = entity.Id,
-                Name = entity.Name,
+                AccountId = entity.AccountId,
+                Name = entity.Name,                
+                Type =  entity.Type,
+                Valuation =  entity.Valuation
 
-                // Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+              //  Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
             };
         }
 
@@ -91,7 +93,7 @@ namespace Portfolio_API.Controllers
         //{
         //    var accountDto = new AccountDto
         //    {
-        //        Id = accountEnt.Id,
+        //        PortfolioId = accountEnt.PortfolioId,
         //        Name = accountEnt.Name,
         //        Cash = accountEnt.Cash,
         //        Valuation = accountEnt.Valuation              

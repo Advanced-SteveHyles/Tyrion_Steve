@@ -9,15 +9,15 @@ namespace PortfolioManagerWeb.Controllers
     public class AccountTransactionController : Controller
     {
         
-        public ActionResult DepositFunds(int accountid)
+        public ActionResult DepositFunds(int? accountId)
         {
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(DepositTransactionRequest depositTransactionRequest)
-        {
 
+        [HttpPost]
+        public async Task<ActionResult> DepositFunds(DepositTransactionRequest depositTransactionRequest)
+        { 
             try
             {
                 var response = await CreateDeposit(depositTransactionRequest);

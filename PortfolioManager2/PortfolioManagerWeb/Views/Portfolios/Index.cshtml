@@ -31,20 +31,20 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.PortfolioId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             @*<td>
                 @((Model.ExpenseGroupStatusses as List<ExpenseTracker.DTO.ExpenseGroupStatus>)
-                        .First(egs => egs.Id == item.ExpenseGroupStatusId).Description)
+                        .First(egs => egs.PortfolioAcountId == item.ExpenseGroupStatusPortfolioAcountId).Description)
             </td>*@
 
             <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.PortfolioAcountId }) |*@
+                @Html.ActionLink("Details", "Details", new { id = item.PortfolioId }) |
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.PortfolioAcountId })*@
                 </td>
             </tr>
         }

@@ -218,7 +218,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Accounts\AccountController.cs" />
     <Compile Include="Controllers\Accounts\AccountsController.cs" />
-    <Compile Include="Controllers\Transactions\AccountTransactionController.cs" />
+    <Compile Include="Controllers\AccountTransaction\AccountTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investments\InvestmentsController.cs" />
     <Compile Include="Controllers\InvestmentsMapController.cs" />

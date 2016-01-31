@@ -93,7 +93,7 @@ namespace Portfolio_API.Controllers
                 if (result.Status == RepositoryActionStatus.Created)
                 {
                     var dtoAccount = EntityToDtoMap.MapAccountToDto(result.Entity);
-                    return Created(Request.RequestUri + "/" + dtoAccount.Id, dtoAccount);
+                    return Created(Request.RequestUri + "/" + dtoAccount.AccountId, dtoAccount);
                 }
                 else
                 {

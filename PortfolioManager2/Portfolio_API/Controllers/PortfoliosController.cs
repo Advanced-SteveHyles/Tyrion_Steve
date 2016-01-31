@@ -113,7 +113,7 @@ namespace Portfolio_API.Controllers
                     portfolio = _repository.GetPortfolio(id);
                 }
 
-                var result = _repository.GetPortfolios().SingleOrDefault(r => r.Id == id);
+                var result = _repository.GetPortfolios().SingleOrDefault(r => r.PortfolioId == id);
 
                 if (result != null)
                 {
@@ -160,7 +160,7 @@ namespace Portfolio_API.Controllers
                 if (result.Status == RepositoryActionStatus.Created)
                 {
                     var dtoPortfolio = EntityToDtoMap.MapPortfolioToDto(result.Entity);
-                    return Created(Request.RequestUri + "/" + dtoPortfolio.Id, dtoPortfolio);
+                    return Created(Request.RequestUri + "/" + dtoPortfolio.PortfolioId, dtoPortfolio);
                 }
                 else
                 {

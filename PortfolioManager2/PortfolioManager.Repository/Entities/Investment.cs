@@ -10,7 +10,7 @@ namespace PortfolioManager.Repository.Entities
     [Table ("Investment")]
     public class Investment
     {
-            public int Id { get; set; }
+            public int InvestmentId { get; set; }
             public string Name { get; set; }
 
             public string Symbol { get; set; }

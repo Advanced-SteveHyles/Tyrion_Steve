@@ -8,20 +8,25 @@ namespace PortfolioManager.DTO.Requests.Transactions
 {
    public class DepositTransactionRequest
     {
-       public int AccountId { get; }
+       public int AccountId { get; set; }
 
-       public DateTime TransactionDate { get; }
+       public DateTime TransactionDate { get; set; }
         
-       public decimal Value { get; }
+       public decimal Value { get; set; }
 
-       public string Source { get; }
+       public string Source { get; set; }
 
-       public DepositTransactionRequest(int accountID, decimal value, DateTime transactionDate, string source)
+       public DepositTransactionRequest()
        {
-           AccountId = accountID;
-           Value = value;
-           TransactionDate = transactionDate;
-           Source = source;
+           
        }
+
+       //public DepositTransactionRequest(int accountId, decimal value, DateTime transactionDate, string source)
+       //{
+       //    AccountId = accountId;
+       //    Value = value;
+       //    TransactionDate = transactionDate;
+       //    Source = source;
+       //}
     }
 }

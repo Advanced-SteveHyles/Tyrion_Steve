@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers

@@ -6,7 +6,7 @@ namespace PortfolioManager.Repository.Entities
     [Table ("InvestmentMap")]
     public class InvestmentMap
     {
-        public int Id { get; set; }
+        public int InvestmentMapId { get; set; }
 
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
