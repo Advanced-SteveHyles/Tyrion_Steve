@@ -63,8 +63,8 @@
                     @Html.DisplayFor(modelItem => item.Valuation)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", "Accounts", new { id = item.AccountId }, null) |
-                    @Html.ActionLink("Edit", "Edit", "Accounts", new {id = item.AccountId}, null) |
+                    @Html.ActionLink("Details", "Details", "Accounts", new { accountID = item.AccountId }, null) |
+                    @Html.ActionLink("Edit", "Edit", "Accounts", new { accountID = item.AccountId}, null) |
                     @*@Html.ActionLink("Delete", "Delete", "Accounts", new { expenseGroupPortfolioAccountId = item.ExpenseGroupPortfolioAccountId, id = item.PortfolioAccountId }, null)*@
                 </td>
             </tr>

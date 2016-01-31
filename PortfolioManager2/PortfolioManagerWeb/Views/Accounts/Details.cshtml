@@ -20,6 +20,10 @@
         @Html.DisplayFor(model => model.AccountBalance)
     </dd>
 
+    <dd>
+        @Html.DisplayFor(model => model.AccountId)
+    </dd>
+
 </dl>
 
 @Html.ActionLink("Deposit Funds", "DepositFunds", "AccountTransaction", new { accountId = Model.AccountId }, null)

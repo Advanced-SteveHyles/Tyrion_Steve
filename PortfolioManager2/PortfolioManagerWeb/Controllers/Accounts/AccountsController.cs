@@ -58,17 +58,17 @@ namespace PortfolioManagerWeb.Controllers
         }
 
 
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int accountID)
         {
             return null;
         }
 
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int accountID)
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/accounts/" + id
-                                + "?fields=name,investments");
+            HttpResponseMessage response = await client.GetAsync("api/accounts/" + accountID
+                                + "?fields=accountid, name,investments");
 
             string content = await response.Content.ReadAsStringAsync();
 

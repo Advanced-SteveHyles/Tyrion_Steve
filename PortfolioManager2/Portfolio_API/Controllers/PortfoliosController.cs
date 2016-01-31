@@ -87,7 +87,7 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        public IHttpActionResult Get(int id, string fields = null)
+        public IHttpActionResult Get(int portfolioId, string fields = null)
         {
             try
             {
@@ -106,14 +106,14 @@ namespace Portfolio_API.Controllers
 
                 if (includeAccounts)
                 {
-                    portfolio = _repository.GetPortfolioWithAccounts(id);
+                    portfolio = _repository.GetPortfolioWithAccounts(portfolioId);
                 }
                 else
                 {
-                    portfolio = _repository.GetPortfolio(id);
+                    portfolio = _repository.GetPortfolio(portfolioId);
                 }
 
-                var result = _repository.GetPortfolios().SingleOrDefault(r => r.PortfolioId == id);
+                var result = _repository.GetPortfolios().SingleOrDefault(r => r.PortfolioId == portfolioId);
 
                 if (result != null)
                 {

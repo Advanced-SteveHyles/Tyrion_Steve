@@ -83,6 +83,7 @@ namespace Portfolio_API.Controllers
                 AccountId = entity.AccountId,
                 Name = entity.Name,                
                 Type =  entity.Type,
+                Cash = entity.Cash,
                 Valuation =  entity.Valuation
 
               //  Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()

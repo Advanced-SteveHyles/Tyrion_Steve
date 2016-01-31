@@ -10,7 +10,6 @@ namespace Portfolio_API.Controllers
 {
     internal class ShapedData
     {
-
         
         public static object CreateDataShapedObject(Portfolio portfolioEnt, List<string> lstOfFields)
         {
