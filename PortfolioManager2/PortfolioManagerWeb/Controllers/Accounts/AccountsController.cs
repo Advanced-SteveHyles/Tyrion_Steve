@@ -24,7 +24,7 @@ namespace PortfolioManagerWeb.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Details", "Portfolios", new { Id = account.PortfolioId });
+                    return RedirectToAction("Details", "Portfolios", new { portfolioId = account.PortfolioId });
                 }
                 else
                 {
@@ -58,17 +58,17 @@ namespace PortfolioManagerWeb.Controllers
         }
 
 
-        public async Task<ActionResult> Edit(int accountID)
+        public async Task<ActionResult> Edit(int accountId)
         {
             return null;
         }
 
-        public async Task<ActionResult> Details(int accountID)
+        public async Task<ActionResult> Details(int accountId)
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/accounts/" + accountID
-                                + "?fields=accountid, name,investments");
+            HttpResponseMessage response = await client.GetAsync("api/accounts/" + accountId
+                                + "?fields=accountid,name,investments");
 
             string content = await response.Content.ReadAsStringAsync();
 

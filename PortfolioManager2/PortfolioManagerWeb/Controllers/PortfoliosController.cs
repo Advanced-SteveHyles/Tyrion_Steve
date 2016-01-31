@@ -67,11 +67,11 @@ namespace PortfolioManagerWeb.Controllers
         }
 
         // GET: ExpenseGroups/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int portfolioId)
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/portfolios/" + id
+            HttpResponseMessage response = await client.GetAsync("api/portfolios/" + portfolioId
                                 + "?fields=portfolioid,name,accounts");
             string content = await response.Content.ReadAsStringAsync();
 
