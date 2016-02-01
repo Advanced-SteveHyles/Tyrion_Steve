@@ -20,7 +20,8 @@ namespace BusinessLogicTests
                 depositTransactionRequest.AccountId,
                 depositTransactionRequest.TransactionDate,
                 depositTransactionRequest.Source,
-                depositTransactionRequest.Value
+                depositTransactionRequest.Value,
+                depositTransactionRequest.IsTaxRefund
                 );
         }
     }

@@ -27,6 +27,8 @@
 </dl>
 
 @Html.ActionLink("Deposit Funds", "DepositFunds", "AccountTransaction", new { accountId = Model.AccountId }, null)
+@Html.ActionLink("Withdraw Funds", "WithdrawFunds", "AccountTransaction", new { accountId = Model.AccountId }, null)
+@Html.ActionLink("Link Investment", "LinkInvestment", "Account", new { accountId = Model.AccountId }, null)
 
 <h2>Investment Details</h2>
 
@@ -91,3 +93,6 @@
         </tr>
     }
 </table>
+<p>
+    @Html.ActionLink("Back to List", "Details", "Portfolios", new { portfolioId = Model.PortfolioId }, null)
+</p>

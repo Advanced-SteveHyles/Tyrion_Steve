@@ -68,7 +68,7 @@ namespace PortfolioManagerWeb.Controllers
             var client = PortfolioManagerHttpClient.GetClient();
 
             HttpResponseMessage response = await client.GetAsync("api/accounts/" + accountId
-                                + "?fields=accountid,name,investments");
+                                + "?fields=accountid,portfolioid,name,investments");
 
             string content = await response.Content.ReadAsStringAsync();
 

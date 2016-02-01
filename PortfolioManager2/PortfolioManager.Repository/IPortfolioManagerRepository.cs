@@ -14,12 +14,12 @@ namespace PortfolioManager.Repository
 
         Portfolio GetPortfolio(int id);
         Portfolio GetPortfolioWithAccounts(int id);
-        RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);
+        RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);        
         System.Linq.IQueryable<Entities.Investment> GetInvestments();
         RepositoryActionResult<Account> InsertAccount(Account entityAccount);
         Account GetAccountWithInvestments(int id);
         Account GetAccount(int id);
-        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value);
+        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund);
         void IncreaseAccountBalance(int accountId, decimal amount);
     }
 }

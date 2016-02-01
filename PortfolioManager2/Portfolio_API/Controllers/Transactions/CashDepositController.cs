@@ -54,10 +54,9 @@ namespace Portfolio_API.Controllers.Transactions
                 var status = ExecuteCommand(new CreateDepositTransaction(deposit, accountHandler, transactionHandler));
 
                 if (status)
-                {
-                    var dtoTransaction = new TransactionDTO();
+                {                    
                     //var dtoTransaction = EntityToDtoMap.MapTransactionToDto(result.Entity);
-                    return Created(Request.RequestUri, dtoTransaction); // + "/" + dtoTransaction.TransactionId, dtoTransaction);
+                    return Created(Request.RequestUri + "/" + deposit.AccountId, new TransactionDTO());
                 }
                 else
                 {

@@ -14,19 +14,8 @@ namespace PortfolioManager.DTO.Requests.Transactions
         
        public decimal Value { get; set; }
 
-       public string Source { get; set; }
+       public string Source { get; set; }        
 
-       public DepositTransactionRequest()
-       {
-           
-       }
-
-       //public DepositTransactionRequest(int accountId, decimal value, DateTime transactionDate, string source)
-       //{
-       //    AccountId = accountId;
-       //    Value = value;
-       //    TransactionDate = transactionDate;
-       //    Source = source;
-       //}
+       public bool IsTaxRefund { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace PortfolioManager.DTO
         public int AccountId { get; set; }
         public string Name { get; set; }
 
+        public int PortfolioId { get; set; }
+
         public decimal Cash { get; set; }
         public decimal Valuation { get; set; }
 

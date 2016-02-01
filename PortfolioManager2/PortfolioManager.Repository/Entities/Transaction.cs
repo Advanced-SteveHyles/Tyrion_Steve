@@ -14,5 +14,6 @@ namespace PortfolioManager.Repository.Entities
         public DateTime TransactionDate { get; set; }
         public string Source { get; set; }
         public decimal Value { get; set; }
+        public bool IsTaxRefund { get; set; }
     }
 }

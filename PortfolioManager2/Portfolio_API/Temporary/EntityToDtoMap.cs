@@ -84,9 +84,11 @@ namespace Portfolio_API.Controllers
                 Name = entity.Name,                
                 Type =  entity.Type,
                 Cash = entity.Cash,
-                Valuation =  entity.Valuation
+                Valuation =  entity.Valuation,
+                AccountBalance = entity.Cash,
+                PortfolioId = entity.PortfolioId
 
-              //  Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+                //  Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
             };
         }
 
@@ -107,5 +109,9 @@ namespace Portfolio_API.Controllers
         //}
 
 
+        public static TransactionDTO MapTransactionToDto(object entity)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
