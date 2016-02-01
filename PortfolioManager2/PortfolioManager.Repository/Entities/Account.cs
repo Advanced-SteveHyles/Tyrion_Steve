@@ -12,7 +12,7 @@ namespace PortfolioManager.Repository.Entities
 
         public string Name { get; set; }
 
-        public int Cash { get; set; }
+        public decimal Cash { get; set; }
         public decimal Valuation { get; set; }
 
         public int PortfolioId { get; set; }

@@ -11,12 +11,16 @@ namespace PortfolioManager.DTO
         public int AccountId { get; set; }
         public string Name { get; set; }
 
-        public int Cash { get; set; }
+        public decimal Cash { get; set; }
         public decimal Valuation { get; set; }
 
         public string Type { get; set; }
 
         public ICollection<InvestmentMapDto>  Investments { get; set; }
         public Decimal AccountBalance { get; set; }
+    }
+
+    public class TransactionDTO
+    {
     }
 }

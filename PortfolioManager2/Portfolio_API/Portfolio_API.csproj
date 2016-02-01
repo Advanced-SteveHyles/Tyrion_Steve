@@ -234,6 +234,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{D54F38E9-8FBB-473A-AE31-98C85A05E857}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{170BE89D-025F-4352-9388-72CE26EE12E9}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PortfolioManager.DTO\PortfolioManager.DTO.csproj">
       <Project>{51c5255f-8785-406d-8f4e-1dc6824e630b}</Project>
       <Name>PortfolioManager.DTO</Name>

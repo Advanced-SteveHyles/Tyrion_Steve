@@ -4,9 +4,7 @@ namespace Interfaces
 {
     public interface IAccountHandler
     {
-        decimal Balance { get; set; }
-
-        void IncreaseBalance(decimal amount);
+        void IncreaseBalance(int accountId, decimal amount);
     }
 
     public interface ITransactionHandler

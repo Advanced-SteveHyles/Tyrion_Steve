@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpenseTracker.Repository;
-using PortfolioManager.DTO;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
@@ -103,6 +99,39 @@ namespace PortfolioManager.Repository
         {
             var account = _context.Accounts.SingleOrDefault(p => p.AccountId == id);
             return account;
+        }
+
+        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value)
+        {
+            var entityTransaction = new Transaction()
+            {
+                    AccountId = accountId,
+                TransactionDate = transactionDate,
+                Source = source,
+                Value = value
+            };
+
+            _context.Transactions.Add(entityTransaction);
+
+            var result = _context.SaveChanges();
+            if (result > 0)
+            {
+                return new RepositoryActionResult<Transaction>(entityTransaction, RepositoryActionStatus.Created);
+            }
+            else
+            {
+                return new RepositoryActionResult<Transaction>(entityTransaction, RepositoryActionStatus.NothingModified, null);
+            }
+        }
+
+        public void IncreaseAccountBalance(int accountId, decimal amount)
+        {
+            var account = _context.Accounts.Single(a => a.AccountId == accountId);
+            account.Cash += amount;
+            account.Valuation += amount;
+
+            _context.SaveChanges();
+
         }
     }
 }

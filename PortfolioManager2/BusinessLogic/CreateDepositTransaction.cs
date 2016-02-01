@@ -20,12 +20,22 @@ namespace BusinessLogic
         public void Execute()
         {            
             _transactionHandler.StoreTransaction(_depositTransactionRequest);         
-            _accountHandler.IncreaseBalance(_depositTransactionRequest.Value);
+            _accountHandler.IncreaseBalance(
+                _depositTransactionRequest.AccountId, 
+                _depositTransactionRequest.Value);
+
+            ExecuteResult = true;
         }
+
+        public bool ExecuteResult { get; set; }
 
         public bool CommandValid()
         {
-            throw new NotImplementedException();
+            return _depositTransactionRequest.AccountId > 0
+                   && _depositTransactionRequest.Value > 0
+                   && _depositTransactionRequest.TransactionDate != null
+                   && !string.IsNullOrWhiteSpace(_depositTransactionRequest.Source);
+
         }
     }
 }

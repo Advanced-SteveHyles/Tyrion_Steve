@@ -4,12 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BusinessLogic;
+using BusinessLogicTests;
+using ExpenseTracker.Repository;
+using PortfolioManager.DTO;
 using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.Repository;
 
 namespace Portfolio_API.Controllers.Transactions
-{
+{    
+
     public class CashDepositController : ApiController
     {
+        readonly IPortfolioManagerRepository _repository;
+        public CashDepositController()
+        {
+            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+        }
+
         [System.Web.Http.HttpPost]
         [Route("api/transactions/cashdeposit")]
         public IHttpActionResult Post([FromBody] DepositTransactionRequest deposit)
@@ -36,23 +48,45 @@ namespace Portfolio_API.Controllers.Transactions
                 //}
                 //*/
 
-                //var result = _repository.InsertAccount(entityAccount);
-                //if (result.Status == RepositoryActionStatus.Created)
-                //{
-                //    var dtoAccount = EntityToDtoMap.MapAccountToDto(result.Entity);
-                //    return Created(Request.RequestUri + "/" + dtoAccount.AccountId, dtoAccount);
-                //}
-                //else
-                //{
-                return BadRequest();
-                //}
+                var accountHandler = new AccountHandler(_repository);
+                var transactionHandler = new TransactionHandler(_repository);
 
+                var status = ExecuteCommand(new CreateDepositTransaction(deposit, accountHandler, transactionHandler));
+
+                if (status)
+                {
+                    var dtoTransaction = new TransactionDTO();
+                    //var dtoTransaction = EntityToDtoMap.MapTransactionToDto(result.Entity);
+                    return Created(Request.RequestUri, dtoTransaction); // + "/" + dtoTransaction.TransactionId, dtoTransaction);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception ex)
             {
                 ErrorLog.LogError(ex);
                 return InternalServerError();
             }
+        }
+
+        private bool ExecuteCommand(CreateDepositTransaction command)
+        {
+            try
+            {
+                if (command.CommandValid())
+                {
+                    command.Execute();
+                    return command.ExecuteResult;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return false;
+            }            
         }
     }
 }
