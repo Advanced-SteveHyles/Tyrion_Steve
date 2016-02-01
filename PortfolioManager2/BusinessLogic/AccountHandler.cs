@@ -16,5 +16,10 @@ namespace BusinessLogicTests
         {
             _repository.IncreaseAccountBalance(accountId, amount);            
         }
+
+     public void DecreaseBalance(int accountId, decimal amount)
+     {
+            _repository.DecreaseAccountBalance(accountId, amount);
+        }
     }
 }

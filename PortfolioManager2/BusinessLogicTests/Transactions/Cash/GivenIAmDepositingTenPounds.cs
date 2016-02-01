@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Linq.Expressions;
+using BusinessLogic;
+using BusinessLogic.Transactions;
+using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
-using BusinessLogic;
-using Interfaces;
 
-namespace BusinessLogicTests
+namespace BusinessLogicTests.Deposits
 {
-    public class MakingDeposits
-    {
+    
         public class GivenIAmDepositingTenPounds 
         {
             private readonly ICommandRunner _depositTransaction;
@@ -57,5 +56,5 @@ namespace BusinessLogicTests
                 Assert.Equal(TransactionValue, _fakeRepository.AccountBalance);
             }
         }
-    }
 }
+

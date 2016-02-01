@@ -21,8 +21,22 @@ namespace BusinessLogicTests
                 depositTransactionRequest.TransactionDate,
                 depositTransactionRequest.Source,
                 depositTransactionRequest.Value,
-                depositTransactionRequest.IsTaxRefund
+                depositTransactionRequest.IsTaxRefund,
+                "Deposit"
                 );
+        }
+
+        public void StoreTransaction(WithdrawalTransactionRequest _withdrawalTransactionRequest)
+        {
+            _repository.AddCashTransaction
+                      (
+                      _withdrawalTransactionRequest.AccountId,
+                      _withdrawalTransactionRequest.TransactionDate,
+                      _withdrawalTransactionRequest.Source,
+                      _withdrawalTransactionRequest.Value,
+                      false,
+                      "Withdrawal"
+                      );
         }
     }
 }

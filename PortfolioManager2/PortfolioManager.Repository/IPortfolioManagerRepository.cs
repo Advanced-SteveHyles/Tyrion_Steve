@@ -19,7 +19,8 @@ namespace PortfolioManager.Repository
         RepositoryActionResult<Account> InsertAccount(Account entityAccount);
         Account GetAccountWithInvestments(int id);
         Account GetAccount(int id);
-        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund);
+        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
         void IncreaseAccountBalance(int accountId, decimal amount);
+        void DecreaseAccountBalance(int accountId, decimal amount);
     }
 }

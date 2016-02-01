@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
-using Interfaces;
 
-namespace BusinessLogic
+namespace BusinessLogic.Transactions
 {
     public class CreateDepositTransaction : ICommandRunner
     {
@@ -34,7 +33,8 @@ namespace BusinessLogic
             return _depositTransactionRequest.AccountId > 0
                    && _depositTransactionRequest.Value > 0
                    && _depositTransactionRequest.TransactionDate != null
-                   && !string.IsNullOrWhiteSpace(_depositTransactionRequest.Source);
+                   && !string.IsNullOrWhiteSpace(_depositTransactionRequest.Source)                 
+                   ;
 
         }
     }

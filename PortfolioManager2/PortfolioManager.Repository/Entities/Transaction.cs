@@ -11,6 +11,9 @@ namespace PortfolioManager.Repository.Entities
         public int TransactionId { get; set; }
 
         public int AccountId { get; set; }
+
+        public string TransactionType { get; set; }
+
         public DateTime TransactionDate { get; set; }
         public string Source { get; set; }
         public decimal Value { get; set; }

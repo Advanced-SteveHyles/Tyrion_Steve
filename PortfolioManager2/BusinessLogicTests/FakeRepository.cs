@@ -51,16 +51,22 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
-        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund)
+        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
+            bool isTaxRefund, string transactionType)
         {
             AddCashTransactionWasCalled = true;
 
             return null;
         }
-
+        
         public void IncreaseAccountBalance(int accountId, decimal amount)
         {
             AccountBalance += amount;
+        }
+
+        public void DecreaseAccountBalance(int accountId, decimal amount)
+        {
+            throw new NotImplementedException();
         }
     }
 }

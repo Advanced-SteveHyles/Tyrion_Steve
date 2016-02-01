@@ -101,7 +101,7 @@ namespace PortfolioManager.Repository
             return account;
         }
 
-        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund)
+        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
         {
             var entityTransaction = new Transaction()
             {
@@ -109,7 +109,8 @@ namespace PortfolioManager.Repository
                 TransactionDate = transactionDate,
                 Source = source,
                 Value = value,
-                IsTaxRefund = isTaxRefund
+                IsTaxRefund = isTaxRefund,
+                TransactionType = transactionType
             };
 
             _context.Transactions.Add(entityTransaction);
@@ -133,5 +134,11 @@ namespace PortfolioManager.Repository
 
         }
 
+        public void DecreaseAccountBalance(int accountId, decimal amount)
+        {
+            var account = _context.Accounts.Single(a => a.AccountId == accountId);
+            account.Cash -= amount;
+            _context.SaveChanges();
+        }
     }
 }

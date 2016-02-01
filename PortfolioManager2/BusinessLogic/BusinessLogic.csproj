@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateDepositTransaction.cs" />
+    <Compile Include="Transactions\CreateDepositTransaction.cs" />
     <Compile Include="AccountHandler.cs" />
+    <Compile Include="Transactions\CreateWithdrawalTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionHandler.cs" />
   </ItemGroup>

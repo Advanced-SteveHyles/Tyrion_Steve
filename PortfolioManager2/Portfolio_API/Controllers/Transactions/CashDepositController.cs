@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BusinessLogic;
+using BusinessLogic.Transactions;
 using BusinessLogicTests;
 using ExpenseTracker.Repository;
 using PortfolioManager.DTO;
