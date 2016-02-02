@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Interfaces;
 using Newtonsoft.Json;
 using PagedList;
 using PortfolioManager.DTO;
@@ -37,7 +38,7 @@ namespace PortfolioManagerWeb.Controllers
             //HttpResponseMessage response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid"
             //    + ",title&page=" + page + "&pagesize=5&userid=" + userId);
 
-            HttpResponseMessage response = await client.GetAsync("api/Portfolios?page=" + page + "&pagesize=5");
+            HttpResponseMessage response = await client.GetAsync(ApiPaths.Portfolios + "?page=" + page + "&pagesize=5");
                 //"?sort=expensegroupstatusid"+ ",title&page=" + page + "&pagesize=5");
 
 
@@ -71,7 +72,7 @@ namespace PortfolioManagerWeb.Controllers
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/portfolios/" + portfolioId
+            HttpResponseMessage response = await client.GetAsync(ApiPaths.Portfolios + "/" + portfolioId
                                 + "?fields=portfolioid,name,accounts");
             string content = await response.Content.ReadAsStringAsync();
 
@@ -108,7 +109,7 @@ namespace PortfolioManagerWeb.Controllers
 
                 var serializedItemToCreate = JsonConvert.SerializeObject(portfolio);
 
-                var response = await client.PostAsync("api/portfolios",
+                var response = await client.PostAsync(ApiPaths.Portfolios,
                   new StringContent(serializedItemToCreate,
                   System.Text.Encoding.Unicode, "application/json"));
 

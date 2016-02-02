@@ -66,10 +66,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Enums\Common.csproj">
-      <Project>{5d781e57-0df3-40b7-bf45-ff50b1ee3b03}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170be89d-025f-4352-9388-72ce26ee12e9}</Project>
       <Name>Interfaces</Name>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using ExpenseTracker.Repository;
+using Interfaces;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
@@ -24,7 +25,7 @@ namespace Portfolio_API.Controllers
         }
 
 
-        [Route("api/portfolios", Name = "PortfoliosList")]
+        [Route(ApiPaths.Portfolios, Name = "PortfoliosList")]
         public IHttpActionResult Get(int page = 1, int pageSize = MaxPageSize)
         {
             try
@@ -131,7 +132,7 @@ namespace Portfolio_API.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        [Route("api/portfolios")]
+        [Route(ApiPaths.Portfolios)]
         public IHttpActionResult Post([FromBody] PortfolioRequest portfolio)
         {
             try

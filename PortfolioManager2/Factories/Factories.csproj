@@ -50,10 +50,6 @@
       <Project>{323b4f4b-6264-40c5-88ac-af508909dfe6}</Project>
       <Name>Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Enums\Common.csproj">
-      <Project>{5d781e57-0df3-40b7-bf45-ff50b1ee3b03}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170be89d-025f-4352-9388-72ce26ee12e9}</Project>
       <Name>Interfaces</Name>

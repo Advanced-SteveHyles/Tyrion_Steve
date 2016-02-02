@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-public     interface ICommandRunner
+    public interface ICommandRunner
     {
         void Execute();
 
         bool CommandValid();
+        bool ExecuteResult { get; }
     }
 }

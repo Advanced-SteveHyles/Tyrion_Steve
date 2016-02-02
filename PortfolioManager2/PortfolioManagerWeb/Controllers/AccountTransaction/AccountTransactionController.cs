@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO.Requests.Transactions;
 
@@ -54,7 +55,7 @@ namespace PortfolioManagerWeb.Controllers
 
             var serializedItemToCreate = JsonConvert.SerializeObject(depositTransactionRequest);
 
-            var response = await client.PostAsync("api/transactions/cashdeposit",
+            var response = await client.PostAsync(ApiPaths.CashDeposit,
                 new StringContent(serializedItemToCreate,
                     System.Text.Encoding.Unicode, "application/json"));
             return response;
@@ -104,7 +105,7 @@ namespace PortfolioManagerWeb.Controllers
 
             var serializedItemToCreate = JsonConvert.SerializeObject(withdrawalTransactionRequest);
 
-            var response = await client.PostAsync("api/transactions/cashwithdrawal",
+            var response = await client.PostAsync(ApiPaths.CashWithdrawal,
                 new StringContent(serializedItemToCreate,
                     System.Text.Encoding.Unicode, "application/json"));
             return response;

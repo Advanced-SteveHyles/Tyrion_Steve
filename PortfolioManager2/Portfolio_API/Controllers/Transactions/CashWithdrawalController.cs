@@ -1,35 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
-using BusinessLogic;
 using BusinessLogic.Transactions;
 using BusinessLogicTests;
-using ExpenseTracker.Repository;
 using PortfolioManager.DTO;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
 
 namespace Portfolio_API.Controllers.Transactions
-{    
-
-    public class CashDepositController : ApiController
+{
+internal class CashWithdrawalController : ApiController
     {
         readonly IPortfolioManagerRepository _repository;
-        public CashDepositController()
+        public CashWithdrawalController()
         {
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
         }
 
+
         [System.Web.Http.HttpPost]
-        [Route("api/transactions/cashdeposit")]
-        public IHttpActionResult Post([FromBody] DepositTransactionRequest deposit)
+     //   [Route("api/transactions1/cashwithdrawal")]
+        public IHttpActionResult Post([FromBody] WithdrawalTransactionRequest  withdrawal)
         {
             try
             {
-                if (deposit == null)
+                if (withdrawal == null)
                 {
                     return BadRequest();
                 }
@@ -52,12 +50,12 @@ namespace Portfolio_API.Controllers.Transactions
                 var accountHandler = new AccountHandler(_repository);
                 var transactionHandler = new TransactionHandler(_repository);
 
-                var status = ExecuteCommand(new CreateDepositTransaction(deposit, accountHandler, transactionHandler));
+                var status = Command.ExecuteCommand(new CreateWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
 
                 if (status)
-                {                    
+                {
                     //var dtoTransaction = EntityToDtoMap.MapTransactionToDto(result.Entity);
-                    return Created(Request.RequestUri + "/" + deposit.AccountId, new TransactionDTO());
+                    return Created(Request.RequestUri + "/" + withdrawal.AccountId, new TransactionDTO());
                 }
                 else
                 {
@@ -71,22 +69,6 @@ namespace Portfolio_API.Controllers.Transactions
             }
         }
 
-        private bool ExecuteCommand(CreateDepositTransaction command)
-        {
-            try
-            {
-                if (command.CommandValid())
-                {
-                    command.Execute();
-                    return command.ExecuteResult;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.LogError(ex);
-                return false;
-            }            
-        }
+
     }
 }

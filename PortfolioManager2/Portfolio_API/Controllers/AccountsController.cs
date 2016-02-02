@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ExpenseTracker.Repository;
+using Interfaces;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
@@ -64,7 +65,7 @@ namespace Portfolio_API.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        [Route("api/accounts")]
+        [Route(ApiPaths.Accounts)]
         public IHttpActionResult Post([FromBody] AccountRequest account)
         {
             try

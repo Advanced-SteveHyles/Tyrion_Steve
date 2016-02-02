@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO.Transactions;
 
@@ -79,10 +80,5 @@ namespace PortfolioManagerWeb.Controllers
         }
     }
 
-    internal class ApiPaths
-    {
-
-
-        public static string BuyTransaction => "api/buytransaction";
-    }
+    
 }

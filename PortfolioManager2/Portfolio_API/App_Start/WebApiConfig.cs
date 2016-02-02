@@ -16,8 +16,14 @@ namespace Portfolio_API
             config.Routes.MapHttpRoute(
                name: "DefaultRouting",
                routeTemplate: "api/{controller}/{id}",
-               defaults: new { id = RouteParameter.Optional }               
-           );
+               defaults: new { id = RouteParameter.Optional }
+               );
+
+            //config.Routes.MapHttpRoute(
+            //   name: "TransactionRouting",
+            //   routeTemplate: "api/transactions/{controller}/{id}",
+            //   defaults: new { id = RouteParameter.Optional }
+            // );
 
             FormatterForJson(config);
 
