@@ -21,8 +21,4 @@ namespace PortfolioManager.DTO
         public ICollection<InvestmentMapDto>  Investments { get; set; }
         public Decimal AccountBalance { get; set; }
     }
-
-    public class TransactionDTO
-    {
-    }
 }

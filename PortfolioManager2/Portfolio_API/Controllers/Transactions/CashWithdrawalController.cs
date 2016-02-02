@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BusinessLogic.Transactions;
 using BusinessLogicTests;
+using Interfaces;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
 
 namespace Portfolio_API.Controllers.Transactions
 {
-internal class CashWithdrawalController : ApiController
+public class CashWithdrawalController : ApiController
     {
         readonly IPortfolioManagerRepository _repository;
         public CashWithdrawalController()
@@ -22,7 +24,7 @@ internal class CashWithdrawalController : ApiController
 
 
         [System.Web.Http.HttpPost]
-     //   [Route("api/transactions1/cashwithdrawal")]
+        [Route(ApiPaths.CashWithdrawal)]
         public IHttpActionResult Post([FromBody] WithdrawalTransactionRequest  withdrawal)
         {
             try
@@ -55,7 +57,7 @@ internal class CashWithdrawalController : ApiController
                 if (status)
                 {
                     //var dtoTransaction = EntityToDtoMap.MapTransactionToDto(result.Entity);
-                    return Created(Request.RequestUri + "/" + withdrawal.AccountId, new TransactionDTO());
+                    return Created(Request.RequestUri + "/" + withdrawal.AccountId, new TransactionDto());
                 }
                 else
                 {

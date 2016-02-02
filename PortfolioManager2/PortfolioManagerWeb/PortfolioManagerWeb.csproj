@@ -222,6 +222,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investments\InvestmentsController.cs" />
     <Compile Include="Controllers\InvestmentsMapController.cs" />
+    <Compile Include="Controllers\Transactions\TransactionController.cs" />
     <Compile Include="Models\AccountsViewModel.cs" />
     <Compile Include="Models\Transactions\InvestmentBuyViewModel.cs" />
     <Compile Include="Models\InvestmentsViewModel.cs" />
@@ -312,6 +313,7 @@
     <Content Include="Views\Accounts\Create.cshtml" />
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
+    <Content Include="Views\Transactions\TransactionSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

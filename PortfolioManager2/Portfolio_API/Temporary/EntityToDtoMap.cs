@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 
 namespace Portfolio_API.Controllers
@@ -109,7 +110,7 @@ namespace Portfolio_API.Controllers
         //}
 
 
-        public static TransactionDTO MapTransactionToDto(object entity)
+        public static TransactionDto MapTransactionToDto(object entity)
         {
             throw new System.NotImplementedException();
         }

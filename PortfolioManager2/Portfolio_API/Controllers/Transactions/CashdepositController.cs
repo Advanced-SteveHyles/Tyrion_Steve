@@ -5,6 +5,7 @@ using BusinessLogic.Transactions;
 using BusinessLogicTests;
 using Interfaces;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
 using Portfolio_API.Controllers.Transactions;
@@ -62,7 +63,7 @@ namespace Portfolio_API.Controllers
                 if (status)
                 {                    
                     //var dtoTransaction = EntityToDtoMap.MapTransactionToDto(result.Entity);
-                    return Created(Request.RequestUri + "/" + deposit.AccountId, new TransactionDTO());
+                    return Created(Request.RequestUri + "/" + deposit.AccountId, new TransactionDto());
                 }
                 else
                 {
