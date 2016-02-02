@@ -12,7 +12,7 @@ using Portfolio_API.Controllers.Transactions;
 namespace Portfolio_API.Controllers
 {
 
-    internal class CashdepositController : ApiController
+    public class CashdepositController : ApiController
     {
         readonly IPortfolioManagerRepository _repository;
        
@@ -22,7 +22,7 @@ namespace Portfolio_API.Controllers
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());       
         }
 
-        [Route(ApiPaths.CashDeposit, Name = "PortfoliosList")]
+        [Route(ApiPaths.CashDeposit)]//, Name = "PortfoliosList")]
         public IHttpActionResult Get(int page = 1)
         {
             return null;

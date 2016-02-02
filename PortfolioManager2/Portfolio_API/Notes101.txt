@@ -1,0 +1,3 @@
+﻿1) Do not make controllers Internal
+
+2) Ensure Actionlinks use 5 parameters not 4 if passing IDs

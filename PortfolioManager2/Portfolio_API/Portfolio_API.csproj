@@ -201,7 +201,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\InvestmentsController.cs" />
-    <Compile Include="Controllers\CashdepositController.cs" />
+    <Compile Include="Controllers\Transactions\CashdepositController.cs" />
     <Compile Include="Controllers\Transactions\CashWithdrawalController.cs" />
     <Compile Include="Controllers\Transactions\Command.cs" />
     <Compile Include="Temporary\EntityToDtoMap.cs" />
@@ -228,6 +228,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
+    <Content Include="Notes101.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
