@@ -1,3 +1,6 @@
 ﻿1) Do not make controllers Internal
 
 2) Ensure Actionlinks use 5 parameters not 4 if passing IDs
+
+3) When hitting controller but not method, ensure id parameter is called id 
+to match route info.!

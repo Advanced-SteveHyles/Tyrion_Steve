@@ -20,20 +20,20 @@ namespace Portfolio_API.Controllers.Transactions
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
         }
 
-        [Route(ApiPaths.AccountTransactions)]
+     //   [Route(ApiPaths.AccountTransactions)]
         //public IHttpActionResult Get(int accountId, int page = 1, int  pageSize = ApiConstants.MaxPageSize)
-        public IHttpActionResult Get(int accountId) //, int page = 1, int pageSize = ApiConstants.MaxPageSize)
+        public IHttpActionResult Get(int id, string fields = null) //, int page = 1, int pageSize = ApiConstants.MaxPageSize)
         {
             try
             {
-               var transactionEnt = _repository.GetAccountTransactions(accountId);
+               var transactionEnt = _repository.GetAccountTransactions(id);
                 
-                var result = _repository.GetAccount(accountId);
+                var result = _repository.GetAccount(id);
 
                 if (result != null)
                 {
 
-                    return Ok(ShapedData.CreateDataShapedObject(accountId, transactionEnt));
+                    return Ok(ShapedData.CreateDataShapedObject(id, transactionEnt));
                 }
                 else
                 {
