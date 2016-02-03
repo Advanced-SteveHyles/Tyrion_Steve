@@ -11,4 +11,6 @@ namespace PortfolioManager.DTO
         public string Name { get; set; }
         public ICollection<AccountDto> Accounts { get; set; } = new List<AccountDto>();
     }
+
+    
 }

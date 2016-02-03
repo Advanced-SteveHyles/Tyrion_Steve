@@ -314,6 +314,7 @@
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
+    <Content Include="Views\Investments\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -42,6 +42,7 @@ namespace Portfolio_API.Controllers.Transactions
             }
             catch (Exception ex)
             {
+                ErrorLog.LogError(ex);
                 return InternalServerError();
             }
         }

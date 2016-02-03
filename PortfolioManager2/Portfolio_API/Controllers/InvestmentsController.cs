@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Interfaces;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
@@ -23,7 +24,7 @@ namespace Portfolio_API.Controllers
         }
         
 
-        [Route("api/investments", Name = "InvestmentsList")]
+        [Route(ApiPaths.Investments, Name = "InvestmentsList")]
         public IHttpActionResult Get(int page = 1, int pageSize = ApiConstants.MaxPageSize)
         {
             try

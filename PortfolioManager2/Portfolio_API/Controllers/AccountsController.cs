@@ -60,6 +60,7 @@ namespace Portfolio_API.Controllers
             }
             catch (Exception ex)
             {
+                ErrorLog.LogError(ex);
                 return InternalServerError();
             }
         }

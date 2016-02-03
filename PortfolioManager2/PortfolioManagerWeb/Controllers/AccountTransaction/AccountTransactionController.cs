@@ -37,8 +37,6 @@ namespace PortfolioManagerWeb.Controllers
             {
                 return Content("An error occurred.");
             }
-
-            return null;
         }
 
         private static async Task<HttpResponseMessage> CreateDeposit(DepositTransactionRequest depositTransactionRequest)
