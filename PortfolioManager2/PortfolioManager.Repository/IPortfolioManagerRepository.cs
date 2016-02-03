@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
@@ -22,5 +23,6 @@ namespace PortfolioManager.Repository
         RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
+        IQueryable<Transaction> GetAccountTransactions(int accountId);
     }
 }

@@ -10,13 +10,12 @@ using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
+using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
     public class PortfoliosController : ApiController
-    {
-        const int MaxPageSize = 1;
-
+    {        
         IPortfolioManagerRepository _repository;
 
         public PortfoliosController()
@@ -26,14 +25,14 @@ namespace Portfolio_API.Controllers
 
 
         [Route(ApiPaths.Portfolios, Name = "PortfoliosList")]
-        public IHttpActionResult Get(int page = 1, int pageSize = MaxPageSize)
+        public IHttpActionResult Get(int page = 1, int pageSize =ApiConstants.MaxPageSize)
         {
             try
             {
                 // ensure the page size isn't larger than the maximum.
-                if (pageSize > MaxPageSize)
+                if (pageSize > ApiConstants.MaxPageSize)
                 {
-                    pageSize = MaxPageSize;
+                    pageSize = ApiConstants.MaxPageSize;
                 }
 
                 IQueryable<Portfolio> portfolios = _repository.GetPortfolios();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 using Portfolio_API.Helpers;
 
@@ -10,7 +11,7 @@ namespace Portfolio_API.Controllers
 {
     internal class ShapedData
     {
-        
+
         public static object CreateDataShapedObject(Portfolio portfolioEnt, List<string> lstOfFields)
         {
             // work with a new instance, as we'll manipulate this list in this method
@@ -85,6 +86,36 @@ namespace Portfolio_API.Controllers
 
                 return objectToReturn;
             }
+        }
+
+        internal static AccountTransactionSummaryDto CreateDataShapedObject(int accountId, IQueryable<Transaction> transactionEnts)
+        {
+            var x = new AccountTransactionSummaryDto()
+            {
+                AccountId = accountId,
+                Transactions = new List<TransactionDto>()
+            };
+
+            foreach (var tx in transactionEnts)
+            {
+                x.Transactions.Add(CreateDataShapedObject(tx));
+            }
+
+            return x;
+        }
+
+        private static TransactionDto CreateDataShapedObject(Transaction tx)
+        {
+            return new TransactionDto()
+            {
+                TransactionId = tx.TransactionId,
+                AccountId = tx.AccountId,
+                TransactionType = tx.TransactionType,
+                TransactionDate = tx.TransactionDate,
+                Source = tx.Source,
+                Value = tx.Value,
+                IsTaxRefund = tx.IsTaxRefund
+            };
         }
 
         public static object CreateDataShapedObject(Account accountEnt, List<string> lstOfFields)

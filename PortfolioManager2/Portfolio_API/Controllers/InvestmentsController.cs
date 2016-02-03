@@ -9,6 +9,7 @@ using System.Web.Http.Routing;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
+using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
@@ -20,18 +21,17 @@ namespace Portfolio_API.Controllers
         {
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
         }
-
-        const int maxPageSize = 2;
+        
 
         [Route("api/investments", Name = "InvestmentsList")]
-        public IHttpActionResult Get(int page = 1, int pageSize = maxPageSize)
+        public IHttpActionResult Get(int page = 1, int pageSize = ApiConstants.MaxPageSize)
         {
             try
             {
                 // ensure the page size isn't larger than the maximum.
-                if (pageSize > maxPageSize)
+                if (pageSize > ApiConstants.MaxPageSize)
                 {
-                    pageSize = maxPageSize;
+                    pageSize = ApiConstants.MaxPageSize;
                 }
 
                 IQueryable<Investment> results = _repository.GetInvestments();

@@ -23,12 +23,6 @@ namespace Portfolio_API.Controllers
             _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());       
         }
 
-        [Route(ApiPaths.CashDeposit)]//, Name = "PortfoliosList")]
-        public IHttpActionResult Get(int page = 1)
-        {
-            return null;
-        }
-
         [System.Web.Http.HttpPost]
         [Route(ApiPaths.CashDeposit)]
         public IHttpActionResult Post([FromBody] DepositTransactionRequest deposit)

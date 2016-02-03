@@ -33,7 +33,7 @@
 @Html.ActionLink("Deposit Funds", "DepositFunds", "AccountTransaction", new { accountId = Model.AccountId }, null)
 @Html.ActionLink("Withdraw Funds", "WithdrawFunds", "AccountTransaction", new { accountId = Model.AccountId }, null)
 @Html.ActionLink("Link Investment", "LinkInvestment", "Account", new { accountId = Model.AccountId }, null)
-@Html.ActionLink("Transactions", "TransactionSummary", "Transaction", new { accountId = Model.AccountId }, null)
+@Html.ActionLink("Transactions", "AccountTransactionSummary", "Transactions", new { accountId = Model.AccountId }, null)
 
 <h2>Investment Details</h2>
 

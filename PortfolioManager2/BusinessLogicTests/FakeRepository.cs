@@ -68,5 +68,10 @@ namespace BusinessLogicTests
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<Transaction> GetAccountTransactions(int accountId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

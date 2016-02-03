@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ExpenseTracker.Repository;
+using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
@@ -139,6 +141,12 @@ namespace PortfolioManager.Repository
             var account = _context.Accounts.Single(a => a.AccountId == accountId);
             account.Cash -= amount;
             _context.SaveChanges();
+        }
+
+        public IQueryable<Transaction> GetAccountTransactions(int accountId)
+        {
+            var tx = _context.Transactions.Where(t => t.AccountId == accountId);
+            return tx;
         }
     }
 }

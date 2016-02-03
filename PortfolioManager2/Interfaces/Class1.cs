@@ -7,5 +7,6 @@
         public const string CashWithdrawal = "api/transactions/cashwithdrawal";
         public const string Accounts = "api/accounts";
         public const string Portfolios = "api/portfolios";
+        public const string AccountTransactions = "api/transactionsummary";
     }
 }
