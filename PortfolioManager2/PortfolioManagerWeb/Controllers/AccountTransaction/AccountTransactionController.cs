@@ -26,7 +26,7 @@ namespace PortfolioManagerWeb.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Details", "Accounts", new { Id = depositTransactionRequest.AccountId });
+                    return RedirectToAction("Details", "Accounts", new { accountId = depositTransactionRequest.AccountId });
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace PortfolioManagerWeb.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Details", "Accounts", new { Id = withdrawalTransactionRequest.AccountId });
+                    return RedirectToAction("Details", "Accounts", new { accountId = withdrawalTransactionRequest.AccountId });
                 }
                 else
                 {
