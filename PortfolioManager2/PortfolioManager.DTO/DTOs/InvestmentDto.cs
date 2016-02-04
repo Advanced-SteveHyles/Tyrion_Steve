@@ -9,7 +9,7 @@
 
         public string Type { get; set; }
         public string Class { get; set; }
-        public string Income { get; set; }
-        public string SubType2 { get; set; }
+        public string IncomeType { get; set; }
+        public string MarketIndex { get; set; }
     }
 }

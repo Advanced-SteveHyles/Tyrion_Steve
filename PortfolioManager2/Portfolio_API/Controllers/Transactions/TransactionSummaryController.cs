@@ -12,12 +12,12 @@ namespace Portfolio_API.Controllers.Transactions
 {
     public class TransactionSummaryController : ApiController
     {
-        readonly IPortfolioManagerRepository _repository;
+        readonly IAccountRepository _repository;
         
 
         public TransactionSummaryController()
         {
-            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+            _repository = new AccountRepository(new PortfolioManagerContext());
         }
 
      //   [Route(ApiPaths.AccountTransactions)]
@@ -46,10 +46,5 @@ namespace Portfolio_API.Controllers.Transactions
                 return InternalServerError();
             }
         }
-    }
-
-    public class ApiConstants
-    {
-        public const int MaxPageSize = 10;
     }
 }

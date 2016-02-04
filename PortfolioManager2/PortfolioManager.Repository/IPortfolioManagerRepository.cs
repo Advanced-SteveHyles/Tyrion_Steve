@@ -9,20 +9,36 @@ using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
 {
-    public interface IPortfolioManagerRepository
-    {        
+    public interface ITransactionRepository
+    {
+        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
+    }
+
+    public interface IAccountRepository
+    {
+        RepositoryActionResult<Account> InsertAccount(Account entityAccount);
+        Account GetAccountWithInvestments(int id);
+        Account GetAccount(int id);
+
+        void IncreaseAccountBalance(int accountId, decimal amount);
+        void DecreaseAccountBalance(int accountId, decimal amount);
+
+        IQueryable<Transaction> GetAccountTransactions(int accountId);
+    }
+
+    public interface IInvestmentRepository
+    {
+        RepositoryActionResult<Investment> InsertInvestment(Investment entityInvestment);
+
+        System.Linq.IQueryable<Entities.Investment> GetInvestments();
+    }
+
+    public interface IPortfolioRepository
+    {
         System.Linq.IQueryable<Entities.Portfolio> GetPortfolios();
 
         Portfolio GetPortfolio(int id);
         Portfolio GetPortfolioWithAccounts(int id);
-        RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);        
-        System.Linq.IQueryable<Entities.Investment> GetInvestments();
-        RepositoryActionResult<Account> InsertAccount(Account entityAccount);
-        Account GetAccountWithInvestments(int id);
-        Account GetAccount(int id);
-        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
-        void IncreaseAccountBalance(int accountId, decimal amount);
-        void DecreaseAccountBalance(int accountId, decimal amount);
-        IQueryable<Transaction> GetAccountTransactions(int accountId);
+        RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);
     }
 }

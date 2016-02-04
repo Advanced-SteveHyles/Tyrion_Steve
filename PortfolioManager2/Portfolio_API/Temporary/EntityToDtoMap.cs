@@ -114,5 +114,18 @@ namespace Portfolio_API.Controllers
         {
             throw new System.NotImplementedException();
         }
+
+        public static InvestmentDto MapInvestmentToDto(Investment entity)
+        {
+            return new InvestmentDto
+            {
+                Name = entity.Name,
+                Symbol = entity.Symbol,
+                Type = entity.Type,
+                Class = entity.Class,
+                IncomeType = entity.IncomeType,
+                MarketIndex = entity.MarketIndex
+            };
+        }
     }
 }

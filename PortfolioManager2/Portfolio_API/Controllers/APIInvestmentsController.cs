@@ -6,21 +6,24 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using ExpenseTracker.Repository;
 using Interfaces;
+using Newtonsoft.Json;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Factories;
 using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
-    public class InvestmentsController : ApiController
+    public class APIInvestmentsController : ApiController
     {
-        private IPortfolioManagerRepository _repository;
+        private readonly IInvestmentRepository _repository;
 
-        public InvestmentsController()
+        public APIInvestmentsController()
         {
-            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+            _repository = new InvestmentRepository(new PortfolioManagerContext());
         }
         
 
@@ -87,5 +90,51 @@ namespace Portfolio_API.Controllers
                 return InternalServerError();
             }
         }
+
+        [System.Web.Http.HttpPost]
+        [Route(ApiPaths.Investments)]
+     
+        public IHttpActionResult Post([FromBody] InvestmentRequest investmentRequest)
+        {
+            try
+            {
+                if (investmentRequest == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityInvestment = new InvestmentFactory().CreateInvestment(investmentRequest);
+                if (entityInvestment == null)
+                {
+                    return BadRequest();
+                }
+
+                /*
+                {
+                    "userId": "https://expensetrackeridsrv3/embedded_1",
+                    "title": "STV",
+                    "description": "STV",
+                    "expenseGroupStatusId": 1,
+                }
+                */
+
+                var result = _repository.InsertInvestment(entityInvestment);
+                if (result.Status == RepositoryActionStatus.Created)
+                {
+                    var dtoInvestment = EntityToDtoMap.MapInvestmentToDto(result.Entity);
+                    return Created(Request.RequestUri + "/" + dtoInvestment.InvestmentId, dtoInvestment);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return InternalServerError();
+            }
+        } 
     }
 }

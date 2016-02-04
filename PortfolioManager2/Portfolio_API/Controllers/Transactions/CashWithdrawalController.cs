@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Antlr.Runtime.Tree;
 using BusinessLogic.Transactions;
 using BusinessLogicTests;
 using Interfaces;
@@ -16,10 +17,10 @@ namespace Portfolio_API.Controllers.Transactions
 {
 public class CashWithdrawalController : ApiController
     {
-        readonly IPortfolioManagerRepository _repository;
+        readonly ITransactionRepository _repository;
         public CashWithdrawalController()
         {
-            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+            _repository = new TransactionRepository(new PortfolioManagerContext());
         }
 
 

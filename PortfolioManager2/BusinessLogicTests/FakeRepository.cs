@@ -6,7 +6,11 @@ using Xunit.Sdk;
 
 namespace BusinessLogicTests
 {
-    public class FakeRepository : IPortfolioManagerRepository
+    public class FakeRepository
+        : IPortfolioRepository
+        , IInvestmentRepository
+        , IAccountRepository
+        , ITransactionRepository
     {
         public decimal AccountBalance { get; private set; }
         public bool AddCashTransactionWasCalled { get; private set; }
@@ -27,11 +31,6 @@ namespace BusinessLogicTests
         }
 
         public RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio)
-        {
-            throw new NotImplementedException();
-        }
-
-        IQueryable<Investment> IPortfolioManagerRepository.GetInvestments()
         {
             throw new NotImplementedException();
         }
@@ -70,6 +69,16 @@ namespace BusinessLogicTests
         }
 
         public IQueryable<Transaction> GetAccountTransactions(int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RepositoryActionResult<Investment> InsertInvestment(Investment entityInvestment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Investment> GetInvestments()
         {
             throw new NotImplementedException();
         }

@@ -6,9 +6,9 @@ namespace BusinessLogicTests
 {
     public class TransactionHandler : ITransactionHandler
     {
-        private readonly IPortfolioManagerRepository _repository;
+        private readonly ITransactionRepository _repository;
 
-        public TransactionHandler(IPortfolioManagerRepository repository)
+        public TransactionHandler(ITransactionRepository repository)
         {
             _repository = repository;
         }

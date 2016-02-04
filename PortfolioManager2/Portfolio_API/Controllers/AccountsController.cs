@@ -15,11 +15,11 @@ namespace Portfolio_API.Controllers
 {
     public class AccountsController : ApiController
     {
-        IPortfolioManagerRepository _repository;
+        IAccountRepository _repository;
 
         public AccountsController()
         {
-            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+            _repository = new AccountRepository(new PortfolioManagerContext());
         }
 
         public IHttpActionResult Get(int id, string fields = null)
@@ -114,4 +114,5 @@ namespace Portfolio_API.Controllers
 
 
     }
+
 }

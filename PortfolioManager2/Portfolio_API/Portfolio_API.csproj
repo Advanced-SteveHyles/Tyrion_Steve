@@ -200,13 +200,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\InvestmentsController.cs" />
+    <Compile Include="Controllers\ErrorLog.cs" />
+    <Compile Include="Controllers\APIInvestmentsController.cs" />
+    <Compile Include="Controllers\Transactions\ApiConstants.cs" />
     <Compile Include="Controllers\Transactions\CashdepositController.cs" />
     <Compile Include="Controllers\Transactions\CashWithdrawalController.cs" />
     <Compile Include="Controllers\Transactions\Command.cs" />
     <Compile Include="Controllers\Transactions\TransactionSummaryController.cs" />
     <Compile Include="Temporary\EntityToDtoMap.cs" />
-    <Compile Include="Controllers\PortfoliosController.cs" />
+    <Compile Include="Controllers\APiPortfoliosController.cs" />
     <Compile Include="Temporary\ShapedData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -14,13 +14,13 @@ using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
-    public class PortfoliosController : ApiController
-    {        
-        IPortfolioManagerRepository _repository;
+    public class APIPortfoliosController : ApiController
+    {
+        readonly IPortfolioRepository _repository;
 
-        public PortfoliosController()
+        public APIPortfoliosController()
         {
-            _repository = new PortfolioManagerEfRepository(new PortfolioManagerContext());
+            _repository = new PortfolioRepository(new PortfolioManagerContext());
         }
 
 
@@ -178,13 +178,5 @@ namespace Portfolio_API.Controllers
 
 
 
-    }
-
-    public class ErrorLog
-    {
-        public static void LogError(Exception exception)
-        {
-            Console.Write(exception.Message);
-        }
     }
 }

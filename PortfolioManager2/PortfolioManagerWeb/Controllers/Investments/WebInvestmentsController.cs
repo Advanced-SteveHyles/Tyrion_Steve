@@ -11,7 +11,7 @@ using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers
 {
-    public class InvestmentsController : Controller
+    public class WebInvestmentsController : Controller
     {
         public async Task<ActionResult> Index(int? page = 1)
         {

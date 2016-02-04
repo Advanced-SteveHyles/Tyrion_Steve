@@ -5,9 +5,9 @@ namespace BusinessLogicTests
 {
  public class AccountHandler : IAccountHandler
     {
-        private readonly IPortfolioManagerRepository _repository;
+        private readonly IAccountRepository _repository;
 
-        public AccountHandler(IPortfolioManagerRepository repository)
+        public AccountHandler(IAccountRepository repository)
         {
             _repository = repository;            
         }

@@ -21,8 +21,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
 
             @Html.LabelFor(model => model.Symbol, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -43,7 +43,7 @@
                 Tracker
                 Equity Income
                 Growth
-            </ol>            
+            </ol>
 
             @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -72,8 +72,8 @@
 
             @Html.LabelFor(model => model.MarketIndex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MarketIndex, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.MarketIndex, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.MarketIndex, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MarketIndex, "", new { @class = "text-danger" })
             </div>
 
             <ol>
