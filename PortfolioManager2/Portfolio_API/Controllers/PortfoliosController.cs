@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -14,13 +15,14 @@ using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
-    public class APIPortfoliosController : ApiController
+    public class PortfoliosController : ApiController
     {
         readonly IPortfolioRepository _repository;
 
-        public APIPortfoliosController()
+        public PortfoliosController()
         {
             _repository = new PortfolioRepository(new PortfolioManagerContext());
+            Tracer.Trace(this.ToString());
         }
 
 
@@ -94,7 +96,6 @@ namespace Portfolio_API.Controllers
                 bool includeAccounts = false;
                 List<string> lstOfFields = new List<string>();
 
-                // we should include expenses when the fields-string contains "expenses"
                 if (fields != null)
                 {
                     lstOfFields = fields.ToLower().Split(',').ToList();
@@ -178,5 +179,13 @@ namespace Portfolio_API.Controllers
 
 
 
+    }
+
+    public class Tracer
+    {
+        public static void Trace(string value)
+        {
+            Debug.WriteLine(value);
+        }
     }
 }
