@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using Microsoft.Owin.Security.Facebook;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
@@ -23,7 +24,7 @@ namespace Portfolio_API.Controllers
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult Get(int accountId)
         {
             var map = new AccountInvestmentMapDto();
@@ -31,11 +32,19 @@ namespace Portfolio_API.Controllers
             var accountEnt = _accountRepository.GetAccount(accountId);
             map.AccountInfo = accountEnt.MapToDto();
 
-            ICollection<Investment> investmentEnt = _investmentRepository.GetInvestments();
+            var investmentEntities = _investmentRepository.GetInvestments();
+            map.Investments = investmentEntities.Select(e => e.MapToDto()).ToList();
 
-            
-            
-
+            try
+            {
+                //return Ok(ShapedData.CreateDataShapedObject(accountEnt, lstOfFields));
+                return Ok(map);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return BadRequest();
+            }            
         }
 
     }

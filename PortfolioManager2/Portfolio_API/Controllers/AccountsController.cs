@@ -76,7 +76,7 @@ namespace Portfolio_API.Controllers
                     return BadRequest();
                 }
 
-                var entityAccount   = new AccountFactory().CreateAccount(account);
+                var entityAccount   = AccountFactory.CreateAccount(account);
                 if (entityAccount == null)
                 {
                     return BadRequest();

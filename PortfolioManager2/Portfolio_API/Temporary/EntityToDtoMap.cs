@@ -127,5 +127,19 @@ namespace Portfolio_API.Controllers
                 MarketIndex = entity.MarketIndex
             };
         }
+
+        public static InvestmentDto MapToDto(this Investment entity)
+        {
+            return new InvestmentDto
+            {
+                Name = entity.Name,
+                Symbol = entity.Symbol,
+                Type = entity.Type,
+                Class = entity.Class,
+                IncomeType = entity.IncomeType,
+                MarketIndex = entity.MarketIndex
+            };
+        }
+
     }
 }

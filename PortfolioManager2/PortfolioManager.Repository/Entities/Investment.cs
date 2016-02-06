@@ -19,5 +19,7 @@ namespace PortfolioManager.Repository.Entities
             public string Class { get; set; }
             public string IncomeType { get; set; }
         public string MarketIndex { get; set; }
+
+        
     }
 }
