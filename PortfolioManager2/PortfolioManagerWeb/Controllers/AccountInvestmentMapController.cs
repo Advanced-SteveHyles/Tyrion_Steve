@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO;
+using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers
 {
@@ -13,20 +14,21 @@ namespace PortfolioManagerWeb.Controllers
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync(ApiPaths.InvestmentMapper+ "/" + accountId);
+            HttpResponseMessage response = await client.GetAsync(ApiPaths.InvestmentMap + "/" + accountId);
 
             string content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                var model = JsonConvert.DeserializeObject<AccountInvestmentMapDto>(content);
-                return View(model);
+                var rawModel = JsonConvert.DeserializeObject<AccountInvestmentMapDto>(content);
+                return View(new DecoratedAccountInvestmentDto( rawModel));
             }
 
             return Content("An error occurred");            
         }
 
-        public async Task<ActionResult> LinkInvestment()
+        [HttpPost]
+        public async Task<ActionResult> LinkInvestment(AccountInvestmentMapDto investmentMap)
         {
             throw new System.NotImplementedException();
         }

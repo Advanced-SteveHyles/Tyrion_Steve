@@ -9,6 +9,6 @@
         public const string Portfolios = "api/portfolios";
         public const string AccountTransactions = "api/transactionsummary";
         public const string Investments = "api/investments";
-        public static string InvestmentMapper = "api/setup/investmentmapper";
+        public const string InvestmentMap = "api/accountinvestmentmap";
     }
 }

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using Interfaces;
 using Microsoft.Owin.Security.Facebook;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;
@@ -13,27 +14,30 @@ using PortfolioManager.Repository.Factories;
 
 namespace Portfolio_API.Controllers
 {
-    public class InvestmentMapController : ApiController
+    public class AccountInvestmentMapController : ApiController
     {
-        private InvestmentRepository _investmentRepository;
-        private AccountRepository _accountRepository;
+        private readonly InvestmentRepository _investmentRepository;
+        private readonly AccountRepository _accountRepository;
 
-        public InvestmentMapController()
+        public AccountInvestmentMapController()
         {
             _investmentRepository = new InvestmentRepository(new PortfolioManagerContext());
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
         }
-
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult Get(int accountId)
+        
+        public IHttpActionResult Get(int id)
         {
             var map = new AccountInvestmentMapDto();
 
-            var accountEnt = _accountRepository.GetAccount(accountId);
+            var accountEnt = _accountRepository.GetAccount(id);
             map.AccountInfo = accountEnt.MapToDto();
 
             var investmentEntities = _investmentRepository.GetInvestments();
-            map.Investments = investmentEntities.Select(e => e.MapToDto()).ToList();
+            map.Investments = new List<InvestmentDto>();
+            foreach (var investment in investmentEntities.ToList())
+            {
+                map.Investments.Add(investment.MapToDto());
+            }                
 
             try
             {

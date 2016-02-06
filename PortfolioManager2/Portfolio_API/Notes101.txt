@@ -8,3 +8,5 @@ to match route info.!
 4) Spaces in URLs cause
 	1) Unresolvable API paths
 	2) fields to throw exceptions
+
+5) If the API controller is found but the web cannot find it - check missing api\ on path

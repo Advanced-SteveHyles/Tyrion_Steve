@@ -220,8 +220,11 @@
     <Compile Include="Controllers\Accounts\AccountController.cs" />
     <Compile Include="Controllers\Accounts\AccountsController.cs" />
     <Compile Include="Controllers\AccountTransaction\AccountTransactionController.cs" />
+    <Compile Include="Models\ISelectable.cs" />
+    <Compile Include="Models\InvestmentDecorator.cs" />
+    <Compile Include="Models\DecoratedAccountInvestmentDto.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Investments\WebInvestmentsController.cs" />
+    <Compile Include="Controllers\Investments\InvestmentsController.cs" />
     <Compile Include="Controllers\InvestmentsMapController.cs" />
     <Compile Include="Controllers\Transactions\TransactionsController.cs" />
     <Compile Include="Models\AccountsViewModel.cs" />
@@ -304,7 +307,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Portfolios\Index.cshtml" />
     <Content Include="Views\Home\Portfolios.cshtml" />
-    <Content Include="Views\WebInvestments\Index.cshtml" />
+    <Content Include="Views\Investments\Index.cshtml" />
     <Content Include="Views\Home\Investments.cshtml" />
     <Content Include="Views\Portfolios\Details.cshtml" />
     <Content Include="Views\Accounts\Details.cshtml" />
@@ -315,7 +318,7 @@
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
-    <Content Include="Views\WebInvestments\Create.cshtml" />
+    <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
   </ItemGroup>
   <ItemGroup>
