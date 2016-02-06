@@ -216,6 +216,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountInvestmentMapController.cs" />
     <Compile Include="Controllers\Accounts\AccountController.cs" />
     <Compile Include="Controllers\Accounts\AccountsController.cs" />
     <Compile Include="Controllers\AccountTransaction\AccountTransactionController.cs" />
@@ -315,6 +316,7 @@
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
     <Content Include="Views\WebInvestments\Create.cshtml" />
+    <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -94,7 +94,7 @@ namespace Portfolio_API.Controllers
                 var result = _repository.InsertAccount(entityAccount);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoAccount = EntityToDtoMap.MapAccountToDto(result.Entity);
+                    var dtoAccount = result.Entity.MapToDto();
                     return Created(Request.RequestUri + "/" + dtoAccount.AccountId, dtoAccount);
                 }
                 else

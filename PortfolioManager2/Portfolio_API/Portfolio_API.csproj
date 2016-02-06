@@ -201,7 +201,8 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ErrorLog.cs" />
-    <Compile Include="Controllers\APIInvestmentsController.cs" />
+    <Compile Include="Controllers\InvestmentMapController.cs" />
+    <Compile Include="Controllers\InvestmentsController.cs" />
     <Compile Include="Controllers\Transactions\ApiConstants.cs" />
     <Compile Include="Controllers\Transactions\CashdepositController.cs" />
     <Compile Include="Controllers\Transactions\CashWithdrawalController.cs" />

@@ -1,0 +1,77 @@
+﻿@model PortfolioManager.DTO.AccountInvestmentMapDto
+
+@{
+    ViewBag.Title = "LinkInvestments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<dl class="dl-horizontal">
+
+    <dd>
+        @Html.DisplayFor(model => model.AccountInfo.AccountId)
+    </dd>
+
+    <dd>
+        @Html.DisplayFor(model => model.AccountInfo.Name)
+    </dd>
+
+</dl>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Symbol
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Type
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.investments)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvestmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.IncomeType)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketIndex)
+            </td>
+
+            @*<td>
+                    @((Model.ExpenseGroupStatusses as List<ExpenseTracker.DTO.ExpenseGroupStatus>)
+                            .First(egs => egs.PortfolioAcountId == item.ExpenseGroupStatusPortfolioAcountId).Description)
+                </td>*@
+
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.PortfolioAcountId }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id = item.PortfolioAcountId }) |*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.PortfolioAcountId })*@
+            </td>
+        </tr>
+    }
+
+</table>

@@ -161,7 +161,7 @@ namespace Portfolio_API.Controllers
                 var result = _repository.InsertPortfolio(entityPortfolio);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoPortfolio = EntityToDtoMap.MapPortfolioToDto(result.Entity);
+                    var dtoPortfolio = result.Entity.MapToDto();
                     return Created(Request.RequestUri + "/" + dtoPortfolio.PortfolioId, dtoPortfolio);
                 }
                 else

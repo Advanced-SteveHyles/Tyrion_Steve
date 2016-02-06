@@ -6,9 +6,9 @@ using PortfolioManager.Repository.Entities;
 
 namespace Portfolio_API.Controllers
 {
-    internal class EntityToDtoMap
+    internal static class EntityToDtoMap
     {
-            public static PortfolioDto MapPortfolioToDto(Portfolio entity)
+            public static PortfolioDto MapToDto(this Portfolio entity)
             {
                 return new PortfolioDto
                 {
@@ -77,7 +77,7 @@ namespace Portfolio_API.Controllers
         //}
 
 
-        public static AccountDto MapAccountToDto(Account entity)
+        public static AccountDto MapToDto(this Account entity)
         {
             return new AccountDto()
             {

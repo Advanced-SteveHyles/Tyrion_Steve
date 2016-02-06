@@ -6,7 +6,7 @@ namespace PortfolioManager.Repository.Factories
 {
     public class AccountFactory
     {
-        public Account CreateAccount(AccountRequest account)
+        public static Account CreateAccount(AccountRequest account)
         {
             return new Account()
             {

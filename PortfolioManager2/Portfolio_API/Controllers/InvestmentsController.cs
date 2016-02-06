@@ -17,11 +17,11 @@ using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
 {
-    public class APIInvestmentsController : ApiController
+    public class InvestmentsController : ApiController
     {
         private readonly IInvestmentRepository _repository;
 
-        public APIInvestmentsController()
+        public InvestmentsController()
         {
             _repository = new InvestmentRepository(new PortfolioManagerContext());
         }
