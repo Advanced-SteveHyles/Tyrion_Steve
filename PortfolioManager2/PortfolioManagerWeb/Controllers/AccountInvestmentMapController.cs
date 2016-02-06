@@ -26,9 +26,15 @@ namespace PortfolioManagerWeb.Controllers
 
             return Content("An error occurred");            
         }
+        
+        [HttpPost]
+        public Task<ActionResult> LinkAccountToInvestment(int accountId, int investmentId)
+        {
+            throw new System.NotImplementedException();
+        }
 
         [HttpPost]
-        public async Task<ActionResult> LinkInvestment(AccountInvestmentMapDto investmentMap)
+        public Task<ActionResult> LinkAccountToInvestment(object fish)
         {
             throw new System.NotImplementedException();
         }

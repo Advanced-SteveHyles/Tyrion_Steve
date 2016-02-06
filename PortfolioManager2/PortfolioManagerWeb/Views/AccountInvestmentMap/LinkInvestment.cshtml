@@ -19,6 +19,8 @@
 
 </dl>
 
+<H2>Unlinked Investments</H2>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -41,7 +43,11 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsSelected)
+                    @Html.LabelFor(model => item.IsSelected, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => item.IsSelected, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => item.IsSelected, "", new { @class = "text-danger" })
+                    </div>
                 </td>
 
                 <td>
@@ -61,14 +67,23 @@
                 </td>
 
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.PortfolioAcountId }) |*@
+                    @Html.ActionLink( "Link", "LinkAccountToInvestment", "AccountInvestmentMap", new { accountId = Model.Account.AccountId,  investmentId = item.Investment.InvestmentId},null) |
                     @*@Html.ActionLink("Details", "Details", new { id = item.PortfolioAcountId }) |*@
                     @*@Html.ActionLink("Delete", "Delete", new { id = item.PortfolioAcountId })*@
                 </td>
             </tr>
         }
     </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update" class="btn btn-default" />
+        </div>
+    </div>
 }
+
+
+<h2>Linked Investments</h2>
 
 <table class="table">
     <tr>
@@ -113,8 +128,3 @@
 </table>
 
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Update" class="btn btn-default" />
-    </div>
-</div>

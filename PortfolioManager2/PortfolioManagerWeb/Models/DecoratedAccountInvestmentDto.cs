@@ -9,6 +9,10 @@ namespace PortfolioManagerWeb.Models
         public AccountDto Account { get; }
         public ICollection<InvestmentDecorator> Investments { get; }
 
+        public DecoratedAccountInvestmentDto()
+        {
+        }
+
         public DecoratedAccountInvestmentDto(AccountInvestmentMapDto x)
         {
             Account = x.AccountInfo;
