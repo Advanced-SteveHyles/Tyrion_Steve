@@ -83,16 +83,16 @@
                     new SelectListItem{ Text="Option 3", Value = "3" },
                 })
 
-                @Html.ActionLink("Create New", "Resolve", "InvestmentsMap",   new { id = item.Id , action= fred}, null)
+                @Html.ActionLink("Create New", "Resolve", "InvestmentsMap",   new { id = item.AccountId , action= fred}, null)
                 
 
-                @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new { id = item.Id }, null)
-                @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.Id }, null)
+                @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new { id = item.InvestmentMapId }, null)
+                @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.InvestmentMapId }, null)
 
-                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.Id }, null))
-                @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.Id }, null))
-                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.Id }, null))
-                @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.Id }, null))
+                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
+                @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
+                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
+                @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
 
             </td>
         </tr>

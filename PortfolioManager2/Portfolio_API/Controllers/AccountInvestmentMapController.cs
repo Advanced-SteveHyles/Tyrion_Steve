@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 using Interfaces;
-using Microsoft.Owin.Security.Facebook;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
-using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
 
 namespace Portfolio_API.Controllers
@@ -24,7 +21,7 @@ namespace Portfolio_API.Controllers
             _investmentRepository = new InvestmentRepository(new PortfolioManagerContext());
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
         }
-        
+
         public IHttpActionResult Get(int id)
         {
             var map = new AccountInvestmentMapDto();
@@ -37,7 +34,7 @@ namespace Portfolio_API.Controllers
             foreach (var investment in investmentEntities.ToList())
             {
                 map.Investments.Add(investment.MapToDto());
-            }                
+            }
 
             try
             {
@@ -48,8 +45,54 @@ namespace Portfolio_API.Controllers
             {
                 ErrorLog.LogError(ex);
                 return BadRequest();
-            }            
+            }
         }
 
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route(ApiPaths.InvestmentMap)]
+        public IHttpActionResult Post([FromBody] AccountInvestmentMapRequest investmentMapRequest)
+        {
+            try
+            {
+                if (investmentMapRequest == null)
+                {
+                    return BadRequest();
+                }
+
+                var entityInvestmentMap = InvestmentMapFactory.CreateInvestmentMap(investmentMapRequest);
+                if (entityInvestmentMap == null)
+                {
+                    return BadRequest();
+                }
+
+                /*
+                {
+                    "userId": "https://expensetrackeridsrv3/embedded_1",
+                    "title": "STV",
+                    "description": "STV",
+                    "expenseGroupStatusId": 1,
+                }
+                */
+
+                var result = _accountRepository.InsertInvestmentMap(entityInvestmentMap);
+                if (result.Status == RepositoryActionStatus.Created)
+                {
+                    var dtoInvestment = result.Entity.MapToDto();
+                    return Created(Request.RequestUri + "/" + dtoInvestment.InvestmentId, dtoInvestment);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return InternalServerError();
+            }
+
+        }
     }
 }

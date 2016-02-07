@@ -39,7 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AccountDto.cs" />
-    <Compile Include="DTOs\AccountInvestmentMapRequest.cs" />
+    <Compile Include="DTOs\AccountInvestmentMapDto.cs" />
+    <Compile Include="Requests\AccountInvestmentMapRequest.cs" />
     <Compile Include="DTOs\Transactions\AccountTransactionSummaryDto.cs" />
     <Compile Include="DTOs\Transactions\TransactionDTO.cs" />
     <Compile Include="Requests\AccountRequest.cs" />

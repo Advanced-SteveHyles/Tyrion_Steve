@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using ExpenseTracker.Repository;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository

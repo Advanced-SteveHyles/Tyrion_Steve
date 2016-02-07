@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExpenseTracker.Repository;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Factories;
 
 namespace PortfolioManager.Repository
 {
@@ -70,5 +70,25 @@ namespace PortfolioManager.Repository
         }
 
 
+        public RepositoryActionResult<InvestmentMap> InsertInvestmentMap(InvestmentMap entityInvestmentMap)
+        {
+            try
+            {
+                _context.AccountInvestmentMaps.Add(entityInvestmentMap);
+                var result = _context.SaveChanges();
+                if (result > 0)
+                {
+                    return new RepositoryActionResult<InvestmentMap>(entityInvestmentMap, RepositoryActionStatus.Created);
+                }
+                else
+                {
+                    return new RepositoryActionResult<InvestmentMap>(entityInvestmentMap, RepositoryActionStatus.NothingModified, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new RepositoryActionResult<InvestmentMap>(null, RepositoryActionStatus.Error, ex);
+            }
+        }
     }
 }

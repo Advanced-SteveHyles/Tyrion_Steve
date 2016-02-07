@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ExpenseTracker.Repository;
 using Interfaces;
 using PortfolioManager.DTO;
 using PortfolioManager.Repository;

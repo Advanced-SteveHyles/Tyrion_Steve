@@ -19,6 +19,6 @@ namespace PortfolioManager.DTO
         public string Type { get; set; }
 
         public ICollection<InvestmentMapDto>  Investments { get; set; }
-        public Decimal AccountBalance { get; set; }
+        public decimal AccountBalance { get; set; }
     }
 }

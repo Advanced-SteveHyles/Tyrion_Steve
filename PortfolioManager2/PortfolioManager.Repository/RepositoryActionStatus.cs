@@ -1,4 +1,4 @@
-namespace ExpenseTracker.Repository
+namespace PortfolioManager.Repository
 {
     public enum RepositoryActionStatus
     {

@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PortfolioManager.DTO
 {
     public class InvestmentMapDto
     {
+        public int InvestmentMapId { get; set; }
+
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
 
@@ -12,6 +15,7 @@ namespace PortfolioManager.DTO
         public int Quantity { get; set; }
         public int SellPrice { get; set; }
         public int Valuation { get; set; }
-        public int Id { get; set; }        
+
+        public DateTime LastValuationDate { get; set; }
     }
 }

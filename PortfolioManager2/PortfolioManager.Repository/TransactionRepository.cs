@@ -1,5 +1,4 @@
 using System;
-using ExpenseTracker.Repository;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository

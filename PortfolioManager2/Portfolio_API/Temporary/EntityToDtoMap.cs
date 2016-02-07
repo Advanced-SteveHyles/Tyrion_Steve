@@ -8,19 +8,19 @@ namespace Portfolio_API.Controllers
 {
     internal static class EntityToDtoMap
     {
-            public static PortfolioDto MapToDto(this Portfolio entity)
+        public static PortfolioDto MapToDto(this Portfolio entity)
+        {
+            return new PortfolioDto
             {
-                return new PortfolioDto
-                {
-                    PortfolioId = entity.PortfolioId,
-                    Name = entity.Name,
+                PortfolioId = entity.PortfolioId,
+                Name = entity.Name,
 
-                    //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
-                };
-            }
+                //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
+            };
+        }
 
 
-//public static InvestmentMapDto CreateInvestmentMap(InvestmentMapEnt investmentMapEnt)
+        //public static InvestmentMapDto InvestmentMapFactory(InvestmentMapEnt investmentMapEnt)
         //{
         //    return new InvestmentMapDto
         //    {
@@ -82,10 +82,10 @@ namespace Portfolio_API.Controllers
             return new AccountDto()
             {
                 AccountId = entity.AccountId,
-                Name = entity.Name,                
-                Type =  entity.Type,
+                Name = entity.Name,
+                Type = entity.Type,
                 Cash = entity.Cash,
-                Valuation =  entity.Valuation,
+                Valuation = entity.Valuation,
                 AccountBalance = entity.Cash,
                 PortfolioId = entity.PortfolioId
 
@@ -104,7 +104,7 @@ namespace Portfolio_API.Controllers
         //    };
 
         //    if (includeInvestments)
-        //        accountDto.Investments = accountEnt.Investments.Select(e => CreateInvestmentMap(e)).ToList();
+        //        accountDto.Investments = accountEnt.Investments.Select(e => InvestmentMapFactory(e)).ToList();
 
         //    return accountDto;
         //}
@@ -132,7 +132,7 @@ namespace Portfolio_API.Controllers
         {
             return new InvestmentDto
             {
-                InvestmentId =  entity.InvestmentId,
+                InvestmentId = entity.InvestmentId,
                 Name = entity.Name,
                 Symbol = entity.Symbol,
                 Type = entity.Type,
@@ -142,5 +142,19 @@ namespace Portfolio_API.Controllers
             };
         }
 
+        public static InvestmentMapDto MapToDto(this InvestmentMap entity)
+        {
+            return new InvestmentMapDto
+            {
+                InvestmentMapId = entity.InvestmentMapId,
+                AccountId = entity.AccountId,
+                InvestmentId = entity.AccountId,
+                InvestmentName = entity.InvestmentName,
+                Quantity = entity.Quantity,
+                SellPrice = entity.SellPrice,
+                Valuation = entity.Valuation,
+                LastValuationDate = entity.LastValuationDate
+            };
+        }
     }
 }

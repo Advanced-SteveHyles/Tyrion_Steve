@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs;
+using PortfolioManager.DTO.Requests;
 using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers
@@ -30,7 +32,41 @@ namespace PortfolioManagerWeb.Controllers
 
         public async Task<ActionResult> LinkAccountToInvestment(int accountId, int investmentId)
         {
-            throw new System.NotImplementedException();
+            var linkRequest = new AccountInvestmentMapRequest {AccountId = accountId, InvestmentId = investmentId};
+
+            try
+            {
+                var client = PortfolioManagerHttpClient.GetClient();
+                
+                //var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+
+                // an expensegroup is created with status "Open", for the current user
+                //expenseGroup.ExpenseGroupStatusId = 1;
+                //expenseGroup.UserId = userId;
+
+                var serializedItemToCreate = JsonConvert.SerializeObject(linkRequest);
+
+                var response = await client.PostAsync(ApiPaths.InvestmentMap,
+                    new StringContent(serializedItemToCreate,
+                        System.Text.Encoding.Unicode, "application/json"));
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("LinkInvestment", "AccountInvestmentMap", new
+                    {
+                        accountId = linkRequest.AccountId
+                    });
+                }
+                else
+                {
+                    return Content("An error occurred");
+                }
+            }
+            catch
+            {
+                return Content("An error occurred.");
+            }
         }
         
     }

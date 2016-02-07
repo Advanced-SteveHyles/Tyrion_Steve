@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
-using ExpenseTracker.Repository;
 using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO;
