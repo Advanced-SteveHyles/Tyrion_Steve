@@ -15,3 +15,6 @@ to match route info.!
 	a) creater two parameter object
 	b) add route to global ascx.
 
+7) Debugging Webroutes - try /glimpse.axd 
+
+8) If you dont want the DTO, dont Post the data.

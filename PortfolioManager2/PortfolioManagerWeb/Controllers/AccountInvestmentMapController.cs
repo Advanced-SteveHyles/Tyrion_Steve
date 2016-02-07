@@ -20,23 +20,18 @@ namespace PortfolioManagerWeb.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var rawModel = JsonConvert.DeserializeObject<AccountInvestmentMapDto>(content);
-                return View(new DecoratedAccountInvestmentDto( rawModel));
+                var accountInvestmentMap = JsonConvert.DeserializeObject<AccountInvestmentMapDto>(content);
+                return View(accountInvestmentMap);
             }
 
-            return Content("An error occurred");            
-        }
-        
-        [HttpPost]
-        public Task<ActionResult> LinkAccountToInvestment(int accountId, int investmentId)
-        {
-            throw new System.NotImplementedException();
+            return Content("An error occurred");
         }
 
-        [HttpPost]
-        public Task<ActionResult> LinkAccountToInvestment(object fish)
+
+        public async Task<ActionResult> LinkAccountToInvestment(int accountId, int investmentId)
         {
             throw new System.NotImplementedException();
         }
+        
     }
 }

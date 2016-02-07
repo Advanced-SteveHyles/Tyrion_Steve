@@ -132,6 +132,7 @@ namespace Portfolio_API.Controllers
         {
             return new InvestmentDto
             {
+                InvestmentId =  entity.InvestmentId,
                 Name = entity.Name,
                 Symbol = entity.Symbol,
                 Type = entity.Type,
