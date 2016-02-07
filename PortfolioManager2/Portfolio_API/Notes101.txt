@@ -18,3 +18,6 @@ to match route info.!
 7) Debugging Webroutes - try /glimpse.axd 
 
 8) If you dont want the DTO, dont Post the data.
+
+9a) Random Nulls on Actions -> DTO key is not same as the call from the page
+9b) Random zero -> {get;set;} missing on DTO

@@ -9,7 +9,7 @@ using PortfolioManager.DTO;
 using PortfolioManagerWeb.Helpers;
 using PortfolioManagerWeb.Models;
 
-namespace PortfolioManagerWeb.Controllers
+namespace PortfolioManagerWeb.Controllers.Investments
 {
     public class InvestmentsController : Controller
     {

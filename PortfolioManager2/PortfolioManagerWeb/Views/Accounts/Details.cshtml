@@ -86,7 +86,7 @@
                 @Html.ActionLink("Create New", "Resolve", "InvestmentsMap",   new { id = item.AccountId , action= fred}, null)
                 
 
-                @Html.ActionLink("Buy", "Buy", "InvestmentsMap", new { id = item.InvestmentMapId }, null)
+                @Html.ActionLink("Buy", "Buy", "BuyInvestment", new { mapId = item.InvestmentMapId }, null)
                 @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.InvestmentMapId }, null)
 
                 @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
