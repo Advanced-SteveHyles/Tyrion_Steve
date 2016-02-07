@@ -35,7 +35,7 @@ namespace PortfolioManager.Repository
             }
         }
 
-        public IQueryable<Transaction> GetAccountTransactions(int accountId)
+        public IQueryable<CashTransaction> GetAccountTransactions(int accountId)
         {
             var tx = _context.Transactions.Where(t => t.AccountId == accountId);
             return tx;

@@ -11,7 +11,7 @@ namespace PortfolioManager.Repository
 {
     public interface ITransactionRepository
     {
-        RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
+        RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
     }
 
     public interface IAccountRepository
@@ -23,7 +23,7 @@ namespace PortfolioManager.Repository
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
 
-        IQueryable<Transaction> GetAccountTransactions(int accountId);
+        IQueryable<CashTransaction> GetAccountTransactions(int accountId);
     }
 
     public interface IInvestmentRepository

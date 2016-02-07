@@ -9,9 +9,9 @@ namespace PortfolioManager.Repository
         {        
         }
 
-        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
+        public RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
         {
-            var entityTransaction = new Transaction()
+            var entityTransaction = new CashTransaction()
             {
                 AccountId = accountId,
                 TransactionDate = transactionDate,
@@ -26,11 +26,11 @@ namespace PortfolioManager.Repository
             var result = _context.SaveChanges();
             if (result > 0)
             {
-                return new RepositoryActionResult<Transaction>(entityTransaction, RepositoryActionStatus.Created);
+                return new RepositoryActionResult<CashTransaction>(entityTransaction, RepositoryActionStatus.Created);
             }
             else
             {
-                return new RepositoryActionResult<Transaction>(entityTransaction, RepositoryActionStatus.NothingModified, null);
+                return new RepositoryActionResult<CashTransaction>(entityTransaction, RepositoryActionStatus.NothingModified, null);
             }
         }
 

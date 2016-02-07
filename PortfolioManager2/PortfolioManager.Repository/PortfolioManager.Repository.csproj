@@ -67,7 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="Entities\Transaction.cs" />
+    <Compile Include="Entities\CashTransaction.cs" />
+    <Compile Include="Entities\FundTransaction.cs" />
     <Compile Include="Factories\InvestmentFactory.cs" />
     <Compile Include="Factories\InvestmentMapFactory.cs" />
     <Compile Include="InvestmentRepository.cs" />

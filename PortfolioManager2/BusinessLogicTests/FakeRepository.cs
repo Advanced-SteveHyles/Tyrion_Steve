@@ -50,7 +50,7 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
-        public RepositoryActionResult<Transaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
+        public RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
             bool isTaxRefund, string transactionType)
         {
             AddCashTransactionWasCalled = true;
@@ -68,7 +68,7 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
-        public IQueryable<Transaction> GetAccountTransactions(int accountId)
+        public IQueryable<CashTransaction> GetAccountTransactions(int accountId)
         {
             throw new NotImplementedException();
         }

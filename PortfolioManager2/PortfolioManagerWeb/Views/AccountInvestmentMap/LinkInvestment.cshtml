@@ -104,7 +104,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Class)
             </td>
-            
+
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.PortfolioAcountId }) |*@
                 @*@Html.ActionLink("Details", "Details", new { id = item.PortfolioAcountId }) |*@
@@ -113,5 +113,9 @@
         </tr>
     }
 </table>
+
+<p>
+    @Html.ActionLink("Back to List", "Details", "Accounts", new { accountId = Model.AccountInfo.AccountId }, null)
+</p>
 
 

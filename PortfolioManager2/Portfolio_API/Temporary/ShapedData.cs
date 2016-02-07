@@ -88,7 +88,7 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        internal static AccountTransactionSummaryDto CreateDataShapedObject(int accountId, IQueryable<Transaction> transactionEnts)
+        internal static AccountTransactionSummaryDto CreateDataShapedObject(int accountId, IQueryable<CashTransaction> transactionEnts)
         {
             var x = new AccountTransactionSummaryDto()
             {
@@ -104,7 +104,7 @@ namespace Portfolio_API.Controllers
             return x;
         }
 
-        private static TransactionDto CreateDataShapedObject(Transaction tx)
+        private static TransactionDto CreateDataShapedObject(CashTransaction tx)
         {
             return new TransactionDto()
             {
