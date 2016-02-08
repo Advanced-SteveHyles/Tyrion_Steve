@@ -1,5 +1,6 @@
 ﻿using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository;
 
 namespace BusinessLogicTests
@@ -26,17 +27,31 @@ namespace BusinessLogicTests
                 );
         }
 
-        public void StoreTransaction(WithdrawalTransactionRequest _withdrawalTransactionRequest)
+        public void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest)
         {
             _repository.AddCashTransaction
                       (
-                      _withdrawalTransactionRequest.AccountId,
-                      _withdrawalTransactionRequest.TransactionDate,
-                      _withdrawalTransactionRequest.Source,
-                      _withdrawalTransactionRequest.Value,
+                      withdrawalTransactionRequest.AccountId,
+                      withdrawalTransactionRequest.TransactionDate,
+                      withdrawalTransactionRequest.Source,
+                      withdrawalTransactionRequest.Value,
                       false,
                       "Withdrawal"
                       );
+        }
+        
+        public void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
+        {
+            var depositTransaction = new DepositTransactionRequest()
+            {
+                AccountId = accountId,
+                TransactionDate = investmentBuyRequest.PurchaseDate,
+                Value = investmentBuyRequest.Value,
+                Source = "Buy",
+                IsTaxRefund = false,
+            };
+
+            StoreTransaction(depositTransaction);
         }
     }
 }

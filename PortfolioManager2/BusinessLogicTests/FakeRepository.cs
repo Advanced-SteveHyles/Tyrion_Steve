@@ -65,7 +65,7 @@ namespace BusinessLogicTests
 
         public void DecreaseAccountBalance(int accountId, decimal amount)
         {
-            throw new NotImplementedException();
+            AccountBalance -= amount;
         }
 
         public IQueryable<CashTransaction> GetAccountTransactions(int accountId)

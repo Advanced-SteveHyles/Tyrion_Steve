@@ -1,4 +1,5 @@
 ﻿using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.DTO.Transactions;
 
 namespace Interfaces
 {
@@ -11,7 +12,12 @@ namespace Interfaces
     public interface ITransactionHandler
     {
         void StoreTransaction(DepositTransactionRequest depositTransactionRequest);
-        void StoreTransaction(WithdrawalTransactionRequest _withdrawalTransactionRequest);
+        void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
+        void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
+    }
+
+    public interface IFundTransactionHandler{
+        void StoreTransaction(InvestmentBuyRequest request);
     }
 
 }
