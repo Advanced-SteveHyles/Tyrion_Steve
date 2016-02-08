@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BusinessLogicTests;
 using Interfaces;
-using PortfolioManager.DTO.DTOs;
-using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 
 namespace BusinessLogic.Transactions
@@ -17,27 +11,32 @@ namespace BusinessLogic.Transactions
         private readonly IAccountHandler _accountHandler;
         private readonly ITransactionHandler _transactionHandler;
         private IFundTransactionHandler _fundTransactionHandler;
+        private readonly IInvestmentMapHandler _investmentMapHandler;
 
         public CreateFundBuyTransaction(int accountId,
             InvestmentBuyRequest fundBuyRequest, 
-            IAccountHandler accountHandler)//, 
-            //ITransactionHandler transactionHandler) 
+            IAccountHandler accountHandler, 
+            ITransactionHandler transactionHandler,
+            IInvestmentMapHandler investmentMapHandler)
             //IFundTransactionHandler fundTransactionHandler)
         {
             _accountId = accountId;
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
-          //  _transactionHandler = transactionHandler;
+            _transactionHandler = transactionHandler;
+            _investmentMapHandler = investmentMapHandler;
             //_fundTransactionHandler = fundTransactionHandler;
         }
 
         public void Execute()
         {
             //FundTransactionHandler.StoreTransaction(_request);
-            //_transactionHandler.StoreTransaction(_request);
+            _transactionHandler.StoreTransaction(_accountId, _fundBuyRequest);
             _accountHandler.DecreaseBalance(
                 _accountId,
                 _fundBuyRequest.Value);
+
+            _investmentMapHandler.UpdateMapQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
 
             //_mapHandler.ApplyBuyTransaction();
@@ -46,7 +45,7 @@ namespace BusinessLogic.Transactions
         }
 
         public bool CommandValid => 
-            _fundBuyRequest.MapId != 0 && 
+            _fundBuyRequest.InvestmentMapId != 0 && 
             _accountId != 0
             ;
 

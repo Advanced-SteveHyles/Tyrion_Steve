@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PortfolioManager.DTO;
-using PortfolioManager.DTO.DTOs.Transactions;
+﻿using System.Linq;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.DTO.Requests;
 
 namespace PortfolioManager.Repository
 {
     public interface ITransactionRepository
     {
-        RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
+        RepositoryActionResult<CashTransaction> ApplyCashTransaction(CreateCashTransactionRequest request);
+    }
+
+    public interface IInvestmentMapRepository
+    {        
+        InvestmentMap GetInvestmentMap(int investmentMapId);
+        void Save(InvestmentMap investmentMap);
     }
 
     public interface IAccountRepository

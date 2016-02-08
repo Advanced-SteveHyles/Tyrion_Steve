@@ -12,9 +12,9 @@ namespace PortfolioManager.DTO
 
         public string InvestmentName { get; set; }
 
-        public int Quantity { get; set; }
-        public int SellPrice { get; set; }
-        public int Valuation { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal SellPrice { get; set; }
+        public decimal Valuation { get; set; }
 
         public DateTime LastValuationDate { get; set; }
     }

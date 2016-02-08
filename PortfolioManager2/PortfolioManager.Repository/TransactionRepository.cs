@@ -1,4 +1,5 @@
 using System;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
@@ -9,16 +10,16 @@ namespace PortfolioManager.Repository
         {        
         }
 
-        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
+        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(CreateCashTransactionRequest request)
         {
             var entityTransaction = new CashTransaction()
             {
-                AccountId = accountId,
-                TransactionDate = transactionDate,
-                Source = source,
-                Value = value,
-                IsTaxRefund = isTaxRefund,
-                TransactionType = transactionType
+                AccountId = request.AccountId,
+                TransactionDate = request.TransactionDate,
+                Source = request.Source,
+                Value = request.Value,
+                IsTaxRefund = request.IsTaxRefund,
+                TransactionType = request.TransactionType
             };
 
             _context.Transactions.Add(entityTransaction);
@@ -33,6 +34,5 @@ namespace PortfolioManager.Repository
                 return new RepositoryActionResult<CashTransaction>(entityTransaction, RepositoryActionStatus.NothingModified, null);
             }
         }
-
     }
 }

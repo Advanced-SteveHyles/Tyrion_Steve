@@ -1,11 +1,35 @@
 ﻿using System;
+using BusinessLogic;
 using Interfaces;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository;
 
 namespace BusinessLogicTests
 {
+    public class InvestmentMapHandler : IInvestmentMapHandler
+    {
+        private readonly IInvestmentMapRepository  _repository;
+
+        public InvestmentMapHandler(IInvestmentMapRepository repository)
+        {
+            _repository = repository;
+        }        
+
+        public void UpdateMapQuantity(int investmentMapId, decimal quantity)
+        {            
+            var investmentMap = _repository.GetInvestmentMap(investmentMapId);
+            investmentMap.Quantity += quantity;
+            _repository.Save(investmentMap);
+
+            //    public int Quantity { get; set; }
+            //public int SellPrice { get; set; }
+            //public int Valuation { get; set; }
+            //public DateTime LastValuationDate { get; set; }
+        }
+}
+
     public class TransactionHandler : ITransactionHandler
     {
         private readonly ITransactionRepository _repository;
@@ -17,61 +41,55 @@ namespace BusinessLogicTests
 
         public void StoreTransaction(DepositTransactionRequest depositTransactionRequest)
         {
-            _repository.ApplyCashTransaction
-                (
+            StoreCashTransaction(
                 depositTransactionRequest.AccountId,
                 depositTransactionRequest.TransactionDate,
                 depositTransactionRequest.Source,
                 depositTransactionRequest.Value,
                 depositTransactionRequest.IsTaxRefund,
                 "Deposit"
-                );
+                );            
         }
 
         public void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest)
         {
-            _repository.ApplyCashTransaction
-                      (
+            StoreCashTransaction(
                       withdrawalTransactionRequest.AccountId,
                       withdrawalTransactionRequest.TransactionDate,
                       withdrawalTransactionRequest.Source,
                       withdrawalTransactionRequest.Value,
                       false,
-                      "Withdrawal",
-                      new CashTransactionRequest(withdrawalTransactionRequest),
+                      "Withdrawal"                      
                       );
         }
 
         public void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
         {
-            var depositTransaction = new DepositTransactionRequest()
+            StoreCashTransaction(
+                          accountId,
+                          investmentBuyRequest.PurchaseDate,
+                          investmentBuyRequest.ToString(),
+                          investmentBuyRequest.Value,
+                          false,
+                          "Buy"
+                          );            
+    }
+
+        private void StoreCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType )
+        {
+            var cashTransaction = new CreateCashTransactionRequest()
             {
                 AccountId = accountId,
-                TransactionDate = investmentBuyRequest.PurchaseDate,
-                Value = investmentBuyRequest.Value,
-                Source = "Buy",
-                IsTaxRefund = false,
+                TransactionDate = transactionDate,
+                TransactionType = transactionType,
+                Value = value,
+                Source = source,
+                IsTaxRefund = isTaxRefund,
             };
 
-            StoreTransaction(depositTransaction);
+            _repository.ApplyCashTransaction(cashTransaction);        
         }
     }
 
-    internal class CashTransactionRequest
-    {
-        public int AccountId;
-        public DateTime TransactionDate;
-        public decimal Value;
-        public string Source;
-        public string IsTaxRefund ;
-
-        public CashTransactionRequest()
-        {
-                    public int AccountId;
-        public DateTime TransactionDate;
-        public decimal Value;
-        public string Source;
-        public string IsTaxRefund;
-    }
-    }
+  
 }

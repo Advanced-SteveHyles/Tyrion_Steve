@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic;
 using BusinessLogic.Transactions;
+using Interfaces;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Entities;
 using Xunit;
@@ -20,8 +22,10 @@ namespace BusinessLogicTests.Transactions.Fund
         private DateTime _transactionDate;
         private FakeRepository _fakeRepository;
         private CreateFundBuyTransaction _buyTransaction;
-        private AccountHandler _accountHandler;
+        private IAccountHandler _accountHandler;
         private int _accountId;
+        private ITransactionHandler _transactionHandler;
+        private IInvestmentMapHandler _investmentMapHandler;
 
         private void Setup()
         {
@@ -34,7 +38,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var request = new InvestmentBuyRequest
             {
-                MapId = 1,
+                InvestmentMapId = 1,
                 Quantity = _numberOfShares,
                 Price = _priceOfOneShare,
                 PurchaseDate = _transactionDate,
@@ -44,8 +48,11 @@ namespace BusinessLogicTests.Transactions.Fund
 
             _fakeRepository = new FakeRepository();
             _accountHandler = new AccountHandler(_fakeRepository);
-
-            _buyTransaction = new CreateFundBuyTransaction(_accountId, request, _accountHandler);
+            _transactionHandler = new TransactionHandler(_fakeRepository);
+            _investmentMapHandler =  new InvestmentMapHandler(_fakeRepository);
+            _buyTransaction = new CreateFundBuyTransaction(
+                _accountId, request, _accountHandler, 
+                _transactionHandler, _investmentMapHandler);
             
         }
 
@@ -77,13 +84,13 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
         }
 
-        //[Fact]
-        //public void WhenIBuyThenTheShareCountIsIncreasedBy10()
-        //{
-        //    Setup();
-        //    _buyTransaction.Execute();
-        //    Assert.Equal(_numberOfShares, _accountFundMap.Quantity);
-        //}
+        [Fact]
+        public void WhenIBuyThenTheShareCountIsIncreased()
+        {
+            Setup();
+            _buyTransaction.Execute();
+            Assert.Equal(_numberOfShares, _accountFundMap.Quantity);
+        }
 
         //public void WhenIBuyThenTheShareTransactionIsValuedCorrectly()
         //{

@@ -16,8 +16,13 @@ namespace Interfaces
         void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
     }
 
-    public interface IFundTransactionHandler{
-        void StoreTransaction(InvestmentBuyRequest request);
+    public interface IFundTransactionHandler
+    {        
+    }
+
+    public interface IInvestmentMapHandler
+    {
+        void UpdateMapQuantity(int investmentMapId, decimal quantity);        
     }
 
 }

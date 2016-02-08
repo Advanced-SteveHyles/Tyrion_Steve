@@ -1,4 +1,4 @@
-﻿namespace PortfolioManager.DTO
+﻿namespace PortfolioManager.DTO.Requests
 {
     public class PortfolioRequest
     {

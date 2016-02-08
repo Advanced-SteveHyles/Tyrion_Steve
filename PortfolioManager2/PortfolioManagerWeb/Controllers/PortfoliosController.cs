@@ -6,6 +6,7 @@ using Interfaces;
 using Newtonsoft.Json;
 using PagedList;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.Requests;
 using PortfolioManagerWeb.Helpers;
 using PortfolioManagerWeb.Models;
 

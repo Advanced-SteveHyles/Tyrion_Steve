@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using Xunit.Sdk;
@@ -11,6 +12,7 @@ namespace BusinessLogicTests
         , IInvestmentRepository
         , IAccountRepository
         , ITransactionRepository
+        , IInvestmentMapRepository
     {
         public decimal AccountBalance { get; private set; }
         public bool ApplyCashTransactionWasCalled { get; private set; }
@@ -49,14 +51,6 @@ namespace BusinessLogicTests
         {
             throw new NotImplementedException();
         }
-
-        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
-            bool isTaxRefund, string transactionType)
-        {
-            ApplyCashTransactionWasCalled = true;
-
-            return null;
-        }
         
         public void IncreaseAccountBalance(int accountId, decimal amount)
         {
@@ -79,6 +73,25 @@ namespace BusinessLogicTests
         }
 
         public IQueryable<Investment> GetInvestments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(CreateCashTransactionRequest request)
+        {
+            ApplyCashTransactionWasCalled = true;
+
+            return null;
+        }
+
+        
+
+        public InvestmentMap GetInvestmentMap(int investmentMapId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save(InvestmentMap investmentMap)
         {
             throw new NotImplementedException();
         }
