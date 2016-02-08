@@ -9,7 +9,7 @@ namespace PortfolioManager.Repository
         {        
         }
 
-        public RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
+        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType)
         {
             var entityTransaction = new CashTransaction()
             {

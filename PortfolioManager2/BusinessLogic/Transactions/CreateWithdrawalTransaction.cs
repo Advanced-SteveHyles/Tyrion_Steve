@@ -10,7 +10,8 @@ namespace BusinessLogic.Transactions
         private readonly IAccountHandler _accountHandler;
         private readonly ITransactionHandler _transactionHandler;
 
-        public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest, IAccountHandler accountHandler, ITransactionHandler transactionHandler)
+        public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
+            IAccountHandler accountHandler, ITransactionHandler transactionHandler)
         {
             this._withdrawalTransactionRequest = withdrawalTransactionRequest;
             _accountHandler = accountHandler;
@@ -29,12 +30,9 @@ namespace BusinessLogic.Transactions
 
         public bool ExecuteResult { get; set; }
 
-        public bool CommandValid()
-        {
-            return _withdrawalTransactionRequest.AccountId > 0
-                   && _withdrawalTransactionRequest.Value > 0
-                   && _withdrawalTransactionRequest.TransactionDate != null
-                   && !string.IsNullOrWhiteSpace(_withdrawalTransactionRequest.Source);
-        }
+        public bool CommandValid => _withdrawalTransactionRequest.AccountId > 0
+                                    && _withdrawalTransactionRequest.Value > 0
+                                    && _withdrawalTransactionRequest.TransactionDate != null
+                                    && !string.IsNullOrWhiteSpace(_withdrawalTransactionRequest.Source);
     }
 }

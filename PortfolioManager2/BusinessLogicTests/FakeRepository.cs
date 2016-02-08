@@ -13,7 +13,7 @@ namespace BusinessLogicTests
         , ITransactionRepository
     {
         public decimal AccountBalance { get; private set; }
-        public bool AddCashTransactionWasCalled { get; private set; }
+        public bool ApplyCashTransactionWasCalled { get; private set; }
 
         public IQueryable<Portfolio> GetPortfolios()
         {
@@ -50,10 +50,10 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
-        public RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
+        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value,
             bool isTaxRefund, string transactionType)
         {
-            AddCashTransactionWasCalled = true;
+            ApplyCashTransactionWasCalled = true;
 
             return null;
         }

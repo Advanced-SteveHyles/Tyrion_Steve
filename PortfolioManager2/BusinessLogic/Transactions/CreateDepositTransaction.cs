@@ -28,13 +28,16 @@ namespace BusinessLogic.Transactions
 
         public bool ExecuteResult { get; set; }
 
-        public bool CommandValid()
+        public bool CommandValid
         {
+            get 
+            { 
             return _depositTransactionRequest.AccountId > 0
                    && _depositTransactionRequest.Value > 0
                    && _depositTransactionRequest.TransactionDate != null
                    && !string.IsNullOrWhiteSpace(_depositTransactionRequest.Source)                 
                    ;
+            }
 
         }
     }

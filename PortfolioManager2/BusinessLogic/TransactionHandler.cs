@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository;
@@ -16,7 +17,7 @@ namespace BusinessLogicTests
 
         public void StoreTransaction(DepositTransactionRequest depositTransactionRequest)
         {
-            _repository.AddCashTransaction
+            _repository.ApplyCashTransaction
                 (
                 depositTransactionRequest.AccountId,
                 depositTransactionRequest.TransactionDate,
@@ -29,17 +30,18 @@ namespace BusinessLogicTests
 
         public void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest)
         {
-            _repository.AddCashTransaction
+            _repository.ApplyCashTransaction
                       (
                       withdrawalTransactionRequest.AccountId,
                       withdrawalTransactionRequest.TransactionDate,
                       withdrawalTransactionRequest.Source,
                       withdrawalTransactionRequest.Value,
                       false,
-                      "Withdrawal"
+                      "Withdrawal",
+                      new CashTransactionRequest(withdrawalTransactionRequest),
                       );
         }
-        
+
         public void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
         {
             var depositTransaction = new DepositTransactionRequest()
@@ -53,5 +55,23 @@ namespace BusinessLogicTests
 
             StoreTransaction(depositTransaction);
         }
+    }
+
+    internal class CashTransactionRequest
+    {
+        public int AccountId;
+        public DateTime TransactionDate;
+        public decimal Value;
+        public string Source;
+        public string IsTaxRefund ;
+
+        public CashTransactionRequest()
+        {
+                    public int AccountId;
+        public DateTime TransactionDate;
+        public decimal Value;
+        public string Source;
+        public string IsTaxRefund;
+    }
     }
 }

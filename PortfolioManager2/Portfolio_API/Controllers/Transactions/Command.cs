@@ -10,7 +10,7 @@ namespace Portfolio_API.Controllers.Transactions
         {
             try
             {
-                if (!command.CommandValid()) return false;
+                if (!command.CommandValid) return false;
 
                 command.Execute();
                 return command.ExecuteResult;

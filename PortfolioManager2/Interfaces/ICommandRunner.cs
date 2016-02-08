@@ -10,7 +10,7 @@ namespace Interfaces
     {
         void Execute();
 
-        bool CommandValid();
+        bool CommandValid { get; }
         bool ExecuteResult { get; }
     }
 }

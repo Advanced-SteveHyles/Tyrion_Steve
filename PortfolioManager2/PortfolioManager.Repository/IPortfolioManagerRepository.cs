@@ -11,7 +11,7 @@ namespace PortfolioManager.Repository
 {
     public interface ITransactionRepository
     {
-        RepositoryActionResult<CashTransaction> AddCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
+        RepositoryActionResult<CashTransaction> ApplyCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType);
     }
 
     public interface IAccountRepository

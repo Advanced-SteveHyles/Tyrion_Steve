@@ -33,7 +33,7 @@ namespace BusinessLogicTests
         [Fact]
         public void ValidTransactionCanExecute()
         {
-            Assert.True(_withdrawalTransaction.CommandValid());
+            Assert.True(_withdrawalTransaction.CommandValid);
 
             _withdrawalTransaction.Execute();
             Assert.Equal(-TransactionValue, _fakeRepository.AccountBalance);
@@ -44,7 +44,7 @@ namespace BusinessLogicTests
         {
             _withdrawalTransaction.Execute();
 
-            Assert.True(_fakeRepository.AddCashTransactionWasCalled);
+            Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
         }
 
         [Fact]
