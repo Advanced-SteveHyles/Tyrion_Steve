@@ -1,10 +1,10 @@
 using System;
 using BusinessLogic.Transactions;
 using Interfaces;
-using Xunit;
 using PortfolioManager.DTO.Requests.Transactions;
+using Xunit;
 
-namespace BusinessLogicTests
+namespace BusinessLogicTests.Transactions.Cash
 {
     public class GivenIAmWithdrawingTenPounds
     {
@@ -12,6 +12,7 @@ namespace BusinessLogicTests
         private readonly FakeRepository _fakeRepository;
         const int AccountId = 1;
         const int TransactionValue = 10;
+        const int ArbitaryId = 1;
 
         public GivenIAmWithdrawingTenPounds()
         {
@@ -36,8 +37,10 @@ namespace BusinessLogicTests
             Assert.True(_withdrawalTransaction.CommandValid);
 
             _withdrawalTransaction.Execute();
-            Assert.Equal(-TransactionValue, _fakeRepository.AccountBalance);
+            var account = _fakeRepository.GetAccount(ArbitaryId);            
+            Assert.Equal(-TransactionValue, account.Cash);
         }
+        
 
         [Fact]
         public void WhenTheTransactionCompletesThereIsARecordOfTheDeposit()
@@ -51,7 +54,8 @@ namespace BusinessLogicTests
         public void WhenTheTransactionCompletesThereAccountBalanceIsCorrect()
         {
             _withdrawalTransaction.Execute();
-            Assert.Equal(-TransactionValue, _fakeRepository.AccountBalance);
+            var account = _fakeRepository.GetAccount(ArbitaryId);
+            Assert.Equal(-TransactionValue, account.Cash);
         }
     }
 }

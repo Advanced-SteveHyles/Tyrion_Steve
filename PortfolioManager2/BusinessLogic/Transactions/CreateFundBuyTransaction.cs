@@ -10,7 +10,6 @@ namespace BusinessLogic.Transactions
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountHandler _accountHandler;
         private readonly ITransactionHandler _transactionHandler;
-        private IFundTransactionHandler _fundTransactionHandler;
         private readonly IInvestmentMapHandler _investmentMapHandler;
 
         public CreateFundBuyTransaction(int accountId,
@@ -31,13 +30,14 @@ namespace BusinessLogic.Transactions
         public void Execute()
         {
             //FundTransactionHandler.StoreTransaction(_request);
+
             _transactionHandler.StoreTransaction(_accountId, _fundBuyRequest);
+
             _accountHandler.DecreaseBalance(
                 _accountId,
                 _fundBuyRequest.Value);
 
             _investmentMapHandler.UpdateMapQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
-
 
             //_mapHandler.ApplyBuyTransaction();
 
@@ -52,17 +52,6 @@ namespace BusinessLogic.Transactions
 
         public bool ExecuteResult { get; private set; }
 
-        public IFundTransactionHandler FundTransactionHandler
-        {
-            get
-            {
-                return _fundTransactionHandler;
-            }
-
-            set
-            {
-                _fundTransactionHandler = value;
-            }
-        }
+        public IFundTransactionHandler FundTransactionHandler { get; set; }
     }
 }

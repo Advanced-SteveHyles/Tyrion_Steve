@@ -20,7 +20,7 @@ namespace BusinessLogicTests
         public void UpdateMapQuantity(int investmentMapId, decimal quantity)
         {            
             var investmentMap = _repository.GetInvestmentMap(investmentMapId);
-            investmentMap.Quantity += quantity;
+            investmentMap.Quantity += quantity;            
             _repository.Save(investmentMap);
 
             //    public int Quantity { get; set; }

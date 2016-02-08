@@ -26,9 +26,11 @@ namespace BusinessLogicTests.Transactions.Fund
         private int _accountId;
         private ITransactionHandler _transactionHandler;
         private IInvestmentMapHandler _investmentMapHandler;
+        private const int ArbitaryId =1 ;
 
         private void Setup()
         {
+
             _numberOfShares = 10;
             _priceOfOneShare = 1;
             _commission = 2;
@@ -49,31 +51,32 @@ namespace BusinessLogicTests.Transactions.Fund
             _fakeRepository = new FakeRepository();
             _accountHandler = new AccountHandler(_fakeRepository);
             _transactionHandler = new TransactionHandler(_fakeRepository);
-            _investmentMapHandler =  new InvestmentMapHandler(_fakeRepository);
+            _investmentMapHandler = new InvestmentMapHandler(_fakeRepository);
             _buyTransaction = new CreateFundBuyTransaction(
-                _accountId, request, _accountHandler, 
+                _accountId, request, _accountHandler,
                 _transactionHandler, _investmentMapHandler);
-            
+
         }
 
         public GivenIAmBuyingIntoAFund()
         {
-            _accountFundMap = new InvestmentMap();            
+            _accountFundMap = new InvestmentMap();
         }
 
         [Fact]
         public void WhenIBuyTransactionIsValid()
         {
             Setup();
-            Assert.True(_buyTransaction.CommandValid);            
-}
+            Assert.True(_buyTransaction.CommandValid);
+        }
 
         [Fact]
         public void WhenIBuyThenTheAccountValueIsReduced()
         {
             Setup();
             _buyTransaction.Execute();
-            Assert.Equal(-_valueOfTransaction, _fakeRepository.AccountBalance);
+            var account = _fakeRepository.GetAccount(ArbitaryId);
+            Assert.Equal(-_valueOfTransaction, account.Cash);
         }
 
         [Fact]
@@ -89,9 +92,21 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             Setup();
             _buyTransaction.Execute();
-            Assert.Equal(_numberOfShares, _accountFundMap.Quantity);
+
+            var accountFundMap = _fakeRepository.GetInvestmentMap(1);
+            Assert.Equal(_numberOfShares, accountFundMap.Quantity);
         }
 
+        //[Fact]
+        //public void WhenIBuyThenTheValuationIsCorrect()
+        //{
+        //    Setup();
+        //    _buyTransaction.Execute();
+
+        //    var accountFundMap = _fakeRepository.GetInvestmentMap(1);
+        //    Assert.Equal(_numberOfShares, accountFundMap.Quantity);
+        //}
+        
         //public void WhenIBuyThenTheShareTransactionIsValuedCorrectly()
         //{
         //    //10 =20

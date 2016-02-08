@@ -1,60 +1,62 @@
 ﻿using System;
-using BusinessLogic;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
 
-namespace BusinessLogicTests.Deposits
+namespace BusinessLogicTests.Transactions.Cash
 {
-    
-        public class GivenIAmDepositingTenPounds 
+
+    public class GivenIAmDepositingTenPounds
+    {
+        private readonly ICommandRunner _depositTransaction;
+        private readonly FakeRepository _fakeRepository;
+        const int AccountId = 1;
+        const int TransactionValue = 10;
+        const int ArbitaryId = 1;
+
+        public GivenIAmDepositingTenPounds()
         {
-            private readonly ICommandRunner _depositTransaction;
-            private readonly FakeRepository _fakeRepository;
-            const int AccountId = 1;
-            const int TransactionValue = 10;
+            _fakeRepository = new FakeRepository();
+            IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
+            ITransactionHandler transactionHandler = new TransactionHandler(_fakeRepository);
 
-            public GivenIAmDepositingTenPounds()
+            var depositTransactionRequest = new DepositTransactionRequest
             {
-                _fakeRepository = new FakeRepository();
-                IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-                ITransactionHandler transactionHandler = new TransactionHandler(_fakeRepository);
+                AccountId = AccountId,
+                Value = TransactionValue,
+                Source = "Test",
+                TransactionDate = DateTime.Now
+            };
 
-                var depositTransactionRequest = new DepositTransactionRequest
-                {
-                    AccountId = AccountId,
-                    Value = TransactionValue,
-                    Source = "Test",
-                    TransactionDate = DateTime.Now
-                };              
-
-                _depositTransaction = new CreateDepositTransaction(depositTransactionRequest,accountHandler, transactionHandler );                
-            }
-
-            [Fact]
-            public void ValidTransactionCanExecute()
-            {
-                Assert.True(_depositTransaction.CommandValid);
-
-                _depositTransaction.Execute();
-                Assert.Equal(TransactionValue, _fakeRepository.AccountBalance);
-            }
-            
-            [Fact]
-            public void WhenTheTransactionCompletesThereIsARecordOfTheDeposit()
-            {
-                _depositTransaction.Execute();
-
-                Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
-            }
-
-            [Fact]
-            public void WhenTheTransactionCompletesThereAccountBalanceIsCorrect()
-            {               
-                _depositTransaction.Execute();
-                Assert.Equal(TransactionValue, _fakeRepository.AccountBalance);
-            }
+            _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, accountHandler, transactionHandler);
         }
+
+        [Fact]
+        public void ValidTransactionCanExecute()
+        {
+            Assert.True(_depositTransaction.CommandValid);
+
+            _depositTransaction.Execute();
+            var account = _fakeRepository.GetAccount(ArbitaryId);
+            Assert.Equal(TransactionValue, account.Cash);
+        }
+
+        [Fact]
+        public void WhenTheTransactionCompletesThereIsARecordOfTheDeposit()
+        {
+            _depositTransaction.Execute();
+
+            Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
+        }
+
+        [Fact]
+        public void WhenTheTransactionCompletesThereAccountBalanceIsCorrect()
+        {
+            _depositTransaction.Execute();
+            var account = _fakeRepository.GetAccount(ArbitaryId);
+            Assert.Equal(TransactionValue, account.Cash);
+        }
+    }
 }
 

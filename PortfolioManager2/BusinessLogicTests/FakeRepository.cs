@@ -14,7 +14,15 @@ namespace BusinessLogicTests
         , ITransactionRepository
         , IInvestmentMapRepository
     {
-        public decimal AccountBalance { get; private set; }
+        private InvestmentMap _dummyInvestmentMap;
+        private Account _dummyAccount;
+
+        public FakeRepository()
+        {
+            _dummyAccount = new Account();
+            _dummyInvestmentMap = new InvestmentMap();
+        }
+
         public bool ApplyCashTransactionWasCalled { get; private set; }
 
         public IQueryable<Portfolio> GetPortfolios()
@@ -49,17 +57,17 @@ namespace BusinessLogicTests
 
         public Account GetAccount(int id)
         {
-            throw new NotImplementedException();
+            return _dummyAccount;
         }
         
         public void IncreaseAccountBalance(int accountId, decimal amount)
         {
-            AccountBalance += amount;
+            _dummyAccount.Cash += amount;
         }
 
         public void DecreaseAccountBalance(int accountId, decimal amount)
         {
-            AccountBalance -= amount;
+            _dummyAccount.Cash -= amount;
         }
 
         public IQueryable<CashTransaction> GetAccountTransactions(int accountId)
@@ -83,17 +91,15 @@ namespace BusinessLogicTests
 
             return null;
         }
-
-        
-
+      
         public InvestmentMap GetInvestmentMap(int investmentMapId)
         {
-            throw new NotImplementedException();
+            return _dummyInvestmentMap;
         }
 
         public void Save(InvestmentMap investmentMap)
         {
-            throw new NotImplementedException();
+            _dummyInvestmentMap = investmentMap;
         }
     }
 }
