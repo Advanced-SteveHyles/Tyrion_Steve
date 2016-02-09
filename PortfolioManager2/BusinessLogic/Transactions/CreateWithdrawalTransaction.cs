@@ -20,8 +20,8 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
-            _transactionHandler.StoreTransaction(_withdrawalTransactionRequest);
-            _accountHandler.DecreaseBalance(
+            _transactionHandler.StoreCashTransaction(_withdrawalTransactionRequest);
+            _accountHandler.DecreaseAccountBalance(
                 _withdrawalTransactionRequest.AccountId,
                 _withdrawalTransactionRequest.Value);
 

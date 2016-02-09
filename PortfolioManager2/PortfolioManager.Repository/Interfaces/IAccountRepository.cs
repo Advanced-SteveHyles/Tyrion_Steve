@@ -11,7 +11,6 @@ namespace PortfolioManager.Repository.Interfaces
 
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
-
-        IQueryable<CashTransaction> GetAccountTransactions(int accountId);
+        
     }
 }

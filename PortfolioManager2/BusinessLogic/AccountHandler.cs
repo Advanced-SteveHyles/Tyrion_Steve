@@ -13,12 +13,12 @@ namespace BusinessLogicTests
             _repository = repository;            
         }
 
-        public void IncreaseBalance(int accountId, decimal amount)
+        public void IncreaseAccountBalance(int accountId, decimal amount)
         {
             _repository.IncreaseAccountBalance(accountId, amount);            
         }
 
-     public void DecreaseBalance(int accountId, decimal amount)
+     public void DecreaseAccountBalance(int accountId, decimal amount)
      {
             _repository.DecreaseAccountBalance(accountId, amount);
         }

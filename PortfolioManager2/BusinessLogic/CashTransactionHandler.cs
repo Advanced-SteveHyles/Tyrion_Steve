@@ -10,14 +10,14 @@ namespace BusinessLogic
 {
     public class CashTransactionHandler : ITransactionHandler
     {
-        private readonly ITransactionRepository _repository;
+        private readonly ICashTransactionRepository _repository;
 
-        public CashTransactionHandler(ITransactionRepository repository)
+        public CashTransactionHandler(ICashTransactionRepository repository)
         {
             _repository = repository;
         }
 
-        public void StoreTransaction(DepositTransactionRequest depositTransactionRequest)
+        public void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest)
         {
             StoreCashTransaction(
                 depositTransactionRequest.AccountId,
@@ -29,7 +29,7 @@ namespace BusinessLogic
                 );            
         }
 
-        public void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest)
+        public void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest)
         {
             StoreCashTransaction(
                       withdrawalTransactionRequest.AccountId,
@@ -41,7 +41,7 @@ namespace BusinessLogic
                       );
         }
 
-        public void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
+        public void StoreCashTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
         {
             StoreCashTransaction(
                           accountId,
@@ -65,7 +65,7 @@ namespace BusinessLogic
                 IsTaxRefund = isTaxRefund,
             };
 
-            _repository.ApplyCashTransaction(cashTransaction);        
+            _repository.InsertCashTransaction(cashTransaction);        
         }
     }
 

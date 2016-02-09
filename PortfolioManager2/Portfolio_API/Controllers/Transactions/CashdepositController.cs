@@ -17,13 +17,13 @@ namespace Portfolio_API.Controllers
 
     public class CashdepositController : ApiController
     {
-        readonly ITransactionRepository _transactionRepository;
+        readonly ICashTransactionRepository _cashTransactionRepository;
         readonly IAccountRepository _accountRepository;
 
 
         public CashdepositController()
         {
-            _transactionRepository = new TransactionRepository(new PortfolioManagerContext());
+            _cashTransactionRepository = new CashTransactionRepository(new PortfolioManagerContext());
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
         }
 
@@ -54,7 +54,7 @@ namespace Portfolio_API.Controllers
                 //*/
 
                 var accountHandler = new AccountHandler(_accountRepository);
-                var transactionHandler = new CashTransactionHandler(_transactionRepository);
+                var transactionHandler = new CashTransactionHandler(_cashTransactionRepository);
 
                 var status = Command.ExecuteCommand(new CreateDepositTransaction(deposit, accountHandler, transactionHandler));
 

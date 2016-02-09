@@ -108,12 +108,12 @@ namespace Portfolio_API.Controllers
         {
             return new TransactionDto()
             {
-                TransactionId = tx.TransactionId,
+                TransactionId = tx.CashTransactionId,
                 AccountId = tx.AccountId,
                 TransactionType = tx.TransactionType,
                 TransactionDate = tx.TransactionDate,
                 Source = tx.Source,
-                Value = tx.Value,
+                Value = tx.TransactionValue,
                 IsTaxRefund = tx.IsTaxRefund
             };
         }

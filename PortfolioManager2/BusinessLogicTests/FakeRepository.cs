@@ -12,16 +12,21 @@ namespace BusinessLogicTests
         : IPortfolioRepository
         , IInvestmentRepository
         , IAccountRepository
-        , ITransactionRepository
+        , ICashTransactionRepository
         , IAccountInvestmentMapRepository
+        , IFundTransactionRepository
     {
         private AccountInvestmentMap _dummyAccountInvestmentMap;
         private Account _dummyAccount;
+        private FundTransaction _dummyFundTransaction;
+        private CashTransaction _dummyCashTransaction;
 
         public FakeRepository()
         {
             _dummyAccount = new Account();
             _dummyAccountInvestmentMap = new AccountInvestmentMap();
+            _dummyFundTransaction = new FundTransaction();
+            _dummyCashTransaction = new CashTransaction();
         }
 
         public bool ApplyCashTransactionWasCalled { get; private set; }
@@ -71,7 +76,7 @@ namespace BusinessLogicTests
             _dummyAccount.Cash -= amount;
         }
 
-        public IQueryable<CashTransaction> GetAccountTransactions(int accountId)
+        public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)
         {
             throw new NotImplementedException();
         }
@@ -86,7 +91,7 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
-        public RepositoryActionResult<CashTransaction> ApplyCashTransaction(CreateCashTransactionRequest request)
+        public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
             ApplyCashTransactionWasCalled = true;
 
@@ -107,5 +112,15 @@ namespace BusinessLogicTests
         {
             throw new NotImplementedException();
         }
-    }
+
+        public FundTransaction GetFundTransaction(int arbitaryId)
+        {
+            return _dummyFundTransaction;
+        }
+
+        public CashTransaction GetCashTransaction(int arbitaryId)
+        {
+            return _dummyCashTransaction;
+        }
+    }   
 }

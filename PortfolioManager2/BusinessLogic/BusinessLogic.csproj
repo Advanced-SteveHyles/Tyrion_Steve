@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountInvestmentMapHandler.cs" />
+    <Compile Include="FundTransactionHandler.cs" />
     <Compile Include="Transactions\CreateDepositTransaction.cs" />
     <Compile Include="AccountHandler.cs" />
     <Compile Include="Transactions\CreateFundBuyTransaction.cs" />

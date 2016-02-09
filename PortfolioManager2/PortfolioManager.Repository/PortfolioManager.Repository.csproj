@@ -69,13 +69,15 @@
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Entities\CashTransaction.cs" />
     <Compile Include="Entities\FundTransaction.cs" />
+    <Compile Include="Entities\PriceHistory.cs" />
     <Compile Include="Factories\InvestmentFactory.cs" />
     <Compile Include="Factories\InvestmentMapFactory.cs" />
+    <Compile Include="Interfaces\IFundTransactionRepository.cs" />
     <Compile Include="Repositories\AccountInvestmentMapRepository.cs" />
     <Compile Include="Interfaces\IAccountInvestmentMapRepository.cs" />
     <Compile Include="Interfaces\IAccountRepository.cs" />
     <Compile Include="Interfaces\IInvestmentRepository.cs" />
-    <Compile Include="Interfaces\ITransactionRepository.cs" />
+    <Compile Include="Interfaces\ICashTransactionRepository.cs" />
     <Compile Include="Repositories\InvestmentRepository.cs" />
     <Compile Include="PortfolioMangerMigrationsConfiguration.cs" />
     <Compile Include="Entities\Account.cs" />
@@ -91,7 +93,7 @@
     <Compile Include="PortfolioManagerContext.cs" />
     <Compile Include="RepositoryActionResult.cs" />
     <Compile Include="RepositoryActionStatus.cs" />
-    <Compile Include="Repositories\TransactionRepository.cs" />
+    <Compile Include="Repositories\CashTransactionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

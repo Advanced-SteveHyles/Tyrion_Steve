@@ -5,19 +5,20 @@ namespace Interfaces
 {
     public interface IAccountHandler
     {
-        void IncreaseBalance(int accountId, decimal amount);
-        void DecreaseBalance(int accountId, decimal amount);
+        void IncreaseAccountBalance(int accountId, decimal amount);
+        void DecreaseAccountBalance(int accountId, decimal amount);
     }
 
     public interface ITransactionHandler
     {
-        void StoreTransaction(DepositTransactionRequest depositTransactionRequest);
-        void StoreTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
-        void StoreTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
+        void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest);
+        void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
+        void StoreCashTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
     }
 
     public interface IFundTransactionHandler
-    {        
+    {
+        void StoreFundTransaction(InvestmentBuyRequest fundBuyRequest);
     }
 
     public interface IAccountInvestmentMapHandler

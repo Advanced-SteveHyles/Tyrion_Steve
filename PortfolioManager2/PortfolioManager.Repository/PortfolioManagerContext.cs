@@ -24,7 +24,8 @@ namespace PortfolioManager.Repository
         public virtual DbSet<Account> Accounts { get; set; }
 
         public virtual DbSet<Investment> Investments { get; set; }
-        public virtual DbSet<CashTransaction> Transactions  { get; set; }
+        public virtual DbSet<CashTransaction> CashTransactions { get; set; }
+        public virtual DbSet<FundTransaction> FundTransactions { get; set; }
 
         public virtual DbSet<AccountInvestmentMap> AccountInvestmentMaps { get; set; }
         

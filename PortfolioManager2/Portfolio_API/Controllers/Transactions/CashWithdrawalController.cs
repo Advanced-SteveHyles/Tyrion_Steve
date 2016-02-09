@@ -19,11 +19,11 @@ namespace Portfolio_API.Controllers.Transactions
 {
 public class CashWithdrawalController : ApiController
     {
-        readonly ITransactionRepository _transactionRepository;
+        readonly ICashTransactionRepository _cashTransactionRepository;
         readonly IAccountRepository _accountRepository;
         public CashWithdrawalController()
         {
-            _transactionRepository = new TransactionRepository(new PortfolioManagerContext());
+            _cashTransactionRepository = new CashTransactionRepository(new PortfolioManagerContext());
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
         }
 
@@ -55,7 +55,7 @@ public class CashWithdrawalController : ApiController
                 //*/
 
                 var accountHandler = new AccountHandler(_accountRepository);
-                var transactionHandler = new CashTransactionHandler(_transactionRepository);
+                var transactionHandler = new CashTransactionHandler(_cashTransactionRepository);
 
                 var status = Command.ExecuteCommand(new CreateWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
 
