@@ -28,9 +28,7 @@ namespace BusinessLogicTests
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
         }
-
-        public bool ApplyCashTransactionWasCalled { get; private set; }
-
+        
         public IQueryable<Portfolio> GetPortfolios()
         {
             throw new NotImplementedException();
@@ -65,7 +63,7 @@ namespace BusinessLogicTests
         {
             return _dummyAccount;
         }
-        
+
         public void IncreaseAccountBalance(int accountId, decimal amount)
         {
             _dummyAccount.Cash += amount;
@@ -93,11 +91,18 @@ namespace BusinessLogicTests
 
         public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
-            ApplyCashTransactionWasCalled = true;
-
+            _dummyCashTransaction = new CashTransaction()
+            {
+                AccountId = request.AccountId,
+                TransactionDate = request.TransactionDate,
+                TransactionValue = request.TransactionValue,
+                Source = request.Source,
+                IsTaxRefund = request.IsTaxRefund,
+                TransactionType = request.TransactionType,
+            };
             return null;
         }
-      
+
         public AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId)
         {
             return _dummyAccountInvestmentMap;
@@ -118,9 +123,28 @@ namespace BusinessLogicTests
             return _dummyFundTransaction;
         }
 
+        public RepositoryActionResult<FundTransaction> InsertFundTransaction(CreateFundTransactionRequest request)
+        {
+            _dummyFundTransaction = new FundTransaction()
+            {
+                InvestmentMapId = request.InvestmentMapId,
+                TransactionType = request.TransactionType,
+                TransactionDate = request.TransactionDate,
+                SettlementDate = request.SettlementDate,
+                Source = request.Source,
+                Quantity = request.Quantity,
+                SellPrice = request.SellPrice,
+                BuyPrice = request.BuyPrice,
+                Charges = request.Charges,
+                TransactionValue = request.TransactionValue
+            };
+
+            return new RepositoryActionResult<FundTransaction>(_dummyFundTransaction, RepositoryActionStatus.Ok);
+        }
+
         public CashTransaction GetCashTransaction(int arbitaryId)
         {
             return _dummyCashTransaction;
         }
-    }   
+    }
 }

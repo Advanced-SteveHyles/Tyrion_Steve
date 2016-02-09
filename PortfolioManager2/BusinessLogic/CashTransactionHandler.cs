@@ -1,5 +1,6 @@
 ﻿using System;
 using Interfaces;
+using Portfolio.Constants;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
@@ -25,7 +26,7 @@ namespace BusinessLogic
                 depositTransactionRequest.Source,
                 depositTransactionRequest.Value,
                 depositTransactionRequest.IsTaxRefund,
-                "Deposit"
+                  CashTransactionTypes.Deposit
                 );            
         }
 
@@ -37,21 +38,22 @@ namespace BusinessLogic
                       withdrawalTransactionRequest.Source,
                       withdrawalTransactionRequest.Value,
                       false,
-                      "Withdrawal"                      
+                  CashTransactionTypes.Withdrawal
                       );
         }
 
         public void StoreCashTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest)
         {
+            var source = string.Empty;       
             StoreCashTransaction(
                           accountId,
                           investmentBuyRequest.PurchaseDate,
-                          investmentBuyRequest.ToString(),
+                          source,
                           investmentBuyRequest.Value,
                           false,
-                          "Buy"
-                          );            
-    }
+                          CashTransactionTypes.Deposit
+                          );
+        }
 
         private void StoreCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType )
         {
@@ -60,7 +62,7 @@ namespace BusinessLogic
                 AccountId = accountId,
                 TransactionDate = transactionDate,
                 TransactionType = transactionType,
-                Value = value,
+                TransactionValue = value,
                 Source = source,
                 IsTaxRefund = isTaxRefund,
             };

@@ -15,6 +15,8 @@ namespace BusinessLogicTests.Transactions.Cash
         const int AccountId = 1;
         const int TransactionValue = 10;
         const int ArbitaryId = 1;
+        DateTime transactionDate = DateTime.Now;
+        const string Source = "Test";
 
         public GivenIAmDepositingTenPounds()
         {
@@ -26,8 +28,8 @@ namespace BusinessLogicTests.Transactions.Cash
             {
                 AccountId = AccountId,
                 Value = TransactionValue,
-                Source = "Test",
-                TransactionDate = DateTime.Now
+                Source = Source,
+                TransactionDate = transactionDate
             };
 
             _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, accountHandler, transactionHandler);
@@ -48,7 +50,19 @@ namespace BusinessLogicTests.Transactions.Cash
         {
             _depositTransaction.Execute();
 
-            Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
+            const bool isTaxRefund = false;
+
+            _depositTransaction.Execute();
+
+            var transaction = _fakeRepository.GetCashTransaction(ArbitaryId);
+
+            Assert.Equal(AccountId, transaction.AccountId);
+            Assert.Equal(transactionDate, transaction.TransactionDate);
+            Assert.Equal(TransactionValue, transaction.TransactionValue);
+            Assert.Equal(Source, transaction.Source);
+            Assert.Equal(isTaxRefund, transaction.IsTaxRefund);
+            Assert.Equal("Deposit", transaction.TransactionType);
+
         }
 
         [Fact]

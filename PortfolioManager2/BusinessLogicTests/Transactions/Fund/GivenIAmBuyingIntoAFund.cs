@@ -2,6 +2,7 @@
 using BusinessLogic;
 using BusinessLogic.Transactions;
 using Interfaces;
+using Portfolio.Constants;
 using PortfolioManager.DTO.Transactions;
 using Xunit;
 
@@ -21,7 +22,10 @@ namespace BusinessLogicTests.Transactions.Fund
         private ITransactionHandler _cashTransactionHandler;
         private IAccountInvestmentMapHandler _accountInvestmentMapHandler;
         private FundTransactionHandler _fundTransactionHandler;
+        private DateTime _settlementDate;
+        private decimal _valuation;
         private const int ArbitaryId = 1;
+        
 
         private void Setup()
         {
@@ -31,16 +35,20 @@ namespace BusinessLogicTests.Transactions.Fund
             _commission = 2;
             _valueOfTransaction = (_numberOfShares * _priceOfOneShare) + _commission;
             _transactionDate = DateTime.Now;
+            _settlementDate = DateTime.Today.AddDays(14);
             _accountId = 10;
-            
+            _valuation = (_numberOfShares*_priceOfOneShare);
+
             var request = new InvestmentBuyRequest
             {
                 InvestmentMapId = 1,
                 Quantity = _numberOfShares,
                 Price = _priceOfOneShare,
                 PurchaseDate = _transactionDate,
+                SettlementDate = _settlementDate,
                 UpdatePriceHistory = false,
-                Value = _valueOfTransaction
+                Value = _valueOfTransaction,
+                Charges = _commission
             };
 
             _fakeRepository = new FakeRepository();
@@ -77,7 +85,14 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             Setup();
             _buyTransaction.Execute();
-            Assert.True(_fakeRepository.ApplyCashTransactionWasCalled);
+            
+            var transaction = _fakeRepository.GetCashTransaction(ArbitaryId);
+            Assert.Equal(_accountId, transaction.AccountId);
+            Assert.Equal(_transactionDate, transaction.TransactionDate);
+            Assert.Equal(_valueOfTransaction, transaction.TransactionValue);
+            Assert.Equal(string.Empty, transaction.Source);
+            Assert.Equal(false, transaction.IsTaxRefund);
+            Assert.Equal(CashTransactionTypes.Buy, transaction.TransactionType);
         }
 
         [Fact]
@@ -97,17 +112,17 @@ namespace BusinessLogicTests.Transactions.Fund
             _buyTransaction.Execute();
 
             var fundTransaction = _fakeRepository.GetFundTransaction(ArbitaryId);
-            Assert.Equal(_priceOfOneShare, fundTransaction.BuyPrice);
-            Assert.Equal("BUY", fundTransaction.TransactionType);
-            Assert.Equal(ArbitaryId, fundTransaction.AccountId);
+            Assert.Equal(_priceOfOneShare, fundTransaction.BuyPrice);            
+            Assert.Equal(CashTransactionTypes.Buy, fundTransaction.TransactionType);
             Assert.Equal(_transactionDate, fundTransaction.TransactionDate);
+            Assert.Equal(_settlementDate, fundTransaction.SettlementDate);
             Assert.Equal(string.Empty, fundTransaction.Source);
             Assert.Equal(_numberOfShares, fundTransaction.Quantity);
             Assert.Equal(null, fundTransaction.SellPrice);
             Assert.Equal(_priceOfOneShare, fundTransaction.BuyPrice);
             Assert.Equal(_commission, fundTransaction.Charges);
 
-            var transactionValue = (_numberOfShares*_priceOfOneShare) + _commission;
+            var transactionValue = (_numberOfShares * _priceOfOneShare) + _commission;
             Assert.Equal(transactionValue, fundTransaction.TransactionValue);
         }
 
@@ -119,22 +134,19 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var fundTransaction = _fakeRepository.GetFundTransaction(ArbitaryId);
             var cashTransaction = _fakeRepository.GetCashTransaction(ArbitaryId);
-            
+
             Assert.Equal(fundTransaction.TransactionValue, cashTransaction.TransactionValue);
         }
 
-        //WhereIBuyTheCashWithdrawnIsEqualToTheTransactionCost
+        [Fact]
+        public void WhenIBuyThenTheValuationIsCorrect()
+        {
+            Setup();
+            _buyTransaction.Execute();
 
-
-
-        //[Fact]
-        //public void WhenIBuyThenTheValuationIsCorrect()
-        //{
-        //    Setup();
-        //    _buyTransaction.Execute();
-
-        //    var accountFundMap = _fakeRepository.GetInvestmentMap(1);
-        //    Assert.Equal(_numberOfShares, accountFundMap.Quantity);
-        //}
+            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(ArbitaryId);
+            Assert.Equal(_numberOfShares, accountFundMap.Quantity);
+            Assert.Equal(_valuation, accountFundMap.Valuation);
+        }
     }
 }

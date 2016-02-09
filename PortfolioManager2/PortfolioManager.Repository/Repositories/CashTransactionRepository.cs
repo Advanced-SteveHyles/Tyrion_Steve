@@ -19,7 +19,7 @@ namespace PortfolioManager.Repository
                 AccountId = request.AccountId,
                 TransactionDate = request.TransactionDate,
                 Source = request.Source,
-                TransactionValue = request.Value,
+                TransactionValue = request.TransactionValue,
                 IsTaxRefund = request.IsTaxRefund,
                 TransactionType = request.TransactionType
             };

@@ -30,7 +30,7 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
-            FundTransactionHandler.StoreFundTransaction(_fundBuyRequest);
+            _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);
 
             _transactionHandler.StoreCashTransaction(_accountId, _fundBuyRequest);
 
@@ -51,7 +51,6 @@ namespace BusinessLogic.Transactions
 
 
         public bool ExecuteResult { get; private set; }
-
-        public IFundTransactionHandler FundTransactionHandler { get; set; }
+        
     }
 }
