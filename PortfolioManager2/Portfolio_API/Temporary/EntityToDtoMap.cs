@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 
@@ -20,9 +21,9 @@ namespace Portfolio_API.Controllers
         }
 
 
-        //public static InvestmentMapDto InvestmentMapFactory(InvestmentMapEnt investmentMapEnt)
+        //public static AccountInvestmentMapDto InvestmentMapFactory(InvestmentMapEnt investmentMapEnt)
         //{
-        //    return new InvestmentMapDto
+        //    return new AccountInvestmentMapDto
         //    {
         //        PortfolioId =investmentMapEnt.PortfolioId,
         //        AccountId = investmentMapEnt.AccountId,
@@ -142,18 +143,15 @@ namespace Portfolio_API.Controllers
             };
         }
 
-        public static InvestmentMapDto MapToDto(this InvestmentMap entity)
+        public static AccountInvestmentMapDto MapToDto(this AccountInvestmentMap entity)
         {
-            return new InvestmentMapDto
+            return new AccountInvestmentMapDto
             {
-                InvestmentMapId = entity.InvestmentMapId,
+                AccountInvestmentMapId = entity.AccountInvestmentMapId,
                 AccountId = entity.AccountId,
-                InvestmentId = entity.AccountId,
-                InvestmentName = entity.InvestmentName,
-                Quantity = entity.Quantity,
-                SellPrice = entity.SellPrice,
-                Valuation = entity.Valuation,
-                LastValuationDate = entity.LastValuationDate
+                InvestmentId = entity.AccountId,                
+                Quantity = entity.Quantity,                
+                Valuation = entity.Valuation,                
             };
         }
     }

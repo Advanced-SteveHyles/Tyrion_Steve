@@ -1,6 +1,7 @@
 using System;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Interfaces;
 
 namespace PortfolioManager.Repository
 {

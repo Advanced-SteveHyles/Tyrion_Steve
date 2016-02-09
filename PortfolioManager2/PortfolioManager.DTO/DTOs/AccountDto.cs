@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PortfolioManager.DTO.DTOs;
 
 namespace PortfolioManager.DTO
 {
@@ -18,7 +19,7 @@ namespace PortfolioManager.DTO
 
         public string Type { get; set; }
 
-        public ICollection<InvestmentMapDto>  Investments { get; set; }
+        public ICollection<AccountInvestmentMapDto>  Investments { get; set; }
         public decimal AccountBalance { get; set; }
     }
 }

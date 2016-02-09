@@ -14,7 +14,6 @@ namespace BusinessLogicTests.Transactions.Fund
 {
     public class GivenIAmBuyingIntoAFund
     {
-        private readonly InvestmentMap _accountFundMap;
         private decimal _numberOfShares;
         private decimal _priceOfOneShare;
         private decimal _commission;
@@ -25,8 +24,8 @@ namespace BusinessLogicTests.Transactions.Fund
         private IAccountHandler _accountHandler;
         private int _accountId;
         private ITransactionHandler _transactionHandler;
-        private IInvestmentMapHandler _investmentMapHandler;
-        private const int ArbitaryId =1 ;
+        private IAccountInvestmentMapHandler _accountInvestmentMapHandler;
+        private const int ArbitaryId = 1;
 
         private void Setup()
         {
@@ -50,17 +49,13 @@ namespace BusinessLogicTests.Transactions.Fund
 
             _fakeRepository = new FakeRepository();
             _accountHandler = new AccountHandler(_fakeRepository);
-            _transactionHandler = new TransactionHandler(_fakeRepository);
-            _investmentMapHandler = new InvestmentMapHandler(_fakeRepository);
+            _transactionHandler = new CashTransactionHandler(_fakeRepository);
+            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository);
+
             _buyTransaction = new CreateFundBuyTransaction(
-                _accountId, request, _accountHandler,
-                _transactionHandler, _investmentMapHandler);
+                        _accountId, request, _accountHandler,
+                        _transactionHandler, _accountInvestmentMapHandler);
 
-        }
-
-        public GivenIAmBuyingIntoAFund()
-        {
-            _accountFundMap = new InvestmentMap();
         }
 
         [Fact]
@@ -93,24 +88,16 @@ namespace BusinessLogicTests.Transactions.Fund
             Setup();
             _buyTransaction.Execute();
 
-            var accountFundMap = _fakeRepository.GetInvestmentMap(1);
+            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(1);
             Assert.Equal(_numberOfShares, accountFundMap.Quantity);
         }
 
-        //[Fact]
-        //public void WhenIBuyThenTheValuationIsCorrect()
-        //{
-        //    Setup();
-        //    _buyTransaction.Execute();
-
-        //    var accountFundMap = _fakeRepository.GetInvestmentMap(1);
-        //    Assert.Equal(_numberOfShares, accountFundMap.Quantity);
-        //}
-        
-        //public void WhenIBuyThenTheShareTransactionIsValuedCorrectly()
-        //{
-        //    //10 =20
-        //}
+        [Fact]
+        public void WhenIBuyThenTheFundTransactionIsValuedCorrectly()
+        {
+            //10 =20
+            Assert.Equal(10, fundTransaction.);
+        }
 
         //public void WhenIBuyThenTheBuyTransactionIsValuedCorrectly()
         //{
@@ -134,5 +121,16 @@ namespace BusinessLogicTests.Transactions.Fund
 
         //WhereIBuyTheCashWithdrawnIsEqualToTheTransactionCost
 
+
+
+        //[Fact]
+        //public void WhenIBuyThenTheValuationIsCorrect()
+        //{
+        //    Setup();
+        //    _buyTransaction.Execute();
+
+        //    var accountFundMap = _fakeRepository.GetInvestmentMap(1);
+        //    Assert.Equal(_numberOfShares, accountFundMap.Quantity);
+        //}
     }
 }

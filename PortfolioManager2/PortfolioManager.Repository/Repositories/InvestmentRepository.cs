@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Interfaces;
 
 namespace PortfolioManager.Repository
 {

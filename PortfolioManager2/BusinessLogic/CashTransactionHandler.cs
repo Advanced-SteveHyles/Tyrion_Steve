@@ -1,40 +1,18 @@
 ﻿using System;
-using BusinessLogic;
 using Interfaces;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogicTests
+namespace BusinessLogic
 {
-    public class InvestmentMapHandler : IInvestmentMapHandler
-    {
-        private readonly IInvestmentMapRepository  _repository;
-
-        public InvestmentMapHandler(IInvestmentMapRepository repository)
-        {
-            _repository = repository;
-        }        
-
-        public void UpdateMapQuantity(int investmentMapId, decimal quantity)
-        {            
-            var investmentMap = _repository.GetInvestmentMap(investmentMapId);
-            investmentMap.Quantity += quantity;            
-            _repository.Save(investmentMap);
-
-            //    public int Quantity { get; set; }
-            //public int SellPrice { get; set; }
-            //public int Valuation { get; set; }
-            //public DateTime LastValuationDate { get; set; }
-        }
-}
-
-    public class TransactionHandler : ITransactionHandler
+    public class CashTransactionHandler : ITransactionHandler
     {
         private readonly ITransactionRepository _repository;
 
-        public TransactionHandler(ITransactionRepository repository)
+        public CashTransactionHandler(ITransactionRepository repository)
         {
             _repository = repository;
         }

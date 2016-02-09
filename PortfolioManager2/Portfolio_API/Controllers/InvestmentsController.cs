@@ -12,6 +12,7 @@ using PortfolioManager.DTO;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
+using PortfolioManager.Repository.Interfaces;
 using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers

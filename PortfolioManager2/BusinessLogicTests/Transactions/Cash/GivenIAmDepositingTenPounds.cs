@@ -1,4 +1,5 @@
 ﻿using System;
+using BusinessLogic;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
@@ -19,7 +20,7 @@ namespace BusinessLogicTests.Transactions.Cash
         {
             _fakeRepository = new FakeRepository();
             IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-            ITransactionHandler transactionHandler = new TransactionHandler(_fakeRepository);
+            ITransactionHandler transactionHandler = new CashTransactionHandler(_fakeRepository);
 
             var depositTransactionRequest = new DepositTransactionRequest
             {

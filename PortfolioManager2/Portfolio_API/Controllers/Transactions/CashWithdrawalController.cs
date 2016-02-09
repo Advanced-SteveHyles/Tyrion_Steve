@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Antlr.Runtime.Tree;
+using BusinessLogic;
 using BusinessLogic.Transactions;
 using BusinessLogicTests;
 using Interfaces;
@@ -12,6 +13,7 @@ using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Interfaces;
 
 namespace Portfolio_API.Controllers.Transactions
 {
@@ -53,7 +55,7 @@ public class CashWithdrawalController : ApiController
                 //*/
 
                 var accountHandler = new AccountHandler(_accountRepository);
-                var transactionHandler = new TransactionHandler(_transactionRepository);
+                var transactionHandler = new CashTransactionHandler(_transactionRepository);
 
                 var status = Command.ExecuteCommand(new CreateWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
 

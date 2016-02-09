@@ -3,6 +3,7 @@ using System.Linq;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
+using PortfolioManager.Repository.Interfaces;
 using Xunit.Sdk;
 
 namespace BusinessLogicTests
@@ -12,15 +13,15 @@ namespace BusinessLogicTests
         , IInvestmentRepository
         , IAccountRepository
         , ITransactionRepository
-        , IInvestmentMapRepository
+        , IAccountInvestmentMapRepository
     {
-        private InvestmentMap _dummyInvestmentMap;
+        private AccountInvestmentMap _dummyAccountInvestmentMap;
         private Account _dummyAccount;
 
         public FakeRepository()
         {
             _dummyAccount = new Account();
-            _dummyInvestmentMap = new InvestmentMap();
+            _dummyAccountInvestmentMap = new AccountInvestmentMap();
         }
 
         public bool ApplyCashTransactionWasCalled { get; private set; }
@@ -92,14 +93,19 @@ namespace BusinessLogicTests
             return null;
         }
       
-        public InvestmentMap GetInvestmentMap(int investmentMapId)
+        public AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId)
         {
-            return _dummyInvestmentMap;
+            return _dummyAccountInvestmentMap;
         }
 
-        public void Save(InvestmentMap investmentMap)
+        public void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap)
         {
-            _dummyInvestmentMap = investmentMap;
+            _dummyAccountInvestmentMap = investmentMap;
+        }
+
+        public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -41,12 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInvestmentMapHandler.cs" />
     <Compile Include="Transactions\CreateDepositTransaction.cs" />
     <Compile Include="AccountHandler.cs" />
     <Compile Include="Transactions\CreateFundBuyTransaction.cs" />
     <Compile Include="Transactions\CreateWithdrawalTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransactionHandler.cs" />
+    <Compile Include="CashTransactionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">

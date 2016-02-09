@@ -7,6 +7,7 @@ using System.Web.Http;
 using Interfaces;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Interfaces;
 
 namespace Portfolio_API.Controllers.Transactions
 {

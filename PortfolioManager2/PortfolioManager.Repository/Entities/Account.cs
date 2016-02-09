@@ -17,6 +17,6 @@ namespace PortfolioManager.Repository.Entities
 
         public int PortfolioId { get; set; }
         public string Type { get; set; }
-        public virtual ICollection<InvestmentMap> Investments { get; set; }
+        public virtual ICollection<AccountInvestmentMap> Investments { get; set; }
     }
 }

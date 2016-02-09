@@ -3,18 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PortfolioManager.Repository.Entities
 {
-    [Table ("InvestmentMap")]
-    public class InvestmentMap
+    [Table ("AccountInvestmentMap")]
+    public class AccountInvestmentMap
     {
-        public int InvestmentMapId { get; set; }
+        public int AccountInvestmentMapId { get; set; }
 
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
-        public string InvestmentName { get; set; }
-        public decimal Quantity { get; set; }
-        public int SellPrice { get; set; }
-        public int Valuation { get; set; }
-        public DateTime LastValuationDate { get; set; }
-
+        public decimal Quantity { get; set; }        
+        public int Valuation { get; set; }        
     }
 }

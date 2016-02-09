@@ -10,20 +10,20 @@ namespace BusinessLogic.Transactions
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountHandler _accountHandler;
         private readonly ITransactionHandler _transactionHandler;
-        private readonly IInvestmentMapHandler _investmentMapHandler;
+        private readonly IAccountInvestmentMapHandler _accountInvestmentMapHandler;
 
         public CreateFundBuyTransaction(int accountId,
             InvestmentBuyRequest fundBuyRequest, 
             IAccountHandler accountHandler, 
             ITransactionHandler transactionHandler,
-            IInvestmentMapHandler investmentMapHandler)
+            IAccountInvestmentMapHandler accountInvestmentMapHandler)
             //IFundTransactionHandler fundTransactionHandler)
         {
             _accountId = accountId;
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
             _transactionHandler = transactionHandler;
-            _investmentMapHandler = investmentMapHandler;
+            _accountInvestmentMapHandler = accountInvestmentMapHandler;
             //_fundTransactionHandler = fundTransactionHandler;
         }
 
@@ -37,7 +37,7 @@ namespace BusinessLogic.Transactions
                 _accountId,
                 _fundBuyRequest.Value);
 
-            _investmentMapHandler.UpdateMapQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
+            _accountInvestmentMapHandler.UpdateMapQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
             //_mapHandler.ApplyBuyTransaction();
 

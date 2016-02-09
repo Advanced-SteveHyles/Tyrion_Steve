@@ -1,5 +1,6 @@
 using Interfaces;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogicTests
 {

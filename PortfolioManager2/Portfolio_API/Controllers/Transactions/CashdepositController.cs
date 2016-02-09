@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using BusinessLogic;
 using BusinessLogic.Transactions;
 using BusinessLogicTests;
 using Interfaces;
@@ -8,6 +9,7 @@ using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Interfaces;
 using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers
@@ -52,7 +54,7 @@ namespace Portfolio_API.Controllers
                 //*/
 
                 var accountHandler = new AccountHandler(_accountRepository);
-                var transactionHandler = new TransactionHandler(_transactionRepository);
+                var transactionHandler = new CashTransactionHandler(_transactionRepository);
 
                 var status = Command.ExecuteCommand(new CreateDepositTransaction(deposit, accountHandler, transactionHandler));
 

@@ -6,18 +6,14 @@ namespace PortfolioManager.Repository.Factories
 {
     public  class InvestmentMapFactory
     {
-        public static InvestmentMap CreateInvestmentMap(AccountInvestmentMapRequest investmentMapRequest)
+        public static AccountInvestmentMap CreateAccountInvestmenMap(AccountInvestmentMapRequest investmentMapRequest)
         {
-            return new InvestmentMap
+            return new AccountInvestmentMap
             {
                 AccountId = investmentMapRequest.AccountId,
-                InvestmentId = investmentMapRequest.InvestmentId,
-
-                InvestmentName = string.Empty,
+                InvestmentId = investmentMapRequest.InvestmentId,              
                 Quantity = 0,
-                SellPrice = 0,
-                Valuation = 0,
-                LastValuationDate = DateTime.Today
+                Valuation = 0                
             };
         }
     }

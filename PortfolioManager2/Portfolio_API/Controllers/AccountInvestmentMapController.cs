@@ -8,23 +8,28 @@ using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Factories;
+using PortfolioManager.Repository.Interfaces;
+using PortfolioManager.Repository.Repositories;
+using AccountInvestmentMapDto = PortfolioManager.DTO.DTOs.AccountInvestmentMapDto;
 
 namespace Portfolio_API.Controllers
 {
     public class AccountInvestmentMapController : ApiController
     {
         private readonly InvestmentRepository _investmentRepository;
-        private readonly AccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountInvestmentMapRepository _accountInvestmentRepository;
 
         public AccountInvestmentMapController()
         {
             _investmentRepository = new InvestmentRepository(new PortfolioManagerContext());
             _accountRepository = new AccountRepository(new PortfolioManagerContext());
+            _accountInvestmentRepository = new AccountInvestmentMapRepository(new PortfolioManagerContext());
         }
 
         public IHttpActionResult Get(int id)
         {
-            var map = new AccountInvestmentMapDto();
+            var map = new AccountWithInvestmentsMapDto();
 
             var accountEnt = _accountRepository.GetAccount(id);
             map.AccountInfo = accountEnt.MapToDto();
@@ -51,17 +56,17 @@ namespace Portfolio_API.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route(ApiPaths.InvestmentMap)]
-        public IHttpActionResult Post([FromBody] AccountInvestmentMapRequest investmentMapRequest)
+        public IHttpActionResult Post([FromBody] AccountInvestmentMapRequest accountInvestmentMapRequest)
         {
             try
             {
-                if (investmentMapRequest == null)
+                if (accountInvestmentMapRequest == null)
                 {
                     return BadRequest();
                 }
 
-                var entityInvestmentMap = InvestmentMapFactory.CreateInvestmentMap(investmentMapRequest);
-                if (entityInvestmentMap == null)
+                var accountInvestmentMap = InvestmentMapFactory.CreateAccountInvestmenMap(accountInvestmentMapRequest);
+                if (accountInvestmentMap == null)
                 {
                     return BadRequest();
                 }
@@ -75,11 +80,11 @@ namespace Portfolio_API.Controllers
                 }
                 */
 
-                var result = _accountRepository.InsertInvestmentMap(entityInvestmentMap);
+                var result = _accountInvestmentRepository.InsertAccountInvestmentMap(accountInvestmentMap);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoInvestment = result.Entity.MapToDto();
-                    return Created(Request.RequestUri + "/" + dtoInvestment.InvestmentId, dtoInvestment);
+                    var dtoAccountInvestmentMap = result.Entity.MapToDto();
+                    return Created(Request.RequestUri + "/" + dtoAccountInvestmentMap.AccountInvestmentMapId, dtoAccountInvestmentMap);
                 }
                 else
                 {

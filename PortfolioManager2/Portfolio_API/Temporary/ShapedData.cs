@@ -194,9 +194,9 @@ namespace Portfolio_API.Controllers
             }
         }
 
-        private static object CreateDataShapedObject(InvestmentMap portfolioEnt, List<string> lstOfInvestmentColumns)
+        private static object CreateDataShapedObject(AccountInvestmentMap accountInvestmentMap, List<string> lstOfInvestmentColumns)
         {
-            return portfolioEnt;
+            return accountInvestmentMap;
         }
     }
 }

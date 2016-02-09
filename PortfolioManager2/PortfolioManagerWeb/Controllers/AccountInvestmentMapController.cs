@@ -7,6 +7,7 @@ using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.Requests;
 using PortfolioManagerWeb.Models;
+using AccountInvestmentMapDto = PortfolioManager.DTO.DTOs.AccountInvestmentMapDto;
 
 namespace PortfolioManagerWeb.Controllers
 {

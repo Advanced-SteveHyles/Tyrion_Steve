@@ -12,7 +12,7 @@ namespace PortfolioManager.Repository.Factories
             {
                 PortfolioId = account.PortfolioId,
                 Name = account.Name,
-                Investments = new List<InvestmentMap>(),
+                Investments = new List<AccountInvestmentMap>(),
                 Cash = 0,
                 Valuation = 0,
                 Type = "Not Set"

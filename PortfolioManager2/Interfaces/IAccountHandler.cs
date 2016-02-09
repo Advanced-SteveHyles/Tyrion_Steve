@@ -20,7 +20,7 @@ namespace Interfaces
     {        
     }
 
-    public interface IInvestmentMapHandler
+    public interface IAccountInvestmentMapHandler
     {
         void UpdateMapQuantity(int investmentMapId, decimal quantity);        
     }
