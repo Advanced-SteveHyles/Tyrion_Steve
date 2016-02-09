@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManager.DTO.Requests.Transactions
 {
-   public class DepositTransactionRequest
+    public class DepositTransactionRequest
     {
        public int AccountId { get; set; }
 

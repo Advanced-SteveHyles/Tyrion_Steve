@@ -55,6 +55,7 @@
     <Compile Include="Requests\Transactions\InvestmentSellDTO.cs" />
     <Compile Include="DTOs\PortfolioDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\Transactions\PriceHistoryRequest.cs" />
     <Compile Include="Requests\Transactions\WithdrawalTransactionRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

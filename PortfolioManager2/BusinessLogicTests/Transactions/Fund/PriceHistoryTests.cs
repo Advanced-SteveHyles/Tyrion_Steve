@@ -10,9 +10,41 @@ namespace BusinessLogicTests.Transactions.Fund
     public class PriceHistoryTests
     {
         [Fact]
-        public void Foo()
+        public void WhenIAddAPriceHistoryTheFundIsAnOEICThenBothTheBuyAndSellPriceChange()
         {
-            Assert.Equal("This next", "Hello World");
+            var _FakeRepository = new FakeRepository();
+            var priceHistoryHandler = new PriceHistoryHandler(_FakeRepository);
+            var priceHistoryRequest = new PriceHistoryRequest();
+
+            var priceHistoryTransaction = new PriceHistoryTransaction();
+            priceHistoryTransaction.Execute();
+
+            _FakeRepository.GetCurrentPrice();
+
+            Assert.Equal("This next", currentSellPrice);
+            Assert.Equal("This next", currentBuyPrice);
         }
-    }
+
+        //[Fact]
+        //public void WhenIAddAPriceHistoryTheFundIsATrustThenOnlyTheSellPriceChanges()
+        //{
+        //    Assert.Equal("This next", currentSellPrice);
+        //    Assert.Equal("This next", currentBuyPrice);
+        //}
+
+        //[Fact]
+        //public void WhenMoreThanOnePriceExistsTheCurrentSellPriceIsTheOneThatIsClosestToTheCurrentDateButNotAfter()
+        //{
+        //    Assert.Equal("This next", currentSellPrice);
+        //    Assert.Equal("This next", currentBuyPrice);
+        //}
+
+        //[Fact]
+        //public void WhenMoreThanOnePriceExistsTheCurrentBuyPriceIsTheOneThatIsClosestToTheCurrentDateButNotAfter()
+        //{
+        //    Assert.Equal("This next", currentSellPrice);
+        //    Assert.Equal("This next", currentBuyPrice);
+        //}
+
+       }
 }
