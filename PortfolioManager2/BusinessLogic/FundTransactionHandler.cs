@@ -1,5 +1,6 @@
 ﻿using System;
 using Interfaces;
+using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Interfaces;
@@ -19,8 +20,7 @@ namespace BusinessLogic
         {
             int? sellPrice =null;
             var source = string.Empty;
-            const string transactionType = "BUY";
-
+            
             StoreFundTransaction(
                 fundBuyRequest.InvestmentMapId,
                 fundBuyRequest.PurchaseDate,
@@ -31,7 +31,7 @@ namespace BusinessLogic
                 sellPrice,
                 fundBuyRequest.Price,
                 fundBuyRequest.Charges,
-                transactionType);
+                FundTransactionTypes.Buy);
         }
 
         private void StoreFundTransaction(

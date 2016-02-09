@@ -2,6 +2,7 @@
 using BusinessLogic;
 using BusinessLogic.Transactions;
 using Interfaces;
+using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
 
@@ -61,7 +62,7 @@ namespace BusinessLogicTests.Transactions.Cash
             Assert.Equal(TransactionValue, transaction.TransactionValue);
             Assert.Equal(Source, transaction.Source);
             Assert.Equal(isTaxRefund, transaction.IsTaxRefund);
-            Assert.Equal("Deposit", transaction.TransactionType);
+            Assert.Equal(CashTransactionTypes.Deposit, transaction.TransactionType);
 
         }
 

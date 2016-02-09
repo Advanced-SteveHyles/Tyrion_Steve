@@ -15,6 +15,7 @@ namespace BusinessLogicTests
         , ICashTransactionRepository
         , IAccountInvestmentMapRepository
         , IFundTransactionRepository
+        , IPriceHistoryRepository
     {
         private AccountInvestmentMap _dummyAccountInvestmentMap;
         private Account _dummyAccount;
@@ -145,6 +146,11 @@ namespace BusinessLogicTests
         public CashTransaction GetCashTransaction(int arbitaryId)
         {
             return _dummyCashTransaction;
+        }
+
+        public decimal GetInvestmentSellPrice(int investmentId)
+        {
+            return 1;
         }
     }
 }

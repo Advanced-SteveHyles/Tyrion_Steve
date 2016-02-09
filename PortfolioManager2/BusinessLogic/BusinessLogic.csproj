@@ -51,7 +51,7 @@
     <Compile Include="CashTransactionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Constants\Portfolio.Constants.csproj">
+    <ProjectReference Include="..\Constants\PortfolioManager.Constants.csproj">
       <Project>{A97D6231-48CB-43A6-BED3-58A3044384E8}</Project>
       <Name>Portfolio.Constants</Name>
     </ProjectReference>

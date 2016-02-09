@@ -2,7 +2,7 @@
 using BusinessLogic;
 using BusinessLogic.Transactions;
 using Interfaces;
-using Portfolio.Constants;
+using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Transactions;
 using Xunit;
 
@@ -54,7 +54,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _fakeRepository = new FakeRepository();
             _accountHandler = new AccountHandler(_fakeRepository);
             _cashTransactionHandler = new CashTransactionHandler(_fakeRepository);
-            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository);
+            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository, _fakeRepository);
             _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
 
             _buyTransaction = new CreateFundBuyTransaction(
@@ -92,7 +92,7 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(_valueOfTransaction, transaction.TransactionValue);
             Assert.Equal(string.Empty, transaction.Source);
             Assert.Equal(false, transaction.IsTaxRefund);
-            Assert.Equal(CashTransactionTypes.Buy, transaction.TransactionType);
+            Assert.Equal(CashTransactionTypes.FundPurchase, transaction.TransactionType);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var fundTransaction = _fakeRepository.GetFundTransaction(ArbitaryId);
             Assert.Equal(_priceOfOneShare, fundTransaction.BuyPrice);            
-            Assert.Equal(CashTransactionTypes.Buy, fundTransaction.TransactionType);
+            Assert.Equal(FundTransactionTypes.Buy, fundTransaction.TransactionType);
             Assert.Equal(_transactionDate, fundTransaction.TransactionDate);
             Assert.Equal(_settlementDate, fundTransaction.SettlementDate);
             Assert.Equal(string.Empty, fundTransaction.Source);

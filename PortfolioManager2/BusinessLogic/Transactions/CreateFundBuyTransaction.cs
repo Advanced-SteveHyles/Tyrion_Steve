@@ -38,8 +38,8 @@ namespace BusinessLogic.Transactions
                 _accountId,
                 _fundBuyRequest.Value);
 
-            _accountInvestmentMapHandler.UpdateMapQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
-            
+            _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
+            _accountInvestmentMapHandler.RevalueMap(_fundBuyRequest.InvestmentMapId);
 
             ExecuteResult = true;
         }

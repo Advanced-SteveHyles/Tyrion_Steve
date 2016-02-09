@@ -1,10 +1,9 @@
 ﻿using System;
 using Interfaces;
-using Portfolio.Constants;
+using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
-using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic
@@ -26,7 +25,7 @@ namespace BusinessLogic
                 depositTransactionRequest.Source,
                 depositTransactionRequest.Value,
                 depositTransactionRequest.IsTaxRefund,
-                  CashTransactionTypes.Deposit
+                 CashTransactionTypes.Deposit
                 );            
         }
 
@@ -51,7 +50,7 @@ namespace BusinessLogic
                           source,
                           investmentBuyRequest.Value,
                           false,
-                          CashTransactionTypes.Deposit
+                          CashTransactionTypes.FundPurchase
                           );
         }
 

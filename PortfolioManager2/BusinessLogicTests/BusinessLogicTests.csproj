@@ -65,15 +65,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions\Fund\GivenIAmBuyingIntoAFund.cs" />
     <Compile Include="Transactions\Fund\CorporateActionTransaction.cs" />
+    <Compile Include="Transactions\Fund\PriceHistoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{d54f38e9-8fbb-473a-ae31-98c85a05e857}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Constants\Portfolio.Constants.csproj">
+    <ProjectReference Include="..\Constants\PortfolioManager.Constants.csproj">
       <Project>{a97d6231-48cb-43a6-bed3-58a3044384e8}</Project>
-      <Name>Portfolio.Constants</Name>
+      <Name>PortfolioManager.Constants</Name>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170BE89D-025F-4352-9388-72CE26EE12E9}</Project>
