@@ -66,9 +66,6 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SellPrice)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Valuation)
             </td>
             <td>
@@ -86,13 +83,13 @@
                 @Html.ActionLink("Create New", "Resolve", "InvestmentsMap",   new { id = item.AccountId , action= fred}, null)
                 
 
-                @Html.ActionLink("Buy", "Buy", "BuyInvestment", new { mapId = item.InvestmentMapId }, null)
-                @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.InvestmentMapId }, null)
+                @Html.ActionLink("Buy", "Buy", "BuyInvestment", new { mapId = item.AccountInvestmentMapId }, null)
+                @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null)
 
-                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
-                @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
-                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
-                @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.InvestmentMapId }, null))
+                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
+                @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
+                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
+                @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
 
             </td>
         </tr>
