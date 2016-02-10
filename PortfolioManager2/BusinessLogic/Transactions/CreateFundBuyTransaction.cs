@@ -34,13 +34,11 @@ namespace BusinessLogic.Transactions
 
             _transactionHandler.StoreCashTransaction(_accountId, _fundBuyRequest);
 
-            _accountHandler.DecreaseAccountBalance(
-                _accountId,
-                _fundBuyRequest.Value);
+            _accountHandler.DecreaseAccountBalance(_accountId, _fundBuyRequest.Value);
 
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
             _accountInvestmentMapHandler.RevalueMap(_fundBuyRequest.InvestmentMapId);
-
+            
             ExecuteResult = true;
         }
 

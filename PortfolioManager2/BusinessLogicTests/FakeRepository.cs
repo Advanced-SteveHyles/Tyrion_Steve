@@ -152,12 +152,12 @@ namespace BusinessLogicTests
 
         public decimal? GetInvestmentSellPrice(int investmentId)
         {
-            return 1;
+            return _dummyPriceHistory.SellPrice;
         }
 
         public decimal? GetInvestmentBuyPrice(int investmentId)
         {
-            return 1;
+            return _dummyPriceHistory.BuyPrice;
         }
 
         public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)

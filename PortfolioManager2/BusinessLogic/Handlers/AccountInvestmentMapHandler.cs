@@ -34,7 +34,12 @@ namespace BusinessLogic
         {
             var investmentMap = _repository.GetAccountInvestmentMap(investmentMapId);
             var currentSellPrice = _priceHistoryRepository.GetInvestmentSellPrice(investmentMap.InvestmentId);
-            investmentMap.Valuation = investmentMap.Quantity*currentSellPrice;
+
+            if (currentSellPrice.HasValue)
+            {
+                investmentMap.Valuation = investmentMap.Quantity * currentSellPrice.Value;
+            }
+            
             _repository.UpdateAccountInvestmentMap(investmentMap);
         }
     }

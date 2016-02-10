@@ -66,8 +66,8 @@ namespace BusinessLogicTests.Transactions.Fund
             var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
             var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
 
-            decimal? notDefinedSellPrice;
-            decimal? notDefinedBuyPrice;
+            decimal? notDefinedSellPrice =null;
+            decimal? notDefinedBuyPrice = null;
 
             Assert.Equal(notDefinedSellPrice, currentSellPrice);
             Assert.Equal(notDefinedBuyPrice, currentBuyPrice);
@@ -89,6 +89,29 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(sellPrice, currentSellPrice);
             Assert.Equal(buyPrice, currentBuyPrice);
         }
+
+        [Fact]
+        public void WhenAFutureDatePriceExistsTheCurrentPriceIsTheClosestBeforeTheCurrentDate()
+        {
+            var evaluationDate = DateTime.Today;
+            decimal? buyPrice = (decimal)1.25;
+            decimal? sellPrice = (decimal)1.25;
+            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+            _priceHistoryTransaction.Execute();
+
+            var tomorrowsDate = DateTime.Today;
+            decimal? tomorrowsBuyPrice = (decimal)2.25;
+            decimal? tomorrowsSellPrice = (decimal)2.25;
+            SetupPriceHistory(tomorrowsDate, tomorrowsBuyPrice, tomorrowsSellPrice);
+            _priceHistoryTransaction.Execute();
+
+            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
+            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+
+            Assert.Equal(sellPrice, currentSellPrice);
+            Assert.Equal(buyPrice, currentBuyPrice);
+        }
+
 
         //[Fact]
         //public void WhenIAddAPriceHistoryTheFundIsAnOEICThenBothTheBuyAndSellPriceChange()
