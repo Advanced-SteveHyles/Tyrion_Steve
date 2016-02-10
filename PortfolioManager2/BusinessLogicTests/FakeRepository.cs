@@ -152,5 +152,10 @@ namespace BusinessLogicTests
         {
             return 1;
         }
+
+        public decimal GetInvestmentBuyPrice(int investmentId)
+        {
+            return 1;
+        }
     }
 }

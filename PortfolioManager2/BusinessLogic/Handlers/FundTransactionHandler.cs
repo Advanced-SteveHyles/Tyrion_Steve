@@ -32,7 +32,7 @@ namespace BusinessLogic
                 fundBuyRequest.Price,
                 fundBuyRequest.Charges,
                 FundTransactionTypes.Buy);
-        }
+            }
 
         private void StoreFundTransaction(
             int investmentMapId,

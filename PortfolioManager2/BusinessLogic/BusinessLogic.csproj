@@ -41,14 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountInvestmentMapHandler.cs" />
-    <Compile Include="FundTransactionHandler.cs" />
+    <Compile Include="Handlers\AccountInvestmentMapHandler.cs" />
+    <Compile Include="Handlers\FundTransactionHandler.cs" />
+    <Compile Include="Handlers\PriceHistoryHandler.cs" />
     <Compile Include="Transactions\CreateDepositTransaction.cs" />
-    <Compile Include="AccountHandler.cs" />
+    <Compile Include="Handlers\AccountHandler.cs" />
     <Compile Include="Transactions\CreateFundBuyTransaction.cs" />
+    <Compile Include="Transactions\CreatePriceHistoryTransaction.cs" />
     <Compile Include="Transactions\CreateWithdrawalTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CashTransactionHandler.cs" />
+    <Compile Include="Handlers\CashTransactionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Constants\PortfolioManager.Constants.csproj">

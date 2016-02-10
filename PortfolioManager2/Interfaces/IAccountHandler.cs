@@ -27,4 +27,9 @@ namespace Interfaces
         void RevalueMap(int investmentMapId);
     }
 
+    public interface IPriceHistoryHandler
+{
+    
+}
+
 }
