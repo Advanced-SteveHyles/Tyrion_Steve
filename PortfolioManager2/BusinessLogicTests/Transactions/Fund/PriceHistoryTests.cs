@@ -13,39 +13,81 @@ namespace BusinessLogicTests.Transactions.Fund
 {
     public class PriceHistoryTests
     {
-        private FakeRepository _repository;
-        private PriceHistoryHandler _priceHistoryHandler;
-        private PriceHistoryRequest _priceHistoryRequest;
+        private readonly FakeRepository _repository;
+        private readonly PriceHistoryHandler _priceHistoryHandler;
         private CreatePriceHistoryTransaction _priceHistoryTransaction;
 
-        private int investmentMapId = 629;
+        private int investmentId = 629;
 
         public PriceHistoryTests()
         {
             _repository = new FakeRepository();
-            _priceHistoryHandler = new PriceHistoryHandler(_repository);            
+            _priceHistoryHandler = new PriceHistoryHandler(_repository);
         }
 
-        private void CreatePriceHistory(DateTime date, decimal? buyAt, decimal? sellAt)
+        private void SetupPriceHistory(DateTime date, decimal? buyAt, decimal? sellAt)
         {
             var priceHistoryRequest = new PriceHistoryRequest()
             {
-                AccountInvestmentMapId = investmentMapId,
+                InvestmentId = investmentId,
                 valuationDate = date,
-               SellPrice = sellAt,
-               BuyPrice = buyAt
+                SellPrice = sellAt,
+                BuyPrice = buyAt
             };
 
             _priceHistoryTransaction = new CreatePriceHistoryTransaction(
-                _priceHistoryRequest, _priceHistoryHandler);
+                priceHistoryRequest, _priceHistoryHandler);
         }
 
         public decimal? SellPrice { get; set; }
 
         [Fact]
-        public void TransactionCommandIsValue()
+        public void CanSaveAPriceHistory()
         {
+            var evaluationDate = DateTime.Today;
+            decimal? buyPrice = (decimal)1.25;
+            decimal? sellPrice = (decimal)1.25;
+            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+
             Assert.True(_priceHistoryTransaction.CommandValid);
+            _priceHistoryTransaction.Execute();
+            Assert.True(_priceHistoryTransaction.ExecuteResult);
+
+            var priceHistory = _repository.GetPriceHistory(investmentId);
+            Assert.Equal(investmentId, priceHistory.InvestmentId);
+            Assert.Equal(evaluationDate, priceHistory.ValuationDate);
+            Assert.Equal(sellPrice, priceHistory.SellPrice);
+            Assert.Equal(buyPrice, priceHistory.BuyPrice);
+        }
+
+        [Fact]
+        public void WhenNoHistoricalPriceExistsTheCurrentPriceIsNull()
+        {
+            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
+            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+
+            decimal? notDefinedSellPrice;
+            decimal? notDefinedBuyPrice;
+
+            Assert.Equal(notDefinedSellPrice, currentSellPrice);
+            Assert.Equal(notDefinedBuyPrice, currentBuyPrice);
+        }
+
+
+        [Fact]
+        public void WhenAHistoricalPriceExistsTheCurrentPriceIsTheClosestBeforeTheCurrentDate()
+        {
+            var evaluationDate = DateTime.Today;
+            decimal? buyPrice = (decimal)1.25;
+            decimal? sellPrice = (decimal)1.25;
+            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+            _priceHistoryTransaction.Execute();
+
+            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
+            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+
+            Assert.Equal(sellPrice, currentSellPrice);
+            Assert.Equal(buyPrice, currentBuyPrice);
         }
 
         //[Fact]
@@ -73,7 +115,7 @@ namespace BusinessLogicTests.Transactions.Fund
         //    Assert.Equal("This next", buyPrice);
         //}
 
-        
+
 
         //[Fact]
         //public void WhenIAddAPriceHistoryTheFundIsATrustThenOnlyTheSellPriceChanges()

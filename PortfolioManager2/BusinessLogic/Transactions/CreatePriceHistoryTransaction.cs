@@ -8,7 +8,7 @@ using PortfolioManager.DTO.Requests.Transactions;
 
 namespace BusinessLogic.Transactions
 {
-    public class CreatePriceHistoryTransaction    : ICommandRunner
+    public class CreatePriceHistoryTransaction: ICommandRunner
 {
         private readonly PriceHistoryRequest _priceHistoryRequest;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
@@ -21,11 +21,13 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            _priceHistoryHandler.StorePriceHistory(_priceHistoryRequest);
+
+            ExecuteResult = true;
         }
 
-        public bool CommandValid { get; }
-        public bool ExecuteResult { get; }
+        public bool CommandValid => _priceHistoryRequest.InvestmentId != 0;
+        public bool ExecuteResult { get; private set; }
 }
 
 }

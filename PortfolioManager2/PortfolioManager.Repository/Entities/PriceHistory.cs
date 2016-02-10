@@ -10,8 +10,8 @@ namespace PortfolioManager.Repository.Entities
         [Key]
         public int PriceHistoryId { get; set; }
         public int InvestmentId { get; set; }
-        public decimal BuyPrice { get; set; }
-        public decimal SellPrice { get; set; }
+        public decimal? BuyPrice { get; set; }
+        public decimal? SellPrice { get; set; }
         public DateTime ValuationDate { get; set; }        
     }
 }

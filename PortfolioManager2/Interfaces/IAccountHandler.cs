@@ -29,7 +29,7 @@ namespace Interfaces
 
     public interface IPriceHistoryHandler
 {
-    
+        void StorePriceHistory(PriceHistoryRequest priceHistoryRequest);
 }
 
 }

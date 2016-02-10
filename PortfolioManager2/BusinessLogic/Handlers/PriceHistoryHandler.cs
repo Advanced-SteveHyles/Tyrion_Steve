@@ -1,4 +1,5 @@
 using Interfaces;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic
@@ -10,6 +11,17 @@ namespace BusinessLogic
         public PriceHistoryHandler(IPriceHistoryRepository priceHistoryRepository)
         {
             this._priceHistoryRepository = priceHistoryRepository;
+        }
+
+        public void StorePriceHistory(PriceHistoryRequest priceHistoryRequest)
+        {
+            _priceHistoryRepository.InsertPriceHistory
+                (
+                priceHistoryRequest.InvestmentId,
+                priceHistoryRequest.valuationDate,
+                priceHistoryRequest.BuyPrice,
+                priceHistoryRequest.SellPrice
+                );
         }
     }
 }

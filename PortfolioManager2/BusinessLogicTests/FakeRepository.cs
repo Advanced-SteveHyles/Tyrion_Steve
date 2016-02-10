@@ -21,6 +21,7 @@ namespace BusinessLogicTests
         private Account _dummyAccount;
         private FundTransaction _dummyFundTransaction;
         private CashTransaction _dummyCashTransaction;
+        private PriceHistory _dummyPriceHistory;
 
         public FakeRepository()
         {
@@ -28,6 +29,7 @@ namespace BusinessLogicTests
             _dummyAccountInvestmentMap = new AccountInvestmentMap();
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
+            _dummyPriceHistory = new PriceHistory();
         }
         
         public IQueryable<Portfolio> GetPortfolios()
@@ -148,14 +150,28 @@ namespace BusinessLogicTests
             return _dummyCashTransaction;
         }
 
-        public decimal GetInvestmentSellPrice(int investmentId)
+        public decimal? GetInvestmentSellPrice(int investmentId)
         {
             return 1;
         }
 
-        public decimal GetInvestmentBuyPrice(int investmentId)
+        public decimal? GetInvestmentBuyPrice(int investmentId)
         {
             return 1;
+        }
+
+        public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
+        {
+
+            _dummyPriceHistory.InvestmentId = investmentId;
+            _dummyPriceHistory.ValuationDate = valuationDate;
+            _dummyPriceHistory.BuyPrice = buyPrice;
+            _dummyPriceHistory.SellPrice = sellPrice;
+        }
+
+        public PriceHistory GetPriceHistory(int investmentMapId)
+        {
+            return _dummyPriceHistory;
         }
     }
 }
