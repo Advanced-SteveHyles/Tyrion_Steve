@@ -45,7 +45,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _priceHistoryTransaction = new CreatePriceHistoryTransaction(
                 priceHistoryRequest, _priceHistoryHandler);
         }
-        
+
         [Fact]
         public void CanSaveAPriceHistory()
         {
@@ -68,7 +68,7 @@ namespace BusinessLogicTests.Transactions.Fund
             var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
             var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
 
-            decimal? notDefinedSellPrice =null;
+            decimal? notDefinedSellPrice = null;
             decimal? notDefinedBuyPrice = null;
 
             Assert.Equal(notDefinedSellPrice, currentSellPrice);
@@ -91,7 +91,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
         [Fact]
         public void WhenAFutureDatePriceExistsTheCurrentPriceIsTheClosestBeforeTheCurrentDate()
-        {            
+        {
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
             _priceHistoryTransaction.Execute();
 
@@ -100,7 +100,7 @@ namespace BusinessLogicTests.Transactions.Fund
             decimal? tomorrowsSellPrice = (decimal)2.25;
             SetupPriceHistory(tomorrowsDate, tomorrowsBuyPrice, tomorrowsSellPrice);
             _priceHistoryTransaction.Execute();
-            
+
 
             var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
             var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
@@ -121,7 +121,7 @@ namespace BusinessLogicTests.Transactions.Fund
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
             _priceHistoryTransaction.Execute();
 
-            var valuation1 = todaysBuyPrice*request1.Quantity;
+            var valuation1 = todaysBuyPrice * request1.Quantity;
             var valuation2 = todaysBuyPrice * request2.Quantity;
 
             var investmentMap1 = _repository.GetAccountInvestmentMap(1);
@@ -131,13 +131,35 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(valuation2, investmentMap2.Valuation);
         }
 
+        //[Fact]
+        //public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdate()
+        //{
+        //    var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
+        //    _repository.InsertAccountInvestmentMap(request1);
+
+        //    var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
+        //    _repository.InsertAccountInvestmentMap(request2);
+
+        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+        //    _priceHistoryTransaction.Execute();
+
+        //    var valuation1 = todaysBuyPrice * request1.Quantity;
+        //    var valuation2 = todaysBuyPrice * request2.Quantity;
+
+        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
+        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+
+        //    Assert.Equal(valuation1, investmentMap1.Valuation);
+        //    Assert.Equal(valuation2, investmentMap2.Valuation);
+        //}
+
         private AccountInvestmentMap CreateDummyInvestmentMap(int accountInvestmentMapId, int investmentId, int quantity)
         {
             return new AccountInvestmentMap()
             {
                 AccountInvestmentMapId = accountInvestmentMapId,
-                InvestmentId =investmentId,
-                Quantity =quantity
+                InvestmentId = investmentId,
+                Quantity = quantity
             };
         }
 

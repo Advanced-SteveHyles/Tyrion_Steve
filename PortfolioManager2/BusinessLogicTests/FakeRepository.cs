@@ -22,18 +22,21 @@ namespace BusinessLogicTests
         private AccountInvestmentMap _dummyAccountInvestmentMap;
         private Account _dummyAccount;
         private FundTransaction _dummyFundTransaction;
-        private CashTransaction _dummyCashTransaction;        
+        private CashTransaction _dummyCashTransaction;
         private List<PriceHistory> _dummyPriceHistoryList;
+        private Dictionary<int, List<AccountInvestmentMap>> _investmentMapsKeyedByInvestmentId;
+
 
         public FakeRepository()
         {
             _dummyAccount = new Account();
             _dummyAccountInvestmentMap = new AccountInvestmentMap();
             _dummyFundTransaction = new FundTransaction();
-            _dummyCashTransaction = new CashTransaction();            
+            _dummyCashTransaction = new CashTransaction();
             _dummyPriceHistoryList = new List<PriceHistory>();
+            _investmentMapsKeyedByInvestmentId = new Dictionary<int, List<AccountInvestmentMap>>();
         }
-        
+
         public IQueryable<Portfolio> GetPortfolios()
         {
             throw new NotImplementedException();
@@ -125,7 +128,23 @@ namespace BusinessLogicTests
 
         public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
         {
-            throw new NotImplementedException();
+            var map = new AccountInvestmentMap()
+            {
+
+                AccountId = entityAccountInvestmentMap.AccountId,
+                InvestmentId = entityAccountInvestmentMap.InvestmentId,
+                Quantity = entityAccountInvestmentMap.Quantity,
+                Valuation = entityAccountInvestmentMap.Valuation
+            };
+
+            if (!_investmentMapsKeyedByInvestmentId.ContainsKey(entityAccountInvestmentMap.InvestmentId))
+            {
+                _investmentMapsKeyedByInvestmentId.Add(entityAccountInvestmentMap.InvestmentId, new List<AccountInvestmentMap>());
+            }
+
+            _investmentMapsKeyedByInvestmentId[entityAccountInvestmentMap.InvestmentId].Add(map);
+            
+            return new RepositoryActionResult<AccountInvestmentMap>(map, RepositoryActionStatus.Created);
         }
 
         public FundTransaction GetFundTransaction(int arbitaryId)
@@ -180,6 +199,6 @@ namespace BusinessLogicTests
 
             _dummyPriceHistoryList.Add(priceHistory);
         }
-        
+
     }
 }
