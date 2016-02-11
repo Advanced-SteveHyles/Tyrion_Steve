@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
@@ -22,6 +23,7 @@ namespace BusinessLogicTests
         private FundTransaction _dummyFundTransaction;
         private CashTransaction _dummyCashTransaction;
         private PriceHistory _dummyPriceHistory;
+        private IQueryable<PriceHistory> _dummyPriceHistoryList;
 
         public FakeRepository()
         {
@@ -30,6 +32,7 @@ namespace BusinessLogicTests
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
             _dummyPriceHistory = new PriceHistory();
+            _dummyPriceHistoryList = new List<PriceHistory>();
         }
         
         public IQueryable<Portfolio> GetPortfolios()
@@ -75,6 +78,11 @@ namespace BusinessLogicTests
         public void DecreaseAccountBalance(int accountId, decimal amount)
         {
             _dummyAccount.Cash -= amount;
+        }
+
+        public void IncreaseValuation(int accountId, decimal mapValue)
+        {
+            _dummyAccount.Valuation += mapValue;
         }
 
         public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)
@@ -150,14 +158,15 @@ namespace BusinessLogicTests
             return _dummyCashTransaction;
         }
 
-        public decimal? GetInvestmentSellPrice(int investmentId)
+
+        public IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId)
         {
-            return _dummyPriceHistory.SellPrice;
+            return _dummyPriceHistoryList;
         }
 
-        public decimal? GetInvestmentBuyPrice(int investmentId)
+        public IQueryable<PriceHistory> GetInvestmentBuyPrices(int investmentId)
         {
-            return _dummyPriceHistory.BuyPrice;
+            throw new NotImplementedException();
         }
 
         public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)

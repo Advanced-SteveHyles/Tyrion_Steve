@@ -1,4 +1,7 @@
-﻿using PortfolioManager.DTO.Requests.Transactions;
+﻿using System;
+using System.Collections.Generic;
+using PortfolioManager.DTO.DTOs;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 
 namespace Interfaces
@@ -7,6 +10,7 @@ namespace Interfaces
     {
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
+        void UpdateValuation(int accountId, decimal mapValue);
     }
 
     public interface ITransactionHandler
@@ -24,12 +28,16 @@ namespace Interfaces
     public interface IAccountInvestmentMapHandler
     {
         void ChangeQuantity(int investmentMapId, decimal quantity);
-        void RevalueMap(int investmentMapId);
+        decimal RevalueMap(int investmentMapId, decimal? currentSellPrice);
+        AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId);
+        List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId);
     }
 
     public interface IPriceHistoryHandler
 {
         void StorePriceHistory(PriceHistoryRequest priceHistoryRequest);
+        decimal? GetInvestmentSellPrice(int investmentId, DateTime valuationDate);
+        decimal? GetInvestmentBuyPrice(int investmentId, DateTime valuationDate);
 }
 
 }

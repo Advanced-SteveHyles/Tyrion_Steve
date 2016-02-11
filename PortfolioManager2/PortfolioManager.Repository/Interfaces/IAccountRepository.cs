@@ -11,6 +11,7 @@ namespace PortfolioManager.Repository.Interfaces
 
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
-        
+
+        void IncreaseValuation(int accountId, decimal mapValue);
     }
 }

@@ -37,7 +37,7 @@ namespace BusinessLogic.Transactions
             _accountHandler.DecreaseAccountBalance(_accountId, _fundBuyRequest.Value);
 
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
-            _accountInvestmentMapHandler.RevalueMap(_fundBuyRequest.InvestmentMapId);
+            //_accountInvestmentMapHandler.RevalueMap(_fundBuyRequest.InvestmentMapId);
             
             ExecuteResult = true;
         }

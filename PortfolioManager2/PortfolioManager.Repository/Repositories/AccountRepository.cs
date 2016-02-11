@@ -63,5 +63,11 @@ namespace PortfolioManager.Repository
             _context.SaveChanges();
         }
 
+        public void IncreaseValuation(int accountId, decimal mapValue)
+        {
+            var account = _context.Accounts.Single(a => a.AccountId == accountId);
+            account.Valuation += mapValue;
+            _context.SaveChanges();
+        }
     }
 }

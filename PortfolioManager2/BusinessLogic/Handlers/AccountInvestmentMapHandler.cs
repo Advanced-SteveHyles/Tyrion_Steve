@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using Interfaces;
+using PortfolioManager.DTO.DTOs;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 
@@ -28,19 +30,20 @@ namespace BusinessLogic
             //public int Valuation { get; set; }
             //public DateTime LastValuationDate { get; set; }
         }
-        
 
-        public void RevalueMap(int investmentMapId)
+        public decimal RevalueMap(int investmentMapId, decimal? currentSellPrice)
         {
-            var investmentMap = _repository.GetAccountInvestmentMap(investmentMapId);
-            var currentSellPrice = _priceHistoryRepository.GetInvestmentSellPrice(investmentMap.InvestmentId);
+            throw new System.NotImplementedException();
+        }
 
-            if (currentSellPrice.HasValue)
-            {
-                investmentMap.Valuation = investmentMap.Quantity * currentSellPrice.Value;
-            }
-            
-            _repository.UpdateAccountInvestmentMap(investmentMap);
+        public AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

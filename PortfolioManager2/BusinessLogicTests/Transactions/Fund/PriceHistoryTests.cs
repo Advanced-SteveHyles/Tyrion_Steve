@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BusinessLogic;
+using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
@@ -63,8 +64,9 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenNoHistoricalPriceExistsTheCurrentPriceIsNull()
         {
-            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
-            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+            var valuationDate = DateTime.Today;
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, valuationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, valuationDate);
 
             decimal? notDefinedSellPrice =null;
             decimal? notDefinedBuyPrice = null;
@@ -83,8 +85,8 @@ namespace BusinessLogicTests.Transactions.Fund
             SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
             _priceHistoryTransaction.Execute();
 
-            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
-            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, evaluationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, evaluationDate);
 
             Assert.Equal(sellPrice, currentSellPrice);
             Assert.Equal(buyPrice, currentBuyPrice);
@@ -105,8 +107,10 @@ namespace BusinessLogicTests.Transactions.Fund
             SetupPriceHistory(tomorrowsDate, tomorrowsBuyPrice, tomorrowsSellPrice);
             _priceHistoryTransaction.Execute();
 
-            var currentSellPrice = _repository.GetInvestmentSellPrice(investmentId);
-            var currentBuyPrice = _repository.GetInvestmentBuyPrice(investmentId);
+            
+
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, evaluationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, evaluationDate);
 
             Assert.Equal(sellPrice, currentSellPrice);
             Assert.Equal(buyPrice, currentBuyPrice);

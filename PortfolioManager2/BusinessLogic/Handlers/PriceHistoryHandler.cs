@@ -1,8 +1,10 @@
+using System;
+using System.Linq;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic
+namespace BusinessLogic.Handlers
 {
     public class PriceHistoryHandler : IPriceHistoryHandler
     {
@@ -22,6 +24,26 @@ namespace BusinessLogic
                 priceHistoryRequest.BuyPrice,
                 priceHistoryRequest.SellPrice
                 );
+        }
+
+        public decimal? GetInvestmentSellPrice(int investmentId, DateTime valuationDate)
+        {
+            var prices = _priceHistoryRepository
+                .GetInvestmentSellPrices(investmentId)
+                .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
+                .OrderByDescending(ip=>ip.ValuationDate);
+
+            return prices.FirstOrDefault()?.SellPrice ?? null;
+        }
+
+        public decimal? GetInvestmentBuyPrice(int investmentId, DateTime valuationDate)
+        {
+            var prices = _priceHistoryRepository
+                .GetInvestmentSellPrices(investmentId)
+                .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
+                .OrderByDescending(ip => ip.ValuationDate);
+
+            return prices.FirstOrDefault()?.BuyPrice ?? null;
         }
     }
 }

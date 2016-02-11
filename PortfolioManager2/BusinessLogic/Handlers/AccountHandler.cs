@@ -22,5 +22,10 @@ namespace BusinessLogicTests
      {
             _repository.DecreaseAccountBalance(accountId, amount);
         }
+
+     public void UpdateValuation(int accountId, decimal mapValue)
+     {
+            _repository.IncreaseValuation(accountId, mapValue);
+     }
     }
 }
