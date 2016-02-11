@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PortfolioManager.DTO.Requests;
@@ -21,17 +22,15 @@ namespace BusinessLogicTests
         private AccountInvestmentMap _dummyAccountInvestmentMap;
         private Account _dummyAccount;
         private FundTransaction _dummyFundTransaction;
-        private CashTransaction _dummyCashTransaction;
-        private PriceHistory _dummyPriceHistory;
-        private IQueryable<PriceHistory> _dummyPriceHistoryList;
+        private CashTransaction _dummyCashTransaction;        
+        private List<PriceHistory> _dummyPriceHistoryList;
 
         public FakeRepository()
         {
             _dummyAccount = new Account();
             _dummyAccountInvestmentMap = new AccountInvestmentMap();
             _dummyFundTransaction = new FundTransaction();
-            _dummyCashTransaction = new CashTransaction();
-            _dummyPriceHistory = new PriceHistory();
+            _dummyCashTransaction = new CashTransaction();            
             _dummyPriceHistoryList = new List<PriceHistory>();
         }
         
@@ -161,26 +160,26 @@ namespace BusinessLogicTests
 
         public IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId)
         {
-            return _dummyPriceHistoryList;
+            return _dummyPriceHistoryList.AsQueryable();
         }
 
         public IQueryable<PriceHistory> GetInvestmentBuyPrices(int investmentId)
         {
-            throw new NotImplementedException();
+            return _dummyPriceHistoryList.AsQueryable();
         }
 
         public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
         {
+            var priceHistory = new PriceHistory
+            {
+                InvestmentId = investmentId,
+                ValuationDate = valuationDate,
+                BuyPrice = buyPrice,
+                SellPrice = sellPrice
+            };
 
-            _dummyPriceHistory.InvestmentId = investmentId;
-            _dummyPriceHistory.ValuationDate = valuationDate;
-            _dummyPriceHistory.BuyPrice = buyPrice;
-            _dummyPriceHistory.SellPrice = sellPrice;
+            _dummyPriceHistoryList.Add(priceHistory);
         }
-
-        public PriceHistory GetPriceHistory(int investmentMapId)
-        {
-            return _dummyPriceHistory;
-        }
+        
     }
 }

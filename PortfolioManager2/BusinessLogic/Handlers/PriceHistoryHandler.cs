@@ -20,7 +20,7 @@ namespace BusinessLogic.Handlers
             _priceHistoryRepository.InsertPriceHistory
                 (
                 priceHistoryRequest.InvestmentId,
-                priceHistoryRequest.valuationDate,
+                priceHistoryRequest.ValuationDate,
                 priceHistoryRequest.BuyPrice,
                 priceHistoryRequest.SellPrice
                 );

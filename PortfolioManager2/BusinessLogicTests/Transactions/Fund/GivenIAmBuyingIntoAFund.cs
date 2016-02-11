@@ -146,7 +146,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var accountFundMap = _fakeRepository.GetAccountInvestmentMap(ArbitaryId);
             Assert.Equal(_numberOfShares, accountFundMap.Quantity);
-            Assert.Equal(_valuation, accountFundMap.Valuation);
+            Assert.Equal(0, accountFundMap.Valuation);
         }
     }
 }

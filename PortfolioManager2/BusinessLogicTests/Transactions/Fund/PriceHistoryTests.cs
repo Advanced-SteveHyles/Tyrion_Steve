@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.Repository.Entities;
 using Xunit;
 
 namespace BusinessLogicTests.Transactions.Fund
@@ -20,18 +22,22 @@ namespace BusinessLogicTests.Transactions.Fund
 
         private int investmentId = 629;
 
+        private DateTime todaysValuationDate = DateTime.Today;
+        decimal? todaysBuyPrice = (decimal)1.25;
+        decimal? todaysSellPrice = (decimal)1.25;
+
         public PriceHistoryTests()
         {
             _repository = new FakeRepository();
             _priceHistoryHandler = new PriceHistoryHandler(_repository);
         }
 
-        private void SetupPriceHistory(DateTime date, decimal? buyAt, decimal? sellAt)
+        private void SetupPriceHistory(DateTime valuationDate, decimal? buyAt, decimal? sellAt)
         {
             var priceHistoryRequest = new PriceHistoryRequest()
             {
                 InvestmentId = investmentId,
-                valuationDate = date,
+                ValuationDate = valuationDate,
                 SellPrice = sellAt,
                 BuyPrice = buyAt
             };
@@ -39,34 +45,28 @@ namespace BusinessLogicTests.Transactions.Fund
             _priceHistoryTransaction = new CreatePriceHistoryTransaction(
                 priceHistoryRequest, _priceHistoryHandler);
         }
-
-        public decimal? SellPrice { get; set; }
-
+        
         [Fact]
         public void CanSaveAPriceHistory()
         {
-            var evaluationDate = DateTime.Today;
-            decimal? buyPrice = (decimal)1.25;
-            decimal? sellPrice = (decimal)1.25;
-            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
 
             Assert.True(_priceHistoryTransaction.CommandValid);
             _priceHistoryTransaction.Execute();
             Assert.True(_priceHistoryTransaction.ExecuteResult);
 
-            var priceHistory = _repository.GetPriceHistory(investmentId);
-            Assert.Equal(investmentId, priceHistory.InvestmentId);
-            Assert.Equal(evaluationDate, priceHistory.ValuationDate);
-            Assert.Equal(sellPrice, priceHistory.SellPrice);
-            Assert.Equal(buyPrice, priceHistory.BuyPrice);
+            var priceHistory = _repository.GetInvestmentSellPrices(investmentId);
+            Assert.Equal(investmentId, priceHistory.FirstOrDefault()?.InvestmentId);
+            Assert.Equal(todaysValuationDate, priceHistory.FirstOrDefault()?.ValuationDate);
+            Assert.Equal(todaysSellPrice, priceHistory.FirstOrDefault()?.SellPrice);
+            Assert.Equal(todaysBuyPrice, priceHistory.FirstOrDefault()?.BuyPrice);
         }
 
         [Fact]
         public void WhenNoHistoricalPriceExistsTheCurrentPriceIsNull()
         {
-            var valuationDate = DateTime.Today;
-            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, valuationDate);
-            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, valuationDate);
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
 
             decimal? notDefinedSellPrice =null;
             decimal? notDefinedBuyPrice = null;
@@ -79,41 +79,66 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenAHistoricalPriceExistsTheCurrentPriceIsTheClosestBeforeTheCurrentDate()
         {
-            var evaluationDate = DateTime.Today;
-            decimal? buyPrice = (decimal)1.25;
-            decimal? sellPrice = (decimal)1.25;
-            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
             _priceHistoryTransaction.Execute();
 
-            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, evaluationDate);
-            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, evaluationDate);
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
 
-            Assert.Equal(sellPrice, currentSellPrice);
-            Assert.Equal(buyPrice, currentBuyPrice);
+            Assert.Equal(todaysSellPrice, currentSellPrice);
+            Assert.Equal(todaysBuyPrice, currentBuyPrice);
         }
 
         [Fact]
         public void WhenAFutureDatePriceExistsTheCurrentPriceIsTheClosestBeforeTheCurrentDate()
-        {
-            var evaluationDate = DateTime.Today;
-            decimal? buyPrice = (decimal)1.25;
-            decimal? sellPrice = (decimal)1.25;
-            SetupPriceHistory(evaluationDate, buyPrice, sellPrice);
+        {            
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
             _priceHistoryTransaction.Execute();
 
-            var tomorrowsDate = DateTime.Today;
+            var tomorrowsDate = DateTime.Today.AddDays(1);
             decimal? tomorrowsBuyPrice = (decimal)2.25;
             decimal? tomorrowsSellPrice = (decimal)2.25;
             SetupPriceHistory(tomorrowsDate, tomorrowsBuyPrice, tomorrowsSellPrice);
             _priceHistoryTransaction.Execute();
-
             
 
-            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, evaluationDate);
-            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, evaluationDate);
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
 
-            Assert.Equal(sellPrice, currentSellPrice);
-            Assert.Equal(buyPrice, currentBuyPrice);
+            Assert.Equal(todaysSellPrice, currentSellPrice);
+            Assert.Equal(todaysBuyPrice, currentBuyPrice);
+        }
+
+        [Fact]
+        public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateThePriceBothInvestmentsUpdate()
+        {
+            var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
+            _repository.InsertAccountInvestmentMap(request1);
+
+            var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
+            _repository.InsertAccountInvestmentMap(request2);
+
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+            _priceHistoryTransaction.Execute();
+
+            var valuation1 = todaysBuyPrice*request1.Quantity;
+            var valuation2 = todaysBuyPrice * request2.Quantity;
+
+            var investmentMap1 = _repository.GetAccountInvestmentMap(1);
+            var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+
+            Assert.Equal(valuation1, investmentMap1.Valuation);
+            Assert.Equal(valuation2, investmentMap2.Valuation);
+        }
+
+        private AccountInvestmentMap CreateDummyInvestmentMap(int accountInvestmentMapId, int investmentId, int quantity)
+        {
+            return new AccountInvestmentMap()
+            {
+                AccountInvestmentMapId = accountInvestmentMapId,
+                InvestmentId =investmentId,
+                Quantity =quantity
+            };
         }
 
 
