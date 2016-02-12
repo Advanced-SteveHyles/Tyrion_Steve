@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
@@ -18,8 +19,7 @@ namespace BusinessLogicTests
         , IAccountInvestmentMapRepository
         , IFundTransactionRepository
         , IPriceHistoryRepository
-    {
-        private AccountInvestmentMap _dummyAccountInvestmentMap;
+    {        
         private Account _dummyAccount;
         private FundTransaction _dummyFundTransaction;
         private CashTransaction _dummyCashTransaction;
@@ -30,7 +30,6 @@ namespace BusinessLogicTests
         public FakeRepository()
         {
             _dummyAccount = new Account();
-            _dummyAccountInvestmentMap = new AccountInvestmentMap();
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
             _dummyPriceHistoryList = new List<PriceHistory>();
@@ -118,12 +117,16 @@ namespace BusinessLogicTests
 
         public AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId)
         {
-            return _dummyAccountInvestmentMap;
+            return _investmentMapsKeyedByInvestmentId.Values
+                .Select(k => k.Where(i => i.AccountInvestmentMapId == accountInvestmentMapId))
+                .Select(r => r.SingleOrDefault()).FirstOrDefault(r1 => r1 != null);
         }
 
         public void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap)
         {
-            _dummyAccountInvestmentMap = investmentMap;
+            var map = GetAccountInvestmentMap(investmentMap.AccountInvestmentMapId);
+            
+
         }
 
         public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
@@ -139,12 +142,17 @@ namespace BusinessLogicTests
 
             if (!_investmentMapsKeyedByInvestmentId.ContainsKey(entityAccountInvestmentMap.InvestmentId))
             {
-                _investmentMapsKeyedByInvestmentId.Add(entityAccountInvestmentMap.InvestmentId, new List<AccountInvestmentMap>());
+                _investmentMapsKeyedByInvestmentId.Add(entityAccountInvestmentMap.InvestmentId, new List<AccountInvestmentMapDto>());
             }
 
-            _investmentMapsKeyedByInvestmentId[entityAccountInvestmentMap.InvestmentId].Add(map);
+            _investmentMapsKeyedByInvestmentId[entityAccountInvestmentMap.InvestmentId].Add(map.MapToDto());
             
             return new RepositoryActionResult<AccountInvestmentMap>(map, RepositoryActionStatus.Created);
+        }
+
+        public IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId)
+        {
+            return _investmentMapsKeyedByInvestmentId[investmentId].AsQueryable();
         }
 
         public FundTransaction GetFundTransaction(int arbitaryId)

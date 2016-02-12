@@ -25,11 +25,17 @@ namespace BusinessLogicTests.Transactions.Fund
         private DateTime todaysValuationDate = DateTime.Today;
         decimal? todaysBuyPrice = (decimal)1.25;
         decimal? todaysSellPrice = (decimal)1.25;
+        private RevaluePriceTransaction _revaluePriceTransaction;
 
+        
         public PriceHistoryTests()
         {
             _repository = new FakeRepository();
             _priceHistoryHandler = new PriceHistoryHandler(_repository);
+
+            var accountMapHandler = new AccountHandler(_repository);
+            var accountInvestmentMapHandler = new AccountInvestmentMapHandler(_repository,_repository);
+            _revaluePriceTransaction = new RevaluePriceTransaction(investmentId, todaysValuationDate, _priceHistoryHandler, accountInvestmentMapHandler, accountMapHandler);
         }
 
         private void SetupPriceHistory(DateTime valuationDate, decimal? buyAt, decimal? sellAt)
@@ -120,6 +126,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
             _priceHistoryTransaction.Execute();
+            _revaluePriceTransaction.Execute();
 
             var valuation1 = todaysBuyPrice * request1.Quantity;
             var valuation2 = todaysBuyPrice * request2.Quantity;
@@ -152,6 +159,40 @@ namespace BusinessLogicTests.Transactions.Fund
         //    Assert.Equal(valuation1, investmentMap1.Valuation);
         //    Assert.Equal(valuation2, investmentMap2.Valuation);
         //}
+
+        //[Fact]
+        //public void WhenTwoPriceUpdatesOccurAndIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdatesCorrectly()
+        //{
+        //    var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
+        //    _repository.InsertAccountInvestmentMap(request1);
+
+        //    var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
+        //    _repository.InsertAccountInvestmentMap(request2);
+
+        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+        //    _priceHistoryTransaction.Execute();
+
+        //    var valuation1 = todaysBuyPrice * request1.Quantity;
+        //    var valuation2 = todaysBuyPrice * request2.Quantity;
+
+        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
+        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+
+        //    Assert.Equal(valuation1, investmentMap1.Valuation);
+        //    Assert.Equal(valuation2, investmentMap2.Valuation);
+
+        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+        //    _priceHistoryTransaction.Execute();
+
+        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
+        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+
+        //    Assert.Equal(valuation1, investmentMap1.Valuation);
+        //    Assert.Equal(valuation2, investmentMap2.Valuation);
+
+        //}
+
+
 
         private AccountInvestmentMap CreateDummyInvestmentMap(int accountInvestmentMapId, int investmentId, int quantity)
         {

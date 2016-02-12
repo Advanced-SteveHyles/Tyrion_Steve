@@ -3,7 +3,7 @@ using Interfaces;
 
 namespace BusinessLogic.Transactions
 {
-    class RevaluePriceTransaction: ICommandRunner
+    public class RevaluePriceTransaction: ICommandRunner
     {
         private readonly IAccountInvestmentMapHandler _investmentMapHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
@@ -12,14 +12,13 @@ namespace BusinessLogic.Transactions
         private DateTime _valuationDate;
 
 
-        public RevaluePriceTransaction(int investmentMapId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapHandler investmentMapHandler, IAccountHandler accountHandler)
-        {            
+        public RevaluePriceTransaction(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapHandler investmentMapHandler, IAccountHandler accountHandler)
+        {
+            _investmentId = investmentId;
             _priceHistoryHandler = priceHistoryHandler;
             _investmentMapHandler = investmentMapHandler;
             _accountHandler = accountHandler;
-            _valuationDate = valuationDate;
-            var investmentMap = _investmentMapHandler.GetAccountInvestmentMap(investmentMapId);            
-            _investmentId = investmentMap.InvestmentId;
+            _valuationDate = valuationDate;            
         }
 
         public void Execute()

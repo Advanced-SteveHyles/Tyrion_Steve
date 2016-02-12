@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Interfaces;
 using PortfolioManager.DTO.DTOs;
 using PortfolioManager.Repository;
@@ -33,7 +34,13 @@ namespace BusinessLogic
 
         public decimal RevalueMap(int investmentMapId, decimal? currentSellPrice)
         {
-            throw new System.NotImplementedException();
+            var investmentMap = _repository.GetAccountInvestmentMap(investmentMapId);
+
+            var valuation = investmentMap.Quantity*currentSellPrice ?? 0;
+            investmentMap.Valuation = valuation ;        
+            _repository.UpdateAccountInvestmentMap(investmentMap);
+
+            return valuation;
         }
 
         public AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId)
@@ -43,7 +50,7 @@ namespace BusinessLogic
 
         public List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId)
         {
-            throw new System.NotImplementedException();
+            return _repository.GetAccountInvestmentMapsByInvestmentId(investmentId).ToList();
         }
     }
 }

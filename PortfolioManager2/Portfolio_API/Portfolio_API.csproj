@@ -208,7 +208,6 @@
     <Compile Include="Controllers\Transactions\CashWithdrawalController.cs" />
     <Compile Include="Controllers\Transactions\Command.cs" />
     <Compile Include="Controllers\Transactions\TransactionSummaryController.cs" />
-    <Compile Include="Temporary\EntityToDtoMap.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Temporary\ShapedData.cs" />
     <Compile Include="Global.asax.cs">

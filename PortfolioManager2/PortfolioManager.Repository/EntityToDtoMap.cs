@@ -1,13 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
 using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
 
-namespace Portfolio_API.Controllers
+namespace PortfolioManager.Repository
 {
-    internal static class EntityToDtoMap
+    public static class EntityToDtoMap
     {
         public static PortfolioDto MapToDto(this Portfolio entity)
         {
@@ -19,24 +17,6 @@ namespace Portfolio_API.Controllers
                 //        Accounts = portfolioEnt.Accounts.Select(e => CreateAccount(e, false)).ToList()
             };
         }
-
-
-        //public static AccountInvestmentMapDto InvestmentMapFactory(InvestmentMapEnt investmentMapEnt)
-        //{
-        //    return new AccountInvestmentMapDto
-        //    {
-        //        PortfolioId =investmentMapEnt.PortfolioId,
-        //        AccountId = investmentMapEnt.AccountId,
-        //        InvestmentId = investmentMapEnt.InvestmentId,
-        //        InvestmentName = investmentMapEnt.InvestmentName,
-        //        Quantity = investmentMapEnt.Quantity,
-        //        SellPrice = investmentMapEnt.SellPrice,
-        //        Valuation = investmentMapEnt.Valuation,
-
-        //    };
-        //}
-
-
 
         //public static InvestmentDto CreateInvestment(InvestmentEnt investmentEnt)
         //{
@@ -143,15 +123,15 @@ namespace Portfolio_API.Controllers
             };
         }
 
-        public static AccountInvestmentMapDto MapToDto(this AccountInvestmentMap entity)
+        public static AccountInvestmentMapDto MapToDto(this AccountInvestmentMap accountInvestmentMap)
         {
             return new AccountInvestmentMapDto
             {
-                AccountInvestmentMapId = entity.AccountInvestmentMapId,
-                AccountId = entity.AccountId,
-                InvestmentId = entity.AccountId,                
-                Quantity = entity.Quantity,                
-                Valuation = entity.Valuation,                
+                AccountInvestmentMapId = accountInvestmentMap.AccountInvestmentMapId,
+                AccountId = accountInvestmentMap.AccountId,
+                InvestmentId = accountInvestmentMap.AccountId,                
+                Quantity = accountInvestmentMap.Quantity,                
+                Valuation = accountInvestmentMap.Valuation,                
             };
         }
     }

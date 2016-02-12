@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using PortfolioManager.DTO.DTOs;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository.Interfaces
@@ -7,5 +10,6 @@ namespace PortfolioManager.Repository.Interfaces
         AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId);
         void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap);
         RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap);
+        IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId);
     }
 }
