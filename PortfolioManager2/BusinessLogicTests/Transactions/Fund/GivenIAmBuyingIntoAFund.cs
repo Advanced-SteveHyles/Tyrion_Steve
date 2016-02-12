@@ -24,7 +24,7 @@ namespace BusinessLogicTests.Transactions.Fund
         private FundTransactionHandler _fundTransactionHandler;
         private DateTime _settlementDate;
         private decimal _valuation;
-        private const int ArbitaryId = 1;
+        private const int ArbitaryId = -1;
         
 
         private void Setup()
@@ -41,7 +41,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var request = new InvestmentBuyRequest
             {
-                InvestmentMapId = 1,
+                InvestmentMapId = ArbitaryId,
                 Quantity = _numberOfShares,
                 Price = _priceOfOneShare,
                 PurchaseDate = _transactionDate,
@@ -101,7 +101,7 @@ namespace BusinessLogicTests.Transactions.Fund
             Setup();
             _buyTransaction.Execute();
 
-            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(1);
+            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(ArbitaryId);
             Assert.Equal(_numberOfShares, accountFundMap.Quantity);
         }
 
