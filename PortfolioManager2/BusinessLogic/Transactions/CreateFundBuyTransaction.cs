@@ -1,5 +1,4 @@
-﻿using BusinessLogicTests;
-using Interfaces;
+﻿using Interfaces;
 using PortfolioManager.DTO.Transactions;
 
 namespace BusinessLogic.Transactions

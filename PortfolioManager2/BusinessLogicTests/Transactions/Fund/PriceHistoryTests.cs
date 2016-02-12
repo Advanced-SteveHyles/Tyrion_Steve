@@ -27,14 +27,14 @@ namespace BusinessLogicTests.Transactions.Fund
         decimal? todaysSellPrice = (decimal)1.25;
         private RevaluePriceTransaction _revaluePriceTransaction;
 
-        
+
         public PriceHistoryTests()
         {
             _repository = new FakeRepository();
             _priceHistoryHandler = new PriceHistoryHandler(_repository);
 
             var accountMapHandler = new AccountHandler(_repository);
-            var accountInvestmentMapHandler = new AccountInvestmentMapHandler(_repository,_repository);
+            var accountInvestmentMapHandler = new AccountInvestmentMapHandler(_repository, _repository);
             _revaluePriceTransaction = new RevaluePriceTransaction(investmentId, todaysValuationDate, _priceHistoryHandler, accountInvestmentMapHandler, accountMapHandler);
         }
 
@@ -118,10 +118,10 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateThePriceBothInvestmentsUpdate()
         {
-            var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
+            var request1 = CreateDummyInvestmentMap(1,1 , investmentId, 1);
             _repository.InsertAccountInvestmentMap(request1);
 
-            var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
+            var request2 = CreateDummyInvestmentMap(2,2, investmentId, 100);
             _repository.InsertAccountInvestmentMap(request2);
 
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
@@ -138,66 +138,73 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(valuation2, investmentMap2.Valuation);
         }
 
-        //[Fact]
-        //public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdate()
-        //{
-        //    var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
-        //    _repository.InsertAccountInvestmentMap(request1);
+        [Fact]
+        public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdate()
+        {
+            var request1 = CreateDummyInvestmentMap(1,1, investmentId, 1);
+            _repository.InsertAccountInvestmentMap(request1);
 
-        //    var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
-        //    _repository.InsertAccountInvestmentMap(request2);
+            var request2 = CreateDummyInvestmentMap(2,2, investmentId, 100);
+            _repository.InsertAccountInvestmentMap(request2);
 
-        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
-        //    _priceHistoryTransaction.Execute();
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+            _priceHistoryTransaction.Execute();
+            _revaluePriceTransaction.Execute();
 
-        //    var valuation1 = todaysBuyPrice * request1.Quantity;
-        //    var valuation2 = todaysBuyPrice * request2.Quantity;
+            var valuation1 = todaysBuyPrice * request1.Quantity;
+            var valuation2 = todaysBuyPrice * request2.Quantity;
 
-        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
-        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+            var investmentMap1 = _repository.GetAccount(1);
+            var investmentMap2 = _repository.GetAccount(2);
 
-        //    Assert.Equal(valuation1, investmentMap1.Valuation);
-        //    Assert.Equal(valuation2, investmentMap2.Valuation);
-        //}
+            Assert.Equal(valuation1, investmentMap1.Valuation);
+            Assert.Equal(valuation2, investmentMap2.Valuation);
+        }
 
-        //[Fact]
-        //public void WhenTwoPriceUpdatesOccurAndIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdatesCorrectly()
-        //{
-        //    var request1 = CreateDummyInvestmentMap(1, investmentId, 1);
-        //    _repository.InsertAccountInvestmentMap(request1);
+        [Fact]
+        public void WhenTwoPriceUpdatesOccurAndIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdatesCorrectly()
+        {
+            var request1 = CreateDummyInvestmentMap(1, 1,investmentId, 20);
+            _repository.InsertAccountInvestmentMap(request1);
 
-        //    var request2 = CreateDummyInvestmentMap(2, investmentId, 100);
-        //    _repository.InsertAccountInvestmentMap(request2);
+            var request2 = CreateDummyInvestmentMap(2,2, investmentId, (decimal)25.045);
+            _repository.InsertAccountInvestmentMap(request2);
 
-        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
-        //    _priceHistoryTransaction.Execute();
+            SetupPriceHistory(todaysValuationDate.AddDays(-1), todaysBuyPrice, todaysSellPrice);
+            _priceHistoryTransaction.Execute();
+            _revaluePriceTransaction.Execute();
 
-        //    var valuation1 = todaysBuyPrice * request1.Quantity;
-        //    var valuation2 = todaysBuyPrice * request2.Quantity;
+            var valuation1 = todaysSellPrice * request1.Quantity;
+            var valuation2 = todaysSellPrice * request2.Quantity;
 
-        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
-        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
-
-        //    Assert.Equal(valuation1, investmentMap1.Valuation);
-        //    Assert.Equal(valuation2, investmentMap2.Valuation);
-
-        //    SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
-        //    _priceHistoryTransaction.Execute();
-
-        //    var investmentMap1 = _repository.GetAccountInvestmentMap(1);
-        //    var investmentMap2 = _repository.GetAccountInvestmentMap(2);
-
-        //    Assert.Equal(valuation1, investmentMap1.Valuation);
-        //    Assert.Equal(valuation2, investmentMap2.Valuation);
-
-        //}
+            var account1 = _repository.GetAccount(1);
+            var account2 = _repository.GetAccount(2);
 
 
+            Assert.Equal(valuation1, account1.Valuation);
+            Assert.Equal(valuation2, account2.Valuation);
 
-        private AccountInvestmentMap CreateDummyInvestmentMap(int accountInvestmentMapId, int investmentId, int quantity)
+            var sellPriceIncrement = (decimal)1.5;
+            valuation1 = (todaysSellPrice + sellPriceIncrement) * request1.Quantity;            
+            valuation2 = (todaysSellPrice + sellPriceIncrement) * request2.Quantity;
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice+1, todaysSellPrice+ sellPriceIncrement);
+            _priceHistoryTransaction.Execute();
+            _revaluePriceTransaction.Execute();
+
+            account1 = _repository.GetAccount(1);
+             account2 = _repository.GetAccount(2);
+
+
+            Assert.Equal(valuation1, account1.Valuation);
+            Assert.Equal(valuation2, account2.Valuation);
+        }
+        
+
+        private AccountInvestmentMap CreateDummyInvestmentMap(int accountInvestmentMapId, int accountId, int investmentId, decimal quantity)
         {
             return new AccountInvestmentMap()
             {
+                AccountId = accountId,
                 AccountInvestmentMapId = accountInvestmentMapId,
                 InvestmentId = investmentId,
                 Quantity = quantity

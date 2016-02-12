@@ -1,5 +1,6 @@
 ﻿using System;
 using BusinessLogic;
+using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
@@ -36,7 +37,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _valueOfTransaction = (_numberOfShares * _priceOfOneShare) + _commission;
             _transactionDate = DateTime.Now;
             _settlementDate = DateTime.Today.AddDays(14);
-            _accountId = 10;
+            _accountId = 3;
             _valuation = (_numberOfShares*_priceOfOneShare);
 
             var request = new InvestmentBuyRequest
@@ -76,7 +77,8 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             Setup();
             _buyTransaction.Execute();
-            var account = _fakeRepository.GetAccount(ArbitaryId);
+            
+            var account = _fakeRepository.GetAccount(_accountId);
             Assert.Equal(-_valueOfTransaction, account.Cash);
         }
 

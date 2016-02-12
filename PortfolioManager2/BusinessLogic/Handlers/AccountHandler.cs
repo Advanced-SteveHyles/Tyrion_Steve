@@ -1,8 +1,7 @@
 using Interfaces;
-using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogicTests
+namespace BusinessLogic.Handlers
 {
  public class AccountHandler : IAccountHandler
     {

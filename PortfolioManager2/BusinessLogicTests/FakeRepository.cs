@@ -21,24 +21,30 @@ namespace BusinessLogicTests
         , IFundTransactionRepository
         , IPriceHistoryRepository
     {
-        const int arbitaryId = -1;
-
-        private Account _dummyAccount;
+        const int ArbitaryId = -1;
+        
         private FundTransaction _dummyFundTransaction;
         private CashTransaction _dummyCashTransaction;
-        private AccountInvestmentMap _dummyAccountInvestment = new AccountInvestmentMap() {AccountInvestmentMapId = arbitaryId};
+        private readonly AccountInvestmentMap _dummyAccountInvestment = new AccountInvestmentMap() {AccountInvestmentMapId = ArbitaryId};
 
-        private List<PriceHistory> _dummyPriceHistoryList;
+        private readonly List<PriceHistory> _dummyPriceHistoryList;
         private Dictionary<int, List<AccountInvestmentMapDto>> _investmentMapsKeyedByInvestmentId;
         private int _nextId = 1;
+        Dictionary<int, Account> _accountDictionary;
 
         public FakeRepository()
-        {
-            _dummyAccount = new Account();
+        {            
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
             _dummyPriceHistoryList = new List<PriceHistory>();
             _investmentMapsKeyedByInvestmentId = new Dictionary<int, List<AccountInvestmentMapDto>>();
+            _accountDictionary = new Dictionary<int, Account>()
+            {
+                {0, new Account(){}},
+                {1, new Account(){}},
+                {2, new Account(){}},
+                {3, new Account(){}}
+            };
         }
 
         public IQueryable<Portfolio> GetPortfolios()
@@ -72,23 +78,23 @@ namespace BusinessLogicTests
         }
 
         public Account GetAccount(int id)
-        {
-            return _dummyAccount;
+        {            
+            return _accountDictionary[id];
         }
 
         public void IncreaseAccountBalance(int accountId, decimal amount)
         {
-            _dummyAccount.Cash += amount;
+            _accountDictionary[accountId].Cash += amount;
         }
 
         public void DecreaseAccountBalance(int accountId, decimal amount)
         {
-            _dummyAccount.Cash -= amount;
+            _accountDictionary[accountId].Cash -= amount;
         }
 
         public void IncreaseValuation(int accountId, decimal mapValue)
         {
-            _dummyAccount.Valuation += mapValue;
+            _accountDictionary[accountId].Valuation += mapValue;
         }
 
         public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)
@@ -146,13 +152,14 @@ namespace BusinessLogicTests
 
         public void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap)
         {
-            if (investmentMap.AccountInvestmentMapId != arbitaryId)
-            {
-                var map = GetAccountInvestmentMap(investmentMap.AccountInvestmentMapId);
-                map.Valuation = investmentMap.Valuation;
+            if (investmentMap.AccountInvestmentMapId == ArbitaryId) return;
 
-                
-            }
+            var map = GetAccountInvestmentMap(investmentMap.AccountInvestmentMapId);
+            map.Valuation = investmentMap.Valuation;
+
+            var matchingInvestments = _investmentMapsKeyedByInvestmentId[map.InvestmentId];
+            matchingInvestments.RemoveAll(f => f.AccountInvestmentMapId == map.AccountInvestmentMapId);
+            matchingInvestments.Add(map.MapToDto());
         }
 
         public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
@@ -211,7 +218,7 @@ namespace BusinessLogicTests
             return new RepositoryActionResult<FundTransaction>(_dummyFundTransaction, RepositoryActionStatus.Ok);
         }
 
-        public CashTransaction GetCashTransaction(int arbitaryId)
+        public CashTransaction GetCashTransaction(int cashTransactionId)
         {
             return _dummyCashTransaction;
         }

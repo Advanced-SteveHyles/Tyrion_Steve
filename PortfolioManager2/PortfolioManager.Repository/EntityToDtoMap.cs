@@ -129,7 +129,7 @@ namespace PortfolioManager.Repository
             {
                 AccountInvestmentMapId = accountInvestmentMap.AccountInvestmentMapId,
                 AccountId = accountInvestmentMap.AccountId,
-                InvestmentId = accountInvestmentMap.AccountId,                
+                InvestmentId = accountInvestmentMap.InvestmentId,                
                 Quantity = accountInvestmentMap.Quantity,                
                 Valuation = accountInvestmentMap.Valuation,                
             };
