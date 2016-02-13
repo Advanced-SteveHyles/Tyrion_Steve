@@ -118,10 +118,12 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateThePriceBothInvestmentsUpdate()
         {
-            var request1 = CreateDummyInvestmentMap(1,1 , investmentId, 1);
+            var newInvestmentMap1 = 5;
+            var request1 = CreateDummyInvestmentMap(newInvestmentMap1, 1, investmentId, 1);
             _repository.InsertAccountInvestmentMap(request1);
 
-            var request2 = CreateDummyInvestmentMap(2,2, investmentId, 100);
+            var newInvestment2 = 6;
+            var request2 = CreateDummyInvestmentMap(newInvestment2, 2, investmentId, 100);
             _repository.InsertAccountInvestmentMap(request2);
 
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
@@ -131,8 +133,8 @@ namespace BusinessLogicTests.Transactions.Fund
             var valuation1 = todaysBuyPrice * request1.Quantity;
             var valuation2 = todaysBuyPrice * request2.Quantity;
 
-            var investmentMap1 = _repository.GetAccountInvestmentMap(1);
-            var investmentMap2 = _repository.GetAccountInvestmentMap(2);
+            var investmentMap1 = _repository.GetAccountInvestmentMap(newInvestmentMap1);
+            var investmentMap2 = _repository.GetAccountInvestmentMap(newInvestment2);
 
             Assert.Equal(valuation1, investmentMap1.Valuation);
             Assert.Equal(valuation2, investmentMap2.Valuation);
@@ -141,10 +143,12 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdate()
         {
-            var request1 = CreateDummyInvestmentMap(1,1, investmentId, 1);
+            var newInvestmentMap1 = 5;
+            var request1 = CreateDummyInvestmentMap(newInvestmentMap1, 1, investmentId, 1);
             _repository.InsertAccountInvestmentMap(request1);
 
-            var request2 = CreateDummyInvestmentMap(2,2, investmentId, 100);
+            var newInvestmentMap2 = 6;
+            var request2 = CreateDummyInvestmentMap(newInvestmentMap2, 2, investmentId, 100);
             _repository.InsertAccountInvestmentMap(request2);
 
             SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
@@ -164,10 +168,12 @@ namespace BusinessLogicTests.Transactions.Fund
         [Fact]
         public void WhenTwoPriceUpdatesOccurAndIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateTheAccountValuationUpdatesCorrectly()
         {
-            var request1 = CreateDummyInvestmentMap(1, 1,investmentId, 20);
+            var newInvestmentMap1 = 5;
+            var request1 = CreateDummyInvestmentMap(newInvestmentMap1, 1,investmentId, 20);
             _repository.InsertAccountInvestmentMap(request1);
 
-            var request2 = CreateDummyInvestmentMap(2,2, investmentId, (decimal)25.045);
+            var newInvestmentMap2 = 6;
+            var request2 = CreateDummyInvestmentMap(newInvestmentMap2, 2, investmentId, (decimal)25.045);
             _repository.InsertAccountInvestmentMap(request2);
 
             SetupPriceHistory(todaysValuationDate.AddDays(-1), todaysBuyPrice, todaysSellPrice);

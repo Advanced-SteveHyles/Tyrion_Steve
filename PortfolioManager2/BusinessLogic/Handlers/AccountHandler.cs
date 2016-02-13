@@ -1,4 +1,5 @@
 using Interfaces;
+using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic.Handlers
@@ -25,6 +26,11 @@ namespace BusinessLogic.Handlers
      public void UpdateValuation(int accountId, decimal mapValue)
      {
             _repository.IncreaseValuation(accountId, mapValue);
+     }
+
+     public Account GetAccount(int accountId)
+     {
+         return _repository.GetAccount(accountId);
      }
     }
 }

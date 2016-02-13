@@ -1,3 +1,4 @@
+using PortfolioManager.DTO;
 using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository.Interfaces
@@ -7,5 +8,6 @@ namespace PortfolioManager.Repository.Interfaces
         RepositoryActionResult<Investment> InsertInvestment(Investment entityInvestment);
 
         System.Linq.IQueryable<Entities.Investment> GetInvestments();
+        Investment GetInvestment(int investmentId);
     }
 }

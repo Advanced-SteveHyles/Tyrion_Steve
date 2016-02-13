@@ -22,28 +22,62 @@ namespace BusinessLogicTests
         , IPriceHistoryRepository
     {
         const int ArbitaryId = -1;
-        
+
+        private Investment _investment = new Investment();
         private FundTransaction _dummyFundTransaction;
         private CashTransaction _dummyCashTransaction;
-        private readonly AccountInvestmentMap _dummyAccountInvestment = new AccountInvestmentMap() {AccountInvestmentMapId = ArbitaryId};
+        private readonly AccountInvestmentMap _dummyAccountInvestment = new AccountInvestmentMap() { AccountInvestmentMapId = ArbitaryId };
 
         private readonly List<PriceHistory> _dummyPriceHistoryList;
-        private Dictionary<int, List<AccountInvestmentMapDto>> _investmentMapsKeyedByInvestmentId;
+
+        private readonly List<AccountInvestmentMapDto> _investmentMaps;
+
+
+
         private int _nextId = 1;
         Dictionary<int, Account> _accountDictionary;
 
         public FakeRepository()
-        {            
+        {
             _dummyFundTransaction = new FundTransaction();
             _dummyCashTransaction = new CashTransaction();
             _dummyPriceHistoryList = new List<PriceHistory>();
-            _investmentMapsKeyedByInvestmentId = new Dictionary<int, List<AccountInvestmentMapDto>>();
+            _investmentMaps = FakePopulatedInvestmentMap();
+
+
             _accountDictionary = new Dictionary<int, Account>()
             {
                 {0, new Account(){}},
                 {1, new Account(){}},
                 {2, new Account(){}},
                 {3, new Account(){}}
+            };
+        }
+
+        private static List<AccountInvestmentMapDto> FakePopulatedInvestmentMap()
+        {
+            return new List<AccountInvestmentMapDto>
+            {
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 1,
+                    InvestmentId = 1
+                },
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 2,
+                    InvestmentId = 1
+                },
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 3,
+                    InvestmentId = 2
+                },
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 3,
+                    InvestmentId = 2
+                },
             };
         }
 
@@ -78,7 +112,7 @@ namespace BusinessLogicTests
         }
 
         public Account GetAccount(int id)
-        {            
+        {
             return _accountDictionary[id];
         }
 
@@ -112,6 +146,11 @@ namespace BusinessLogicTests
             throw new NotImplementedException();
         }
 
+        public Investment GetInvestment(int investmentId)
+        {
+            return _investment;
+        }
+
         public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
             _dummyCashTransaction = new CashTransaction()
@@ -126,7 +165,7 @@ namespace BusinessLogicTests
             return null;
         }
 
-        
+
         public AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId)
         {
             if (accountInvestmentMapId == -1)
@@ -135,10 +174,9 @@ namespace BusinessLogicTests
             }
             else
             {
-                var accountInvestmentMapDto = _investmentMapsKeyedByInvestmentId.Values
-                    .Select(k => k.Where(i => i.AccountInvestmentMapId == accountInvestmentMapId))
-                    .Select(r => r.FirstOrDefault()).FirstOrDefault(r1 => r1 != null);
-
+                var accountInvestmentMapDto =
+                    _investmentMaps.SingleOrDefault(i => i.AccountInvestmentMapId == accountInvestmentMapId);
+                
                 return new AccountInvestmentMap()
                 {
                     AccountId = accountInvestmentMapDto.AccountId,
@@ -147,7 +185,7 @@ namespace BusinessLogicTests
                     Quantity = accountInvestmentMapDto.Quantity,
                     Valuation = accountInvestmentMapDto.Valuation
                 };
-            }            
+            }
         }
 
         public void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap)
@@ -157,29 +195,23 @@ namespace BusinessLogicTests
             var map = GetAccountInvestmentMap(investmentMap.AccountInvestmentMapId);
             map.Valuation = investmentMap.Valuation;
 
-            var matchingInvestments = _investmentMapsKeyedByInvestmentId[map.InvestmentId];
-            matchingInvestments.RemoveAll(f => f.AccountInvestmentMapId == map.AccountInvestmentMapId);
-            matchingInvestments.Add(map.MapToDto());
+            _investmentMaps.RemoveAll(f => f.AccountInvestmentMapId == map.AccountInvestmentMapId);
+            _investmentMaps.Add(map.MapToDto());
         }
 
         public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
         {
             var map = new AccountInvestmentMap()
             {
-                AccountInvestmentMapId = NewId(),
+                AccountInvestmentMapId = entityAccountInvestmentMap.AccountInvestmentMapId,
                 AccountId = entityAccountInvestmentMap.AccountId,
                 InvestmentId = entityAccountInvestmentMap.InvestmentId,
                 Quantity = entityAccountInvestmentMap.Quantity,
                 Valuation = entityAccountInvestmentMap.Valuation
             };
-
-            if (!_investmentMapsKeyedByInvestmentId.ContainsKey(entityAccountInvestmentMap.InvestmentId))
-            {
-                _investmentMapsKeyedByInvestmentId.Add(entityAccountInvestmentMap.InvestmentId, new List<AccountInvestmentMapDto>());
-            }
-
-            _investmentMapsKeyedByInvestmentId[entityAccountInvestmentMap.InvestmentId].Add(map.MapToDto());
-
+            
+            _investmentMaps.Add(map.MapToDto());
+            
             return new RepositoryActionResult<AccountInvestmentMap>(map, RepositoryActionStatus.Created);
         }
 
@@ -191,7 +223,7 @@ namespace BusinessLogicTests
 
         public IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId)
         {
-            return _investmentMapsKeyedByInvestmentId[investmentId].AsQueryable();
+            return _investmentMaps.Where(inv=>inv.InvestmentId == investmentId).AsQueryable();
         }
 
         public FundTransaction GetFundTransaction(int arbitaryId)
@@ -246,6 +278,11 @@ namespace BusinessLogicTests
 
             _dummyPriceHistoryList.Add(priceHistory);
         }
+        
 
+        public void SetInvestmentType(int fakeInvestmentId, string type)
+        {
+            _investment.Type = type;
+        }
     }
 }

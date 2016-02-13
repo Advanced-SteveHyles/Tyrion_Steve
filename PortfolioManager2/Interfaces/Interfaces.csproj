@@ -69,6 +69,10 @@
       <Project>{51C5255F-8785-406D-8F4E-1DC6824E630B}</Project>
       <Name>PortfolioManager.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PortfolioManager.Repository\PortfolioManager.Repository.csproj">
+      <Project>{77B12DE0-53EA-43CD-8E33-06AF1DE7A8B6}</Project>
+      <Name>PortfolioManager.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

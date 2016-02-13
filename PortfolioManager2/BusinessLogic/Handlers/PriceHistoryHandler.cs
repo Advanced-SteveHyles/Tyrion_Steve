@@ -1,14 +1,31 @@
 using System;
 using System.Linq;
 using Interfaces;
+using PortfolioManager.DTO;
 using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic.Handlers
 {
+    public class InvestmentHandler : IInvestmentHandler
+    {
+        private readonly IInvestmentRepository _repository;
+
+        public InvestmentHandler(IInvestmentRepository investmentRepository)
+        {
+            this._repository = investmentRepository;
+        }
+
+        public InvestmentDto GetInvestment(int investmentId)
+        {
+            return _repository.GetInvestment(investmentId).MapToDto();
+        }
+    }
+
     public class PriceHistoryHandler : IPriceHistoryHandler
     {
-        private IPriceHistoryRepository _priceHistoryRepository;
+        private readonly IPriceHistoryRepository _priceHistoryRepository;
 
         public PriceHistoryHandler(IPriceHistoryRepository priceHistoryRepository)
         {

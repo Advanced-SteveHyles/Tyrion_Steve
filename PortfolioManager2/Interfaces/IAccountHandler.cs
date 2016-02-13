@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
+using PortfolioManager.Repository.Entities;
 
 namespace Interfaces
 {
@@ -11,6 +13,7 @@ namespace Interfaces
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
         void UpdateValuation(int accountId, decimal mapValue);
+        Account GetAccount(int accountId);
     }
 
     public interface ITransactionHandler
@@ -39,5 +42,10 @@ namespace Interfaces
         decimal? GetInvestmentSellPrice(int investmentId, DateTime valuationDate);
         decimal? GetInvestmentBuyPrice(int investmentId, DateTime valuationDate);
 }
+
+    public interface IInvestmentHandler
+    {
+        InvestmentDto GetInvestment(int investmentId);
+    }
 
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Data.Entity;
 using System.Linq;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
@@ -13,8 +14,12 @@ namespace PortfolioManager.Repository
 
         public IQueryable<Investment> GetInvestments()
         {
-            var investment = _context.Investments;
-            return investment;
+            return _context.Investments;
+        }
+
+        public Investment GetInvestment(int investmentId)
+        {
+            return _context.Investments.SingleOrDefault(inv => inv.InvestmentId == investmentId);
         }
 
         public RepositoryActionResult<Investment> InsertInvestment(Investment entityInvestment)

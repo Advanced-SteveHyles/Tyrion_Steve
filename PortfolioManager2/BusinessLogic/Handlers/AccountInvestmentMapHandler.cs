@@ -45,7 +45,7 @@ namespace BusinessLogic
 
         public AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId)
         {
-            throw new System.NotImplementedException();
+            return _repository.GetAccountInvestmentMap(investmentMapId).MapToDto();
         }
 
         public List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId)
