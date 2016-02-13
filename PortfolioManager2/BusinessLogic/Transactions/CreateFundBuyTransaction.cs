@@ -52,6 +52,11 @@ namespace BusinessLogic.Transactions
 
             _priceHistoryHandler.StorePriceHistory(priceRequest);
 
+            var revaluePriceTransaction = new RevaluePriceTransaction(
+                investmentId,
+                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapHandler, _accountHandler );
+            revaluePriceTransaction.Execute();
+
             ExecuteResult = true;
         }
 

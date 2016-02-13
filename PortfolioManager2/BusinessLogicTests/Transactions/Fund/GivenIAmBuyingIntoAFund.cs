@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BusinessLogic;
 using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
@@ -30,9 +31,7 @@ namespace BusinessLogicTests.Transactions.Fund
         private DateTime _settlementDate;
         private decimal _valuation;
         private IPriceHistoryHandler _priceHistoryHandler;
-        
-        private const int ArbitaryId = -1;
-        
+        private int _existingInvestmentMapId = 1;
 
         private void SetupAndOrExecute(bool execute)
         {
@@ -48,7 +47,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             var request = new InvestmentBuyRequest
             {
-                InvestmentMapId = ArbitaryId,
+                InvestmentMapId = _existingInvestmentMapId,
                 Quantity = _numberOfShares,
                 Price = _priceOfOneShare,
                 PurchaseDate = _transactionDate,
@@ -95,7 +94,8 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             SetupAndOrExecute(true);
 
-            var transaction = _fakeRepository.GetCashTransaction(ArbitaryId);
+            var cashTransactionId = -1;
+            var transaction = _fakeRepository.GetCashTransaction(cashTransactionId);
             Assert.Equal(_accountId, transaction.AccountId);
             Assert.Equal(_transactionDate, transaction.TransactionDate);
             Assert.Equal(_valueOfTransaction, transaction.TransactionValue);
@@ -109,8 +109,9 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             SetupAndOrExecute(true);
 
-            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(ArbitaryId);
-            Assert.Equal(_numberOfShares, accountFundMap.Quantity);
+            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(_existingInvestmentMapId);
+            var startingNumberOfShares = 10;
+            Assert.Equal(_numberOfShares +startingNumberOfShares, accountFundMap.Quantity);
         }
 
         [Fact]
@@ -118,7 +119,8 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             SetupAndOrExecute(true);
 
-            var fundTransaction = _fakeRepository.GetFundTransaction(ArbitaryId);
+            var arbitaryId = 1;
+            var fundTransaction = _fakeRepository.GetFundTransaction(arbitaryId);
             Assert.Equal(_priceOfOneShare, fundTransaction.BuyPrice);            
             Assert.Equal(FundTransactionTypes.Buy, fundTransaction.TransactionType);
             Assert.Equal(_transactionDate, fundTransaction.TransactionDate);
@@ -139,8 +141,9 @@ namespace BusinessLogicTests.Transactions.Fund
             SetupAndOrExecute(true);
             _buyTransaction.Execute();
 
-            var fundTransaction = _fakeRepository.GetFundTransaction(ArbitaryId);
-            var cashTransaction = _fakeRepository.GetCashTransaction(ArbitaryId);
+            var arbitaryId= 1;
+            var fundTransaction = _fakeRepository.GetFundTransaction(arbitaryId);
+            var cashTransaction = _fakeRepository.GetCashTransaction(arbitaryId);
 
             Assert.Equal(fundTransaction.TransactionValue, cashTransaction.TransactionValue);
         }
@@ -149,9 +152,9 @@ namespace BusinessLogicTests.Transactions.Fund
         public void WhenIBuyThenTheValuationIsCorrect()
         {
             SetupAndOrExecute(true);
-            
-            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(ArbitaryId);
-            Assert.Equal(_numberOfShares, accountFundMap.Quantity);
+            var startingNumberOfShares = 10;
+            var accountFundMap = _fakeRepository.GetAccountInvestmentMap(_existingInvestmentMapId);
+            Assert.Equal(_numberOfShares+ startingNumberOfShares, accountFundMap.Quantity);
             Assert.Equal(0, accountFundMap.Valuation);
         }
 
@@ -162,16 +165,35 @@ namespace BusinessLogicTests.Transactions.Fund
             _fakeRepository.SetInvestmentType(fakeInvestmentId, "OEIC");
             SetupAndOrExecute(true);
 
-            var prices = _fakeRepository.GetInvestmentBuyPrices(ArbitaryId);
+            var investmentId = 1;
+            var prices = _fakeRepository.GetInvestmentBuyPrices(investmentId);
 
             Assert.Equal(_priceOfOneShare, prices.First().BuyPrice);
             Assert.Equal(_priceOfOneShare, prices.First().SellPrice);
         }
 
-        //[Fact]
-        //public void WhenIBuyAndTheAccountIsAnOEICBothThenTheAccountIsValuedCorrect() { }
+        [Fact]
+        public void WhenIBuyAndTheAccountIsAOEICBothThenTheAccountIsValuedCorrect()
+        {
+            var fakeInvestmentId = 1;
+            _fakeRepository.SetInvestmentType(fakeInvestmentId, "OEIC");
+            SetupAndOrExecute(true);
 
+            var account = _fakeRepository.GetAccount(_accountId);
+            Assert.Equal(_priceOfOneShare, account.Valuation);            
+        }
 
+        [Fact]
+        public void WhenIBuyAndTheAccountIsUnitTrustBothThenTheAccountIsValuedCorrect()
+        {
+            var fakeInvestmentId = 1;
+            _fakeRepository.SetInvestmentType(fakeInvestmentId, "UnitTrust");
+            SetupAndOrExecute(true);
+
+            var account = _fakeRepository.GetAccount(_accountId);
+            Assert.Equal(new decimal?(), account.Valuation);
+        }
+        
         [Fact]
         public void WhenIBuyAndTheAccountIsAUnitTrustFundOnlyTheBuyIsRecorded()
         {
@@ -179,7 +201,8 @@ namespace BusinessLogicTests.Transactions.Fund
             _fakeRepository.SetInvestmentType(fakeInvestmentId, "UnitTrust");
             SetupAndOrExecute(true);
 
-            var prices = _fakeRepository.GetInvestmentBuyPrices(ArbitaryId);
+            var investmentId = 1;
+            var prices = _fakeRepository.GetInvestmentBuyPrices(investmentId);
 
             Assert.Equal(_priceOfOneShare, prices.First().BuyPrice);
             Assert.Equal(null, prices.First().SellPrice);
