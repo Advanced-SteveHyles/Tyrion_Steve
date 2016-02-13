@@ -23,10 +23,16 @@ namespace BusinessLogic.Handlers
             _repository.DecreaseAccountBalance(accountId, amount);
         }
 
-     public void UpdateValuation(int accountId, decimal mapValue)
+     public void IncreaseValuation(int accountId, decimal mapValue)
      {
             _repository.IncreaseValuation(accountId, mapValue);
-     }
+        }
+
+     public void DecreaseValuation(int accountId, decimal mapValue)
+     {
+            _repository.DecreaseValuation(accountId, mapValue);
+        }
+     
 
      public Account GetAccount(int accountId)
      {

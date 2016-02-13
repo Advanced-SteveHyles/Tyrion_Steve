@@ -1,6 +1,5 @@
 ﻿using System;
 using Interfaces;
-using PortfolioManager.DTO.DTOs;
 
 namespace BusinessLogic.Transactions
 {
@@ -29,24 +28,24 @@ namespace BusinessLogic.Transactions
 
             foreach (var map in accountsMappedToInvestment)
             {
-                RemovePreviousValuationFromAccount(map);
+                RemovePreviousValuationFromAccount(map.AccountId, map.Valuation);
 
                 var mapValue = _investmentMapHandler.RevalueMap(map.AccountInvestmentMapId, currentSellPrice);
-                
-                AddNewValuationToAccount(map, mapValue);
+
+                AddNewValuationToAccount(map.AccountId, mapValue);
             }
 
             ExecuteResult = true;
         }
 
-        private void AddNewValuationToAccount(AccountInvestmentMapDto map, decimal mapValue)
+        private void AddNewValuationToAccount(int accountId, decimal mapValue)
         {
-            _accountHandler.UpdateValuation(map.AccountId, mapValue);
+            _accountHandler.IncreaseValuation(accountId, mapValue);
         }
 
-        private void RemovePreviousValuationFromAccount(AccountInvestmentMapDto map)
+        private void RemovePreviousValuationFromAccount(int accountId, decimal valuation)
         {
-            _accountHandler.UpdateValuation(map.AccountId, -map.Valuation);
+            _accountHandler.DecreaseValuation(accountId, valuation);
         }
 
         public bool CommandValid { get; }

@@ -131,7 +131,7 @@ namespace PortfolioManager.Repository
                 AccountId = accountInvestmentMap.AccountId,
                 InvestmentId = accountInvestmentMap.InvestmentId,                
                 Quantity = accountInvestmentMap.Quantity,                
-                Valuation = accountInvestmentMap.Valuation,                
+                Valuation = accountInvestmentMap.Valuation ?? 0,                
             };
         }
     }

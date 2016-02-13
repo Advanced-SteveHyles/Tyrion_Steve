@@ -3,11 +3,11 @@
 namespace PortfolioManager.Repository.Interfaces
 {
     public interface IPortfolioRepository
-    {
-        System.Linq.IQueryable<Entities.Portfolio> GetPortfolios();
-
+    {     
         Portfolio GetPortfolio(int id);
         Portfolio GetPortfolioWithAccounts(int id);
+        System.Linq.IQueryable<Portfolio> GetPortfolios();
+
         RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio);
     }
 }

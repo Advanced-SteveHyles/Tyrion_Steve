@@ -12,7 +12,8 @@ namespace Interfaces
     {
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
-        void UpdateValuation(int accountId, decimal mapValue);
+        void IncreaseValuation(int accountId, decimal mapValue);
+        void DecreaseValuation(int accountId, decimal mapValue);
         Account GetAccount(int accountId);
     }
 

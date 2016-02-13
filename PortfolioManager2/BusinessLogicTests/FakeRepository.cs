@@ -28,7 +28,7 @@ namespace BusinessLogicTests
         private readonly List<PriceHistory> _dummyPriceHistoryList;
         private readonly List<AccountInvestmentMapDto> _investmentMaps;
 
-        readonly List<Account> _accountDictionary;
+        readonly List<Account> _accounts;
 
         public FakeRepository()
         {
@@ -37,7 +37,7 @@ namespace BusinessLogicTests
             _dummyPriceHistoryList = new List<PriceHistory>();
             _investmentMaps = FakePopulatedInvestmentMap();
             
-            _accountDictionary = new List<Account>()
+            _accounts = new List<Account>()
             {
                 new Account(){AccountId = 1},
                 new Account(){AccountId = 2},
@@ -68,14 +68,14 @@ namespace BusinessLogicTests
                     AccountInvestmentMapId = 3,
                     InvestmentId = 2,
                     AccountId = 1,
-                    Quantity = 1,
+                    Quantity = 10,
                 },
                 new AccountInvestmentMapDto()
                 {
-                    AccountInvestmentMapId = 3,
-                    InvestmentId = 2,
+                    AccountInvestmentMapId = 4,
+                    InvestmentId = 1,
                     AccountId = 3,
-                    Quantity = 2,
+                    Quantity = (decimal)25.4,
                 },
             };
         }
@@ -112,7 +112,7 @@ namespace BusinessLogicTests
 
         public Account GetAccount(int id)
         {
-            return _accountDictionary.Single(a => a.AccountId == id);
+            return _accounts.Single(a => a.AccountId == id);
         }
 
         public void IncreaseAccountBalance(int accountId, decimal amount)
@@ -125,9 +125,20 @@ namespace BusinessLogicTests
             GetAccount(accountId).Cash -= amount;
         }
 
-        public void IncreaseValuation(int accountId, decimal mapValue)
+        public void IncreaseValuation(int accountId, decimal valuation)
         {
-            GetAccount(accountId).Valuation += mapValue;
+            var account = GetAccount(accountId);
+            account.Valuation += valuation;
+            _accounts.RemoveAll(acc => acc.AccountId == accountId);
+            _accounts.Add(account);
+        }
+
+        public void DecreaseValuation(int accountId, decimal valuation)
+        {
+            var account = GetAccount(accountId);
+            account.Valuation -= valuation;
+            _accounts.RemoveAll(acc => acc.AccountId == accountId);
+            _accounts.Add(account);
         }
 
         public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)

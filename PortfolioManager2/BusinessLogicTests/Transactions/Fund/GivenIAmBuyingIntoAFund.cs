@@ -173,25 +173,30 @@ namespace BusinessLogicTests.Transactions.Fund
         }
 
         [Fact]
-        public void WhenIBuyAndTheAccountIsAOEICBothThenTheAccountIsValuedCorrect()
+        public void WhenIBuyAndTheAccountIsAOEICThenTheAccountIsValuedCorrect()
         {
             var fakeInvestmentId = 1;
             _fakeRepository.SetInvestmentType(fakeInvestmentId, "OEIC");
             SetupAndOrExecute(true);
 
+            var maps = _fakeRepository.GetAccountInvestmentMapsByInvestmentId(fakeInvestmentId)
+                .Where(map=>map.AccountId == _accountId);
+
+            var evaluation = (maps.Single().Quantity)*_priceOfOneShare;
+
             var account = _fakeRepository.GetAccount(_accountId);
-            Assert.Equal(_priceOfOneShare, account.Valuation);            
+            Assert.Equal(evaluation, account.Valuation);            
         }
 
         [Fact]
-        public void WhenIBuyAndTheAccountIsUnitTrustBothThenTheAccountIsValuedCorrect()
+        public void WhenIBuyAndTheAccountIsUnitTrustThenTheAccountIsValuedCorrect()
         {
             var fakeInvestmentId = 1;
             _fakeRepository.SetInvestmentType(fakeInvestmentId, "UnitTrust");
             SetupAndOrExecute(true);
 
             var account = _fakeRepository.GetAccount(_accountId);
-            Assert.Equal(new decimal?(), account.Valuation);
+            Assert.Equal(0, account.Valuation);
         }
         
         [Fact]

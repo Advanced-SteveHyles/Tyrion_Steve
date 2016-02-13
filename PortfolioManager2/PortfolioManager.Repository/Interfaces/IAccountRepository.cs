@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using PortfolioManager.Repository.Entities;
 
@@ -12,6 +13,7 @@ namespace PortfolioManager.Repository.Interfaces
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
 
-        void IncreaseValuation(int accountId, decimal mapValue);
+        void IncreaseValuation(int accountId, decimal valuation);
+        void DecreaseValuation(int accountId, decimal valuation);
     }
 }

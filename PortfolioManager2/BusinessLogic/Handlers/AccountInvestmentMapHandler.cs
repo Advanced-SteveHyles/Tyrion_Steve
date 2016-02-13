@@ -24,23 +24,18 @@ namespace BusinessLogic
         {            
             var investmentMap = _repository.GetAccountInvestmentMap(investmentMapId);
             investmentMap.Quantity += quantity;            
-            _repository.UpdateAccountInvestmentMap(investmentMap);
-
-            //    public int Quantity { get; set; }
-            //public int SellPrice { get; set; }
-            //public int Valuation { get; set; }
-            //public DateTime LastValuationDate { get; set; }
+            _repository.UpdateAccountInvestmentMap(investmentMap);        
         }
 
         public decimal RevalueMap(int investmentMapId, decimal? currentSellPrice)
         {
             var investmentMap = _repository.GetAccountInvestmentMap(investmentMapId);
 
-            var valuation = investmentMap.Quantity*currentSellPrice ?? 0;
+            var valuation = investmentMap.Quantity*currentSellPrice;
             investmentMap.Valuation = valuation ;        
             _repository.UpdateAccountInvestmentMap(investmentMap);
 
-            return valuation;
+            return valuation ??0;
         }
 
         public AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId)
