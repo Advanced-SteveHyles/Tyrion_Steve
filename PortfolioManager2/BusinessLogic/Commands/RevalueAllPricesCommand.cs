@@ -24,8 +24,7 @@ namespace BusinessLogic.Commands
         public void Execute()
         {            
             RevalueAllMaps();
-            UpdateAllAccounts();
-            ShouldWeStoreValuationHistory?
+            UpdateAllAccounts();           
             ExecuteResult = true;
         }
 

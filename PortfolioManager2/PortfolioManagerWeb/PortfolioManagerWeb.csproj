@@ -325,7 +325,9 @@
     <Content Include="Views\BuyInvestment\Buy.cshtml" />
     <Content Include="Views\InvestmentsMap\Sell.cshtml" />
     <Content Include="Views\Portfolios\Create.cshtml" />
-    <Content Include="Views\Accounts\Create.cshtml" />
+    <Compile Include="Views\Accounts\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Compile>
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
     <Content Include="Views\AccountTransaction\Summary\AccountTransactionSummary.cshtml" />
