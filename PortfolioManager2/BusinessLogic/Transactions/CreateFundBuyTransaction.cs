@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using BusinessLogic.Commands;
+using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 
@@ -52,7 +53,7 @@ namespace BusinessLogic.Transactions
 
             _priceHistoryHandler.StorePriceHistory(priceRequest);
 
-            var revaluePriceTransaction = new RevaluePriceTransaction(
+            var revaluePriceTransaction = new RevalueSinglePriceCommand(
                 investmentId,
                 _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapHandler, _accountHandler );
             revaluePriceTransaction.Execute();

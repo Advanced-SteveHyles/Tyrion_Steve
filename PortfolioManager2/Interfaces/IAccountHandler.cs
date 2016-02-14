@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PortfolioManager.DTO;
 using PortfolioManager.DTO.DTOs;
@@ -14,7 +15,9 @@ namespace Interfaces
         void DecreaseAccountBalance(int accountId, decimal amount);
         void IncreaseValuation(int accountId, decimal mapValue);
         void DecreaseValuation(int accountId, decimal mapValue);
+        void SetValuation(int accountId, decimal valuation);
         Account GetAccount(int accountId);
+        IEnumerable<Account> GetAccounts();
     }
 
     public interface ITransactionHandler
@@ -35,6 +38,7 @@ namespace Interfaces
         decimal RevalueMap(int investmentMapId, decimal? currentSellPrice);
         AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId);
         List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId);
+        List<AccountInvestmentMapDto> GetMapsByAccountId(int accountId);
     }
 
     public interface IPriceHistoryHandler
@@ -47,6 +51,7 @@ namespace Interfaces
     public interface IInvestmentHandler
     {
         InvestmentDto GetInvestment(int investmentId);
+        IEnumerable<InvestmentDto> GetInvestments();
     }
 
 }

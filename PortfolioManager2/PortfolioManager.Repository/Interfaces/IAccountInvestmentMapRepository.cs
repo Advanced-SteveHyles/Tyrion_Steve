@@ -11,5 +11,6 @@ namespace PortfolioManager.Repository.Interfaces
         void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap);
         RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap);
         IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId);
+        IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps();
     }
 }

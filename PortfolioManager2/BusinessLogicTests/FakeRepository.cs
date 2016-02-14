@@ -41,7 +41,10 @@ namespace BusinessLogicTests
             {
                 new Account(){AccountId = 1},
                 new Account(){AccountId = 2},
-                new Account(){AccountId = 3}
+                new Account(){AccountId = 3},
+                new Account(){AccountId = 4},
+                new Account(){AccountId = 5},
+                new Account(){AccountId = 6}
             };
         }
 
@@ -76,6 +79,20 @@ namespace BusinessLogicTests
                     InvestmentId = 1,
                     AccountId = 3,
                     Quantity = (decimal)25.4,
+                },
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 88,
+                    InvestmentId = 1,
+                    AccountId = 4,
+                    Quantity = (decimal)1.78923,
+                },
+                new AccountInvestmentMapDto()
+                {
+                    AccountInvestmentMapId = 89,
+                    InvestmentId = 3,
+                    AccountId = 6,
+                    Quantity = (decimal)21,
                 },
             };
         }
@@ -141,6 +158,20 @@ namespace BusinessLogicTests
             _accounts.Add(account);
         }
 
+        public IEnumerable<Account> GetAccounts()
+        {
+            return _accounts;
+        }
+
+        public void SetValuation(int accountId, decimal valuation)
+        {
+            var account = GetAccount(accountId);
+            account.Valuation = valuation;
+            _accounts.RemoveAll(acc => acc.AccountId == accountId);
+            _accounts.Add(account);
+        }
+
+
         public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)
         {
             throw new NotImplementedException();
@@ -153,7 +184,10 @@ namespace BusinessLogicTests
 
         public IQueryable<Investment> GetInvestments()
         {
-            throw new NotImplementedException();
+            return _investmentMaps.Select(inv=> new Investment()
+            {
+                InvestmentId = inv.InvestmentId,                
+            }).AsQueryable();
         }
 
         public Investment GetInvestment(int investmentId)
@@ -221,6 +255,15 @@ namespace BusinessLogicTests
             return _investmentMaps.Where(inv => inv.InvestmentId == investmentId).AsQueryable();
         }
 
+        public IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps()
+        {
+            return _investmentMaps.Select(map=> new AccountInvestmentMap()
+            {
+                AccountId =  map.AccountId,
+                Valuation = map.Valuation
+            }).AsQueryable();
+        }
+
         public FundTransaction GetFundTransaction(int arbitaryId)
         {
             return _dummyFundTransaction;
@@ -252,12 +295,12 @@ namespace BusinessLogicTests
         
         public IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId)
         {
-            return _dummyPriceHistoryList.AsQueryable();
+            return _dummyPriceHistoryList.Where(ph=>ph.InvestmentId == investmentId).AsQueryable();
         }
 
         public IQueryable<PriceHistory> GetInvestmentBuyPrices(int investmentId)
         {
-            return _dummyPriceHistoryList.AsQueryable();
+            return _dummyPriceHistoryList.Where(ph => ph.InvestmentId == investmentId).AsQueryable();
         }
 
         public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
@@ -276,6 +319,11 @@ namespace BusinessLogicTests
         public void SetInvestmentType(int fakeInvestmentId, string type)
         {
             _investment.Type = type;
+        }
+
+        public List<AccountInvestmentMapDto> GetAllAccountInvestmentMaps()
+        {
+            return _investmentMaps;
         }
     }
 }

@@ -35,6 +35,11 @@ namespace PortfolioManager.Repository.Repositories
                .Select(accountInvestmentMap => MapToDto2(accountInvestmentMap));
         }
 
+        public IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps()
+        {
+            return _context.AccountInvestmentMaps;
+        }
+
         private static AccountInvestmentMapDto MapToDto2(AccountInvestmentMap accountInvestmentMap)
         {
             return accountInvestmentMap.MapToDto();

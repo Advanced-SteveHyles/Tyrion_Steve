@@ -63,9 +63,10 @@
     <Compile Include="FakeRepository.cs" />
     <Compile Include="Transactions\Cash\GivenIAmDepositingTenPounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\Fund\Evaluations\FullPortfolioRevaluation.cs" />
     <Compile Include="Transactions\Fund\GivenIAmBuyingIntoAFund.cs" />
     <Compile Include="Transactions\Fund\CorporateActionTransaction.cs" />
-    <Compile Include="Transactions\Fund\PriceHistoryTests.cs" />
+    <Compile Include="Transactions\Fund\Evaluations\PriceHistoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">

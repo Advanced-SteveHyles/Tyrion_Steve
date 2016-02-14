@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
 using PortfolioManager.DTO;
@@ -20,6 +21,11 @@ namespace BusinessLogic.Handlers
         public InvestmentDto GetInvestment(int investmentId)
         {
             return _repository.GetInvestment(investmentId).MapToDto();
+        }
+
+        public IEnumerable<InvestmentDto> GetInvestments()
+        {
+            return _repository.GetInvestments().Select(inv=>inv.MapToDto());
         }
     }
 

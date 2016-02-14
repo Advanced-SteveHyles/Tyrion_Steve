@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Interfaces;
+﻿using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 
-namespace BusinessLogic.Transactions
+namespace BusinessLogic.Commands
 {
-    public class CreatePriceHistoryTransaction: ICommandRunner
+    public class CreatePriceHistoryCommand: ICommandRunner
 {
         private readonly PriceHistoryRequest _priceHistoryRequest;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
 
-        public CreatePriceHistoryTransaction(PriceHistoryRequest priceHistoryRequest, IPriceHistoryHandler priceHistoryHandler)
+        public CreatePriceHistoryCommand(PriceHistoryRequest priceHistoryRequest, IPriceHistoryHandler priceHistoryHandler)
         {
             _priceHistoryRequest = priceHistoryRequest;
             _priceHistoryHandler = priceHistoryHandler;        

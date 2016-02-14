@@ -1,18 +1,18 @@
 ﻿using System;
 using Interfaces;
 
-namespace BusinessLogic.Transactions
+namespace BusinessLogic.Commands
 {
-    public class RevaluePriceTransaction: ICommandRunner
+    public class RevalueSinglePriceCommand: ICommandRunner
     {
         private readonly IAccountInvestmentMapHandler _investmentMapHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IAccountHandler _accountHandler;
-        private int _investmentId;
-        private DateTime _valuationDate;
+        private readonly int _investmentId;
+        private readonly DateTime _valuationDate;
 
 
-        public RevaluePriceTransaction(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapHandler investmentMapHandler, IAccountHandler accountHandler)
+        public RevalueSinglePriceCommand(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapHandler investmentMapHandler, IAccountHandler accountHandler)
         {
             _investmentId = investmentId;
             _priceHistoryHandler = priceHistoryHandler;

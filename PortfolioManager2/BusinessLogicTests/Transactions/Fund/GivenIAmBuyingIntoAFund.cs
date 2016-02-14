@@ -59,7 +59,7 @@ namespace BusinessLogicTests.Transactions.Fund
             
             _accountHandler = new AccountHandler(_fakeRepository);
             _cashTransactionHandler = new CashTransactionHandler(_fakeRepository);
-            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository, _fakeRepository);
+            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository);
             _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
             _investmentHandler = new InvestmentHandler(_fakeRepository);

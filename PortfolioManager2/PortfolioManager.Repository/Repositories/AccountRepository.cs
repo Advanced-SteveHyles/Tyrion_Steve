@@ -76,5 +76,17 @@ namespace PortfolioManager.Repository
             account.Valuation -= valuation;
             _context.SaveChanges();
         }
+
+        public IEnumerable<Account> GetAccounts()
+        {
+            return _context.Accounts;
+        }
+
+        public void SetValuation(int accountId, decimal valuation)
+        {
+            var account = GetAccount(accountId);
+            account.Valuation = valuation;
+            _context.SaveChanges();
+        }
     }
 }
