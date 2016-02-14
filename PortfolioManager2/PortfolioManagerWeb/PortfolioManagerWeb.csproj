@@ -16,7 +16,7 @@
     <RootNamespace>PortfolioManagerWeb</RootNamespace>
     <AssemblyName>PortfolioManagerWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -325,9 +325,7 @@
     <Content Include="Views\BuyInvestment\Buy.cshtml" />
     <Content Include="Views\InvestmentsMap\Sell.cshtml" />
     <Content Include="Views\Portfolios\Create.cshtml" />
-    <Compile Include="Views\Accounts\Create.cshtml">
-      <Generator>RazorGenerator</Generator>
-    </Compile>
+    <Content Include="Views\Accounts\Create.cshtml" />
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
     <Content Include="Views\AccountTransaction\Summary\AccountTransactionSummary.cshtml" />
