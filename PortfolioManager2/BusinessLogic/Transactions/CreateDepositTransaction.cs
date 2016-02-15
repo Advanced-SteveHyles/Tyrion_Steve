@@ -7,9 +7,9 @@ namespace BusinessLogic.Transactions
     {
         private readonly DepositTransactionRequest _depositTransactionRequest;
         private readonly IAccountHandler _accountHandler;
-        private readonly ITransactionHandler _transactionHandler;
+        private readonly ICashTransactionHandler _transactionHandler;
 
-        public CreateDepositTransaction(DepositTransactionRequest depositTransactionRequest, IAccountHandler accountHandler, ITransactionHandler transactionHandler)
+        public CreateDepositTransaction(DepositTransactionRequest depositTransactionRequest, IAccountHandler accountHandler, ICashTransactionHandler transactionHandler)
         {
             this._depositTransactionRequest = depositTransactionRequest;
             _accountHandler = accountHandler;

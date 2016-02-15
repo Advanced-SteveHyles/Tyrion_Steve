@@ -8,6 +8,6 @@ namespace PortfolioManager.Repository.Interfaces
     {
         IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId);
         IQueryable<PriceHistory> GetInvestmentBuyPrices(int investmentId);
-        void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice);
+        RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice);
     }
 }

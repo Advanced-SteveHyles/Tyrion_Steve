@@ -20,10 +20,10 @@ namespace BusinessLogicTests
         , IAccountInvestmentMapRepository
         , IFundTransactionRepository
         , IPriceHistoryRepository
-    {        
+    {
         private readonly Investment _investment = new Investment();
         private FundTransaction _dummyFundTransaction;
-        private CashTransaction _dummyCashTransaction;
+        private List<CashTransaction> _dummyCashTransactions;
 
         private readonly List<PriceHistory> _dummyPriceHistoryList;
         private readonly List<AccountInvestmentMapDto> _investmentMaps;
@@ -33,10 +33,10 @@ namespace BusinessLogicTests
         public FakeRepository()
         {
             _dummyFundTransaction = new FundTransaction();
-            _dummyCashTransaction = new CashTransaction();
+            _dummyCashTransactions = new List<CashTransaction>();
             _dummyPriceHistoryList = new List<PriceHistory>();
             _investmentMaps = FakePopulatedInvestmentMap();
-            
+
             _accounts = new List<Account>()
             {
                 new Account(){AccountId = 1},
@@ -184,9 +184,9 @@ namespace BusinessLogicTests
 
         public IQueryable<Investment> GetInvestments()
         {
-            return _investmentMaps.Select(inv=> new Investment()
+            return _investmentMaps.Select(inv => new Investment()
             {
-                InvestmentId = inv.InvestmentId,                
+                InvestmentId = inv.InvestmentId,
             }).AsQueryable();
         }
 
@@ -197,15 +197,17 @@ namespace BusinessLogicTests
 
         public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
-            _dummyCashTransaction = new CashTransaction()
-            {
-                AccountId = request.AccountId,
-                TransactionDate = request.TransactionDate,
-                TransactionValue = request.TransactionValue,
-                Source = request.Source,
-                IsTaxRefund = request.IsTaxRefund,
-                TransactionType = request.TransactionType,
-            };
+            _dummyCashTransactions.Add(
+                new CashTransaction()
+                {
+                    AccountId = request.AccountId,
+                    TransactionDate = request.TransactionDate,
+                    TransactionValue = request.TransactionValue,
+                    Source = request.Source,
+                    IsTaxRefund = request.IsTaxRefund,
+                    TransactionType = request.TransactionType
+                }
+                );
             return null;
         }
 
@@ -249,7 +251,7 @@ namespace BusinessLogicTests
 
             return new RepositoryActionResult<AccountInvestmentMap>(map, RepositoryActionStatus.Created);
         }
-        
+
         public IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId)
         {
             return _investmentMaps.Where(inv => inv.InvestmentId == investmentId).AsQueryable();
@@ -257,9 +259,9 @@ namespace BusinessLogicTests
 
         public IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps()
         {
-            return _investmentMaps.Select(map=> new AccountInvestmentMap()
+            return _investmentMaps.Select(map => new AccountInvestmentMap()
             {
-                AccountId =  map.AccountId,
+                AccountId = map.AccountId,
                 Valuation = map.Valuation
             }).AsQueryable();
         }
@@ -290,12 +292,12 @@ namespace BusinessLogicTests
 
         public CashTransaction GetCashTransaction(int cashTransactionId)
         {
-            return _dummyCashTransaction;
+            return _dummyCashTransactions[0];
         }
-        
+
         public IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId)
         {
-            return _dummyPriceHistoryList.Where(ph=>ph.InvestmentId == investmentId).AsQueryable();
+            return _dummyPriceHistoryList.Where(ph => ph.InvestmentId == investmentId).AsQueryable();
         }
 
         public IQueryable<PriceHistory> GetInvestmentBuyPrices(int investmentId)
@@ -303,7 +305,7 @@ namespace BusinessLogicTests
             return _dummyPriceHistoryList.Where(ph => ph.InvestmentId == investmentId).AsQueryable();
         }
 
-        public void InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
+        public RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
         {
             var priceHistory = new PriceHistory
             {
@@ -314,6 +316,8 @@ namespace BusinessLogicTests
             };
 
             _dummyPriceHistoryList.Add(priceHistory);
+
+            return null;
         }
 
         public void SetInvestmentType(int fakeInvestmentId, string type)

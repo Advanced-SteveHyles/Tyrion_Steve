@@ -29,7 +29,6 @@ namespace BusinessLogicTests.Transactions.Fund
         private IInvestmentHandler _investmentHandler;
 
         private DateTime _settlementDate;
-        private decimal _valuation;
         private IPriceHistoryHandler _priceHistoryHandler;
         private int _existingInvestmentMapId = 1;
 
@@ -42,8 +41,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _valueOfTransaction = (_numberOfShares * _priceOfOneShare) + _commission;
             _transactionDate = DateTime.Now;
             _settlementDate = DateTime.Today.AddDays(14);
-            _accountId = 3;
-            _valuation = (_numberOfShares*_priceOfOneShare);
+            _accountId = 1;
 
             var request = new InvestmentBuyRequest
             {
@@ -64,8 +62,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
             _investmentHandler = new InvestmentHandler(_fakeRepository);
 
-            _buyTransaction = new CreateFundBuyTransaction(
-                        _accountId, request, _accountHandler,
+            _buyTransaction = new CreateFundBuyTransaction(request, _accountHandler,
                         _cashCashTransactionHandler, _accountInvestmentMapHandler,
                         _fundTransactionHandler, _priceHistoryHandler,
                         _investmentHandler);

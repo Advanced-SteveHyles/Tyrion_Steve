@@ -7,16 +7,15 @@ namespace BusinessLogic.Transactions
 {
     public class CreateFundBuyTransaction : ICommandRunner
     {
-        private readonly int _accountId;
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountHandler _accountHandler;
         private readonly ICashTransactionHandler _cashTransactionHandler;
         private readonly IAccountInvestmentMapHandler _accountInvestmentMapHandler;
-        private IFundTransactionHandler _fundTransactionHandler;
+        private readonly IFundTransactionHandler _fundTransactionHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private IInvestmentHandler _investmentHandler;
+        private readonly IInvestmentHandler _investmentHandler;
 
-        public CreateFundBuyTransaction(int accountId,
+        public CreateFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
             IAccountHandler accountHandler,
             ICashTransactionHandler cashTransactionHandler,
@@ -24,7 +23,6 @@ namespace BusinessLogic.Transactions
             IFundTransactionHandler fundTransactionHandler,
             IPriceHistoryHandler priceHistoryHandler, IInvestmentHandler investmentHandler)
         {
-            _accountId = accountId;
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
             _cashTransactionHandler = cashTransactionHandler;
@@ -36,20 +34,23 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
+            var investmentMapDto = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
+            var investmentId = investmentMapDto.InvestmentId;
+            var accountId = investmentMapDto.AccountId;
+
             _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);
-            _cashTransactionHandler.StoreCashTransaction(_accountId, _fundBuyRequest);
-            _accountHandler.DecreaseAccountBalance(_accountId, _fundBuyRequest.Value);        
+            _cashTransactionHandler.StoreCashTransaction(accountId, _fundBuyRequest);
+            _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
-            var investment = _investmentHandler.GetInvestment(_accountId);
+            var investment = _investmentHandler.GetInvestment(accountId);
 
-            var investmentId = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId).InvestmentId;
             var priceRequest = new PriceHistoryRequest
             {
                 InvestmentId = investmentId,
-                BuyPrice = _fundBuyRequest.Price,                
+                BuyPrice = _fundBuyRequest.Price,
+                SellPrice = (investment.Type == "OEIC") ? _fundBuyRequest.Price : new decimal?(),
             };
-            priceRequest.SellPrice = (investment.Type == "OEIC") ? _fundBuyRequest.Price : new decimal?();
 
             _priceHistoryHandler.StorePriceHistory(priceRequest);
 
@@ -62,9 +63,7 @@ namespace BusinessLogic.Transactions
         }
 
         public bool CommandValid =>
-            _fundBuyRequest.InvestmentMapId != 0 &&
-            _accountId != 0
-            ;
+            _fundBuyRequest.InvestmentMapId != 0;
 
         public bool ExecuteResult { get; private set; }
 

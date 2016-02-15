@@ -63,9 +63,7 @@ namespace Portfolio_API.Controllers.Transactions
                 var status = Command.ExecuteCommand
                     (
                         new CreateFundBuyTransaction
-                        (
-                             accountId,
-                             purchaseRequest,
+                        (purchaseRequest,
                              new AccountHandler(_accountRepository),
                              new CashTransactionHandler(_cashTransactionRepository),
                              new AccountInvestmentMapHandler(_accountInvestmentMapRepository),

@@ -7,7 +7,7 @@ namespace PortfolioManager.Repository.Repositories
 {
     public class FundTransactionRepository : BaseRepository, IFundTransactionRepository
     {
-        public FundTransactionRepository(PortfolioManagerContext context) : base(context){ }
+        public FundTransactionRepository(PortfolioManagerContext context) : base(context) { }
         public FundTransaction GetFundTransaction(int fundTransactionId)
         {
             return _context.FundTransactions.SingleOrDefault(tx => tx.FundTransactionId == fundTransactionId);
@@ -17,12 +17,21 @@ namespace PortfolioManager.Repository.Repositories
         {
             var fundTransaction = new FundTransaction()
             {
-                
+                InvestmentMapId = request.InvestmentMapId,
+                TransactionType = request.TransactionType,
+                TransactionDate = request.TransactionDate,
+                SettlementDate = request.SettlementDate,
+                Source = request.Source,
+                Quantity = request.Quantity,
+                SellPrice = request.SellPrice,
+                BuyPrice = request.BuyPrice,
+                Charges = request.Charges,
+                TransactionValue = request.TransactionValue
             };
 
             _context.FundTransactions.Add(fundTransaction);
 
-            return fundTransaction;
+            return new RepositoryActionResult<FundTransaction>(fundTransaction, RepositoryActionStatus.Created);
         }
     }
 }

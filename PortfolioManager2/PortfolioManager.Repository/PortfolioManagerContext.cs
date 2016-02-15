@@ -26,9 +26,9 @@ namespace PortfolioManager.Repository
         public virtual DbSet<Investment> Investments { get; set; }
         public virtual DbSet<CashTransaction> CashTransactions { get; set; }
         public virtual DbSet<FundTransaction> FundTransactions { get; set; }
-
         public virtual DbSet<AccountInvestmentMap> AccountInvestmentMaps { get; set; }
-        
+        public virtual DbSet<PriceHistory> PriceHistories { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Portfolio>()
