@@ -8,10 +8,10 @@ namespace BusinessLogic.Transactions
     {
         private readonly WithdrawalTransactionRequest _withdrawalTransactionRequest;
         private readonly IAccountHandler _accountHandler;
-        private readonly ITransactionHandler _transactionHandler;
+        private readonly ICashTransactionHandler _transactionHandler;
 
         public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
-            IAccountHandler accountHandler, ITransactionHandler transactionHandler)
+            IAccountHandler accountHandler, ICashTransactionHandler transactionHandler)
         {
             this._withdrawalTransactionRequest = withdrawalTransactionRequest;
             _accountHandler = accountHandler;

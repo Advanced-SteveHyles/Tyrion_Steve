@@ -10,7 +10,7 @@ namespace BusinessLogic.Transactions
         private readonly int _accountId;
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountHandler _accountHandler;
-        private readonly ITransactionHandler _transactionHandler;
+        private readonly ICashTransactionHandler _cashTransactionHandler;
         private readonly IAccountInvestmentMapHandler _accountInvestmentMapHandler;
         private IFundTransactionHandler _fundTransactionHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
@@ -19,7 +19,7 @@ namespace BusinessLogic.Transactions
         public CreateFundBuyTransaction(int accountId,
             InvestmentBuyRequest fundBuyRequest,
             IAccountHandler accountHandler,
-            ITransactionHandler transactionHandler,
+            ICashTransactionHandler cashTransactionHandler,
             IAccountInvestmentMapHandler accountInvestmentMapHandler,
             IFundTransactionHandler fundTransactionHandler,
             IPriceHistoryHandler priceHistoryHandler, IInvestmentHandler investmentHandler)
@@ -27,7 +27,7 @@ namespace BusinessLogic.Transactions
             _accountId = accountId;
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
-            _transactionHandler = transactionHandler;
+            _cashTransactionHandler = cashTransactionHandler;
             _accountInvestmentMapHandler = accountInvestmentMapHandler;
             _fundTransactionHandler = fundTransactionHandler;
             _priceHistoryHandler = priceHistoryHandler;
@@ -37,7 +37,7 @@ namespace BusinessLogic.Transactions
         public void Execute()
         {
             _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);
-            _transactionHandler.StoreCashTransaction(_accountId, _fundBuyRequest);
+            _cashTransactionHandler.StoreCashTransaction(_accountId, _fundBuyRequest);
             _accountHandler.DecreaseAccountBalance(_accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 

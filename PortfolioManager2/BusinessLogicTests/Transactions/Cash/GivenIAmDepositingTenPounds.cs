@@ -24,7 +24,7 @@ namespace BusinessLogicTests.Transactions.Cash
         {
             _fakeRepository = new FakeRepository();
             IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-            ITransactionHandler transactionHandler = new CashTransactionHandler(_fakeRepository);
+            ICashTransactionHandler cashTransactionHandler = new CashTransactionHandler(_fakeRepository);
 
             var depositTransactionRequest = new DepositTransactionRequest
             {
@@ -34,7 +34,7 @@ namespace BusinessLogicTests.Transactions.Cash
                 TransactionDate = transactionDate
             };
 
-            _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, accountHandler, transactionHandler);
+            _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, accountHandler, cashTransactionHandler);
         }
 
         [Fact]

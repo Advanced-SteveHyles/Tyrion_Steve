@@ -29,7 +29,7 @@ namespace Portfolio_API.Controllers
 
         public IHttpActionResult Get(int id)
         {
-            var map = new AccountWithInvestmentsMapDto();
+            var map = new AccountInfoWithAllInvestmentDto();
 
             var accountEnt = _accountRepository.GetAccount(id);
             map.AccountInfo = accountEnt.MapToDto();

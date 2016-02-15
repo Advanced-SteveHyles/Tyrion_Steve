@@ -264,7 +264,7 @@ namespace BusinessLogicTests
             }).AsQueryable();
         }
 
-        public FundTransaction GetFundTransaction(int arbitaryId)
+        public FundTransaction GetFundTransaction(int fundTransactionId)
         {
             return _dummyFundTransaction;
         }

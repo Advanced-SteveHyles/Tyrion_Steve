@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\Transactions\BuyFundController.cs" />
     <Compile Include="Controllers\ErrorLog.cs" />
     <Compile Include="Controllers\AccountInvestmentMapController.cs" />
     <Compile Include="Controllers\InvestmentsController.cs" />

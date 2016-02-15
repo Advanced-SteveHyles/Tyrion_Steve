@@ -23,7 +23,7 @@ namespace BusinessLogicTests.Transactions.Fund
         private int _accountId;
 
         private IAccountHandler _accountHandler;        
-        private ITransactionHandler _cashTransactionHandler;
+        private ICashTransactionHandler _cashCashTransactionHandler;
         private IAccountInvestmentMapHandler _accountInvestmentMapHandler;
         private IFundTransactionHandler _fundTransactionHandler;
         private IInvestmentHandler _investmentHandler;
@@ -58,7 +58,7 @@ namespace BusinessLogicTests.Transactions.Fund
             };
             
             _accountHandler = new AccountHandler(_fakeRepository);
-            _cashTransactionHandler = new CashTransactionHandler(_fakeRepository);
+            _cashCashTransactionHandler = new CashTransactionHandler(_fakeRepository);
             _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository);
             _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
@@ -66,7 +66,7 @@ namespace BusinessLogicTests.Transactions.Fund
 
             _buyTransaction = new CreateFundBuyTransaction(
                         _accountId, request, _accountHandler,
-                        _cashTransactionHandler, _accountInvestmentMapHandler,
+                        _cashCashTransactionHandler, _accountInvestmentMapHandler,
                         _fundTransactionHandler, _priceHistoryHandler,
                         _investmentHandler);
 

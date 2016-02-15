@@ -5,7 +5,7 @@ namespace PortfolioManager.Repository.Interfaces
 {
     public interface IFundTransactionRepository
     {
-        FundTransaction GetFundTransaction(int arbitaryId);
+        FundTransaction GetFundTransaction(int fundTransactionId);
         RepositoryActionResult<FundTransaction> InsertFundTransaction(CreateFundTransactionRequest request);
 
     }

@@ -23,7 +23,7 @@ namespace PortfolioManagerWeb.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var accountInvestmentMap = JsonConvert.DeserializeObject<AccountInvestmentMapDto>(content);
+                var accountInvestmentMap = JsonConvert.DeserializeObject<AccountInfoWithAllInvestmentDto>(content);
                 return View(accountInvestmentMap);
             }
 

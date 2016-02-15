@@ -8,7 +8,7 @@ using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic
 {
-    public class CashTransactionHandler : ITransactionHandler
+    public class CashTransactionHandler : ICashTransactionHandler
     {
         private readonly ICashTransactionRepository _repository;
 

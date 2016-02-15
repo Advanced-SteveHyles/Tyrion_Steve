@@ -20,7 +20,7 @@ namespace Interfaces
         IEnumerable<Account> GetAccounts();
     }
 
-    public interface ITransactionHandler
+    public interface ICashTransactionHandler
     {
         void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest);
         void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
