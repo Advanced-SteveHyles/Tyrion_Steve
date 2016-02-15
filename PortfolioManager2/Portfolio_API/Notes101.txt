@@ -21,3 +21,8 @@ to match route info.!
 
 9a) Random Nulls on Actions -> DTO key is not same as the call from the page
 9b) Random zero -> {get;set;} missing on DTO
+
+10) If the controller forgets the key
+10a) Ensure key is mapped in the call
+@Html.ActionLink("Buy", "Buy", "BuyInvestment", new { investmentMapId = item.AccountInvestmentMapId }, null)
+10b) and name investmentMapId actually exists in the dto

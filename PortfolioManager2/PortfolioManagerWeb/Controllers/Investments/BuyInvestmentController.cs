@@ -9,8 +9,8 @@ namespace PortfolioManagerWeb.Controllers.Investments
 {
     public class BuyInvestmentController : Controller
     {
-        public ActionResult Buy(int? mapId)
-        {          
+        public ActionResult Buy(int? investmentMapId)
+        {
             return View();
         }
 
