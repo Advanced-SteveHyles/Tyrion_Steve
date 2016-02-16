@@ -24,7 +24,7 @@ namespace PortfolioManager.Repository
                 TransactionType = request.TransactionType
             };
 
-            _context.CashTransactions.Add(entityTransaction);
+           _context.CashTransactions.Add(entityTransaction);
 
             var result = _context.SaveChanges();
             if (result > 0)

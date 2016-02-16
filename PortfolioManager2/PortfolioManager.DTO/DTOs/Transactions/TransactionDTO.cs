@@ -10,7 +10,7 @@ namespace PortfolioManager.DTO.DTOs.Transactions
 
         public string TransactionType { get; set; }
 
-        public DateTime TransactionDate { get; set; }
+        public DateTime? TransactionDate { get; set; }
         public string Source { get; set; }
         public decimal Value { get; set; }
         public bool IsTaxRefund { get; set; }

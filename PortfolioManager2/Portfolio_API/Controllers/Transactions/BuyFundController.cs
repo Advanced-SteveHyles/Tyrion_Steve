@@ -59,18 +59,19 @@ namespace Portfolio_API.Controllers.Transactions
                 //}
                 //*/
 
-                var accountId = -10000;
+                var createFundBuyTransaction = new CreateFundBuyTransaction
+                    (purchaseRequest,
+                        new AccountHandler(_accountRepository),
+                        new CashTransactionHandler(_cashTransactionRepository),
+                        new AccountInvestmentMapHandler(_accountInvestmentMapRepository),
+                        new FundTransactionHandler(_fundTransactionRepository),
+                        new PriceHistoryHandler(_priceHistoryRepository),
+                        new InvestmentHandler(_investmentRepository)
+                    );
+
                 var status = Command.ExecuteCommand
                     (
-                        new CreateFundBuyTransaction
-                        (purchaseRequest,
-                             new AccountHandler(_accountRepository),
-                             new CashTransactionHandler(_cashTransactionRepository),
-                             new AccountInvestmentMapHandler(_accountInvestmentMapRepository),
-                             new FundTransactionHandler(_fundTransactionRepository),
-                             new PriceHistoryHandler(_priceHistoryRepository),
-                             new InvestmentHandler(_investmentRepository)
-                        )
+                        createFundBuyTransaction    
                     );
 
                 if (status)

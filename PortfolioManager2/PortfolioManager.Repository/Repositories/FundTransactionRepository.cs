@@ -29,9 +29,22 @@ namespace PortfolioManager.Repository.Repositories
                 TransactionValue = request.TransactionValue
             };
 
-            _context.FundTransactions.Add(fundTransaction);
+            if (request.SettlementDate < request.TransactionDate)
+            {
+                request.SettlementDate = request.TransactionDate;
+            }
 
-            return new RepositoryActionResult<FundTransaction>(fundTransaction, RepositoryActionStatus.Created);
+            _context.FundTransactions.Add(fundTransaction);
+            var result = _context.SaveChanges();
+
+            if (result > 0)
+            {
+                return new RepositoryActionResult<FundTransaction>(fundTransaction, RepositoryActionStatus.Created);
+            }
+            else
+            {
+                return new RepositoryActionResult<FundTransaction>(fundTransaction, RepositoryActionStatus.NothingModified, null);
+            }
         }
     }
 }

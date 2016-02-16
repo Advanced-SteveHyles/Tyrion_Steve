@@ -21,5 +21,5 @@ namespace Portfolio_API.Controllers.Transactions
                 return false;
             }            
         }
-    }
+    }   
 }

@@ -34,12 +34,13 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
+            
             var investmentMapDto = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
             var investmentId = investmentMapDto.InvestmentId;
             var accountId = investmentMapDto.AccountId;
 
-            _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);
             _cashTransactionHandler.StoreCashTransaction(accountId, _fundBuyRequest);
+            _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);            
             _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
