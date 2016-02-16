@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Interfaces;
 
 namespace Portfolio_API.Controllers.Transactions
@@ -10,7 +11,11 @@ namespace Portfolio_API.Controllers.Transactions
         {
             try
             {
-                if (!command.CommandValid) return false;
+                if (!command.CommandValid)
+                {
+                    ErrorLog.LogError(new  InvalidDataException());
+                    return false;
+                }
 
                 command.Execute();
                 return command.ExecuteResult;

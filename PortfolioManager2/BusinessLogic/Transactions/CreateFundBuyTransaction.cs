@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Commands;
+﻿using System;
+using BusinessLogic.Commands;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
@@ -64,7 +65,9 @@ namespace BusinessLogic.Transactions
         }
 
         public bool CommandValid =>
-            _fundBuyRequest.InvestmentMapId != 0;
+            _fundBuyRequest.InvestmentMapId != 0 &&
+            _fundBuyRequest.PurchaseDate != DateTime.MinValue &&
+            _fundBuyRequest.SettlementDate != DateTime.MinValue;
 
         public bool ExecuteResult { get; private set; }
 
