@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using PortfolioManager.DTO.DTOs;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
 
@@ -26,13 +25,12 @@ namespace PortfolioManager.Repository.Repositories
             }
         }
 
-        public IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId)
+        public IQueryable<AccountInvestmentMap> GetAccountInvestmentMapsByInvestmentId(int investmentId)
         {
             var accountInvestmentMaps = _context.AccountInvestmentMaps
                 .Where(accountInvestmentMap => accountInvestmentMap.InvestmentId == investmentId);
 
-            return accountInvestmentMaps
-               .Select(accountInvestmentMap => MapToDto2(accountInvestmentMap));
+            return accountInvestmentMaps;               
         }
 
         public IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps()
@@ -40,11 +38,6 @@ namespace PortfolioManager.Repository.Repositories
             return _context.AccountInvestmentMaps;
         }
 
-        private static AccountInvestmentMapDto MapToDto2(AccountInvestmentMap accountInvestmentMap)
-        {
-            return accountInvestmentMap.MapToDto();
-        }
-        
         public AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId)
         {
             return _context.AccountInvestmentMaps.SingleOrDefault(aiv => aiv.AccountInvestmentMapId == accountInvestmentMapId);

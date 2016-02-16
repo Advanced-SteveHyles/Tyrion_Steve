@@ -28,12 +28,7 @@ namespace PortfolioManager.Repository.Repositories
                 Charges = request.Charges,
                 TransactionValue = request.TransactionValue
             };
-
-            if (request.SettlementDate < request.TransactionDate)
-            {
-                request.SettlementDate = request.TransactionDate;
-            }
-
+            
             _context.FundTransactions.Add(fundTransaction);
             var result = _context.SaveChanges();
 

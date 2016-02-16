@@ -44,7 +44,7 @@ namespace BusinessLogic.Transactions
             _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
-            var investment = _investmentHandler.GetInvestment(accountId);
+            var investment = _investmentHandler.GetInvestment(investmentId);
 
             var priceRequest = new PriceHistoryRequest
             {

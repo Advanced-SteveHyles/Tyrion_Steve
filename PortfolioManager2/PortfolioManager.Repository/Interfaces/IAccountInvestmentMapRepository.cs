@@ -10,7 +10,7 @@ namespace PortfolioManager.Repository.Interfaces
         AccountInvestmentMap GetAccountInvestmentMap(int accountInvestmentMapId);
         void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap);
         RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap);
-        IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId);
+        IQueryable<AccountInvestmentMap> GetAccountInvestmentMapsByInvestmentId(int investmentId);
         IQueryable<AccountInvestmentMap> GetAccountInvestmentMaps();
     }
 }

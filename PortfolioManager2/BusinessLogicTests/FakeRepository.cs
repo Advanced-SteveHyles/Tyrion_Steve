@@ -26,7 +26,7 @@ namespace BusinessLogicTests
         private List<CashTransaction> _dummyCashTransactions;
 
         private readonly List<PriceHistory> _dummyPriceHistoryList;
-        private readonly List<AccountInvestmentMapDto> _investmentMaps;
+        private readonly List<AccountInvestmentMap> _investmentMaps;
 
         readonly List<Account> _accounts;
 
@@ -48,46 +48,46 @@ namespace BusinessLogicTests
             };
         }
 
-        private static List<AccountInvestmentMapDto> FakePopulatedInvestmentMap()
+        private static List<AccountInvestmentMap> FakePopulatedInvestmentMap()
         {
-            return new List<AccountInvestmentMapDto>
+            return new List<AccountInvestmentMap>
             {
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 1,
                     InvestmentId = 1,
                     AccountId = 1,
                     Quantity = 10,
                 },
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 2,
                     InvestmentId = 1,
                     AccountId = 2,
                     Quantity = 5,
                 },
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 3,
                     InvestmentId = 2,
                     AccountId = 1,
                     Quantity = 10,
                 },
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 4,
                     InvestmentId = 1,
                     AccountId = 3,
                     Quantity = (decimal)25.4,
                 },
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 88,
                     InvestmentId = 1,
                     AccountId = 4,
                     Quantity = (decimal)1.78923,
                 },
-                new AccountInvestmentMapDto()
+                new AccountInvestmentMap()
                 {
                     AccountInvestmentMapId = 89,
                     InvestmentId = 3,
@@ -233,7 +233,7 @@ namespace BusinessLogicTests
             map.Quantity = investmentMap.Quantity;
 
             _investmentMaps.RemoveAll(f => f.AccountInvestmentMapId == map.AccountInvestmentMapId);
-            _investmentMaps.Add(map.MapToDto());
+            _investmentMaps.Add(map);
         }
 
         public RepositoryActionResult<AccountInvestmentMap> InsertAccountInvestmentMap(AccountInvestmentMap entityAccountInvestmentMap)
@@ -247,12 +247,12 @@ namespace BusinessLogicTests
                 Valuation = entityAccountInvestmentMap.Valuation
             };
 
-            _investmentMaps.Add(map.MapToDto());
+            _investmentMaps.Add(map);
 
             return new RepositoryActionResult<AccountInvestmentMap>(map, RepositoryActionStatus.Created);
         }
 
-        public IQueryable<AccountInvestmentMapDto> GetAccountInvestmentMapsByInvestmentId(int investmentId)
+        public IQueryable<AccountInvestmentMap> GetAccountInvestmentMapsByInvestmentId(int investmentId)
         {
             return _investmentMaps.Where(inv => inv.InvestmentId == investmentId).AsQueryable();
         }
@@ -325,7 +325,7 @@ namespace BusinessLogicTests
             _investment.Type = type;
         }
 
-        public List<AccountInvestmentMapDto> GetAllAccountInvestmentMaps()
+        public List<AccountInvestmentMap> GetAllAccountInvestmentMaps()
         {
             return _investmentMaps;
         }

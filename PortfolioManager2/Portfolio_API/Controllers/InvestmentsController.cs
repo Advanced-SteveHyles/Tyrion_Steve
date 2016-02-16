@@ -121,7 +121,7 @@ namespace Portfolio_API.Controllers
                 var result = _repository.InsertInvestment(entityInvestment);
                 if (result.Status == RepositoryActionStatus.Created)
                 {
-                    var dtoInvestment = EntityToDtoMap.MapInvestmentToDto(result.Entity);
+                    var dtoInvestment = result.Entity.MapToDto();
                     return Created(Request.RequestUri + "/" + dtoInvestment.InvestmentId, dtoInvestment);
                 }
                 else

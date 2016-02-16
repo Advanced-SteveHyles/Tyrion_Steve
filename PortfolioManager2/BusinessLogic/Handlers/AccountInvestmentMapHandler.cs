@@ -42,7 +42,10 @@ namespace BusinessLogic
 
         public List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId)
         {
-            return _accountInvestmentMapRepository.GetAccountInvestmentMapsByInvestmentId(investmentId).ToList();
+            return _accountInvestmentMapRepository
+                    .GetAccountInvestmentMapsByInvestmentId(investmentId)
+                    .Select(aiv => aiv.MapToDto())
+                    .ToList();
         }
 
         public List<AccountInvestmentMapDto> GetMapsByAccountId(int accountId)

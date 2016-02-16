@@ -152,7 +152,7 @@ namespace BusinessLogicTests.Transactions.Fund
             var startingNumberOfShares = 10;
             var accountFundMap = _fakeRepository.GetAccountInvestmentMap(_existingInvestmentMapId);
             Assert.Equal(_numberOfShares+ startingNumberOfShares, accountFundMap.Quantity);
-            Assert.Equal(0, accountFundMap.Valuation);
+            Assert.Equal(null, accountFundMap.Valuation);
         }
 
         [Fact]

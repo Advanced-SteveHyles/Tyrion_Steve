@@ -61,6 +61,13 @@ namespace BusinessLogic
                 TransactionValue = transactionValue,                
             };
 
+
+
+            if (fundTransaction.SettlementDate < fundTransaction.TransactionDate)
+            {
+                fundTransaction.SettlementDate = fundTransaction.TransactionDate;
+            }
+
             _repository.InsertFundTransaction(fundTransaction);
         }
     }
