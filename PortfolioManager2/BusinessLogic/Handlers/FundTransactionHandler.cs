@@ -60,9 +60,7 @@ namespace BusinessLogic
                 Charges = charges,
                 TransactionValue = transactionValue,                
             };
-
-
-
+            
             if (fundTransaction.SettlementDate < fundTransaction.TransactionDate)
             {
                 fundTransaction.SettlementDate = fundTransaction.TransactionDate;

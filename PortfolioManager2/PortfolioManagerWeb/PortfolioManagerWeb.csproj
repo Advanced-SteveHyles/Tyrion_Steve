@@ -328,12 +328,13 @@
     <Content Include="Views\Accounts\Create.cshtml" />
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
     <Content Include="Views\AccountTransaction\WithdrawFunds.cshtml" />
-    <Content Include="Views\AccountTransaction\Summary\AccountTransactionSummary.cshtml" />
+    <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AccountTransaction\Summary\" />
     <Folder Include="Views\FundTransactions\" />
   </ItemGroup>
   <ItemGroup>

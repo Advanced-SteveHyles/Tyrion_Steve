@@ -30,7 +30,7 @@ namespace BusinessLogic
             var investmentMap = _accountInvestmentMapRepository.GetAccountInvestmentMap(investmentMapId);
 
             var valuation = investmentMap.Quantity*currentSellPrice;
-            investmentMap.Valuation = valuation ;        
+            investmentMap.Valuation = valuation??0 ;        
             _accountInvestmentMapRepository.UpdateAccountInvestmentMap(investmentMap);
 
             return valuation ??0;

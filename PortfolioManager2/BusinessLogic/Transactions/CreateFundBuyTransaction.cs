@@ -52,7 +52,8 @@ namespace BusinessLogic.Transactions
             {
                 InvestmentId = investmentId,
                 BuyPrice = _fundBuyRequest.Price,
-                SellPrice = (investment.Type == "OEIC") ? _fundBuyRequest.Price : new decimal?(),
+                SellPrice = (investment.Class == "OEIC") ? _fundBuyRequest.Price : new decimal?(),
+                ValuationDate = _fundBuyRequest.PurchaseDate
             };
 
             _priceHistoryHandler.StorePriceHistory(priceRequest);
