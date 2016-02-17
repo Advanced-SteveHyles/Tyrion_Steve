@@ -8,6 +8,7 @@ using Interfaces;
 using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
+using PortfolioManager.Repository.Repositories;
 
 namespace Portfolio_API.Controllers.Transactions
 {

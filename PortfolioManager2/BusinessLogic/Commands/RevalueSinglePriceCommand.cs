@@ -28,19 +28,20 @@ namespace BusinessLogic.Commands
 
             foreach (var map in accountsMappedToInvestment)
             {
-                RemovePreviousValuationFromAccount(map.AccountId, map.Valuation);
+                var currentValuation = map.Valuation??0;
+                RemovePreviousValuationFromAccount(map.AccountId, currentValuation);
 
-                var mapValue = _investmentMapHandler.RevalueMap(map.AccountInvestmentMapId, currentSellPrice);
+                var newValuation = _investmentMapHandler.RevalueMap(map.AccountInvestmentMapId, currentSellPrice);
 
-                AddNewValuationToAccount(map.AccountId, mapValue);
+                AddNewValuationToAccount(map.AccountId, newValuation);
             }
 
             ExecuteResult = true;
         }
 
-        private void AddNewValuationToAccount(int accountId, decimal mapValue)
+        private void AddNewValuationToAccount(int accountId, decimal valuation)
         {
-            _accountHandler.IncreaseValuation(accountId, mapValue);
+            _accountHandler.IncreaseValuation(accountId, valuation);
         }
 
         private void RemovePreviousValuationFromAccount(int accountId, decimal valuation)

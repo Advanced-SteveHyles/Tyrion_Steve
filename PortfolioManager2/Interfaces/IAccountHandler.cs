@@ -37,8 +37,8 @@ namespace Interfaces
         void ChangeQuantity(int investmentMapId, decimal quantity);
         decimal RevalueMap(int investmentMapId, decimal? currentSellPrice);
         AccountInvestmentMapDto GetAccountInvestmentMap(int investmentMapId);
-        List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId);
-        List<AccountInvestmentMapDto> GetMapsByAccountId(int accountId);
+        List<AccountInvestmentMap> GetMapsByInvestmentId(int investmentId);
+        List<AccountInvestmentMap> GetMapsByAccountId(int accountId);
     }
 
     public interface IPriceHistoryHandler

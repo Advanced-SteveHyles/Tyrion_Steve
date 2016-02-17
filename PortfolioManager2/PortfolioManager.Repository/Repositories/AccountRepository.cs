@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.Repository.Entities;
-using PortfolioManager.Repository.Factories;
 using PortfolioManager.Repository.Interfaces;
 
-namespace PortfolioManager.Repository
+namespace PortfolioManager.Repository.Repositories
 {
     public class AccountRepository : BaseRepository, IAccountRepository
     {
@@ -44,7 +42,6 @@ namespace PortfolioManager.Repository
         public Account GetAccountWithInvestments(int id)
         {
             var account = _context.Accounts.Include("Investments").SingleOrDefault(p => p.AccountId == id);
-
             return account;
         }
 

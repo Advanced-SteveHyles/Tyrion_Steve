@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Schema;
 using BusinessLogic.Commands;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
@@ -64,12 +65,23 @@ namespace BusinessLogic.Transactions
             ExecuteResult = true;
         }
 
-        public bool CommandValid =>
-            _fundBuyRequest.InvestmentMapId != 0 &&
-            _fundBuyRequest.PurchaseDate != DateTime.MinValue &&
-            _fundBuyRequest.SettlementDate != DateTime.MinValue;
-
+        public bool CommandValid => RequestValidator.Validate(_fundBuyRequest);
+            
         public bool ExecuteResult { get; private set; }
+    }
 
+    public class RequestValidator
+    {
+        public static bool Validate(InvestmentBuyRequest fundBuyRequest)
+        {
+            if (fundBuyRequest.SettlementDate < fundBuyRequest.PurchaseDate)
+            {
+                fundBuyRequest.SettlementDate = fundBuyRequest.PurchaseDate;
+            }
+
+            return fundBuyRequest.InvestmentMapId != 0 &&
+                   fundBuyRequest.PurchaseDate != DateTime.MinValue;
+
+        }
     }
 }

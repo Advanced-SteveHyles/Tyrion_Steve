@@ -3,6 +3,7 @@ using System.Linq;
 using Interfaces;
 using PortfolioManager.DTO.DTOs;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic
@@ -40,19 +41,17 @@ namespace BusinessLogic
             return _accountInvestmentMapRepository.GetAccountInvestmentMap(investmentMapId).MapToDto();
         }
 
-        public List<AccountInvestmentMapDto> GetMapsByInvestmentId(int investmentId)
+        public List<AccountInvestmentMap> GetMapsByInvestmentId(int investmentId)
         {
             return _accountInvestmentMapRepository
                     .GetAccountInvestmentMapsByInvestmentId(investmentId)
-                    .Select(aiv => aiv.MapToDto())
                     .ToList();
         }
 
-        public List<AccountInvestmentMapDto> GetMapsByAccountId(int accountId)
+        public List<AccountInvestmentMap> GetMapsByAccountId(int accountId)
         {
             return _accountInvestmentMapRepository.GetAccountInvestmentMaps()
                 .Where(map => map.AccountId == accountId)
-                .Select(map=>map.MapToDto())
                 .ToList();
         }
     }

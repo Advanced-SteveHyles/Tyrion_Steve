@@ -10,6 +10,7 @@ using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
 using PortfolioManager.Repository.Interfaces;
+using PortfolioManager.Repository.Repositories;
 
 namespace Portfolio_API.Controllers
 {

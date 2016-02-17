@@ -10,6 +10,7 @@ using PortfolioManager.DTO.DTOs.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
+using PortfolioManager.Repository.Repositories;
 using Portfolio_API.Controllers.Transactions;
 
 namespace Portfolio_API.Controllers

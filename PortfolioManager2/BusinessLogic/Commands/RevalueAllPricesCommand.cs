@@ -33,8 +33,8 @@ namespace BusinessLogic.Commands
             foreach (var account in _accountHandler.GetAccounts().ToList())
             {
                 var investmentMaps = _investmentMapHandler.GetMapsByAccountId(account.AccountId);
-                var valuation = investmentMaps.Sum(inv => inv.Valuation);
-
+                var valuation = investmentMaps.Sum(inv => inv.Valuation) ?? 0;
+                
                 _accountHandler.SetValuation(account.AccountId, valuation);
             }
         }
