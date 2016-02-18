@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -11,7 +12,13 @@ namespace PortfolioManagerWeb.Controllers.Investments
     {
         public ActionResult Buy(int? investmentMapId)
         {
-            return View();
+            var investmentBuyRequest = new InvestmentBuyRequest()
+            {
+                PurchaseDate = DateTime.Today,
+                SettlementDate    = DateTime.Today,
+            };
+
+            return View(investmentBuyRequest);
         }
 
         [HttpPost]

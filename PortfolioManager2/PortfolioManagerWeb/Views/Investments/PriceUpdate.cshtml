@@ -1,0 +1,55 @@
+﻿@model PortfolioManagerWeb.Models.InvestmentPriceUpdateList
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Price Update</h2>
+
+<div class="form-horizontal">
+    {
+    @Html.AntiForgeryToken()
+
+    @foreach (var item in Model.Investments)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvestmentName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestSellPrice)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestSellPriceDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestBuyPrice)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestBuyPriceDate)
+            </td>
+
+            <td>
+                @Html.LabelFor(model => item.NewSellPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.NewSellPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => item.NewSellPrice, "", new { @class = "text-danger" })
+                </div>
+            </td>
+
+            <td>
+                @Html.LabelFor(model => item.NewBuyPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.NewBuyPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => item.NewBuyPrice, "", new { @class = "text-danger" })
+                </div>
+            </td>
+        </tr>
+    }
+</div>
+}

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Interfaces;
+using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using PagedList;
 using PortfolioManager.DTO;
@@ -85,5 +87,24 @@ namespace PortfolioManagerWeb.Controllers.Investments
                 return Content("An error occurred.");
             }
         }
+
+        public ActionResult PriceUpdate()
+        {
+            var x = new InvestmentPriceUpdateList();
+            var y = new InvestmentPriceUpdate
+            {
+                InvestmentName = "Happy",
+                LatestBuyPrice = (decimal) 1.20,
+                LatestSellPrice = (decimal) 1.09,
+                LatestBuyPriceDate = DateTime.Today,
+                LatestSellPriceDate = DateTime.Today.AddDays(-4)
+            };
+
+            x.Investments.Add(y);
+            
+            return View(x);
+        }
+
+        
     }
 }

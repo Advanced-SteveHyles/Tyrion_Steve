@@ -239,6 +239,7 @@
     <Compile Include="Controllers\Investments\InvestmentsMapController.cs" />
     <Compile Include="Controllers\Transactions\TransactionsController.cs" />
     <Compile Include="Models\AccountsViewModel.cs" />
+    <Compile Include="Models\InvestmentPriceUpdate.cs" />
     <Compile Include="Models\Transactions\InvestmentBuyViewModel.cs" />
     <Compile Include="Models\InvestmentsViewModel.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
+    <Content Include="Views\Investments\PriceUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
