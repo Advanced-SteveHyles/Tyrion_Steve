@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using PagedList;
 using PortfolioManager.DTO;
+using PortfolioManager.DTO.DTOs.PriceUpdates;
 using PortfolioManagerWeb.Helpers;
 using PortfolioManagerWeb.Models;
 
@@ -101,10 +102,17 @@ namespace PortfolioManagerWeb.Controllers.Investments
             };
 
             x.Investments.Add(y);
-            
+            x.Investments.Add(y);
+
             return View(x);
         }
 
-        
+        [HttpPost]
+        public Task<ActionResult> PriceUpdate(InvestmentPriceUpdateList updates)
+        {
+            return null;
+        }
+
+
     }
 }

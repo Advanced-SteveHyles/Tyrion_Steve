@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Ajax.Utilities;
 
-namespace PortfolioManagerWeb.Models
+namespace PortfolioManager.DTO.DTOs.PriceUpdates
 {
-    public class InvestmentPriceUpdateList
-    {
-        public List<InvestmentPriceUpdate> Investments { get; } = new List<InvestmentPriceUpdate>();
-    }
-
     public class InvestmentPriceUpdate
     {
         public string InvestmentName { get; set; }

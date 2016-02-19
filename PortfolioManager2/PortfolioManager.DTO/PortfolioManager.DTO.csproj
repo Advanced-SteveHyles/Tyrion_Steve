@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="DTOs\AccountDto.cs" />
     <Compile Include="DTOs\AccountInfoWithAllInvestmentDto.cs" />
+    <Compile Include="DTOs\PriceUpdates\InvestmentPriceUpdate.cs" />
+    <Compile Include="DTOs\PriceUpdates\InvestmentPriceUpdateList.cs" />
     <Compile Include="Requests\AccountInvestmentMapRequest.cs" />
     <Compile Include="DTOs\Transactions\AccountTransactionSummaryDto.cs" />
     <Compile Include="DTOs\Transactions\TransactionDTO.cs" />
