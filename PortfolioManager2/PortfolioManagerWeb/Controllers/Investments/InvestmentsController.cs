@@ -24,7 +24,6 @@ namespace PortfolioManagerWeb.Controllers.Investments
             HttpResponseMessage response = await client.GetAsync(ApiPaths.Investments +"?page=" + page + "&pagesize=5");
             //"?sort=expensegroupstatusid"+ ",title&page=" + page + "&pagesize=5");
 
-
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
@@ -87,30 +86,6 @@ namespace PortfolioManagerWeb.Controllers.Investments
             {
                 return Content("An error occurred.");
             }
-        }
-
-        public ActionResult PriceUpdate()
-        {
-            var x = new InvestmentPriceUpdateList();
-            var y = new InvestmentPriceUpdate
-            {
-                InvestmentName = "Happy",
-                LatestBuyPrice = (decimal) 1.20,
-                LatestSellPrice = (decimal) 1.09,
-                LatestBuyPriceDate = DateTime.Today,
-                LatestSellPriceDate = DateTime.Today.AddDays(-4)
-            };
-
-            x.Investments.Add(y);
-            x.Investments.Add(y);
-
-            return View(x);
-        }
-
-        [HttpPost]
-        public Task<ActionResult> PriceUpdate(InvestmentPriceUpdateList updates)
-        {
-            return null;
         }
 
 

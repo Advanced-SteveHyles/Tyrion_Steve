@@ -4,6 +4,8 @@ namespace PortfolioManager.DTO.DTOs.PriceUpdates
 {
     public class InvestmentPriceUpdate
     {
+        public int InvestmentId { get; set; }
+
         public string InvestmentName { get; set; }
         public decimal LatestSellPrice { get; set; }
         public DateTime LatestSellPriceDate { get; set; }

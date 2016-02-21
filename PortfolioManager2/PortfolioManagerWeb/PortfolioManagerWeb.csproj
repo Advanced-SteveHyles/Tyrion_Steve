@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Accounts\AccountsController.cs" />
     <Compile Include="Controllers\AccountTransaction\AccountTransactionController.cs" />
     <Compile Include="Controllers\Investments\BuyInvestmentController.cs" />
+    <Compile Include="Controllers\PriceUpdate\PriceUpdateController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investments\InvestmentsController.cs" />
@@ -331,7 +332,7 @@
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
-    <Content Include="Views\Investments\PriceUpdate.cshtml" />
+    <Content Include="Views\PriceUpdate\PriceUpdateList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
