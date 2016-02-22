@@ -34,6 +34,28 @@ namespace BusinessLogic
                 FundTransactionTypes.Buy);
             }
 
+        public void StoreFundTransaction(CorporateActionRequest _request)
+        {
+            int? sellPrice = null;
+            int? buyPrice = null;
+            var source = string.Empty;
+            var quantity = 0;
+            
+            var charges = 0;
+
+            StoreFundTransaction(
+                _request.InvestmentMapId,
+                _request.TransactionDate,
+                _request.TransactionDate,
+                source,
+                _request.Amount,
+                quantity,
+                sellPrice,
+                buyPrice,
+                charges,
+                FundTransactionTypes.CorporateAction);
+        }
+
         private void StoreFundTransaction(
             int investmentMapId,
             DateTime transactionDate,

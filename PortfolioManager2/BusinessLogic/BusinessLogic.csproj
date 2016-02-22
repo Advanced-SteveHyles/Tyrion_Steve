@@ -54,6 +54,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handlers\CashTransactionHandler.cs" />
     <Compile Include="Commands\RevalueSinglePriceCommand.cs" />
+    <Compile Include="Validators\CorporateActionRequestValidator.cs" />
+    <Compile Include="Validators\InvestmentBuyRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Constants\PortfolioManager.Constants.csproj">

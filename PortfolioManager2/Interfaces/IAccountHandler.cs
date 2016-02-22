@@ -25,6 +25,7 @@ namespace Interfaces
         void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest);
         void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
         void StoreCashTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
+        void StoreCashTransaction(int accountId, CorporateActionRequest corporateActionRequest);
     }
 
     public interface IFundTransactionHandler

@@ -54,6 +54,19 @@ namespace BusinessLogic
                           );
         }
 
+        public void StoreCashTransaction(int accountId, CorporateActionRequest corporateActionRequest)
+        {
+            var source = string.Empty;
+            StoreCashTransaction(
+                          accountId,
+                          corporateActionRequest.TransactionDate,
+                          source,
+                          corporateActionRequest.Amount,
+                          false,
+                          CashTransactionTypes.CorporateAction
+                          );
+        }
+
         private void StoreCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType )
         {
             var cashTransaction = new CreateCashTransactionRequest()

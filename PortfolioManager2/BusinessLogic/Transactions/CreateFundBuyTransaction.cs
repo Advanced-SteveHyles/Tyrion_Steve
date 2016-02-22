@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Schema;
 using BusinessLogic.Commands;
+using BusinessLogic.Validators;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;

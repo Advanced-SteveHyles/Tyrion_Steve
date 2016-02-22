@@ -26,3 +26,7 @@ to match route info.!
 10a) Ensure key is mapped in the call
 @Html.ActionLink("Buy", "Buy", "BuyInvestment", new { investmentMapId = item.AccountInvestmentMapId }, null)
 10b) and name investmentMapId actually exists in the dto
+
+
+http://www.mikesdotnetting.com/Article/202/Inline-Editing-With-The-WebGrid
+http://haacked.com/archive/2011/01/06/razor-syntax-quick-reference.aspx/
