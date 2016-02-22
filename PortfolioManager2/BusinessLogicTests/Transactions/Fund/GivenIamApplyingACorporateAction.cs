@@ -33,7 +33,7 @@ namespace BusinessLogicTests.Transactions.Fund
             };
 
             _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
-            _transaction = new CorporateActionTransaction(request, _fundTransactionHandler);
+            //_transaction = new CorporateActionTransaction(request, _fundTransactionHandler);
 
             if (execute) _transaction.Execute();
         }

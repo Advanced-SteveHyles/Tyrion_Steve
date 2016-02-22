@@ -324,7 +324,6 @@
     <Content Include="Views\Portfolios\Details.cshtml" />
     <Content Include="Views\Accounts\Details.cshtml" />
     <Content Include="Views\BuyInvestment\Buy.cshtml" />
-    <Content Include="Views\InvestmentsMap\Sell.cshtml" />
     <Content Include="Views\Portfolios\Create.cshtml" />
     <Content Include="Views\Accounts\Create.cshtml" />
     <Content Include="Views\AccountTransaction\DepositFunds.cshtml" />
@@ -338,6 +337,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountTransaction\Summary\" />
     <Folder Include="Views\FundTransactions\" />
+    <Folder Include="Views\InvestmentsMap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -22,13 +22,13 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {
-            var investmentMapDto = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
-            var investmentId = investmentMapDto.InvestmentId;
-            var accountId = investmentMapDto.AccountId;
+         //   var investmentMapDto = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
+        //    var investmentId = investmentMapDto.InvestmentId;
+       //     var accountId = investmentMapDto.AccountId;
 
             _fundTransactionHandler.StoreFundTransaction(_request);
 
-            _cashTransactionHandler.StoreCashTransaction(accountId, _request);
+       //     _cashTransactionHandler.StoreCashTransaction(accountId, _request);
         }
 
         public bool CommandValid => _request.Validate();
