@@ -45,6 +45,7 @@
     <Compile Include="Handlers\AccountInvestmentMapHandler.cs" />
     <Compile Include="Handlers\FundTransactionHandler.cs" />
     <Compile Include="Handlers\PriceHistoryHandler.cs" />
+    <Compile Include="Transactions\CorporateActionTransaction.cs" />
     <Compile Include="Transactions\CreateDepositTransaction.cs" />
     <Compile Include="Handlers\AccountHandler.cs" />
     <Compile Include="Transactions\CreateFundBuyTransaction.cs" />

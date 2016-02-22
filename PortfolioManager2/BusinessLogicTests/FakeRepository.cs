@@ -320,9 +320,9 @@ namespace BusinessLogicTests
             return null;
         }
 
-        public void SetInvestmentType(int fakeInvestmentId, string type)
+        public void SetInvestmentType(int fakeInvestmentId, string investmentClass)
         {
-            _investment.Type = type;
+            _investment.Class = investmentClass;
         }
 
         public List<AccountInvestmentMap> GetAllAccountInvestmentMaps()

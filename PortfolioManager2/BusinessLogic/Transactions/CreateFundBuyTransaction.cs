@@ -66,23 +66,9 @@ namespace BusinessLogic.Transactions
             ExecuteResult = true;
         }
 
-        public bool CommandValid => RequestValidator.Validate(_fundBuyRequest);
+        public bool CommandValid => _fundBuyRequest.Validate();
             
         public bool ExecuteResult { get; private set; }
     }
-
-    public class RequestValidator
-    {
-        public static bool Validate(InvestmentBuyRequest fundBuyRequest)
-        {
-            if (fundBuyRequest.SettlementDate < fundBuyRequest.PurchaseDate)
-            {
-                fundBuyRequest.SettlementDate = fundBuyRequest.PurchaseDate;
-            }
-
-            return fundBuyRequest.InvestmentMapId != 0 &&
-                   fundBuyRequest.PurchaseDate != DateTime.MinValue;
-
-        }
-    }
+    
 }

@@ -20,9 +20,29 @@ namespace PortfolioManagerWeb.Controllers.Investments
                 LatestBuyPriceDate = DateTime.Today,
                 LatestSellPriceDate = DateTime.Today.AddDays(-4)
             };
+            x.Investments.Add(y);
 
+            y = new InvestmentPriceUpdate
+            {
+                InvestmentId = 51,
+                InvestmentName = "Happy X",
+                LatestBuyPrice = (decimal)1.20,
+                LatestSellPrice = (decimal)1.09,
+                LatestBuyPriceDate = DateTime.Today,
+                LatestSellPriceDate = DateTime.Today.AddDays(-4)
+            };
             x.Investments.Add(y);
-            x.Investments.Add(y);
+
+            y = new InvestmentPriceUpdate
+            {
+                InvestmentId = 52,
+                InvestmentName = "Happy Z",
+                LatestBuyPrice = (decimal)1.20,
+                LatestSellPrice = (decimal)1.09,
+                LatestBuyPriceDate = DateTime.Today,
+                LatestSellPriceDate = DateTime.Today.AddDays(-4)
+            };
+
             x.Investments.Add(y);
 
             return View(x);
