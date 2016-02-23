@@ -64,6 +64,7 @@
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.PortfolioAcountId }) |*@
                 @*@Html.ActionLink("Details", "Details", new { id = item.PortfolioAcountId }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.PortfolioAcountId })*@
+                @Html.ActionLink("Price", "EditPrice", "PriceUpdate",  new {id = item.InvestmentId} , null)
             </td>
         </tr>
     }

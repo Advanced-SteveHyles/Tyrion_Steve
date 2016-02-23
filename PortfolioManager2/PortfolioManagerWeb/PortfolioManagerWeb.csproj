@@ -331,7 +331,7 @@
     <Content Include="Views\Transactions\AccountTransactionSummary.cshtml" />
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
-    <Content Include="Views\PriceUpdate\PriceUpdateList.cshtml" />
+    <Content Include="Views\PriceUpdate\EditPrice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
