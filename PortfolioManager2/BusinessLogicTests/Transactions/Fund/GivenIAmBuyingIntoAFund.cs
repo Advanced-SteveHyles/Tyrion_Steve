@@ -23,9 +23,9 @@ namespace BusinessLogicTests.Transactions.Fund
         private int _accountId;
 
         private IAccountHandler _accountHandler;        
-        private ICashTransactionHandler _cashCashTransactionHandler;
-        private IAccountInvestmentMapHandler _accountInvestmentMapHandler;
-        private IFundTransactionHandler _fundTransactionHandler;
+        private ICashTransactionProcessor _cashCashTransactionProcessor;
+        private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
+        private IFundTransactionProcessor _fundTransactionProcessor;
         private IInvestmentHandler _investmentHandler;
 
         private DateTime _settlementDate;
@@ -56,15 +56,15 @@ namespace BusinessLogicTests.Transactions.Fund
             };
             
             _accountHandler = new AccountHandler(_fakeRepository);
-            _cashCashTransactionHandler = new CashTransactionHandler(_fakeRepository);
-            _accountInvestmentMapHandler = new AccountInvestmentMapHandler(_fakeRepository);
-            _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
+            _cashCashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
+            _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
+            _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
             _investmentHandler = new InvestmentHandler(_fakeRepository);
 
             _buyTransaction = new CreateFundBuyTransaction(request, _accountHandler,
-                        _cashCashTransactionHandler, _accountInvestmentMapHandler,
-                        _fundTransactionHandler, _priceHistoryHandler,
+                        _cashCashTransactionProcessor, _accountInvestmentMapProcessor,
+                        _fundTransactionProcessor, _priceHistoryHandler,
                         _investmentHandler);
 
             if (execute) _buyTransaction.Execute();
@@ -91,7 +91,7 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             SetupAndOrExecute(true);
 
-            var cashTransactionId = -1;
+            var cashTransactionId = 1;
             var transaction = _fakeRepository.GetCashTransaction(cashTransactionId);
             Assert.Equal(_accountId, transaction.AccountId);
             Assert.Equal(_transactionDate, transaction.TransactionDate);

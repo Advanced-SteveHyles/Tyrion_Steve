@@ -55,7 +55,7 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
         {
             var revalueAllPricesCommand = new RevalueAllPricesCommand(
                 DateTime.Now,
-                investmentMapHandler: new AccountInvestmentMapHandler(_fakeRepository),
+                investmentMapProcessor: new AccountInvestmentMapProcessor(_fakeRepository),
                 investmentHandler: new InvestmentHandler(_fakeRepository),
                 priceHistoryHandler: new PriceHistoryHandler(_fakeRepository),
                 accountHandler: new AccountHandler(_fakeRepository)

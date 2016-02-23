@@ -1,6 +1,8 @@
 ﻿using System;
 using BusinessLogic;
+using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
+using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Transactions;
 using Xunit;
@@ -14,7 +16,9 @@ namespace BusinessLogicTests.Transactions.Fund
         decimal _corporateActionAmount = (decimal)50;
         DateTime _transactionDate = DateTime.Now;
         int _existingInvestmentMapId = 1;
-        private FundTransactionHandler _fundTransactionHandler;
+        private IFundTransactionProcessor _fundTransactionProcessor;
+        private ICashTransactionProcessor _cashTransactionProcessor;
+        private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor ;
         private int _accountId = 1;
         //Summary of action
         //  Reduce the amount of money invested in the fund
@@ -32,9 +36,16 @@ namespace BusinessLogicTests.Transactions.Fund
                 TransactionDate = _transactionDate
             };
 
-            _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
-            //_transaction = new CorporateActionTransaction(request, _fundTransactionHandler);
+            _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
+            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
+            _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
 
+            _transaction = new CorporateActionTransaction(
+                request, 
+                _fundTransactionProcessor, 
+                _cashTransactionProcessor,
+                _accountInvestmentMapProcessor);
+            
             if (execute) _transaction.Execute();
         }
 
@@ -66,7 +77,7 @@ namespace BusinessLogicTests.Transactions.Fund
         {
             SetupAndOrExecute(true);
 
-            var cashTransactionId = -1;
+            const int cashTransactionId = 1;
             var transaction = _fakeRepository.GetCashTransaction(cashTransactionId);
             Assert.Equal(_accountId, transaction.AccountId);
             Assert.Equal(_transactionDate, transaction.TransactionDate);

@@ -8,19 +8,19 @@ namespace BusinessLogic.Transactions
     {
         private readonly WithdrawalTransactionRequest _withdrawalTransactionRequest;
         private readonly IAccountHandler _accountHandler;
-        private readonly ICashTransactionHandler _transactionHandler;
+        private readonly ICashTransactionProcessor _transactionProcessor;
 
         public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
-            IAccountHandler accountHandler, ICashTransactionHandler transactionHandler)
+            IAccountHandler accountHandler, ICashTransactionProcessor transactionProcessor)
         {
             this._withdrawalTransactionRequest = withdrawalTransactionRequest;
             _accountHandler = accountHandler;
-            _transactionHandler = transactionHandler;
+            _transactionProcessor = transactionProcessor;
         }
 
         public void Execute()
         {
-            _transactionHandler.StoreCashTransaction(_withdrawalTransactionRequest);
+            _transactionProcessor.StoreCashTransaction(_withdrawalTransactionRequest);
             _accountHandler.DecreaseAccountBalance(
                 _withdrawalTransactionRequest.AccountId,
                 _withdrawalTransactionRequest.Value);

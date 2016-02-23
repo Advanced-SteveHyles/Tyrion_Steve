@@ -6,15 +6,15 @@ namespace BusinessLogic.Commands
 {
     public class RevalueAllPricesCommand : ICommandRunner
     {
-        private readonly IAccountInvestmentMapHandler _investmentMapHandler;
+        private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
         private readonly IInvestmentHandler _investmentHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IAccountHandler _accountHandler;
         private readonly DateTime _evaluationDate;
         
-        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapHandler investmentMapHandler, IInvestmentHandler investmentHandler, IPriceHistoryHandler priceHistoryHandler, IAccountHandler accountHandler)
+        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentHandler investmentHandler, IPriceHistoryHandler priceHistoryHandler, IAccountHandler accountHandler)
         {
-            _investmentMapHandler = investmentMapHandler;
+            _investmentMapProcessor = investmentMapProcessor;
             _investmentHandler = investmentHandler;
             _priceHistoryHandler = priceHistoryHandler;
             _accountHandler = accountHandler;
@@ -32,7 +32,7 @@ namespace BusinessLogic.Commands
         {
             foreach (var account in _accountHandler.GetAccounts().ToList())
             {
-                var investmentMaps = _investmentMapHandler.GetMapsByAccountId(account.AccountId);
+                var investmentMaps = _investmentMapProcessor.GetMapsByAccountId(account.AccountId);
                 var valuation = investmentMaps.Sum(inv => inv.Valuation) ?? 0;
                 
                 _accountHandler.SetValuation(account.AccountId, valuation);
@@ -50,10 +50,10 @@ namespace BusinessLogic.Commands
         private void RevalueMapsForInvestment(int investmentId)
         {
             var investmentSellPriceAtDate = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, _evaluationDate);
-            var investmentMaps = _investmentMapHandler.GetMapsByInvestmentId(investmentId);
+            var investmentMaps = _investmentMapProcessor.GetMapsByInvestmentId(investmentId);
             foreach (var map in investmentMaps)
             {
-                _investmentMapHandler.RevalueMap(map.AccountInvestmentMapId, investmentSellPriceAtDate);
+                _investmentMapProcessor.RevalueMap(map.AccountInvestmentMapId, investmentSellPriceAtDate);
             }
         }
 

@@ -5,18 +5,18 @@ namespace BusinessLogic.Commands
 {
     public class RevalueSinglePriceCommand: ICommandRunner
     {
-        private readonly IAccountInvestmentMapHandler _investmentMapHandler;
+        private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IAccountHandler _accountHandler;
         private readonly int _investmentId;
         private readonly DateTime _valuationDate;
 
 
-        public RevalueSinglePriceCommand(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapHandler investmentMapHandler, IAccountHandler accountHandler)
+        public RevalueSinglePriceCommand(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapProcessor investmentMapProcessor, IAccountHandler accountHandler)
         {
             _investmentId = investmentId;
             _priceHistoryHandler = priceHistoryHandler;
-            _investmentMapHandler = investmentMapHandler;
+            _investmentMapProcessor = investmentMapProcessor;
             _accountHandler = accountHandler;
             _valuationDate = valuationDate;            
         }
@@ -24,14 +24,14 @@ namespace BusinessLogic.Commands
         public void Execute()
         {
             var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(_investmentId, _valuationDate);
-            var accountsMappedToInvestment = _investmentMapHandler.GetMapsByInvestmentId(_investmentId);
+            var accountsMappedToInvestment = _investmentMapProcessor.GetMapsByInvestmentId(_investmentId);
 
             foreach (var map in accountsMappedToInvestment)
             {
                 var currentValuation = map.Valuation??0;
                 RemovePreviousValuationFromAccount(map.AccountId, currentValuation);
 
-                var newValuation = _investmentMapHandler.RevalueMap(map.AccountInvestmentMapId, currentSellPrice);
+                var newValuation = _investmentMapProcessor.RevalueMap(map.AccountInvestmentMapId, currentSellPrice);
 
                 AddNewValuationToAccount(map.AccountId, newValuation);
             }

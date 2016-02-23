@@ -21,9 +21,9 @@ namespace BusinessLogicTests
         , IFundTransactionRepository
         , IPriceHistoryRepository
     {
-        private readonly Investment _investment = new Investment();
-        private FundTransaction _dummyFundTransaction;
+        private readonly Investment _investment = new Investment();        
         private List<CashTransaction> _dummyCashTransactions;
+        private List<FundTransaction> _dummyFundTransactions;
 
         private readonly List<PriceHistory> _dummyPriceHistoryList;
         private readonly List<AccountInvestmentMap> _investmentMaps;
@@ -32,8 +32,8 @@ namespace BusinessLogicTests
 
         public FakeRepository()
         {
-            _dummyFundTransaction = new FundTransaction();
             _dummyCashTransactions = new List<CashTransaction>();
+            _dummyFundTransactions = new List<FundTransaction>();
             _dummyPriceHistoryList = new List<PriceHistory>();
             _investmentMaps = FakePopulatedInvestmentMap();
 
@@ -195,19 +195,25 @@ namespace BusinessLogicTests
             return _investment;
         }
 
+
+        private int nextCashTransactionId;
         public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
+            nextCashTransactionId++;
+            var cashTransaction = new CashTransaction()
+            {
+                CashTransactionId = nextCashTransactionId,
+                AccountId = request.AccountId,
+                TransactionDate = request.TransactionDate,
+                TransactionValue = request.TransactionValue,
+                Source = request.Source,
+                IsTaxRefund = request.IsTaxRefund,
+                TransactionType = request.TransactionType
+            };
             _dummyCashTransactions.Add(
-                new CashTransaction()
-                {
-                    AccountId = request.AccountId,
-                    TransactionDate = request.TransactionDate,
-                    TransactionValue = request.TransactionValue,
-                    Source = request.Source,
-                    IsTaxRefund = request.IsTaxRefund,
-                    TransactionType = request.TransactionType
-                }
+                cashTransaction
                 );
+            
             return null;
         }
 
@@ -267,14 +273,18 @@ namespace BusinessLogicTests
         }
 
         public FundTransaction GetFundTransaction(int fundTransactionId)
-        {
-            return _dummyFundTransaction;
+        {            
+            return _dummyFundTransactions.Single(t => t.FundTransactionId == fundTransactionId);
         }
 
+        private int nextFundTransactionId;
         public RepositoryActionResult<FundTransaction> InsertFundTransaction(CreateFundTransactionRequest request)
         {
-            _dummyFundTransaction = new FundTransaction()
+            nextFundTransactionId++;
+            var dummyFundTransaction = new FundTransaction()
             {
+                FundTransactionId = nextFundTransactionId,
+
                 InvestmentMapId = request.InvestmentMapId,
                 TransactionType = request.TransactionType,
                 TransactionDate = request.TransactionDate,
@@ -286,13 +296,15 @@ namespace BusinessLogicTests
                 Charges = request.Charges,
                 TransactionValue = request.TransactionValue
             };
+            
+            _dummyFundTransactions.Add(dummyFundTransaction);
 
-            return new RepositoryActionResult<FundTransaction>(_dummyFundTransaction, RepositoryActionStatus.Ok);
+            return new RepositoryActionResult<FundTransaction>(dummyFundTransaction, RepositoryActionStatus.Ok);
         }
 
         public CashTransaction GetCashTransaction(int cashTransactionId)
         {
-            return _dummyCashTransactions[0];
+            return _dummyCashTransactions.Single(t => t.CashTransactionId == cashTransactionId);
         }
 
         public IQueryable<PriceHistory> GetInvestmentSellPrices(int investmentId)

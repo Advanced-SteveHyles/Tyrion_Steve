@@ -62,9 +62,9 @@ namespace Portfolio_API.Controllers.Transactions
                 var createFundBuyTransaction = new CreateFundBuyTransaction
                     (purchaseRequest,
                         new AccountHandler(_accountRepository),
-                        new CashTransactionHandler(_cashTransactionRepository),
-                        new AccountInvestmentMapHandler(_accountInvestmentMapRepository),
-                        new FundTransactionHandler(_fundTransactionRepository),
+                        new CashTransactionProcessor(_cashTransactionRepository),
+                        new AccountInvestmentMapProcessor(_accountInvestmentMapRepository),
+                        new FundTransactionProcessor(_fundTransactionRepository),
                         new PriceHistoryHandler(_priceHistoryRepository),
                         new InvestmentHandler(_investmentRepository)
                     );

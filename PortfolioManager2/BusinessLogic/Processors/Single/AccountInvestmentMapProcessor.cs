@@ -8,11 +8,11 @@ using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic
 {
-    public class AccountInvestmentMapHandler : IAccountInvestmentMapHandler
+    public class AccountInvestmentMapProcessor : IAccountInvestmentMapProcessor
     {
         private readonly IAccountInvestmentMapRepository  _accountInvestmentMapRepository;
 
-        public AccountInvestmentMapHandler(
+        public AccountInvestmentMapProcessor(
             IAccountInvestmentMapRepository accountInvestmentMapRepository)
         {
             _accountInvestmentMapRepository = accountInvestmentMapRepository;

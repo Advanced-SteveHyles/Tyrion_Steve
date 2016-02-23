@@ -12,7 +12,7 @@ namespace BusinessLogicTests.Transactions.Cash
     {
         private readonly ICommandRunner _withdrawalTransaction;
         private readonly FakeRepository _fakeRepository;
-        private readonly ICashTransactionHandler _cashTransactionHandler;
+        private readonly ICashTransactionProcessor _cashTransactionProcessor;
         const int AccountId = 1;
         const int TransactionValue = 10;
         const int ArbitaryId = 1;
@@ -23,7 +23,7 @@ namespace BusinessLogicTests.Transactions.Cash
         {
             _fakeRepository = new FakeRepository();
             IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-            _cashTransactionHandler = new CashTransactionHandler(_fakeRepository);
+            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
 
 
             
@@ -35,7 +35,7 @@ namespace BusinessLogicTests.Transactions.Cash
                 TransactionDate = transactionDate,                
             };
 
-            _withdrawalTransaction = new  CreateWithdrawalTransaction(withdrawalTransactionRequest, accountHandler, _cashTransactionHandler);
+            _withdrawalTransaction = new  CreateWithdrawalTransaction(withdrawalTransactionRequest, accountHandler, _cashTransactionProcessor);
         }
 
         [Fact]

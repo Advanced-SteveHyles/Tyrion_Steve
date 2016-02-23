@@ -12,25 +12,25 @@ namespace BusinessLogic.Transactions
     {
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountHandler _accountHandler;
-        private readonly ICashTransactionHandler _cashTransactionHandler;
-        private readonly IAccountInvestmentMapHandler _accountInvestmentMapHandler;
-        private readonly IFundTransactionHandler _fundTransactionHandler;
+        private readonly ICashTransactionProcessor _cashTransactionProcessor;
+        private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
+        private readonly IFundTransactionProcessor _fundTransactionProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IInvestmentHandler _investmentHandler;
 
         public CreateFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
             IAccountHandler accountHandler,
-            ICashTransactionHandler cashTransactionHandler,
-            IAccountInvestmentMapHandler accountInvestmentMapHandler,
-            IFundTransactionHandler fundTransactionHandler,
+            ICashTransactionProcessor cashTransactionProcessor,
+            IAccountInvestmentMapProcessor accountInvestmentMapProcessor,
+            IFundTransactionProcessor fundTransactionProcessor,
             IPriceHistoryHandler priceHistoryHandler, IInvestmentHandler investmentHandler)
         {
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
-            _cashTransactionHandler = cashTransactionHandler;
-            _accountInvestmentMapHandler = accountInvestmentMapHandler;
-            _fundTransactionHandler = fundTransactionHandler;
+            _cashTransactionProcessor = cashTransactionProcessor;
+            _accountInvestmentMapProcessor = accountInvestmentMapProcessor;
+            _fundTransactionProcessor = fundTransactionProcessor;
             _priceHistoryHandler = priceHistoryHandler;
             _investmentHandler = investmentHandler;
         }
@@ -38,14 +38,14 @@ namespace BusinessLogic.Transactions
         public void Execute()
         {
             
-            var investmentMapDto = _accountInvestmentMapHandler.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
+            var investmentMapDto = _accountInvestmentMapProcessor.GetAccountInvestmentMap(_fundBuyRequest.InvestmentMapId);
             var investmentId = investmentMapDto.InvestmentId;
             var accountId = investmentMapDto.AccountId;
 
-            _cashTransactionHandler.StoreCashTransaction(accountId, _fundBuyRequest);
-            _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);            
+            _cashTransactionProcessor.StoreCashTransaction(accountId, _fundBuyRequest);
+            _fundTransactionProcessor.StoreFundTransaction(_fundBuyRequest);            
             _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
-            _accountInvestmentMapHandler.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
+            _accountInvestmentMapProcessor.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
             var investment = _investmentHandler.GetInvestment(investmentId);
 
@@ -61,7 +61,7 @@ namespace BusinessLogic.Transactions
 
             var revaluePriceTransaction = new RevalueSinglePriceCommand(
                 investmentId,
-                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapHandler, _accountHandler );
+                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapProcessor, _accountHandler );
             revaluePriceTransaction.Execute();
 
             ExecuteResult = true;

@@ -5,36 +5,36 @@ using PortfolioManager.DTO.Requests;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic
+namespace BusinessLogic.Handlers
 {
-    public class FundTransactionHandler : IFundTransactionHandler
+    public class FundTransactionProcessor : IFundTransactionProcessor
     {
         private IFundTransactionRepository _repository;
 
-        public FundTransactionHandler(IFundTransactionRepository repository)
+        public FundTransactionProcessor(IFundTransactionRepository repository)
         {
             _repository = repository;
         }
 
-        public void StoreFundTransaction(InvestmentBuyRequest fundBuyRequest)
+        public void StoreFundTransaction(InvestmentBuyRequest request)
         {
             int? sellPrice =null;
             var source = string.Empty;
             
             StoreFundTransaction(
-                fundBuyRequest.InvestmentMapId,
-                fundBuyRequest.PurchaseDate,
-                fundBuyRequest.SettlementDate,
+                request.InvestmentMapId,
+                request.PurchaseDate,
+                request.SettlementDate,
                 source,
-                fundBuyRequest.Value,
-                fundBuyRequest.Quantity,
+                request.Value,
+                request.Quantity,
                 sellPrice,
-                fundBuyRequest.Price,
-                fundBuyRequest.Charges,
+                request.Price,
+                request.Charges,
                 FundTransactionTypes.Buy);
             }
 
-        public void StoreFundTransaction(CorporateActionRequest _request)
+        public void StoreFundTransaction(CorporateActionRequest request)
         {
             int? sellPrice = null;
             int? buyPrice = null;
@@ -44,11 +44,11 @@ namespace BusinessLogic
             var charges = 0;
 
             StoreFundTransaction(
-                _request.InvestmentMapId,
-                _request.TransactionDate,
-                _request.TransactionDate,
+                request.InvestmentMapId,
+                request.TransactionDate,
+                request.TransactionDate,
                 source,
-                _request.Amount,
+                request.Amount,
                 quantity,
                 sellPrice,
                 buyPrice,

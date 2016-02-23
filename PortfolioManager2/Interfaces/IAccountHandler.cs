@@ -20,7 +20,7 @@ namespace Interfaces
         IEnumerable<Account> GetAccounts();
     }
 
-    public interface ICashTransactionHandler
+    public interface ICashTransactionProcessor
     {
         void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest);
         void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
@@ -28,12 +28,13 @@ namespace Interfaces
         void StoreCashTransaction(int accountId, CorporateActionRequest corporateActionRequest);
     }
 
-    public interface IFundTransactionHandler
+    public interface IFundTransactionProcessor
     {
-        void StoreFundTransaction(InvestmentBuyRequest fundBuyRequest);
+        void StoreFundTransaction(InvestmentBuyRequest request);
+        void StoreFundTransaction(CorporateActionRequest request);
     }
 
-    public interface IAccountInvestmentMapHandler
+    public interface IAccountInvestmentMapProcessor
     {
         void ChangeQuantity(int investmentMapId, decimal quantity);
         decimal RevalueMap(int investmentMapId, decimal? currentSellPrice);
