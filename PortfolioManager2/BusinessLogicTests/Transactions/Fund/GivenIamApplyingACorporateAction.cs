@@ -77,7 +77,7 @@ namespace BusinessLogicTests.Transactions.Fund
         }
 
         [Fact]
-        public void WhenIRecordACorporateActionForAnOEICACashTransactionIsCreated()
+        public void WhenIRecordACorporateActionForAnOeicACashTransactionIsCreated()
         {
             _fakeRepository.SetInvestmentClass(_existingInvestmentMapId, PortfolioManager.Constants.Funds.FundClasses.Oeic);
             SetupAndOrExecute(true);
@@ -92,7 +92,6 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(CashTransactionTypes.CorporateAction, transaction.TransactionType);
 
             Assert.Equal(1, _fakeRepository.GetCashTransactionsForAccount(_accountId).Count());
-
         }
 
         [Fact]
@@ -102,7 +101,6 @@ namespace BusinessLogicTests.Transactions.Fund
             SetupAndOrExecute(true);
             Assert.Equal(0, _fakeRepository.GetCashTransactionsForAccount(_accountId).Count());
         }
-
     }    
 }
 
