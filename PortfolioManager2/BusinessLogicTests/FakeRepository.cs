@@ -174,7 +174,7 @@ namespace BusinessLogicTests
 
         public IQueryable<CashTransaction> GetCashTransactionsForAccount(int accountId)
         {
-            throw new NotImplementedException();
+            return _dummyCashTransactions.Where(ct => ct.AccountId == accountId).AsQueryable();
         }
 
         public RepositoryActionResult<Investment> InsertInvestment(Investment entityInvestment)
@@ -332,7 +332,7 @@ namespace BusinessLogicTests
             return null;
         }
 
-        public void SetInvestmentType(int fakeInvestmentId, string investmentClass)
+        public void SetInvestmentClass(int fakeInvestmentId, string investmentClass)
         {
             _investment.Class = investmentClass;
         }

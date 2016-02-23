@@ -9,11 +9,11 @@ using PortfolioManager.Repository.Interfaces;
 
 namespace BusinessLogic.Handlers
 {
-    public class InvestmentHandler : IInvestmentHandler
+    public class InvestmentProcessor : IInvestmentProcessor
     {
         private readonly IInvestmentRepository _repository;
 
-        public InvestmentHandler(IInvestmentRepository investmentRepository)
+        public InvestmentProcessor(IInvestmentRepository investmentRepository)
         {
             this._repository = investmentRepository;
         }

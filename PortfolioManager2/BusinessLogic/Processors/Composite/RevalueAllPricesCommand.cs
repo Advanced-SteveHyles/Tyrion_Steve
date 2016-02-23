@@ -7,15 +7,15 @@ namespace BusinessLogic.Commands
     public class RevalueAllPricesCommand : ICommandRunner
     {
         private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
-        private readonly IInvestmentHandler _investmentHandler;
+        private readonly IInvestmentProcessor _investmentProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IAccountHandler _accountHandler;
         private readonly DateTime _evaluationDate;
         
-        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentHandler investmentHandler, IPriceHistoryHandler priceHistoryHandler, IAccountHandler accountHandler)
+        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentProcessor investmentProcessor, IPriceHistoryHandler priceHistoryHandler, IAccountHandler accountHandler)
         {
             _investmentMapProcessor = investmentMapProcessor;
-            _investmentHandler = investmentHandler;
+            _investmentProcessor = investmentProcessor;
             _priceHistoryHandler = priceHistoryHandler;
             _accountHandler = accountHandler;
             _evaluationDate = evaluationDate;
@@ -41,7 +41,7 @@ namespace BusinessLogic.Commands
 
         private void RevalueAllMaps()
         {
-            foreach (var investment in _investmentHandler.GetInvestments().ToList())
+            foreach (var investment in _investmentProcessor.GetInvestments().ToList())
             {
                 RevalueMapsForInvestment(investment.InvestmentId);
             }

@@ -16,7 +16,7 @@ namespace BusinessLogic.Transactions
         private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
         private readonly IFundTransactionProcessor _fundTransactionProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private readonly IInvestmentHandler _investmentHandler;
+        private readonly IInvestmentProcessor _investmentProcessor;
 
         public CreateFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
@@ -24,7 +24,7 @@ namespace BusinessLogic.Transactions
             ICashTransactionProcessor cashTransactionProcessor,
             IAccountInvestmentMapProcessor accountInvestmentMapProcessor,
             IFundTransactionProcessor fundTransactionProcessor,
-            IPriceHistoryHandler priceHistoryHandler, IInvestmentHandler investmentHandler)
+            IPriceHistoryHandler priceHistoryHandler, IInvestmentProcessor investmentProcessor)
         {
             _fundBuyRequest = fundBuyRequest;
             _accountHandler = accountHandler;
@@ -32,7 +32,7 @@ namespace BusinessLogic.Transactions
             _accountInvestmentMapProcessor = accountInvestmentMapProcessor;
             _fundTransactionProcessor = fundTransactionProcessor;
             _priceHistoryHandler = priceHistoryHandler;
-            _investmentHandler = investmentHandler;
+            _investmentProcessor = investmentProcessor;
         }
 
         public void Execute()
@@ -47,13 +47,13 @@ namespace BusinessLogic.Transactions
             _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapProcessor.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
-            var investment = _investmentHandler.GetInvestment(investmentId);
+            var investment = _investmentProcessor.GetInvestment(investmentId);
 
             var priceRequest = new PriceHistoryRequest
             {
                 InvestmentId = investmentId,
                 BuyPrice = _fundBuyRequest.Price,
-                SellPrice = (investment.Class == "OEIC") ? _fundBuyRequest.Price : new decimal?(),
+                SellPrice = (investment.Class == PortfolioManager.Constants.Funds.FundClasses.Oeic) ? _fundBuyRequest.Price : new decimal?(),
                 ValuationDate = _fundBuyRequest.PurchaseDate
             };
 

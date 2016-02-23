@@ -12,13 +12,15 @@ namespace BusinessLogic.Transactions
         private readonly IFundTransactionProcessor _fundTransactionProcessor;
         private readonly ICashTransactionProcessor _cashTransactionProcessor;
         private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
+        private readonly IInvestmentProcessor _investmentProcessor;
 
-        public CorporateActionTransaction(CorporateActionRequest request, IFundTransactionProcessor fundTransactionProcessor, ICashTransactionProcessor cashTransactionProcessor, IAccountInvestmentMapProcessor accountInvestmentMapProcessor)
+        public CorporateActionTransaction(CorporateActionRequest request, IFundTransactionProcessor fundTransactionProcessor, ICashTransactionProcessor cashTransactionProcessor, IAccountInvestmentMapProcessor accountInvestmentMapProcessor, IInvestmentProcessor investmentProcessor)
         {
             _request = request;
             _fundTransactionProcessor = fundTransactionProcessor;
             _cashTransactionProcessor = cashTransactionProcessor;
             _accountInvestmentMapProcessor = accountInvestmentMapProcessor;
+            _investmentProcessor = investmentProcessor;
         }
 
         public void Execute()
@@ -27,11 +29,18 @@ namespace BusinessLogic.Transactions
             var investmentId = investmentMapDto.InvestmentId;
             var accountId = investmentMapDto.AccountId;
 
+            var investment = _investmentProcessor.GetInvestment(investmentId);
+
             _fundTransactionProcessor.StoreFundTransaction(_request);
-            _cashTransactionProcessor.StoreCashTransaction(accountId, _request);
+
+            if (investment.Class == PortfolioManager.Constants.Funds.FundClasses.Oeic)
+            { 
+                _cashTransactionProcessor.StoreCashTransaction(accountId, _request);
+            }
         }
 
         public bool CommandValid => _request.Validate();
         public bool ExecuteResult { get; }
     }
 }
+

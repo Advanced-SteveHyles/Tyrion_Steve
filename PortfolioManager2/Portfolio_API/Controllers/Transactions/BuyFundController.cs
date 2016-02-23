@@ -66,7 +66,7 @@ namespace Portfolio_API.Controllers.Transactions
                         new AccountInvestmentMapProcessor(_accountInvestmentMapRepository),
                         new FundTransactionProcessor(_fundTransactionRepository),
                         new PriceHistoryHandler(_priceHistoryRepository),
-                        new InvestmentHandler(_investmentRepository)
+                        new InvestmentProcessor(_investmentRepository)
                     );
 
                 var status = Command.ExecuteCommand

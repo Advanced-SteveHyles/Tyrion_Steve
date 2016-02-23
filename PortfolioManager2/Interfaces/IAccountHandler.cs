@@ -50,7 +50,7 @@ namespace Interfaces
         decimal? GetInvestmentBuyPrice(int investmentId, DateTime valuationDate);
 }
 
-    public interface IInvestmentHandler
+    public interface IInvestmentProcessor
     {
         InvestmentDto GetInvestment(int investmentId);
         IEnumerable<InvestmentDto> GetInvestments();

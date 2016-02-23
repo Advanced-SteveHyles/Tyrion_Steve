@@ -26,7 +26,7 @@ namespace BusinessLogicTests.Transactions.Fund
         private ICashTransactionProcessor _cashCashTransactionProcessor;
         private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
         private IFundTransactionProcessor _fundTransactionProcessor;
-        private IInvestmentHandler _investmentHandler;
+        private IInvestmentProcessor _investmentProcessor;
 
         private DateTime _settlementDate;
         private IPriceHistoryHandler _priceHistoryHandler;
@@ -60,12 +60,12 @@ namespace BusinessLogicTests.Transactions.Fund
             _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
             _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
-            _investmentHandler = new InvestmentHandler(_fakeRepository);
+            _investmentProcessor = new InvestmentProcessor(_fakeRepository);
 
             _buyTransaction = new CreateFundBuyTransaction(request, _accountHandler,
                         _cashCashTransactionProcessor, _accountInvestmentMapProcessor,
                         _fundTransactionProcessor, _priceHistoryHandler,
-                        _investmentHandler);
+                        _investmentProcessor);
 
             if (execute) _buyTransaction.Execute();
         }
@@ -159,7 +159,7 @@ namespace BusinessLogicTests.Transactions.Fund
         public void WhenIBuyAndTheAccountIsAnOEICBothTheSellingAndBuyPriceAreRecorded()
         {
             var fakeInvestmentId = 1;
-            _fakeRepository.SetInvestmentType(fakeInvestmentId, "OEIC");
+            _fakeRepository.SetInvestmentClass(fakeInvestmentId, PortfolioManager.Constants.Funds.FundClasses.Oeic);
             SetupAndOrExecute(true);
 
             var investmentId = 1;
@@ -173,7 +173,7 @@ namespace BusinessLogicTests.Transactions.Fund
         public void WhenIBuyAndTheAccountIsAOEICThenTheAccountIsValuedCorrect()
         {
             var fakeInvestmentId = 1;
-            _fakeRepository.SetInvestmentType(fakeInvestmentId, "OEIC");
+            _fakeRepository.SetInvestmentClass(fakeInvestmentId, PortfolioManager.Constants.Funds.FundClasses.Oeic);
             SetupAndOrExecute(true);
 
             var maps = _fakeRepository.GetAccountInvestmentMapsByInvestmentId(fakeInvestmentId)
@@ -189,7 +189,7 @@ namespace BusinessLogicTests.Transactions.Fund
         public void WhenIBuyAndTheAccountIsUnitTrustThenTheAccountIsValuedCorrect()
         {
             var fakeInvestmentId = 1;
-            _fakeRepository.SetInvestmentType(fakeInvestmentId, "UnitTrust");
+            _fakeRepository.SetInvestmentClass(fakeInvestmentId, "UnitTrust");
             SetupAndOrExecute(true);
 
             var account = _fakeRepository.GetAccount(_accountId);
@@ -200,7 +200,7 @@ namespace BusinessLogicTests.Transactions.Fund
         public void WhenIBuyAndTheAccountIsAUnitTrustFundOnlyTheBuyIsRecorded()
         {
             var fakeInvestmentId = 1;
-            _fakeRepository.SetInvestmentType(fakeInvestmentId, "UnitTrust");
+            _fakeRepository.SetInvestmentClass(fakeInvestmentId, "UnitTrust");
             SetupAndOrExecute(true);
 
             var investmentId = 1;
