@@ -8,7 +8,7 @@ using PortfolioManager.DTO.Transactions;
 
 namespace BusinessLogic.Transactions
 {
-    public class CreateFundBuyTransaction : ICommandRunner
+    public class RecordFundBuyTransaction : ICommandRunner
     {
         private readonly InvestmentBuyRequest _fundBuyRequest;
         private readonly IAccountProcessor _accountProcessor;
@@ -18,7 +18,7 @@ namespace BusinessLogic.Transactions
         private readonly IPriceHistoryHandler _priceHistoryHandler;
         private readonly IInvestmentProcessor _investmentProcessor;
 
-        public CreateFundBuyTransaction(
+        public RecordFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
             IAccountProcessor accountProcessor,
             ICashTransactionProcessor cashTransactionProcessor,

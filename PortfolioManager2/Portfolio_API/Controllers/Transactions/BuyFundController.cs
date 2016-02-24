@@ -60,7 +60,7 @@ namespace Portfolio_API.Controllers.Transactions
                 //}
                 //*/
 
-                var createFundBuyTransaction = new CreateFundBuyTransaction
+                var createFundBuyTransaction = new RecordFundBuyTransaction
                     (purchaseRequest,
                         new AccountProcessor(_accountRepository),
                         new CashTransactionProcessor(_cashTransactionRepository, _accountRepository),

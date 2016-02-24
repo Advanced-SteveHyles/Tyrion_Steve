@@ -59,7 +59,7 @@ namespace Portfolio_API.Controllers
                 var accountHandler = new AccountProcessor(_accountRepository);
                 var transactionHandler = new CashTransactionProcessor(_cashTransactionRepository, _accountRepository);
 
-                var status = Command.ExecuteCommand(new CreateDepositTransaction(deposit, transactionHandler));
+                var status = Command.ExecuteCommand(new RecordDepositTransaction(deposit, transactionHandler));
 
                 if (status)
                 {                    

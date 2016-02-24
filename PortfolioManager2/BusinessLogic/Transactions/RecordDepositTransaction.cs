@@ -3,12 +3,12 @@ using PortfolioManager.DTO.Requests.Transactions;
 
 namespace BusinessLogic.Transactions
 {
-    public class CreateDepositTransaction : ICommandRunner
+    public class RecordDepositTransaction : ICommandRunner
     {
         private readonly DepositTransactionRequest _depositTransactionRequest;
         private readonly ICashTransactionProcessor _transactionProcessor;
 
-        public CreateDepositTransaction(DepositTransactionRequest depositTransactionRequest, ICashTransactionProcessor transactionProcessor)
+        public RecordDepositTransaction(DepositTransactionRequest depositTransactionRequest, ICashTransactionProcessor transactionProcessor)
         {
             this._depositTransactionRequest = depositTransactionRequest;
             _transactionProcessor = transactionProcessor;
@@ -16,8 +16,7 @@ namespace BusinessLogic.Transactions
 
         public void Execute()
         {            
-            _transactionProcessor.StoreCashTransaction(_depositTransactionRequest);         
-                        
+            _transactionProcessor.StoreCashTransaction(_depositTransactionRequest);                                 
             ExecuteResult = true;
         }
 

@@ -36,7 +36,7 @@ namespace BusinessLogicTests.Transactions.Cash
                 TransactionDate = transactionDate,                
             };
 
-            _withdrawalTransaction = new  CreateWithdrawalTransaction(withdrawalTransactionRequest, accountProcessor, _cashTransactionProcessor);
+            _withdrawalTransaction = new  RecordWithdrawalTransaction(withdrawalTransactionRequest, accountProcessor, _cashTransactionProcessor);
         }
 
         [Fact]

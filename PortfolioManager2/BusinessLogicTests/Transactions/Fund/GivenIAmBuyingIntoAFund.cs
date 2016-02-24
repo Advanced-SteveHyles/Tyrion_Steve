@@ -20,7 +20,7 @@ namespace BusinessLogicTests.Transactions.Fund
         private decimal _valueOfTransaction;
         private DateTime _transactionDate;
         private readonly FakeRepository _fakeRepository = new FakeRepository();
-        private CreateFundBuyTransaction _buyTransaction;
+        private RecordFundBuyTransaction _buyTransaction;
         private int _accountId;
 
         private IAccountProcessor _accountProcessor;        
@@ -63,7 +63,7 @@ namespace BusinessLogicTests.Transactions.Fund
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
             _investmentProcessor = new InvestmentProcessor(_fakeRepository);
 
-            _buyTransaction = new CreateFundBuyTransaction(request, _accountProcessor,
+            _buyTransaction = new RecordFundBuyTransaction(request, _accountProcessor,
                         _cashCashTransactionProcessor, _accountInvestmentMapProcessor,
                         _fundTransactionProcessor, _priceHistoryHandler,
                         _investmentProcessor);

@@ -59,7 +59,7 @@ public class CashWithdrawalController : ApiController
                 var accountHandler = new AccountProcessor(_accountRepository);
                 var transactionHandler = new CashTransactionProcessor(_cashTransactionRepository, _accountRepository);
 
-                var status = Command.ExecuteCommand(new CreateWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
+                var status = Command.ExecuteCommand(new RecordWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
 
                 if (status)
                 {

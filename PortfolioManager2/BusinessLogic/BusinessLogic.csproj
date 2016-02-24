@@ -46,11 +46,11 @@
     <Compile Include="Processors\Single\FundTransactionProcessor.cs" />
     <Compile Include="Processors\Single\PriceHistoryHandler.cs" />
     <Compile Include="Transactions\RecordCorporateActionTransaction.cs" />
-    <Compile Include="Transactions\CreateDepositTransaction.cs" />
+    <Compile Include="Transactions\RecordDepositTransaction.cs" />
     <Compile Include="Processors\Single\AccountProcessor.cs" />
-    <Compile Include="Transactions\CreateFundBuyTransaction.cs" />
+    <Compile Include="Transactions\RecordFundBuyTransaction.cs" />
     <Compile Include="Processors\Composite\CreatePriceHistoryProcessor.cs" />
-    <Compile Include="Transactions\CreateWithdrawalTransaction.cs" />
+    <Compile Include="Transactions\RecordWithdrawalTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processors\Single\CashTransactionProcessor.cs" />
     <Compile Include="Processors\Composite\RevalueSinglePriceCommand.cs" />

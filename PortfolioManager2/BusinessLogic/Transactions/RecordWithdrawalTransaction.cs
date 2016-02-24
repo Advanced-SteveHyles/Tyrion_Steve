@@ -4,13 +4,13 @@ using PortfolioManager.DTO.Requests.Transactions;
 
 namespace BusinessLogic.Transactions
 {
-    public class CreateWithdrawalTransaction : ICommandRunner
+    public class RecordWithdrawalTransaction : ICommandRunner
     {
         private readonly WithdrawalTransactionRequest _withdrawalTransactionRequest;
         private readonly IAccountProcessor _accountProcessor;
         private readonly ICashTransactionProcessor _transactionProcessor;
 
-        public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
+        public RecordWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
             IAccountProcessor accountProcessor, ICashTransactionProcessor transactionProcessor)
         {
             this._withdrawalTransactionRequest = withdrawalTransactionRequest;
