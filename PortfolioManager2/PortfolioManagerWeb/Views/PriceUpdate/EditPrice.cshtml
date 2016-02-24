@@ -1,4 +1,4 @@
-﻿@model PortfolioManager.DTO.DTOs.PriceUpdates.InvestmentPriceUpdate
+﻿@model PortfolioManagerWeb.Models.InvestmentPriceSummaryDecorator
 
 @{
     ViewBag.Title = "title";
@@ -7,35 +7,35 @@
 
 <h2>Price Update</h2>
 
-@Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    @Html.HiddenFor(model => model.InvestmentId)
-    @Html.DisplayFor(model => model.InvestmentName)
-    @Html.DisplayFor(model => model.LatestSellPrice)
-    @Html.DisplayFor(model => model.LatestSellPriceDate)
-    @Html.DisplayFor(model => model.LatestBuyPrice)
-    @Html.DisplayFor(model => model.LatestBuyPriceDate)
+        @Html.HiddenFor(model => model.InvestmentPriceSummary.InvestmentId)
+        @Html.DisplayFor(model => model.InvestmentPriceSummary.InvestmentName)
+        @Html.DisplayFor(model => model.InvestmentPriceSummary.LatestSellPrice)
+        @Html.DisplayFor(model => model.InvestmentPriceSummary.LatestSellPriceDate)
+        @Html.DisplayFor(model => model.InvestmentPriceSummary.LatestBuyPrice)
+        @Html.DisplayFor(model => model.InvestmentPriceSummary.LatestBuyPriceDate)
 
-    @Html.LabelFor(model => model.NewSellPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.NewSellPrice, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NewSellPrice, "", new { @class = "text-danger" })
-    </div>
+        @Html.LabelFor(model => model.NewSellPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NewSellPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NewSellPrice, "", new { @class = "text-danger" })
+        </div>
 
-    @Html.LabelFor(model => model.NewBuyPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.NewBuyPrice, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NewBuyPrice, "", new { @class = "text-danger" })
-    </div>
+        @Html.LabelFor(model => model.NewBuyPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NewBuyPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NewBuyPrice, "", new { @class = "text-danger" })
+        </div>
 
-
-
-    <div class="form-group">
-        <div>
-            <input type="submit" value="Update" class="btn btn-default" />
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }

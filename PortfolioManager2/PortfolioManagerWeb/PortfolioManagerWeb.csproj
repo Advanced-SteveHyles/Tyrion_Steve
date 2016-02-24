@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Accounts\AccountsController.cs" />
     <Compile Include="Controllers\AccountTransaction\AccountTransactionController.cs" />
     <Compile Include="Controllers\Investments\BuyInvestmentController.cs" />
+    <Compile Include="Controllers\Investments\CorporateActionController.cs" />
     <Compile Include="Controllers\PriceUpdate\PriceUpdateController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Controllers\Investments\InvestmentsMapController.cs" />
     <Compile Include="Controllers\Transactions\TransactionsController.cs" />
     <Compile Include="Models\AccountsViewModel.cs" />
+    <Compile Include="Models\foo.cs" />
     <Compile Include="Models\Transactions\InvestmentBuyViewModel.cs" />
     <Compile Include="Models\InvestmentsViewModel.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -332,12 +334,13 @@
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
     <Content Include="Views\PriceUpdate\EditPrice.cshtml" />
-    <Content Include="Views\InvestmentsMap\CorporateAction.cshtml" />
+    <Content Include="Views\CorporateAction\CorporateAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountTransaction\Summary\" />
     <Folder Include="Views\FundTransactions\" />
+    <Folder Include="Views\InvestmentsMap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -12,6 +12,6 @@
         public const string AccountTransactions = "api/transactionsummary";
         public const string Investments = "api/investments";
         public const string InvestmentMap = "api/accountinvestmentmap";
-        
+        public const string InvestmentSinglePriceUpdate = "api/singlepriceupdate";
     }
 }

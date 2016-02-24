@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Glimpse.Core.ResourceResult;
+using Interfaces;
+using Newtonsoft.Json;
 using PortfolioManager.DTO.DTOs.PriceUpdates;
+using PortfolioManager.DTO.Transactions;
+using PortfolioManagerWeb.Models;
 
-namespace PortfolioManagerWeb.Controllers.Investments
+namespace PortfolioManagerWeb.Controllers.PriceUpdate
 {
     public class PriceUpdateController : Controller
     {
-        public PriceUpdateController()
+        
+        public ActionResult EditPrice(int? investmentId)
         {
-            var x =1;
-        }
-        public ActionResult EditPrice(int id)
-        {
-            var y = new InvestmentPriceUpdate
+            var y = new InvestmentPriceSummaryDto
             {
                 InvestmentId = 50,
                 InvestmentName = "Happy",
@@ -22,13 +25,61 @@ namespace PortfolioManagerWeb.Controllers.Investments
                 LatestBuyPriceDate = DateTime.Today,
                 LatestSellPriceDate = DateTime.Today.AddDays(-4)
             };
-            return View(y);
+
+            var z = new InvestmentPriceSummaryDecorator()
+            {
+                InvestmentPriceSummary = y
+            };
+
+            return View(z);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> EditPrice(InvestmentPriceSummaryDecorator investmentPriceSummary)
+        {
+            try
+            {
+                var response = await ProcessSinglePriceUpdate(investmentPriceSummary);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", "Accounts", new { id = 1 });
+                }
+                else
+                {
+                    return Content("An error occurred");
+                }
+            }
+            catch
+            {
+                return Content("An error occurred");
+            }
         }
 
-        [HttpPost]
-        public async Task<ActionResult> EditPrice(InvestmentPriceUpdate dto)
+        private static async Task<HttpResponseMessage> ProcessSinglePriceUpdate(InvestmentPriceSummaryDecorator investmentPriceSummary)
         {
-            return null;
+            var client = PortfolioManagerHttpClient.GetClient();
+
+            var priceUpdateRequest = new InvestmentPriceUpdateRequest()
+            {
+                InvestmentId = investmentPriceSummary.InvestmentPriceSummary.InvestmentId,                
+            };
+
+
+            priceUpdateRequest.NewSellPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewSellPrice)
+                ? (decimal?) null
+                : Decimal.Parse(investmentPriceSummary.NewSellPrice);
+
+            priceUpdateRequest.NewBuyPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewBuyPrice)
+                ? (decimal?)null
+                : Decimal.Parse(investmentPriceSummary.NewBuyPrice);
+            
+            var serializedItemToCreate = JsonConvert.SerializeObject(priceUpdateRequest);
+
+            var response = await client.PostAsync(ApiPaths.InvestmentSinglePriceUpdate,
+                new StringContent(serializedItemToCreate,
+                    System.Text.Encoding.Unicode, "application/json"));
+            return response;
         }
     }
 }
