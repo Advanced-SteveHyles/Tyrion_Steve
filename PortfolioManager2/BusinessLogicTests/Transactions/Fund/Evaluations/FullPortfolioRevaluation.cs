@@ -3,6 +3,7 @@ using System.Linq;
 using BusinessLogic;
 using BusinessLogic.Commands;
 using BusinessLogic.Handlers;
+using BusinessLogic.Processors.Single;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
@@ -58,7 +59,7 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
                 investmentMapProcessor: new AccountInvestmentMapProcessor(_fakeRepository),
                 investmentProcessor: new InvestmentProcessor(_fakeRepository),
                 priceHistoryHandler: new PriceHistoryHandler(_fakeRepository),
-                accountHandler: new AccountHandler(_fakeRepository)
+                accountProcessor: new AccountProcessor(_fakeRepository)
                 );
 
             revalueAllPricesCommand.Execute();

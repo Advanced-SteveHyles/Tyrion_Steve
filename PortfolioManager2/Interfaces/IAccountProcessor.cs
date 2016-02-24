@@ -9,7 +9,7 @@ using PortfolioManager.Repository.Entities;
 
 namespace Interfaces
 {
-    public interface IAccountHandler
+    public interface IAccountProcessor
     {
         void IncreaseAccountBalance(int accountId, decimal amount);
         void DecreaseAccountBalance(int accountId, decimal amount);
@@ -25,13 +25,13 @@ namespace Interfaces
         void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest);
         void StoreCashTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest);
         void StoreCashTransaction(int accountId, InvestmentBuyRequest investmentBuyRequest);
-        void StoreCashTransaction(int accountId, CorporateActionRequest corporateActionRequest);
+        void StoreCashTransaction(int accountId, InvestmentCorporateActionRequest investmentCorporateActionRequest);
     }
 
     public interface IFundTransactionProcessor
     {
         void StoreFundTransaction(InvestmentBuyRequest request);
-        void StoreFundTransaction(CorporateActionRequest request);
+        void StoreFundTransaction(InvestmentCorporateActionRequest request);
     }
 
     public interface IAccountInvestmentMapProcessor

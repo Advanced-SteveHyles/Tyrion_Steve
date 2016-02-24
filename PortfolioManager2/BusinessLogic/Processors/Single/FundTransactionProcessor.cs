@@ -2,6 +2,7 @@
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Requests;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
@@ -34,7 +35,7 @@ namespace BusinessLogic.Handlers
                 FundTransactionTypes.Buy);
             }
 
-        public void StoreFundTransaction(CorporateActionRequest request)
+        public void StoreFundTransaction(InvestmentCorporateActionRequest request)
         {
             int? sellPrice = null;
             int? buyPrice = null;

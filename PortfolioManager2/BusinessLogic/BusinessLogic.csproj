@@ -45,9 +45,9 @@
     <Compile Include="Processors\Single\AccountInvestmentMapProcessor.cs" />
     <Compile Include="Processors\Single\FundTransactionProcessor.cs" />
     <Compile Include="Processors\Single\PriceHistoryHandler.cs" />
-    <Compile Include="Transactions\CorporateActionTransaction.cs" />
+    <Compile Include="Transactions\RecordCorporateActionTransaction.cs" />
     <Compile Include="Transactions\CreateDepositTransaction.cs" />
-    <Compile Include="Processors\Single\AccountHandler.cs" />
+    <Compile Include="Processors\Single\AccountProcessor.cs" />
     <Compile Include="Transactions\CreateFundBuyTransaction.cs" />
     <Compile Include="Processors\Composite\CreatePriceHistoryProcessor.cs" />
     <Compile Include="Transactions\CreateWithdrawalTransaction.cs" />

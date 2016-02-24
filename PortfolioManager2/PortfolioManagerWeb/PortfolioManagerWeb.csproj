@@ -332,12 +332,12 @@
     <Content Include="Views\Investments\Create.cshtml" />
     <Content Include="Views\AccountInvestmentMap\LinkInvestment.cshtml" />
     <Content Include="Views\PriceUpdate\EditPrice.cshtml" />
+    <Content Include="Views\InvestmentsMap\CorporateAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountTransaction\Summary\" />
     <Folder Include="Views\FundTransactions\" />
-    <Folder Include="Views\InvestmentsMap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -11,10 +11,12 @@ namespace BusinessLogic
     public class CashTransactionProcessor : ICashTransactionProcessor
     {
         private readonly ICashTransactionRepository _repository;
+        private readonly IAccountRepository _accountRepository;
 
-        public CashTransactionProcessor(ICashTransactionRepository repository)
+        public CashTransactionProcessor(ICashTransactionRepository repository, IAccountRepository accountRepository)
         {
             _repository = repository;
+            _accountRepository = accountRepository;
         }
 
         public void StoreCashTransaction(DepositTransactionRequest depositTransactionRequest)
@@ -25,7 +27,8 @@ namespace BusinessLogic
                 depositTransactionRequest.Source,
                 depositTransactionRequest.Value,
                 depositTransactionRequest.IsTaxRefund,
-                 CashTransactionTypes.Deposit
+                 CashTransactionTypes.Deposit,
+                 increaseAccountBalance: true
                 );            
         }
 
@@ -37,7 +40,8 @@ namespace BusinessLogic
                       withdrawalTransactionRequest.Source,
                       withdrawalTransactionRequest.Value,
                       false,
-                  CashTransactionTypes.Withdrawal
+                  CashTransactionTypes.Withdrawal,
+                  increaseAccountBalance:false
                       );
         }
 
@@ -50,24 +54,26 @@ namespace BusinessLogic
                           source,
                           investmentBuyRequest.Value,
                           false,
-                          CashTransactionTypes.FundPurchase
+                          CashTransactionTypes.FundPurchase,
+                          increaseAccountBalance: false
                           );
         }
 
-        public void StoreCashTransaction(int accountId, CorporateActionRequest corporateActionRequest)
+        public void StoreCashTransaction(int accountId, InvestmentCorporateActionRequest investmentCorporateActionRequest)
         {
             var source = string.Empty;
             StoreCashTransaction(
                           accountId,
-                          corporateActionRequest.TransactionDate,
+                          investmentCorporateActionRequest.TransactionDate,
                           source,
-                          corporateActionRequest.Amount,
+                          investmentCorporateActionRequest.Amount,
                           false,
-                          CashTransactionTypes.CorporateAction
+                          CashTransactionTypes.CorporateAction,
+                         increaseAccountBalance: true
                           );
         }
 
-        private void StoreCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType )
+        private void StoreCashTransaction(int accountId, DateTime transactionDate, string source, decimal value, bool isTaxRefund, string transactionType, bool increaseAccountBalance)
         {
             var cashTransaction = new CreateCashTransactionRequest()
             {
@@ -79,7 +85,17 @@ namespace BusinessLogic
                 IsTaxRefund = isTaxRefund,
             };
 
-            _repository.InsertCashTransaction(cashTransaction);        
+            _repository.InsertCashTransaction(cashTransaction);
+
+            if (increaseAccountBalance == true)
+            {
+                _accountRepository.IncreaseAccountBalance(accountId, value);
+            }
+            else
+            {
+                _accountRepository.DecreaseAccountBalance(accountId, value);
+            }
+
         }
     }
 

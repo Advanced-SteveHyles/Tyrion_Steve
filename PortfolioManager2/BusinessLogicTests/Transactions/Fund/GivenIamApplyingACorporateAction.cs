@@ -5,6 +5,7 @@ using BusinessLogic.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace BusinessLogicTests.Transactions.Fund
     public class GivenIamApplyingACorporateAction
     {
         private readonly FakeRepository _fakeRepository;
-        private CorporateActionTransaction _transaction;
+        private RecordCorporateActionTransaction _transaction;
         private IFundTransactionProcessor _fundTransactionProcessor;
         private ICashTransactionProcessor _cashTransactionProcessor;
         private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor ;
@@ -30,7 +31,7 @@ namespace BusinessLogicTests.Transactions.Fund
         }
         private void SetupAndOrExecute(bool execute)
         {
-            var request = new CorporateActionRequest
+            var request = new InvestmentCorporateActionRequest
             {
                 InvestmentMapId = _existingInvestmentMapId,
                 Amount = _corporateActionAmount,
@@ -38,11 +39,11 @@ namespace BusinessLogicTests.Transactions.Fund
             };
 
             _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
-            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
+            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository, _fakeRepository);
             _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
             _investmentProcessor  = new InvestmentProcessor(_fakeRepository);
 
-            _transaction = new CorporateActionTransaction(
+            _transaction = new RecordCorporateActionTransaction(
                 request, 
                 _fundTransactionProcessor, 
                 _cashTransactionProcessor,
@@ -92,6 +93,34 @@ namespace BusinessLogicTests.Transactions.Fund
             Assert.Equal(CashTransactionTypes.CorporateAction, transaction.TransactionType);
 
             Assert.Equal(1, _fakeRepository.GetCashTransactionsForAccount(_accountId).Count());
+        }
+
+        [Fact]
+        public void WhenIRecordACorporateActionForAnOeicTheAccountBalanceIsIncreased()
+        {
+            var accountBeforeBalance =  _fakeRepository.GetAccount(1).Cash;
+
+            _fakeRepository.SetInvestmentClass(_existingInvestmentMapId,
+                PortfolioManager.Constants.Funds.FundClasses.Oeic);
+            SetupAndOrExecute(true);
+
+            var accountBeforeAfter = _fakeRepository.GetAccount(1).Cash;
+
+            Assert.Equal(accountBeforeBalance + _corporateActionAmount, accountBeforeAfter); 
+        }
+
+
+        [Fact]
+        public void WhenIRecordACorporateActionForATrustFundTheAccountBalanceIsNotIncreased()
+        {
+            var accountBeforeBalance = _fakeRepository.GetAccount(1).Cash;
+
+            _fakeRepository.SetInvestmentClass(_existingInvestmentMapId,
+                PortfolioManager.Constants.Funds.FundClasses.Trustfund);
+            SetupAndOrExecute(true);
+
+            var accountBeforeAfter = _fakeRepository.GetAccount(1).Cash;
+            Assert.Equal(accountBeforeBalance, accountBeforeAfter);
         }
 
         [Fact]

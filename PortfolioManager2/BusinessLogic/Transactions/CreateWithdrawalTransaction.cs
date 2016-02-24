@@ -7,24 +7,21 @@ namespace BusinessLogic.Transactions
     public class CreateWithdrawalTransaction : ICommandRunner
     {
         private readonly WithdrawalTransactionRequest _withdrawalTransactionRequest;
-        private readonly IAccountHandler _accountHandler;
+        private readonly IAccountProcessor _accountProcessor;
         private readonly ICashTransactionProcessor _transactionProcessor;
 
         public CreateWithdrawalTransaction(WithdrawalTransactionRequest withdrawalTransactionRequest,
-            IAccountHandler accountHandler, ICashTransactionProcessor transactionProcessor)
+            IAccountProcessor accountProcessor, ICashTransactionProcessor transactionProcessor)
         {
             this._withdrawalTransactionRequest = withdrawalTransactionRequest;
-            _accountHandler = accountHandler;
+            _accountProcessor = accountProcessor;
             _transactionProcessor = transactionProcessor;
         }
 
         public void Execute()
         {
             _transactionProcessor.StoreCashTransaction(_withdrawalTransactionRequest);
-            _accountHandler.DecreaseAccountBalance(
-                _withdrawalTransactionRequest.AccountId,
-                _withdrawalTransactionRequest.Value);
-
+            
             ExecuteResult = true;
         }
 

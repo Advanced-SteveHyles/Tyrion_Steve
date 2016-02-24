@@ -11,7 +11,7 @@ namespace BusinessLogic.Transactions
     public class CreateFundBuyTransaction : ICommandRunner
     {
         private readonly InvestmentBuyRequest _fundBuyRequest;
-        private readonly IAccountHandler _accountHandler;
+        private readonly IAccountProcessor _accountProcessor;
         private readonly ICashTransactionProcessor _cashTransactionProcessor;
         private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
         private readonly IFundTransactionProcessor _fundTransactionProcessor;
@@ -20,14 +20,14 @@ namespace BusinessLogic.Transactions
 
         public CreateFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
-            IAccountHandler accountHandler,
+            IAccountProcessor accountProcessor,
             ICashTransactionProcessor cashTransactionProcessor,
             IAccountInvestmentMapProcessor accountInvestmentMapProcessor,
             IFundTransactionProcessor fundTransactionProcessor,
             IPriceHistoryHandler priceHistoryHandler, IInvestmentProcessor investmentProcessor)
         {
             _fundBuyRequest = fundBuyRequest;
-            _accountHandler = accountHandler;
+            _accountProcessor = accountProcessor;
             _cashTransactionProcessor = cashTransactionProcessor;
             _accountInvestmentMapProcessor = accountInvestmentMapProcessor;
             _fundTransactionProcessor = fundTransactionProcessor;
@@ -44,7 +44,6 @@ namespace BusinessLogic.Transactions
 
             _cashTransactionProcessor.StoreCashTransaction(accountId, _fundBuyRequest);
             _fundTransactionProcessor.StoreFundTransaction(_fundBuyRequest);            
-            _accountHandler.DecreaseAccountBalance(accountId, _fundBuyRequest.Value);        
             _accountInvestmentMapProcessor.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
             var investment = _investmentProcessor.GetInvestment(investmentId);
@@ -61,7 +60,7 @@ namespace BusinessLogic.Transactions
 
             var revaluePriceTransaction = new RevalueSinglePriceCommand(
                 investmentId,
-                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapProcessor, _accountHandler );
+                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapProcessor, _accountProcessor );
             revaluePriceTransaction.Execute();
 
             ExecuteResult = true;

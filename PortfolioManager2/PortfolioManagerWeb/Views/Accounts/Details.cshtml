@@ -86,9 +86,9 @@
                 @Html.ActionLink("Buy", "Buy", "BuyInvestment", new { investmentMapId = item.AccountInvestmentMapId }, null)
                 @Html.ActionLink("Sell", "Sell", "InvestmentsMap", new { investmentMapId = item.AccountInvestmentMapId }, null)
 
-                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
+                @Html.ActionLink("Corporate Action", "CorporateAction", "InvestmentsMap", new { investmentMapId = item.AccountInvestmentMapId }, null))
                 @Html.ActionLink("Dividend", "Dividend", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
-                @Html.ActionLink("Interest", "CorporateAction", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
+                @Html.ActionLink("Interest", "Interest", "InvestmentsMap", new { investmentMapId = item.AccountInvestmentMapId }, null))
                 @Html.ActionLink("Return Of Capital", "ReturnOfCapital", "InvestmentsMap", new { id = item.AccountInvestmentMapId }, null))
 
             </td>

@@ -9,15 +9,15 @@ namespace BusinessLogic.Commands
         private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
         private readonly IInvestmentProcessor _investmentProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private readonly IAccountHandler _accountHandler;
+        private readonly IAccountProcessor _accountProcessor;
         private readonly DateTime _evaluationDate;
         
-        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentProcessor investmentProcessor, IPriceHistoryHandler priceHistoryHandler, IAccountHandler accountHandler)
+        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentProcessor investmentProcessor, IPriceHistoryHandler priceHistoryHandler, IAccountProcessor accountProcessor)
         {
             _investmentMapProcessor = investmentMapProcessor;
             _investmentProcessor = investmentProcessor;
             _priceHistoryHandler = priceHistoryHandler;
-            _accountHandler = accountHandler;
+            _accountProcessor = accountProcessor;
             _evaluationDate = evaluationDate;
         }
 
@@ -30,12 +30,12 @@ namespace BusinessLogic.Commands
 
         private void UpdateAllAccounts()
         {
-            foreach (var account in _accountHandler.GetAccounts().ToList())
+            foreach (var account in _accountProcessor.GetAccounts().ToList())
             {
                 var investmentMaps = _investmentMapProcessor.GetMapsByAccountId(account.AccountId);
                 var valuation = investmentMaps.Sum(inv => inv.Valuation) ?? 0;
                 
-                _accountHandler.SetValuation(account.AccountId, valuation);
+                _accountProcessor.SetValuation(account.AccountId, valuation);
             }
         }
 

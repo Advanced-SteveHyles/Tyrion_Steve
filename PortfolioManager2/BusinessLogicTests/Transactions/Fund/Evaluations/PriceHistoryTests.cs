@@ -4,6 +4,7 @@ using BusinessLogic;
 using BusinessLogic.Commands;
 using BusinessLogic.Handlers;
 using BusinessLogic.Processors.Composite;
+using BusinessLogic.Processors.Single;
 using BusinessLogic.Transactions;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository.Entities;
@@ -30,7 +31,7 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
             _repository = new FakeRepository();
             _priceHistoryHandler = new PriceHistoryHandler(_repository);
 
-            var accountMapHandler = new AccountHandler(_repository);
+            var accountMapHandler = new AccountProcessor(_repository);
             var investmentMapProcessor = new AccountInvestmentMapProcessor(_repository);
             _revalueSinglePriceCommand = new RevalueSinglePriceCommand(investmentId, todaysValuationDate, _priceHistoryHandler, investmentMapProcessor, accountMapHandler);
         }

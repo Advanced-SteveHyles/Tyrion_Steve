@@ -1,6 +1,7 @@
 ﻿using System;
 using BusinessLogic;
 using BusinessLogic.Handlers;
+using BusinessLogic.Processors.Single;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
@@ -23,8 +24,7 @@ namespace BusinessLogicTests.Transactions.Cash
         public GivenIAmDepositingTenPounds()
         {
             _fakeRepository = new FakeRepository();
-            IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-            ICashTransactionProcessor cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
+            ICashTransactionProcessor cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository, _fakeRepository);
 
             var depositTransactionRequest = new DepositTransactionRequest
             {
@@ -34,7 +34,7 @@ namespace BusinessLogicTests.Transactions.Cash
                 TransactionDate = transactionDate
             };
 
-            _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, accountHandler, cashTransactionProcessor);
+            _depositTransaction = new CreateDepositTransaction(depositTransactionRequest, cashTransactionProcessor);
         }
 
         [Fact]

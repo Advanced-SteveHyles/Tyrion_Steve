@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PortfolioManager.DTO.Transactions
+namespace PortfolioManager.DTO.Requests.Transactions
 {
-    public class CorporateActionRequest
+    public class InvestmentCorporateActionRequest
     {
         public int InvestmentMapId { get; set; }
         public decimal Amount { get; set; }

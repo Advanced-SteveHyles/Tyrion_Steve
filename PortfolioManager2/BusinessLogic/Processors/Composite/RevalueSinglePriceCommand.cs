@@ -7,17 +7,17 @@ namespace BusinessLogic.Commands
     {
         private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private readonly IAccountHandler _accountHandler;
+        private readonly IAccountProcessor _accountProcessor;
         private readonly int _investmentId;
         private readonly DateTime _valuationDate;
 
 
-        public RevalueSinglePriceCommand(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapProcessor investmentMapProcessor, IAccountHandler accountHandler)
+        public RevalueSinglePriceCommand(int investmentId, DateTime valuationDate, IPriceHistoryHandler priceHistoryHandler, IAccountInvestmentMapProcessor investmentMapProcessor, IAccountProcessor accountProcessor)
         {
             _investmentId = investmentId;
             _priceHistoryHandler = priceHistoryHandler;
             _investmentMapProcessor = investmentMapProcessor;
-            _accountHandler = accountHandler;
+            _accountProcessor = accountProcessor;
             _valuationDate = valuationDate;            
         }
 
@@ -41,12 +41,12 @@ namespace BusinessLogic.Commands
 
         private void AddNewValuationToAccount(int accountId, decimal valuation)
         {
-            _accountHandler.IncreaseValuation(accountId, valuation);
+            _accountProcessor.IncreaseValuation(accountId, valuation);
         }
 
         private void RemovePreviousValuationFromAccount(int accountId, decimal valuation)
         {
-            _accountHandler.DecreaseValuation(accountId, valuation);
+            _accountProcessor.DecreaseValuation(accountId, valuation);
         }
 
         public bool CommandValid { get; }

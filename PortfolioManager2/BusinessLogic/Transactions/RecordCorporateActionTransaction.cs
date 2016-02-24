@@ -2,19 +2,20 @@
 using BusinessLogic.Handlers;
 using BusinessLogic.Validators;
 using Interfaces;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 
 namespace BusinessLogic.Transactions
 {
-    public class CorporateActionTransaction: ICommandRunner
+    public class RecordCorporateActionTransaction: ICommandRunner
     {
-        private readonly CorporateActionRequest _request;
+        private readonly InvestmentCorporateActionRequest _request;
         private readonly IFundTransactionProcessor _fundTransactionProcessor;
         private readonly ICashTransactionProcessor _cashTransactionProcessor;
         private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
         private readonly IInvestmentProcessor _investmentProcessor;
 
-        public CorporateActionTransaction(CorporateActionRequest request, IFundTransactionProcessor fundTransactionProcessor, ICashTransactionProcessor cashTransactionProcessor, IAccountInvestmentMapProcessor accountInvestmentMapProcessor, IInvestmentProcessor investmentProcessor)
+        public RecordCorporateActionTransaction(InvestmentCorporateActionRequest request, IFundTransactionProcessor fundTransactionProcessor, ICashTransactionProcessor cashTransactionProcessor, IAccountInvestmentMapProcessor accountInvestmentMapProcessor, IInvestmentProcessor investmentProcessor)
         {
             _request = request;
             _fundTransactionProcessor = fundTransactionProcessor;
@@ -37,10 +38,12 @@ namespace BusinessLogic.Transactions
             { 
                 _cashTransactionProcessor.StoreCashTransaction(accountId, _request);
             }
+
+            ExecuteResult = true;
         }
 
         public bool CommandValid => _request.Validate();
-        public bool ExecuteResult { get; }
+        public bool ExecuteResult { get; set; }
     }
 }
 

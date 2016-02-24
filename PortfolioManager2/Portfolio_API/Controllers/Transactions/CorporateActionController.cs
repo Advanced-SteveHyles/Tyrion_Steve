@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Http;
 using BusinessLogic;
 using BusinessLogic.Handlers;
@@ -6,14 +6,14 @@ using BusinessLogic.Processors.Single;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO.DTOs.Transactions;
-using PortfolioManager.DTO.Transactions;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 using PortfolioManager.Repository.Repositories;
 
 namespace Portfolio_API.Controllers.Transactions
 {
-    public class BuyFundController : ApiController
+    public class CorporateActionController : ApiController
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IInvestmentRepository _investmentRepository;
@@ -22,7 +22,7 @@ namespace Portfolio_API.Controllers.Transactions
         private readonly IFundTransactionRepository _fundTransactionRepository;
         private readonly IPriceHistoryRepository _priceHistoryRepository;
 
-        public BuyFundController()
+        public CorporateActionController()
         {
             var context = new PortfolioManagerContext();
             _accountInvestmentMapRepository = new AccountInvestmentMapRepository(context);
@@ -33,46 +33,29 @@ namespace Portfolio_API.Controllers.Transactions
             _investmentRepository = new InvestmentRepository(context);
         }
 
-        //BuyTransaction
         [System.Web.Http.HttpPost]
-        [Route(ApiPaths.BuyTransaction)]
-        public IHttpActionResult Post([FromBody] InvestmentBuyRequest purchaseRequest)
+        [Route(ApiPaths.CorporateAction)]
+        public IHttpActionResult Post([FromBody] InvestmentCorporateActionRequest request)
         {
             try
             {
-                if (purchaseRequest == null)
+                if (request == null)
                 {
                     return BadRequest();
                 }
 
-                //var entityAccount = new AccountFactory().CreateAccount(account);
-                //if (entityAccount == null)
-                //{
-                //    return BadRequest();
-                //}
 
-                ///*
-                //{
-                //    "userId": "https://expensetrackeridsrv3/embedded_1",
-                //    "title": "STV",
-                //    "description": "STV",
-                //    "expenseGroupStatusId": 1,
-                //}
-                //*/
-
-                var createFundBuyTransaction = new CreateFundBuyTransaction
-                    (purchaseRequest,
-                        new AccountProcessor(_accountRepository),
-                        new CashTransactionProcessor(_cashTransactionRepository, _accountRepository),
+                var createFundBuyTransaction = new RecordCorporateActionTransaction
+                    (request,
+                    new FundTransactionProcessor(_fundTransactionRepository),
+                    new CashTransactionProcessor(_cashTransactionRepository, _accountRepository),
                         new AccountInvestmentMapProcessor(_accountInvestmentMapRepository),
-                        new FundTransactionProcessor(_fundTransactionRepository),
-                        new PriceHistoryHandler(_priceHistoryRepository),
-                        new InvestmentProcessor(_investmentRepository)
+                        new InvestmentProcessor(_investmentRepository)                        
                     );
 
                 var status = Command.ExecuteCommand
                     (
-                        createFundBuyTransaction    
+                        createFundBuyTransaction
                     );
 
                 if (status)
@@ -91,6 +74,6 @@ namespace Portfolio_API.Controllers.Transactions
                 return InternalServerError();
             }
         }
-    }
-}
 
+    }
+    }

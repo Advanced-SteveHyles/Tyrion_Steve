@@ -1,6 +1,7 @@
 using System;
 using BusinessLogic;
 using BusinessLogic.Handlers;
+using BusinessLogic.Processors.Single;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
@@ -22,8 +23,8 @@ namespace BusinessLogicTests.Transactions.Cash
         public GivenIAmWithdrawingTenPounds()
         {
             _fakeRepository = new FakeRepository();
-            IAccountHandler accountHandler = new AccountHandler(_fakeRepository);
-            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository);
+            IAccountProcessor accountProcessor = new AccountProcessor(_fakeRepository);
+            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository, _fakeRepository);
 
 
             
@@ -35,7 +36,7 @@ namespace BusinessLogicTests.Transactions.Cash
                 TransactionDate = transactionDate,                
             };
 
-            _withdrawalTransaction = new  CreateWithdrawalTransaction(withdrawalTransactionRequest, accountHandler, _cashTransactionProcessor);
+            _withdrawalTransaction = new  CreateWithdrawalTransaction(withdrawalTransactionRequest, accountProcessor, _cashTransactionProcessor);
         }
 
         [Fact]

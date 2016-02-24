@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="ApiPaths.cs" />
     <Compile Include="Communication\IMediator.cs" />
-    <Compile Include="IAccountHandler.cs" />
+    <Compile Include="IAccountProcessor.cs" />
     <Compile Include="ICommandRunner.cs" />
     <Compile Include="Interface1.cs" />
     <Compile Include="INullInterface.cs" />

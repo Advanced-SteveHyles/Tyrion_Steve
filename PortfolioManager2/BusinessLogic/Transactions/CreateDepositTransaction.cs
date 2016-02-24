@@ -6,23 +6,18 @@ namespace BusinessLogic.Transactions
     public class CreateDepositTransaction : ICommandRunner
     {
         private readonly DepositTransactionRequest _depositTransactionRequest;
-        private readonly IAccountHandler _accountHandler;
         private readonly ICashTransactionProcessor _transactionProcessor;
 
-        public CreateDepositTransaction(DepositTransactionRequest depositTransactionRequest, IAccountHandler accountHandler, ICashTransactionProcessor transactionProcessor)
+        public CreateDepositTransaction(DepositTransactionRequest depositTransactionRequest, ICashTransactionProcessor transactionProcessor)
         {
             this._depositTransactionRequest = depositTransactionRequest;
-            _accountHandler = accountHandler;
             _transactionProcessor = transactionProcessor;
         }
 
         public void Execute()
         {            
             _transactionProcessor.StoreCashTransaction(_depositTransactionRequest);         
-            _accountHandler.IncreaseAccountBalance(
-                _depositTransactionRequest.AccountId, 
-                _depositTransactionRequest.Value);
-
+                        
             ExecuteResult = true;
         }
 
