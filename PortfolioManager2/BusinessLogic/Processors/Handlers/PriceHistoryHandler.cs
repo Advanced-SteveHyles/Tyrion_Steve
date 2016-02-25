@@ -1,34 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
-using PortfolioManager.DTO;
 using PortfolioManager.DTO.Requests.Transactions;
-using PortfolioManager.Repository;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic.Handlers
+namespace BusinessLogic.Processors.Handlers
 {
-    public class InvestmentProcessor : IInvestmentProcessor
-    {
-        private readonly IInvestmentRepository _repository;
-
-        public InvestmentProcessor(IInvestmentRepository investmentRepository)
-        {
-            this._repository = investmentRepository;
-        }
-
-        public InvestmentDto GetInvestment(int investmentId)
-        {
-            return _repository.GetInvestment(investmentId).MapToDto();
-        }
-
-        public IEnumerable<InvestmentDto> GetInvestments()
-        {
-            return _repository.GetInvestments().Select(inv=>inv.MapToDto());
-        }
-    }
-
     public class PriceHistoryHandler : IPriceHistoryHandler
     {
         private readonly IPriceHistoryRepository _priceHistoryRepository;

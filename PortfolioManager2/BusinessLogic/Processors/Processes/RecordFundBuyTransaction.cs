@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Schema;
-using BusinessLogic.Commands;
+using BusinessLogic.Processors.Processes;
 using BusinessLogic.Validators;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
@@ -11,28 +11,28 @@ namespace BusinessLogic.Transactions
     public class RecordFundBuyTransaction : ICommandRunner
     {
         private readonly InvestmentBuyRequest _fundBuyRequest;
-        private readonly IAccountProcessor _accountProcessor;
-        private readonly ICashTransactionProcessor _cashTransactionProcessor;
+        private readonly IAccountHandlers _accountHandlers;
+        private readonly ICashTransactionHandler _cashTransactionHandler;
         private readonly IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
-        private readonly IFundTransactionProcessor _fundTransactionProcessor;
+        private readonly IFundTransactionHandler _fundTransactionHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private readonly IInvestmentProcessor _investmentProcessor;
+        private readonly IInvestmentHandler _investmentHandler;
 
         public RecordFundBuyTransaction(
             InvestmentBuyRequest fundBuyRequest,
-            IAccountProcessor accountProcessor,
-            ICashTransactionProcessor cashTransactionProcessor,
+            IAccountHandlers accountHandlers,
+            ICashTransactionHandler cashTransactionHandler,
             IAccountInvestmentMapProcessor accountInvestmentMapProcessor,
-            IFundTransactionProcessor fundTransactionProcessor,
-            IPriceHistoryHandler priceHistoryHandler, IInvestmentProcessor investmentProcessor)
+            IFundTransactionHandler fundTransactionHandler,
+            IPriceHistoryHandler priceHistoryHandler, IInvestmentHandler investmentHandler)
         {
             _fundBuyRequest = fundBuyRequest;
-            _accountProcessor = accountProcessor;
-            _cashTransactionProcessor = cashTransactionProcessor;
+            _accountHandlers = accountHandlers;
+            _cashTransactionHandler = cashTransactionHandler;
             _accountInvestmentMapProcessor = accountInvestmentMapProcessor;
-            _fundTransactionProcessor = fundTransactionProcessor;
+            _fundTransactionHandler = fundTransactionHandler;
             _priceHistoryHandler = priceHistoryHandler;
-            _investmentProcessor = investmentProcessor;
+            _investmentHandler = investmentHandler;
         }
 
         public void Execute()
@@ -42,11 +42,11 @@ namespace BusinessLogic.Transactions
             var investmentId = investmentMapDto.InvestmentId;
             var accountId = investmentMapDto.AccountId;
 
-            _cashTransactionProcessor.StoreCashTransaction(accountId, _fundBuyRequest);
-            _fundTransactionProcessor.StoreFundTransaction(_fundBuyRequest);            
+            _cashTransactionHandler.StoreCashTransaction(accountId, _fundBuyRequest);
+            _fundTransactionHandler.StoreFundTransaction(_fundBuyRequest);            
             _accountInvestmentMapProcessor.ChangeQuantity(_fundBuyRequest.InvestmentMapId, _fundBuyRequest.Quantity);
 
-            var investment = _investmentProcessor.GetInvestment(investmentId);
+            var investment = _investmentHandler.GetInvestment(investmentId);
 
             var priceRequest = new PriceHistoryRequest
             {
@@ -60,7 +60,7 @@ namespace BusinessLogic.Transactions
 
             var revaluePriceTransaction = new RevalueSinglePriceCommand(
                 investmentId,
-                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapProcessor, _accountProcessor );
+                _fundBuyRequest.PurchaseDate, _priceHistoryHandler, _accountInvestmentMapProcessor, _accountHandlers );
             revaluePriceTransaction.Execute();
 
             ExecuteResult = true;

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using BusinessLogic;
-using BusinessLogic.Handlers;
-using BusinessLogic.Processors.Single;
+using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO.DTOs.Transactions;
@@ -62,12 +61,12 @@ namespace Portfolio_API.Controllers.Transactions
 
                 var createFundBuyTransaction = new RecordFundBuyTransaction
                     (purchaseRequest,
-                        new AccountProcessor(_accountRepository),
-                        new CashTransactionProcessor(_cashTransactionRepository, _accountRepository),
+                        new AccountHandler(_accountRepository),
+                        new CashTransactionHandler(_cashTransactionRepository, _accountRepository),
                         new AccountInvestmentMapProcessor(_accountInvestmentMapRepository),
-                        new FundTransactionProcessor(_fundTransactionRepository),
+                        new FundTransactionHandler(_fundTransactionRepository),
                         new PriceHistoryHandler(_priceHistoryRepository),
-                        new InvestmentProcessor(_investmentRepository)
+                        new InvestmentHandler(_investmentRepository)
                     );
 
                 var status = Command.ExecuteCommand

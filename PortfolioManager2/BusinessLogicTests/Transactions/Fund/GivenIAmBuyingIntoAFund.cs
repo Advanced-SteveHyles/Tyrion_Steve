@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using BusinessLogic;
-using BusinessLogic.Handlers;
-using BusinessLogic.Processors.Single;
+using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
@@ -23,11 +22,11 @@ namespace BusinessLogicTests.Transactions.Fund
         private RecordFundBuyTransaction _buyTransaction;
         private int _accountId;
 
-        private IAccountProcessor _accountProcessor;        
-        private ICashTransactionProcessor _cashCashTransactionProcessor;
+        private IAccountHandlers _accountHandlers;        
+        private ICashTransactionHandler _cashCashTransactionHandler;
         private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor;
-        private IFundTransactionProcessor _fundTransactionProcessor;
-        private IInvestmentProcessor _investmentProcessor;
+        private IFundTransactionHandler _fundTransactionHandler;
+        private IInvestmentHandler _investmentHandler;
 
         private DateTime _settlementDate;
         private IPriceHistoryHandler _priceHistoryHandler;
@@ -56,17 +55,17 @@ namespace BusinessLogicTests.Transactions.Fund
                 Charges = _commission
             };
             
-            _accountProcessor = new AccountProcessor(_fakeRepository);
-            _cashCashTransactionProcessor = new CashTransactionProcessor(_fakeRepository, _fakeRepository);
+            _accountHandlers = new AccountHandler(_fakeRepository);
+            _cashCashTransactionHandler = new CashTransactionHandler(_fakeRepository, _fakeRepository);
             _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
-            _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
+            _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
             _priceHistoryHandler = new  PriceHistoryHandler(_fakeRepository);
-            _investmentProcessor = new InvestmentProcessor(_fakeRepository);
+            _investmentHandler = new InvestmentHandler(_fakeRepository);
 
-            _buyTransaction = new RecordFundBuyTransaction(request, _accountProcessor,
-                        _cashCashTransactionProcessor, _accountInvestmentMapProcessor,
-                        _fundTransactionProcessor, _priceHistoryHandler,
-                        _investmentProcessor);
+            _buyTransaction = new RecordFundBuyTransaction(request, _accountHandlers,
+                        _cashCashTransactionHandler, _accountInvestmentMapProcessor,
+                        _fundTransactionHandler, _priceHistoryHandler,
+                        _investmentHandler);
 
             if (execute) _buyTransaction.Execute();
         }

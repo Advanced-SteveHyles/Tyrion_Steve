@@ -73,6 +73,7 @@
     <Compile Include="EntityToDtoMap.cs" />
     <Compile Include="Factories\InvestmentFactory.cs" />
     <Compile Include="Factories\InvestmentMapFactory.cs" />
+    <Compile Include="Factories\PriceHistoryFactory.cs" />
     <Compile Include="Interfaces\IFundTransactionRepository.cs" />
     <Compile Include="Interfaces\IPriceHistoryRepository.cs" />
     <Compile Include="Repositories\AccountInvestmentMapRepository.cs" />

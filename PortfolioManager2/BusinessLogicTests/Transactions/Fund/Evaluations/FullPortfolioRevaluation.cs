@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using BusinessLogic;
-using BusinessLogic.Commands;
-using BusinessLogic.Handlers;
-using BusinessLogic.Processors.Single;
+using BusinessLogic.Processors.Handlers;
+using BusinessLogic.Processors.Processes;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
@@ -57,9 +56,9 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
             var revalueAllPricesCommand = new RevalueAllPricesCommand(
                 DateTime.Now,
                 investmentMapProcessor: new AccountInvestmentMapProcessor(_fakeRepository),
-                investmentProcessor: new InvestmentProcessor(_fakeRepository),
+                investmentHandler: new InvestmentHandler(_fakeRepository),
                 priceHistoryHandler: new PriceHistoryHandler(_fakeRepository),
-                accountProcessor: new AccountProcessor(_fakeRepository)
+                accountHandlers: new AccountHandler(_fakeRepository)
                 );
 
             revalueAllPricesCommand.Execute();

@@ -3,13 +3,13 @@ using Interfaces;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic.Processors.Single
+namespace BusinessLogic.Processors.Handlers
 {
-    public class AccountProcessor : IAccountProcessor
+    public class AccountHandler : IAccountHandlers
     {
         private readonly IAccountRepository _repository;
 
-        public AccountProcessor(IAccountRepository repository)
+        public AccountHandler(IAccountRepository repository)
         {
             _repository = repository;
         }

@@ -1,14 +1,14 @@
 ﻿using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 
-namespace BusinessLogic.Processors.Composite
+namespace BusinessLogic.Processors.Processes
 {
-    public class CreatePriceHistoryProcessor: ICommandRunner
+    public class RecordPriceHistoryProcessor: ICommandRunner
 {
         private readonly PriceHistoryRequest _priceHistoryRequest;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
 
-        public CreatePriceHistoryProcessor(PriceHistoryRequest priceHistoryRequest, IPriceHistoryHandler priceHistoryHandler)
+        public RecordPriceHistoryProcessor(PriceHistoryRequest priceHistoryRequest, IPriceHistoryHandler priceHistoryHandler)
         {
             _priceHistoryRequest = priceHistoryRequest;
             _priceHistoryHandler = priceHistoryHandler;        

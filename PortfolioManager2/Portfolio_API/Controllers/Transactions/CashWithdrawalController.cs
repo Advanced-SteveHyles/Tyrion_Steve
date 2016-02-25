@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Antlr.Runtime.Tree;
 using BusinessLogic;
-using BusinessLogic.Handlers;
-using BusinessLogic.Processors.Single;
+using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.DTO;
@@ -56,8 +55,8 @@ public class CashWithdrawalController : ApiController
                 //}
                 //*/
 
-                var accountHandler = new AccountProcessor(_accountRepository);
-                var transactionHandler = new CashTransactionProcessor(_cashTransactionRepository, _accountRepository);
+                var accountHandler = new AccountHandler(_accountRepository);
+                var transactionHandler = new CashTransactionHandler(_cashTransactionRepository, _accountRepository);
 
                 var status = Command.ExecuteCommand(new RecordWithdrawalTransaction(withdrawal, accountHandler, transactionHandler));
 

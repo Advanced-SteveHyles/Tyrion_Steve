@@ -2,22 +2,22 @@ using System;
 using System.Linq;
 using Interfaces;
 
-namespace BusinessLogic.Commands
+namespace BusinessLogic.Processors.Processes
 {
     public class RevalueAllPricesCommand : ICommandRunner
     {
         private readonly IAccountInvestmentMapProcessor _investmentMapProcessor;
-        private readonly IInvestmentProcessor _investmentProcessor;
+        private readonly IInvestmentHandler _investmentHandler;
         private readonly IPriceHistoryHandler _priceHistoryHandler;
-        private readonly IAccountProcessor _accountProcessor;
+        private readonly IAccountHandlers _accountHandlers;
         private readonly DateTime _evaluationDate;
         
-        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentProcessor investmentProcessor, IPriceHistoryHandler priceHistoryHandler, IAccountProcessor accountProcessor)
+        public RevalueAllPricesCommand(DateTime evaluationDate, IAccountInvestmentMapProcessor investmentMapProcessor, IInvestmentHandler investmentHandler, IPriceHistoryHandler priceHistoryHandler, IAccountHandlers accountHandlers)
         {
             _investmentMapProcessor = investmentMapProcessor;
-            _investmentProcessor = investmentProcessor;
+            _investmentHandler = investmentHandler;
             _priceHistoryHandler = priceHistoryHandler;
-            _accountProcessor = accountProcessor;
+            _accountHandlers = accountHandlers;
             _evaluationDate = evaluationDate;
         }
 
@@ -30,18 +30,18 @@ namespace BusinessLogic.Commands
 
         private void UpdateAllAccounts()
         {
-            foreach (var account in _accountProcessor.GetAccounts().ToList())
+            foreach (var account in _accountHandlers.GetAccounts().ToList())
             {
                 var investmentMaps = _investmentMapProcessor.GetMapsByAccountId(account.AccountId);
                 var valuation = investmentMaps.Sum(inv => inv.Valuation) ?? 0;
                 
-                _accountProcessor.SetValuation(account.AccountId, valuation);
+                _accountHandlers.SetValuation(account.AccountId, valuation);
             }
         }
 
         private void RevalueAllMaps()
         {
-            foreach (var investment in _investmentProcessor.GetInvestments().ToList())
+            foreach (var investment in _investmentHandler.GetInvestments().ToList())
             {
                 RevalueMapsForInvestment(investment.InvestmentId);
             }

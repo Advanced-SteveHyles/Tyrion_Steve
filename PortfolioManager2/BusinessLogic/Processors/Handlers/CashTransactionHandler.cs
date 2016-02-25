@@ -6,14 +6,14 @@ using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic
+namespace BusinessLogic.Processors.Handlers
 {
-    public class CashTransactionProcessor : ICashTransactionProcessor
+    public class CashTransactionHandler : ICashTransactionHandler
     {
         private readonly ICashTransactionRepository _repository;
         private readonly IAccountRepository _accountRepository;
 
-        public CashTransactionProcessor(ICashTransactionRepository repository, IAccountRepository accountRepository)
+        public CashTransactionHandler(ICashTransactionRepository repository, IAccountRepository accountRepository)
         {
             _repository = repository;
             _accountRepository = accountRepository;

@@ -6,13 +6,13 @@ using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic.Handlers
+namespace BusinessLogic.Processors.Handlers
 {
-    public class FundTransactionProcessor : IFundTransactionProcessor
+    public class FundTransactionHandler : IFundTransactionHandler
     {
         private IFundTransactionRepository _repository;
 
-        public FundTransactionProcessor(IFundTransactionRepository repository)
+        public FundTransactionHandler(IFundTransactionRepository repository)
         {
             _repository = repository;
         }

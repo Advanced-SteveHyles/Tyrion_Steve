@@ -6,7 +6,7 @@ using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
 
-namespace BusinessLogic
+namespace BusinessLogic.Processors.Handlers
 {
     public class AccountInvestmentMapProcessor : IAccountInvestmentMapProcessor
     {

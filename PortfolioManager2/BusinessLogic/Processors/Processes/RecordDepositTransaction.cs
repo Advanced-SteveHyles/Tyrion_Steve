@@ -6,17 +6,17 @@ namespace BusinessLogic.Transactions
     public class RecordDepositTransaction : ICommandRunner
     {
         private readonly DepositTransactionRequest _depositTransactionRequest;
-        private readonly ICashTransactionProcessor _transactionProcessor;
+        private readonly ICashTransactionHandler _transactionHandler;
 
-        public RecordDepositTransaction(DepositTransactionRequest depositTransactionRequest, ICashTransactionProcessor transactionProcessor)
+        public RecordDepositTransaction(DepositTransactionRequest depositTransactionRequest, ICashTransactionHandler transactionHandler)
         {
             this._depositTransactionRequest = depositTransactionRequest;
-            _transactionProcessor = transactionProcessor;
+            _transactionHandler = transactionHandler;
         }
 
         public void Execute()
         {            
-            _transactionProcessor.StoreCashTransaction(_depositTransactionRequest);                                 
+            _transactionHandler.StoreCashTransaction(_depositTransactionRequest);                                 
             ExecuteResult = true;
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BusinessLogic;
-using BusinessLogic.Handlers;
+using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
@@ -15,10 +15,10 @@ namespace BusinessLogicTests.Transactions.Fund
     {
         private readonly FakeRepository _fakeRepository;
         private RecordCorporateActionTransaction _transaction;
-        private IFundTransactionProcessor _fundTransactionProcessor;
-        private ICashTransactionProcessor _cashTransactionProcessor;
+        private IFundTransactionHandler _fundTransactionHandler;
+        private ICashTransactionHandler _cashTransactionHandler;
         private IAccountInvestmentMapProcessor _accountInvestmentMapProcessor ;
-        private IInvestmentProcessor _investmentProcessor;
+        private IInvestmentHandler _investmentHandler;
 
         private readonly int _accountId = 1;
         readonly decimal _corporateActionAmount = (decimal)50;
@@ -38,17 +38,17 @@ namespace BusinessLogicTests.Transactions.Fund
                 TransactionDate = _transactionDate
             };
 
-            _fundTransactionProcessor = new FundTransactionProcessor(_fakeRepository);
-            _cashTransactionProcessor = new CashTransactionProcessor(_fakeRepository, _fakeRepository);
+            _fundTransactionHandler = new FundTransactionHandler(_fakeRepository);
+            _cashTransactionHandler = new CashTransactionHandler(_fakeRepository, _fakeRepository);
             _accountInvestmentMapProcessor = new AccountInvestmentMapProcessor(_fakeRepository);
-            _investmentProcessor  = new InvestmentProcessor(_fakeRepository);
+            _investmentHandler  = new InvestmentHandler(_fakeRepository);
 
             _transaction = new RecordCorporateActionTransaction(
                 request, 
-                _fundTransactionProcessor, 
-                _cashTransactionProcessor,
+                _fundTransactionHandler, 
+                _cashTransactionHandler,
                 _accountInvestmentMapProcessor,
-                _investmentProcessor
+                _investmentHandler
                 );
             
             if (execute) _transaction.Execute();

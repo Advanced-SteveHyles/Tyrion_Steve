@@ -6,6 +6,7 @@ using Glimpse.Core.ResourceResult;
 using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO.DTOs.PriceUpdates;
+using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.DTO.Transactions;
 using PortfolioManagerWeb.Models;
 
@@ -60,20 +61,17 @@ namespace PortfolioManagerWeb.Controllers.PriceUpdate
         {
             var client = PortfolioManagerHttpClient.GetClient();
 
-            var priceUpdateRequest = new InvestmentPriceUpdateRequest()
-            {
-                InvestmentId = investmentPriceSummary.InvestmentPriceSummary.InvestmentId,                
-            };
-
-
-            priceUpdateRequest.NewSellPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewSellPrice)
+            var priceUpdateRequest = new PriceHistoryRequest();
+            priceUpdateRequest.InvestmentId = investmentPriceSummary.InvestmentPriceSummary.InvestmentId;
+            priceUpdateRequest.SellPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewSellPrice)
                 ? (decimal?) null
                 : Decimal.Parse(investmentPriceSummary.NewSellPrice);
-
-            priceUpdateRequest.NewBuyPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewBuyPrice)
-                ? (decimal?)null
+            priceUpdateRequest.BuyPrice = string.IsNullOrWhiteSpace(investmentPriceSummary.NewBuyPrice)
+                ? (decimal?) null
                 : Decimal.Parse(investmentPriceSummary.NewBuyPrice);
-            
+            priceUpdateRequest.ValuationDate = investmentPriceSummary.ValuationDate;
+
+
             var serializedItemToCreate = JsonConvert.SerializeObject(priceUpdateRequest);
 
             var response = await client.PostAsync(ApiPaths.InvestmentSinglePriceUpdate,
