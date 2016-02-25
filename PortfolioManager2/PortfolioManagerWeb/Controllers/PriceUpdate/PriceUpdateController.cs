@@ -2,12 +2,10 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Glimpse.Core.ResourceResult;
 using Interfaces;
 using Newtonsoft.Json;
 using PortfolioManager.DTO.DTOs.PriceUpdates;
 using PortfolioManager.DTO.Requests.Transactions;
-using PortfolioManager.DTO.Transactions;
 using PortfolioManagerWeb.Models;
 
 namespace PortfolioManagerWeb.Controllers.PriceUpdate
@@ -19,7 +17,7 @@ namespace PortfolioManagerWeb.Controllers.PriceUpdate
         {
             var y = new InvestmentPriceSummaryDto
             {
-                InvestmentId = 50,
+                InvestmentId = 1,
                 InvestmentName = "Happy",
                 LatestBuyPrice = (decimal)1.20,
                 LatestSellPrice = (decimal)1.09,
@@ -36,11 +34,11 @@ namespace PortfolioManagerWeb.Controllers.PriceUpdate
         }
         
         [HttpPost]
-        public async Task<ActionResult> EditPrice(InvestmentPriceSummaryDecorator investmentPriceSummary)
+        public async Task<ActionResult> EditPrice(InvestmentPriceSummaryDecorator investmentPriceSummaryDecorator)
         {
             try
             {
-                var response = await ProcessSinglePriceUpdate(investmentPriceSummary);
+                var response = await ProcessSinglePriceUpdate(investmentPriceSummaryDecorator);
 
                 if (response.IsSuccessStatusCode)
                 {
