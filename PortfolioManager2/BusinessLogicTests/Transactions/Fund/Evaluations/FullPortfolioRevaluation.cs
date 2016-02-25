@@ -48,7 +48,7 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
                 ValuationDate = valuationDate,
                 SellPrice = sellPrice
             };
-            _priceHandler.StorePriceHistory(priceHistoryRequest);         
+            _priceHandler.StorePriceHistory(priceHistoryRequest, DateTime.Now);         
         }
 
         private void SetupMassUpdate()

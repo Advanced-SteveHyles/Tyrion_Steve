@@ -111,6 +111,29 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
             Assert.Equal(todaysBuyPrice, currentBuyPrice);
         }
 
+
+        [Fact]
+        public void WhenTwoPricesExistForTheCurrentDateTheOneAddedLastIsUsed()
+        {
+            SetupPriceHistory(todaysValuationDate, todaysBuyPrice, todaysSellPrice);
+            _recordPriceHistoryProcessor.Execute();
+
+            decimal? latestBuyPrice = (decimal)3.25;
+            decimal? latestSellPrice = (decimal)5.25;
+
+            SetupPriceHistory(todaysValuationDate, latestBuyPrice, latestSellPrice);
+            _recordPriceHistoryProcessor.Execute();
+            
+
+            var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
+            var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
+
+            Assert.Equal(latestSellPrice, currentSellPrice);
+            Assert.Equal(latestBuyPrice, currentBuyPrice);
+        }
+
+
+
         [Fact]
         public void WhenIHaveTwoInvestmentMapsForTheSameInvestmentAndIUpdateThePriceBothInvestmentsUpdate()
         {

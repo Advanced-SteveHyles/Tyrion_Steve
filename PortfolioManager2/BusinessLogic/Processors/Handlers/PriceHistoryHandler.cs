@@ -15,14 +15,15 @@ namespace BusinessLogic.Processors.Handlers
             this._priceHistoryRepository = priceHistoryRepository;
         }
 
-        public void StorePriceHistory(PriceHistoryRequest priceHistoryRequest)
+        public void StorePriceHistory(PriceHistoryRequest priceHistoryRequest, DateTime recordedDate )
         {
             _priceHistoryRepository.InsertPriceHistory
                 (
                 priceHistoryRequest.InvestmentId,
                 priceHistoryRequest.ValuationDate,
                 priceHistoryRequest.BuyPrice,
-                priceHistoryRequest.SellPrice
+                priceHistoryRequest.SellPrice,
+                recordedDate
                 );
         }
 
@@ -31,7 +32,9 @@ namespace BusinessLogic.Processors.Handlers
             var prices = _priceHistoryRepository
                 .GetInvestmentSellPrices(investmentId)
                 .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
-                .OrderByDescending(ip=>ip.ValuationDate);
+                .OrderByDescending(ip=>ip.ValuationDate)
+                .ThenByDescending(ip => ip.RecordedDate)
+                .ThenByDescending(ip => ip.PriceHistoryId);
 
             return prices.FirstOrDefault()?.SellPrice ?? null;
         }
@@ -41,7 +44,9 @@ namespace BusinessLogic.Processors.Handlers
             var prices = _priceHistoryRepository
                 .GetInvestmentSellPrices(investmentId)
                 .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
-                .OrderByDescending(ip => ip.ValuationDate);
+                .OrderByDescending(ip => ip.ValuationDate)
+                .ThenByDescending(ip => ip.RecordedDate)
+                .ThenByDescending(ip => ip.PriceHistoryId);
 
             return prices.FirstOrDefault()?.BuyPrice ?? null;
         }

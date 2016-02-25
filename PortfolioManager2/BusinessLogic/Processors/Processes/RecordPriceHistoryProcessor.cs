@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 
 namespace BusinessLogic.Processors.Processes
@@ -16,7 +17,8 @@ namespace BusinessLogic.Processors.Processes
 
         public void Execute()
         {
-            _priceHistoryHandler.StorePriceHistory(_priceHistoryRequest);
+            var recordedDate = DateTime.Now;
+            _priceHistoryHandler.StorePriceHistory(_priceHistoryRequest, recordedDate);
 
             ExecuteResult = true;
         }

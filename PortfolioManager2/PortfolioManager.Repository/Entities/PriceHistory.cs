@@ -12,6 +12,8 @@ namespace PortfolioManager.Repository.Entities
         public int InvestmentId { get; set; }
         public decimal? BuyPrice { get; set; }
         public decimal? SellPrice { get; set; }
-        public DateTime ValuationDate { get; set; }        
+        public DateTime ValuationDate { get; set; }
+
+        public DateTime RecordedDate { get; set; }
     }
 }

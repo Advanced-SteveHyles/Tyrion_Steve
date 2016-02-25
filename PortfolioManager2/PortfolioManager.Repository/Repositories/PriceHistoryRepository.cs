@@ -21,7 +21,7 @@ namespace PortfolioManager.Repository.Repositories
                 .Where(ph => ph.InvestmentId == investmentId);
         }
 
-        public RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice)
+        public RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice, DateTime recordedDate)
         {
 
             try
@@ -31,7 +31,8 @@ namespace PortfolioManager.Repository.Repositories
                     InvestmentId = investmentId,
                     BuyPrice =buyPrice,
                     SellPrice = sellPrice,
-                    ValuationDate = valuationDate
+                    ValuationDate = valuationDate,
+                    RecordedDate = recordedDate
                 };
 
                 _context.PriceHistories.Add(entityPriceHistory);

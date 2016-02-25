@@ -56,7 +56,7 @@ namespace BusinessLogic.Transactions
                 ValuationDate = _fundBuyRequest.PurchaseDate
             };
 
-            _priceHistoryHandler.StorePriceHistory(priceRequest);
+            _priceHistoryHandler.StorePriceHistory(priceRequest, DateTime.Now);
 
             var revaluePriceTransaction = new RevalueSinglePriceCommand(
                 investmentId,
