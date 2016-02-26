@@ -128,8 +128,8 @@ namespace BusinessLogicTests.Transactions.Fund.Evaluations
             var currentSellPrice = _priceHistoryHandler.GetInvestmentSellPrice(investmentId, todaysValuationDate);
             var currentBuyPrice = _priceHistoryHandler.GetInvestmentBuyPrice(investmentId, todaysValuationDate);
 
-            Assert.Equal(latestSellPrice, currentSellPrice);
             Assert.Equal(latestBuyPrice, currentBuyPrice);
+            Assert.Equal(latestSellPrice, currentSellPrice);
         }
 
 

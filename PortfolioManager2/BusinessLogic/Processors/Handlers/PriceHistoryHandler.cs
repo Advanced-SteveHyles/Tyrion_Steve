@@ -31,7 +31,9 @@ namespace BusinessLogic.Processors.Handlers
         {
             var prices = _priceHistoryRepository
                 .GetInvestmentSellPrices(investmentId)
-                .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
+                .Where(ip => ip.ValuationDate <= valuationDate && 
+                             ip.InvestmentId == investmentId && 
+                             ip.SellPrice !=null)
                 .OrderByDescending(ip=>ip.ValuationDate)
                 .ThenByDescending(ip => ip.RecordedDate)
                 .ThenByDescending(ip => ip.PriceHistoryId);
@@ -42,8 +44,10 @@ namespace BusinessLogic.Processors.Handlers
         public decimal? GetInvestmentBuyPrice(int investmentId, DateTime valuationDate)
         {
             var prices = _priceHistoryRepository
-                .GetInvestmentSellPrices(investmentId)
-                .Where(ip => ip.ValuationDate <= valuationDate && ip.InvestmentId == investmentId)
+                .GetInvestmentBuyPrices(investmentId)
+                 .Where(ip => ip.ValuationDate <= valuationDate &&
+                             ip.InvestmentId == investmentId &&
+                             ip.BuyPrice != null)
                 .OrderByDescending(ip => ip.ValuationDate)
                 .ThenByDescending(ip => ip.RecordedDate)
                 .ThenByDescending(ip => ip.PriceHistoryId);

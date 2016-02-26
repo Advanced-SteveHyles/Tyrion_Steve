@@ -317,10 +317,13 @@ namespace BusinessLogicTests
             return _dummyPriceHistoryList.Where(ph => ph.InvestmentId == investmentId).AsQueryable();
         }
 
+        private int priceHistoryId;
         public RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice, DateTime recordedDate)
         {
-            var priceHistory = new PriceHistory
+            priceHistoryId++;
+               var priceHistory = new PriceHistory
             {
+                PriceHistoryId = priceHistoryId,
                 InvestmentId = investmentId,
                 ValuationDate = valuationDate,
                 BuyPrice = buyPrice,
