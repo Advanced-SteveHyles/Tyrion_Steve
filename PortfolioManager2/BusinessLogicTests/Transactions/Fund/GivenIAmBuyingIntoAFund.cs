@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using BusinessLogic;
 using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
+using BusinessLogicTests.FakeRepositories;
 using Interfaces;
 using PortfolioManager.Constants.TransactionTypes;
 using PortfolioManager.DTO.Transactions;

@@ -3,6 +3,7 @@ using System.Linq;
 using BusinessLogic;
 using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Processors.Processes;
+using BusinessLogicTests.FakeRepositories;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;

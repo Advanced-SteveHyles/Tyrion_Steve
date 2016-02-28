@@ -1,20 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using PortfolioManager.DTO.DTOs;
 using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
 using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Interfaces;
-using Xunit.Sdk;
 
-namespace BusinessLogicTests
+namespace BusinessLogicTests.FakeRepositories
 {
-    public class FakeRepository
-        : IPortfolioRepository
-        , IInvestmentRepository
+    public class FakeRepository        :
+        IInvestmentRepository
         , IAccountRepository
         , ICashTransactionRepository
         , IAccountInvestmentMapRepository
@@ -22,8 +17,8 @@ namespace BusinessLogicTests
         , IPriceHistoryRepository
     {
         private readonly Investment _investment = new Investment();        
-        private List<CashTransaction> _dummyCashTransactions;
-        private List<FundTransaction> _dummyFundTransactions;
+        private readonly List<CashTransaction> _dummyCashTransactions;
+        private readonly List<FundTransaction> _dummyFundTransactions;
 
         private readonly List<PriceHistory> _dummyPriceHistoryList;
         private readonly List<AccountInvestmentMap> _investmentMaps;
@@ -35,88 +30,11 @@ namespace BusinessLogicTests
             _dummyCashTransactions = new List<CashTransaction>();
             _dummyFundTransactions = new List<FundTransaction>();
             _dummyPriceHistoryList = new List<PriceHistory>();
-            _investmentMaps = FakePopulatedInvestmentMap();
+            _investmentMaps = FakeData.FakePopulatedInvestmentMap();
 
-            _accounts = new List<Account>()
-            {
-                new Account(){AccountId = 1},
-                new Account(){AccountId = 2},
-                new Account(){AccountId = 3},
-                new Account(){AccountId = 4},
-                new Account(){AccountId = 5},
-                new Account(){AccountId = 6}
-            };
+            _accounts = FakeData.FakeAccountData();
         }
-
-        private static List<AccountInvestmentMap> FakePopulatedInvestmentMap()
-        {
-            return new List<AccountInvestmentMap>
-            {
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 1,
-                    InvestmentId = 1,
-                    AccountId = 1,
-                    Quantity = 10,
-                },
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 2,
-                    InvestmentId = 1,
-                    AccountId = 2,
-                    Quantity = 5,
-                },
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 3,
-                    InvestmentId = 2,
-                    AccountId = 1,
-                    Quantity = 10,
-                },
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 4,
-                    InvestmentId = 1,
-                    AccountId = 3,
-                    Quantity = (decimal)25.4,
-                },
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 88,
-                    InvestmentId = 1,
-                    AccountId = 4,
-                    Quantity = (decimal)1.78923,
-                },
-                new AccountInvestmentMap()
-                {
-                    AccountInvestmentMapId = 89,
-                    InvestmentId = 3,
-                    AccountId = 6,
-                    Quantity = (decimal)21,
-                },
-            };
-        }
-
-        public IQueryable<Portfolio> GetPortfolios()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Portfolio GetPortfolio(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Portfolio GetPortfolioWithAccounts(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RepositoryActionResult<Portfolio> InsertPortfolio(Portfolio entityPortfolio)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public RepositoryActionResult<Account> InsertAccount(Account entityAccount)
         {
             throw new NotImplementedException();
@@ -196,13 +114,13 @@ namespace BusinessLogicTests
         }
 
 
-        private int nextCashTransactionId;
+        private int _nextCashTransactionId;
         public RepositoryActionResult<CashTransaction> InsertCashTransaction(CreateCashTransactionRequest request)
         {
-            nextCashTransactionId++;
+            _nextCashTransactionId++;
             var cashTransaction = new CashTransaction()
             {
-                CashTransactionId = nextCashTransactionId,
+                CashTransactionId = _nextCashTransactionId,
                 AccountId = request.AccountId,
                 TransactionDate = request.TransactionDate,
                 TransactionValue = request.TransactionValue,
@@ -222,14 +140,17 @@ namespace BusinessLogicTests
             var accountInvestmentMapDto =
                 _investmentMaps.SingleOrDefault(i => i.AccountInvestmentMapId == accountInvestmentMapId);
 
-            return new AccountInvestmentMap()
-            {
-                AccountId = accountInvestmentMapDto.AccountId,
-                AccountInvestmentMapId = accountInvestmentMapDto.AccountInvestmentMapId,
-                InvestmentId = accountInvestmentMapDto.InvestmentId,
-                Quantity = accountInvestmentMapDto.Quantity,
-                Valuation = accountInvestmentMapDto.Valuation
-            };
+            if (accountInvestmentMapDto != null)
+                return new AccountInvestmentMap()
+                {
+                    AccountId = accountInvestmentMapDto.AccountId,
+                    AccountInvestmentMapId = accountInvestmentMapDto.AccountInvestmentMapId,
+                    InvestmentId = accountInvestmentMapDto.InvestmentId,
+                    Quantity = accountInvestmentMapDto.Quantity,
+                    Valuation = accountInvestmentMapDto.Valuation
+                };
+
+            return null;
         }
 
         public void UpdateAccountInvestmentMap(AccountInvestmentMap investmentMap)
@@ -277,13 +198,13 @@ namespace BusinessLogicTests
             return _dummyFundTransactions.Single(t => t.FundTransactionId == fundTransactionId);
         }
 
-        private int nextFundTransactionId;
+        private int _nextFundTransactionId;
         public RepositoryActionResult<FundTransaction> InsertFundTransaction(CreateFundTransactionRequest request)
         {
-            nextFundTransactionId++;
+            _nextFundTransactionId++;
             var dummyFundTransaction = new FundTransaction()
             {
-                FundTransactionId = nextFundTransactionId,
+                FundTransactionId = _nextFundTransactionId,
 
                 InvestmentMapId = request.InvestmentMapId,
                 TransactionType = request.TransactionType,
@@ -317,13 +238,13 @@ namespace BusinessLogicTests
             return _dummyPriceHistoryList.Where(ph => ph.InvestmentId == investmentId).AsQueryable();
         }
 
-        private int priceHistoryId;
+        private int _priceHistoryId;
         public RepositoryActionResult<PriceHistory> InsertPriceHistory(int investmentId, DateTime valuationDate, decimal? buyPrice, decimal? sellPrice, DateTime recordedDate)
         {
-            priceHistoryId++;
+            _priceHistoryId++;
                var priceHistory = new PriceHistory
             {
-                PriceHistoryId = priceHistoryId,
+                PriceHistoryId = _priceHistoryId,
                 InvestmentId = investmentId,
                 ValuationDate = valuationDate,
                 BuyPrice = buyPrice,

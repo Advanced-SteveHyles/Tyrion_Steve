@@ -59,8 +59,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeRepositories\FakeData.cs" />
+    <Compile Include="FakeRepositories\FakePortfolioRepository.cs" />
     <Compile Include="Transactions\Cash\GivenIAmWithdrawingTenPounds.cs" />
-    <Compile Include="FakeRepository.cs" />
+    <Compile Include="FakeRepositories\FakeRepository.cs" />
     <Compile Include="Transactions\Cash\GivenIAmDepositingTenPounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions\Fund\Evaluations\FullPortfolioRevaluation.cs" />

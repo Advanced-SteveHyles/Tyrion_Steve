@@ -4,6 +4,7 @@ using BusinessLogic;
 using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Processors.Processes;
 using BusinessLogic.Transactions;
+using BusinessLogicTests.FakeRepositories;
 using PortfolioManager.DTO.Requests.Transactions;
 using PortfolioManager.Repository.Entities;
 using Xunit;

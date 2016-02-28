@@ -2,6 +2,7 @@ using System;
 using BusinessLogic;
 using BusinessLogic.Processors.Handlers;
 using BusinessLogic.Transactions;
+using BusinessLogicTests.FakeRepositories;
 using Interfaces;
 using PortfolioManager.DTO.Requests.Transactions;
 using Xunit;
