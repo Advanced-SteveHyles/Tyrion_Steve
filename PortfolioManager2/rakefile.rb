@@ -93,7 +93,7 @@ task :prerequisites => [:restore, :update] do
   
 end
 
-desc "Compile ALB _BuildSolution"
+desc "Compile Common"
 msbuild :compile_common do | msb |
   msb.properties = { 
   						:configuration => release_build ? :Release : :Debug, 
@@ -150,10 +150,9 @@ msbuild :Compile_Services => [:set_documentproduction_clients_version, :set_docu
 end
 
 desc "Compile Workflow Module"
-msbuild :compile_workflow => [ :compile_common ] do | msb |
+msbuild :compile_frontEnd => [ :compile_common ] do | msb |
   msb.properties = { 
              	:configuration => release_build ? :Release : :Debug, 
-				:platform =>:x86,
 				:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",
 				:DebugType=> release_build ? "None" : "pdbonly"
             }
@@ -170,10 +169,9 @@ task :restore_diary do
 end
 
 desc "Compile Diary Modules"
-msbuild :compile_diary => [ :compile_common, :restore_diary ] do | msb |
+msbuild :compile_backend => [ :compile_common, :restore_diary ] do | msb |
   msb.properties = { 
-              :configuration => release_build ? :Release : :Debug, 
-        :platform =>:x86,
+              :configuration => release_build ? :Release : :Debug,         
         :AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",
         :DebugType=> release_build ? "None" : "pdbonly"
             }
@@ -192,7 +190,7 @@ end
 
 desc "Compile Web Modules"
 task :compile_web
-#msbuild :compile_web => [ :compile_common, :compile_diary, :restore_web ] do | msb |
+#msbuild :compile_web => [ :compile_common, :compile_backend, :restore_web ] do | msb |
 #  msb.properties = { 
 #             	:configuration => release_build ? :Release : :Debug, #
 ##				:platform =>:x86#,#
@@ -207,7 +205,7 @@ task :compile_web
 #  msb.other_switches = {:toolsVersion => visual_studio_version}
 #end
 
-task :compile => [ :compile_common, :compile_diary, :Compile_Services, :compile_workflow, :compile_web ]
+task :compile => [ :compile_common, :compile_backend, :Compile_Services, :compile_frontEnd, :compile_web ]
 
 task :push => [ :ensure_clean_working_directory, :build_and_test ] do
   sh 'git push'
