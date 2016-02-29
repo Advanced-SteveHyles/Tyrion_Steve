@@ -26,7 +26,7 @@ branch_name = filter_branch_name(ENV['branch_name'] || `git rev-parse --abbrev-r
 
 current_directory = File.dirname(__FILE__)
 windows_current_directory = current_directory.gsub("/", "\\")
-update_version_sql = "UPDATE SysParam SET SysParamValue = '" + ilb_version + "' WHERE SysParamId = 47"
+#update_version_sql = "UPDATE SysParam SET SysParamValue = '" + ilb_version + "' WHERE SysParamId = 47"
 release_build = false
 
 visual_studio_version = ENV["VisualStudioVersion"]
@@ -94,7 +94,7 @@ task :prerequisites => [:restore, :update] do
 end
 
 desc "Compile ALB _BuildSolution"
-msbuild :compile_alb do | msb |
+msbuild :compile_common do | msb |
   msb.properties = { 
   						:configuration => release_build ? :Release : :Debug, 
   						:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",
@@ -133,24 +133,24 @@ task :set_documentproduction_version
 #  asm.output_file = "Solicitors.InteropToOpenXml/Solicitors.DocumentProduction/Properties/AssemblyInfo.cs"
 #end
 
-desc "Compile Document Production Module"
-task :compile_document_production 
-#msbuild :compile_document_production => [:set_documentproduction_clients_version, :set_documentproduction_service_hosts_version, :set_documentproduction_version,:compile_alb ] do | msb |
-#  msb.properties = { 
-#            	:configuration => release_build ? :Release : :Debug,
-#				:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",#
-#				:DebugType=> release_build ? "None" : "pdbonly#"
-#            #}
-#  msb.targets = [ :Build ]
-#  msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
-#  msb.solution = 'Solicitors.InteropToOpenXml/DocumentProduction.sln'
-#  msb.verbosity = :normal
-#  msb.max_cpu_count = 4
-#  msb.other_switches = {:toolsVersion => visual_studio_version}
-#end
+desc "Compile Services Module"
+task :Compile_Services 
+msbuild :Compile_Services => [:set_documentproduction_clients_version, :set_documentproduction_service_hosts_version, :set_documentproduction_version,:compile_common ] do | msb |
+  msb.properties = { 
+            	:configuration => release_build ? :Release : :Debug,
+				:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",#
+				:DebugType=> release_build ? "None" : "pdbonly"
+            }
+  msb.targets = [ :Build ]
+  msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
+  msb.solution = './Services.sln'
+  msb.verbosity = :normal
+  msb.max_cpu_count = 4
+  msb.other_switches = {:toolsVersion => visual_studio_version}
+end
 
 desc "Compile Workflow Module"
-msbuild :compile_workflow => [ :compile_alb ] do | msb |
+msbuild :compile_workflow => [ :compile_common ] do | msb |
   msb.properties = { 
              	:configuration => release_build ? :Release : :Debug, 
 				:platform =>:x86,
@@ -170,7 +170,7 @@ task :restore_diary do
 end
 
 desc "Compile Diary Modules"
-msbuild :compile_diary => [ :compile_alb, :restore_diary ] do | msb |
+msbuild :compile_diary => [ :compile_common, :restore_diary ] do | msb |
   msb.properties = { 
               :configuration => release_build ? :Release : :Debug, 
         :platform =>:x86,
@@ -192,14 +192,14 @@ end
 
 desc "Compile Web Modules"
 task :compile_web
-#msbuild :compile_web => [ :compile_alb, :compile_diary, :restore_web ] do | msb |
+#msbuild :compile_web => [ :compile_common, :compile_diary, :restore_web ] do | msb |
 #  msb.properties = { 
-#             	:configuration => release_build ? :Release : :Debug, 
-#				:platform =>:x86,
-#				:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",
+#             	:configuration => release_build ? :Release : :Debug, #
+##				:platform =>:x86#,#
+#				:AllowedReferenceRelatedFileExtensions => release_build ? "none" : ".pdb; .xml",#
 #				:DebugType=> release_build ? "None" : "pdbonly"
- #           }
-  #msb.targets = [ :Build ]
+#           }
+#  msb.targets = [ :Build ]
 #  msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
 #  msb.solution = 'Solicitors.Web/Web.sln'
 #  msb.verbosity = :normal
@@ -207,7 +207,7 @@ task :compile_web
 #  msb.other_switches = {:toolsVersion => visual_studio_version}
 #end
 
-task :compile => [ :compile_alb, :compile_diary, :compile_document_production, :compile_workflow, :compile_web ]
+task :compile => [ :compile_common, :compile_diary, :Compile_Services, :compile_workflow, :compile_web ]
 
 task :push => [ :ensure_clean_working_directory, :build_and_test ] do
   sh 'git push'
@@ -359,27 +359,27 @@ end
 
 desc 'Build Sql Packages'
 task :build_sql_package do
-  copy("#{current_directory}\\IRIS.Law.SchemaUpdates.dll", "#{windows_current_directory}\\Binaries\\SqlPackager\\IRIS.Law.SchemaUpdates.dll")
+  #copy("#{current_directory}\\IRIS.Law.SchemaUpdates.dll", "#{windows_current_directory}\\Binaries\\SqlPackager\\IRIS.Law.SchemaUpdates.dll")
 
-  mkdir_p "Binaries/SqlPackager/Updates"
-  copy "Libraries/ILBSetup/FillerInterface.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/ILBSetup/SDLT4.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/ILBSetup/WordViewer_Full.ocx", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/PIA/Microsoft.Office.Interop.Excel.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/PIA/Microsoft.Office.Interop.Outlook.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/PIA/Microsoft.Office.Interop.Word.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/PIA/Microsoft.Vbe.Interop.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/PIA/Office.dll", "Binaries/SqlPackager/Updates/"
-  copy "Libraries/System.Management.Automation.dll", "Binaries/SqlPackager/Updates/"
+  #mkdir_p "Binaries/SqlPackager/Updates"
+  #copy "Libraries/ILBSetup/FillerInterface.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/ILBSetup/SDLT4.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/ILBSetup/WordViewer_Full.ocx", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/PIA/Microsoft.Office.Interop.Excel.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/PIA/Microsoft.Office.Interop.Outlook.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/PIA/Microsoft.Office.Interop.Word.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/PIA/Microsoft.Vbe.Interop.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/PIA/Office.dll", "Binaries/SqlPackager/Updates/"
+  #copy "Libraries/System.Management.Automation.dll", "Binaries/SqlPackager/Updates/"
 
-  sh "xcopy \"#{windows_current_directory}\\Binaries\\OutlookAddin\" \"#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\\" /Y /H /R /EXCLUDE:PackagerExcludes.txt"
-  sh "xcopy \"#{windows_current_directory}\\Binaries\\ILBClient\" \"#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\\" /Y /H /R /EXCLUDE:PackagerExcludes.txt"
-  copy "#{windows_current_directory}\\Binaries\\ILBClient\\IRIS.Law.PmsUpd.exe", "#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\IRIS.Law.PmsUpd_New.exe"
+  #sh "xcopy \"#{windows_current_directory}\\Binaries\\OutlookAddin\" \"#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\\" /Y /H /R /EXCLUDE:PackagerExcludes.txt"
+  #sh "xcopy \"#{windows_current_directory}\\Binaries\\ILBClient\" \"#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\\" /Y /H /R /EXCLUDE:PackagerExcludes.txt"
+  #copy "#{windows_current_directory}\\Binaries\\ILBClient\\IRIS.Law.PmsUpd.exe", "#{windows_current_directory}\\Binaries\\SqlPackager\\Updates\\IRIS.Law.PmsUpd_New.exe"
 end
 
 desc "Copy ILB Web Service"
 task :copy_ilb_web_service do
-  xcopy_with_config("#{current_directory}\\Solicitors.Web\\IRIS.Law.WebServices", "#{windows_current_directory}\\binaries\\ILBWebService\\")
+  #xcopy_with_config("#{current_directory}\\Solicitors.Web\\IRIS.Law.WebServices", "#{windows_current_directory}\\binaries\\ILBWebService\\")
 end
 
 desc 'Perform a release of the software'
