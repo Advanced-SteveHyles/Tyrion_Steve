@@ -1,15 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using Interfaces;
-using PortfolioManager.DTO;
-using PortfolioManager.DTO.DTOs;
-using PortfolioManager.DTO.Requests;
-using PortfolioManager.Repository;
-using PortfolioManager.Repository.Factories;
-using PortfolioManager.Repository.Interfaces;
-using PortfolioManager.Repository.Repositories;
 using AccountInvestmentMapDto = PortfolioManager.DTO.DTOs.AccountInvestmentMapDto;
 
 namespace Portfolio_API.Controllers

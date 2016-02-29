@@ -87,6 +87,12 @@
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PortfolioManager.DTO">
+      <HintPath>..\..\Binaries\PortfolioManager.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="PortfolioManager.Repository">
+      <HintPath>..\..\Binaries\PortfolioManager.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -277,14 +283,6 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170BE89D-025F-4352-9388-72CE26EE12E9}</Project>
       <Name>Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PortfolioManager.DTO\PortfolioManager.DTO.csproj">
-      <Project>{51c5255f-8785-406d-8f4e-1dc6824e630b}</Project>
-      <Name>PortfolioManager.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PortfolioManager.Repository\PortfolioManager.Repository.csproj">
-      <Project>{77b12de0-53ea-43cd-8e33-06af1de7a8b6}</Project>
-      <Name>PortfolioManager.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

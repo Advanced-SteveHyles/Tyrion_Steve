@@ -1,4 +1,11 @@
 ﻿using System;
+using BusinessLogic.Processors.Handlers;
+using BusinessLogic.Processors.Processes;
+using Interfaces;
+using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.Repository;
+using PortfolioManager.Repository.Factories;
+using PortfolioManager.Repository.Repositories;
 
 namespace VirtualService.VirtualControllers
 {
@@ -18,7 +25,7 @@ namespace VirtualService.VirtualControllers
 
         [System.Web.Http.HttpPost]
         [Route(ApiPaths.InvestmentSinglePriceUpdate)]
-        public IHttpActionResult Post([FromBody] PriceHistoryRequest request)
+        public IHttpActionResult Post(PriceHistoryRequest request)
         {
 
             try
