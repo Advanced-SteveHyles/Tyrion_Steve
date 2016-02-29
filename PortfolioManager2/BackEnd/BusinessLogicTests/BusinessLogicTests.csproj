@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PortfolioManager.Constants">
+      <HintPath>..\..\Binaries\PortfolioManager.Constants.dll</HintPath>
+    </Reference>
+    <Reference Include="PortfolioManager.DTO">
+      <HintPath>..\..\Binaries\PortfolioManager.DTO.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,17 +81,9 @@
       <Project>{d54f38e9-8fbb-473a-ae31-98c85a05e857}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Constants\PortfolioManager.Constants.csproj">
-      <Project>{a97d6231-48cb-43a6-bed3-58a3044384e8}</Project>
-      <Name>PortfolioManager.Constants</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{170BE89D-025F-4352-9388-72CE26EE12E9}</Project>
       <Name>Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PortfolioManager.DTO\PortfolioManager.DTO.csproj">
-      <Project>{51c5255f-8785-406d-8f4e-1dc6824e630b}</Project>
-      <Name>PortfolioManager.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\PortfolioManager.Repository\PortfolioManager.Repository.csproj">
       <Project>{77B12DE0-53EA-43CD-8E33-06AF1DE7A8B6}</Project>
@@ -104,7 +102,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
