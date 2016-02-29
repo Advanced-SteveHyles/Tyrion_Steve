@@ -103,7 +103,7 @@ msbuild :compile_common do | msb |
   msb.targets = [ :Build ]
   msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
   msb.solution = './Common.sln'
-  msb.verbosity = :normal
+  msb.verbosity = :minimal
   msb.max_cpu_count = 4
   msb.other_switches = {:toolsVersion => visual_studio_version}
 end
@@ -144,7 +144,7 @@ msbuild :Compile_Services => [:set_documentproduction_clients_version, :set_docu
   msb.targets = [ :Build ]
   msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
   msb.solution = './Services.sln'
-  msb.verbosity = :normal
+  msb.verbosity = :minimal
   msb.max_cpu_count = 4
   msb.other_switches = {:toolsVersion => visual_studio_version}
 end
@@ -159,7 +159,7 @@ msbuild :compile_frontEnd => [ :compile_common ] do | msb |
   msb.targets = [ :Build ]
   msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
   msb.solution = './FrontEnd.sln'
-  msb.verbosity = :normal
+  msb.verbosity = :minimal
   msb.max_cpu_count = 4
 end
  
@@ -178,7 +178,7 @@ msbuild :compile_backend => [ :compile_common, :restore_diary ] do | msb |
   msb.targets = [ :Build ]
   msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
   msb.solution = './Backend.sln'
-  msb.verbosity = :normal
+  msb.verbosity = :minimal
   msb.max_cpu_count = 4
   msb.other_switches = {:toolsVersion => visual_studio_version}
 end
@@ -200,7 +200,7 @@ task :compile_web
 #  msb.targets = [ :Build ]
 #  msb.command = "C:\\Program Files (x86)\\MSBuild\\" + visual_studio_version + "\\Bin\\msbuild.exe"
 #  msb.solution = 'Solicitors.Web/Web.sln'
-#  msb.verbosity = :normal
+#  msb.verbosity = :minimal
 #  msb.max_cpu_count = 4
 #  msb.other_switches = {:toolsVersion => visual_studio_version}
 #end
