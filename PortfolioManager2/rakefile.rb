@@ -78,7 +78,7 @@ end
 #desc "Restoring nuget packages"
 task :restore do 
 #	puts 'Restoring packages'
-#	sh 'Source\.nuget\NuGet.exe restore Source\_BuildSolution.sln -source "https://nuget.org/api/v2/;http://168.62.110.126/api/v2/;http://Solicitors-build:90/nuget/ProGetFeeds"'
+#	sh 'Source\.nuget\NuGet.exe restore .\Backend.sln -source "https://nuget.org/api/v2/"'
 end
 
 desc "Update nuget packages"
