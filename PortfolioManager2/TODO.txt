@@ -1,5 +1,0 @@
-
-
-Consider
-========
-Should we store valuation history?
