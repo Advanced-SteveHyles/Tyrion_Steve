@@ -17,9 +17,9 @@ namespace VirtualService.VirtualControllers
         private readonly PriceHistoryRepository _priceHistoryRepository;
         private readonly AccountInvestmentMapRepository _accountInvestmentMapRepository;
 
-        public PriceUpdateController()
+        public PriceUpdateController(string connection)
         {
-            var context = new PortfolioManagerContext();
+            var context = new PortfolioManagerContext(connection);
             _accountInvestmentMapRepository = new AccountInvestmentMapRepository(context);
             _priceHistoryRepository = new PriceHistoryRepository(context);
             _accountRepository = new AccountRepository(context);

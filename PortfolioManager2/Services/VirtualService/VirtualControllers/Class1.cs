@@ -17,9 +17,9 @@ namespace VirtualService.VirtualControllers
     {
         readonly IPortfolioRepository _repository;
 
-        public PortfoliosController()
-        {
-            _repository = new PortfolioRepository(new PortfolioManagerContext());
+        public PortfoliosController(string connection)
+        {            
+            _repository = new PortfolioRepository(new PortfolioManagerContext(connection));
             Tracer.Trace(this.ToString());
         }
         

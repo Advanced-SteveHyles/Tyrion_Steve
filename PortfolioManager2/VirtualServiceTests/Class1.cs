@@ -12,7 +12,8 @@ namespace VirtualServiceTests
         [Fact]
         public void CallsToPortfolioServiceSucceed()
         {
-            var sut = new VirtualService.VirtualControllers.PortfoliosController();
+            var connection = @"Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=c:\temp\PortfolioManagerDummy.mdf;Initial Catalog=aspnet-Portfolio_API-20160118080906;Integrated Security=True";
+            var sut = new VirtualService.VirtualControllers.PortfoliosController(connection);
             var portfolios =  sut.Get();
             Assert.IsType<Ok> (portfolios);
         }

@@ -7,14 +7,14 @@ using PortfolioManager.Repository.Entities;
 
 namespace PortfolioManager.Repository
 {
-    public class PortfolioManagerContext :DbContext
+    public class PortfolioManagerContext : DbContext
     {
-        public PortfolioManagerContext():base ("name=PortfolioManagerContext")
+        public PortfolioManagerContext(string connection) : base(connection)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
-           Database.SetInitializer<PortfolioManagerContext>(new NullDatabaseInitializer<PortfolioManagerContext>()  );
-       //    Database.SetInitializer<PortfolioManagerContext>(new DropCreateDatabaseAlways<PortfolioManagerContext>());
+            Database.SetInitializer<PortfolioManagerContext>(new NullDatabaseInitializer<PortfolioManagerContext>());
+            //    Database.SetInitializer<PortfolioManagerContext>(new DropCreateDatabaseAlways<PortfolioManagerContext>());
         }
 
         public DbSet<DBGenerator> DBGenerator { get; set; }
