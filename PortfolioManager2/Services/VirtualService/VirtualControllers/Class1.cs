@@ -1,44 +1,112 @@
 ﻿using System;
-using BusinessLogic.Processors.Handlers;
-using BusinessLogic.Processors.Processes;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Interfaces;
-using PortfolioManager.DTO.Requests.Transactions;
+using PortfolioManager.DTO.Requests;
 using PortfolioManager.Repository;
+using PortfolioManager.Repository.Entities;
 using PortfolioManager.Repository.Factories;
-using PortfolioManager.Repository.Repositories;
+using PortfolioManager.Repository.Interfaces;
+using VirtualService.VirtualActionResults;
+using VirtualService.VirtualControllers.API;
 
 namespace VirtualService.VirtualControllers
 {
-    public class PriceUpdateController
+    public class PortfoliosController
     {
-        private readonly AccountRepository _accountRepository;
-        private readonly PriceHistoryRepository _priceHistoryRepository;
-        private AccountInvestmentMapRepository _accountInvestmentMapRepository;
+        readonly IPortfolioRepository _repository;
 
-        public PriceUpdateController()
+        public PortfoliosController()
         {
-            var context = new PortfolioManagerContext();
-            _accountInvestmentMapRepository = new AccountInvestmentMapRepository(context);
-            _priceHistoryRepository = new PriceHistoryRepository(context);
-            _accountRepository = new AccountRepository(context);
+            _repository = new PortfolioRepository(new PortfolioManagerContext());
+            Tracer.Trace(this.ToString());
         }
-
-        [System.Web.Http.HttpPost]
-        [Route(ApiPaths.InvestmentSinglePriceUpdate)]
-        public IHttpActionResult Post(PriceHistoryRequest request)
+        
+        public IVirtualActionResult Get(int page = 1, int pageSize = ApiConstants.MaxPageSize)
         {
-
             try
             {
-                if (request == null)
+                // ensure the page size isn't larger than the maximum.
+                if (pageSize > ApiConstants.MaxPageSize)
                 {
-                    return BadRequest();
+                    pageSize = ApiConstants.MaxPageSize;
                 }
 
-                var entityPriceHistory = new PriceHistoryFactory().CreatePriceHistory(request);
-                if (entityPriceHistory == null)
+                IQueryable<Portfolio> portfolios = _repository.GetPortfolios();
+
+                // calculate data for metadata
+                var totalCount = portfolios.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+                
+                return new  Ok(
+                    portfolios
+                    );
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return new InternalServerError();
+            }
+        }
+
+        public IVirtualActionResult Get(int id, string fields = null)
+        {
+            try
+            {
+                bool includeAccounts = false;
+                List<string> lstOfFields = new List<string>();
+
+                if (fields != null)
                 {
-                    return BadRequest();
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                    includeAccounts = lstOfFields.Any(f => f.Contains("accounts"));
+                }
+
+
+                Portfolio portfolio = null;
+
+                if (includeAccounts)
+                {
+                    portfolio = _repository.GetPortfolioWithAccounts(id);
+                }
+                else
+                {
+                    portfolio = _repository.GetPortfolio(id);
+                }
+
+                var result = _repository.GetPortfolios().SingleOrDefault(r => r.PortfolioId == id);
+
+                if (result != null)
+                {
+                    return new Ok(ShapedData.CreateDataShapedObject(portfolio, lstOfFields));
+                }
+                else
+                {
+                    return new NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex);
+                return new InternalServerError();
+            }
+        }
+
+        public IVirtualActionResult Post(PortfolioRequest portfolio)
+        {
+            try
+            {
+                if (portfolio == null)
+                {
+                    return new  BadRequest();
+                }
+
+                var entityPortfolio = new PortfolioFactory().CreatePortfolio(portfolio);
+                if (entityPortfolio == null)
+                {
+                    return new  BadRequest();
                 }
 
                 /*
@@ -49,35 +117,43 @@ namespace VirtualService.VirtualControllers
                     "expenseGroupStatusId": 1,
                 }
                 */
-                var historyHandler = new PriceHistoryHandler(_priceHistoryRepository);
-                var priceHistoryProcessor = new RecordPriceHistoryProcessor(request, historyHandler);
-                var revalueSinglePriceCommand = new RevalueSinglePriceCommand(
-                    request.InvestmentId,
-                    request.ValuationDate,
-                    historyHandler,
-                    new AccountInvestmentMapProcessor(_accountInvestmentMapRepository),
-                    new AccountHandler(_accountRepository)
-                    );
 
-                priceHistoryProcessor.Execute();
-                revalueSinglePriceCommand.Execute();
-
-                if (priceHistoryProcessor.ExecuteResult && revalueSinglePriceCommand.ExecuteResult)
+                var result = _repository.InsertPortfolio(entityPortfolio);
+                if (result.Status == RepositoryActionStatus.Created)
                 {
-                    //var dtoPortfolio = result.Entity.MapToDto();
-                    return Created(Request.RequestUri + "/", new { });
+                    var dtoPortfolio = result.Entity.MapToDto();
+                    return new Created(dtoPortfolio);
                 }
                 else
                 {
-                    return BadRequest();
+                    return new  BadRequest();
                 }
 
             }
             catch (Exception ex)
             {
                 ErrorLog.LogError(ex);
-                return InternalServerError();
+                return new InternalServerError();
             }
+        }
+
+
+
+    }
+
+    public class ShapedData
+    {
+        public static IQueryable<Portfolio> CreateDataShapedObject(Portfolio portfolio, List<string> lstOfFields)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Tracer
+    {
+        public static void Trace(string value)
+        {
+            Debug.WriteLine(value);
         }
     }
 }

@@ -50,6 +50,9 @@
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Interfaces">
+      <HintPath>..\..\Binaries\Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept">
       <HintPath>..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -279,10 +282,6 @@
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{D54F38E9-8FBB-473A-AE31-98C85A05E857}</Project>
       <Name>BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{170BE89D-025F-4352-9388-72CE26EE12E9}</Project>
-      <Name>Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
