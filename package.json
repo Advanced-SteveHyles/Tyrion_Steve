@@ -1,0 +1,28 @@
+{
+  "name": "Tyrion_Steve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Advanced-SteveHyles/Tyrion_Steve.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Advanced-SteveHyles/Tyrion_Steve/issues"
+  },
+  "homepage": "https://github.com/Advanced-SteveHyles/Tyrion_Steve#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-graphql": "^0.5.1",
+    "graphiql": "^0.7.0",
+    "graphql": "^0.5.0",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
+  }
+}

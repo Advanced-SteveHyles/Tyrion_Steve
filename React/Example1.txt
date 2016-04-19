@@ -1,0 +1,58 @@
+<script src="http://fb.me/react-js-fiddle-integration.js"></script>
+
+<div id="myDiv">
+  <H3>
+    There is no code to see here
+  </H3>
+</div>
+
+<div id="myDiv1">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+<div id="myDiv2">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+<div id="myDiv3">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+
+
+var MyComponent = React.createClass({
+    render: function(){
+        return (
+            <h3>Hello, {this.props.name}!</h3>
+        );
+    }
+});
+
+React.render(<MyComponent name="Handsome" />, document.getElementById('myDiv'));
+
+React.render(<MyComponent name="Handsome" />, document.getElementById('myDiv1'));
+
+
+var MyComponent1 = React.createClass({
+    getInitialState: function(){
+        return {count: 5 }
+    },    
+    render: function(){
+        return (
+            <h2><i>Your count is {this.state.count}</i></h2>
+        )
+    }
+});
+
+
+React.render(<MyComponent1 />, document.getElementById('myDiv2'));
+
+//setState({MyComponent1.count: 10});
+
+React.render(<MyComponent1 />, document.getElementById('myDiv3'));

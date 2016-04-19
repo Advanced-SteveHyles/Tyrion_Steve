@@ -1,0 +1,57 @@
+<script src="http://fb.me/react-js-fiddle-integration.js"></script>
+
+<div id="myDiv">
+  <H3>
+    There is no code to see here
+  </H3>
+</div>
+
+<div id="myDiv1">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+<div id="myDiv2">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+<div id="myDiv3">
+  <H2>
+    There is no code to see here
+  </H2>
+</div>
+
+
+/** @jsx React.DOM */
+
+var Counter = React.createClass({
+  incrementCount: function(){
+    this.setState({
+      count: this.state.count + 1
+    });
+  },
+  decrementCount: function(){
+    this.setState({
+      count: this.state.count - 1
+    });
+  },
+  getInitialState: function(){
+     return {
+       count: 0
+     }
+  },
+  render: function(){
+    return (
+      <div class="my-component">
+        <h1>Count: {this.state.count}</h1>
+        <button type="button" onClick={this.incrementCount}>Increment</button>
+        <button type="button" onClick={this.decrementCount}>Decrement</button>
+      </div>
+    );
+  }
+});
+
+React.render(<Counter/>, document.getElementById('myDiv3'));
