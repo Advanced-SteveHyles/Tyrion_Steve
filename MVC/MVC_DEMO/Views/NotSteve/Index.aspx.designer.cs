@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVC_DEMO.Views
+namespace MVC_DEMO.Views.NotSteve
 {
 
 
-    public partial class WebForm1
+    public partial class Index
     {
 
         /// <summary>

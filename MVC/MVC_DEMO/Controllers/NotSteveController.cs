@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MVC_DEMO.Controllers
 {
-    public class WebForm1 : Controller
+    public class NotSteveController : Controller
     {
         // GET: NotSteve
         public ActionResult Index()
