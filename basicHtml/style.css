@@ -7,6 +7,16 @@ h1 {
     background-color: navy;
     }
     
+/*h1:hover{
+    color:Red;
+    background-color: lightyellow;
+}    */
+
+h1.clicked {
+    color: lightyellow;
+    background-color:Red; 
+}
+    
 h2 {
     color: green; margin-left:40px;
     border-bottom: 4px dotted black;
