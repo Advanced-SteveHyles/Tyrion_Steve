@@ -16,6 +16,12 @@ h1.clicked {
     color: lightyellow;
     background-color:Red; 
 }
+ 
+ 
+h2.clicked {
+    color: lightyellow;
+    background-color:pink; 
+}
     
 h2 {
     color: green; margin-left:40px;
