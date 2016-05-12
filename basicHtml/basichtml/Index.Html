@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+         <title>Contents</title>
+         <link href="style.css" rel="stylesheet"></link>
+         
+          </head>         
+          
+           <body>
+               
+                
+               <H1 onclick="handleClick(this);" >Introduction</H1>
+               <H2>Whom this book is for?</H1>
+               <H2>Errata</H1>
+                <H1 onclick="handleClick(this);" >Chapter 1</H1>
+                <h2>What you will learn later in this chapter</h2>
+                <h2 onclick="handleClick(this);">Summary</h2>
+                <h1>Chapter 2</h1>
+                <h2>Recap</h2>
+                <h2>Conclusion</h2>
+ 
+                <script>
+                     function handleClick(node)
+                      {
+                           var value = node.getAttribute('class') || ""; 
+                           value = value === "" ? "clicked" : "";
+                            node.setAttribute('class', value); } 
+                </script>
+ 
+                 </body>
+                  </html>
+ 

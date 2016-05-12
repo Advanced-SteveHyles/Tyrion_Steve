@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+         <title>Contents</title>
+         <link href="style.css" rel="stylesheet"></link>
+         
+          </head>         
+          
+           <body>
+               
+                
+               <H1 >Introduction</H1>
+               <div>
+                <H2>Whom this book is for?</H1>
+                <H2>Errata</H1>
+               </div>
+               
+                <H1 >Chapter 1</H1>
+                <div>
+                    <h2>What you will learn later in this chapter</h2>
+                    <h2>Summary</h2>
+                </div>
+                
+                <h1>Chapter 2</h1>
+                <div>
+                    <h2>Recap</h2>
+                    <h2>Conclusion</h2>
+                </div>
+ 
+                <!--<script src ="Scripts/jquery-2.0.3. min.js" > </ script >-->
+                <script src ="Scripts/jquery-2.2.1.min.js" > </ script >
+        <script>
+         $(document).ready(function () {
+              $('h1').prepend('<span class="node" >-</span>'); 
+              $('h1').click( function () 
+                    { 
+                        var node = $(this). children('. node'); 
+                        $(this).next().fadeToggle( 500, 'swing', 
+                     function () {
+                           var mark = node.text(); 
+                           mark = mark === '-' ? '+' : '-'; 
+                           node.text(mark);
+                         }); 
+                        }) 
+                    }); 
+        </script>
+    
+                 </body>
+                  </html>
+ 
