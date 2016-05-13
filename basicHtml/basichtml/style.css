@@ -12,10 +12,10 @@ h1 {
     background-color: lightyellow;
 }    */
 
-h1.clicked {
+/*h1.clicked {
     color: lightyellow;
     background-color:Red; 
-}
+}*/
 
 h1 .node {
      font-family: monospace; 

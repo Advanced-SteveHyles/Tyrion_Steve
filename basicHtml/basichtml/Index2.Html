@@ -11,14 +11,14 @@
 <body>
 
 
-    <H1>Introduction</H1>
+    <h1>Introduction</h1>
     <div>
-        <H2>
-            Whom this book is for?</H1>
-            <H2>Errata</H1>
+        <h2>
+            Whom this book is for?</h2>
+            <h2>Errata</h2>
     </div>
 
-    <H1>Chapter 1</H1>
+    <h1>Chapter 1</h1>
     <div>
         <h2>What you will learn later in this chapter</h2>
         <h2>Summary</h2>
@@ -33,9 +33,9 @@
     <script src="Scripts/jquery-2.2.3.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('h1').prepend('<span class="node" >-</span>');
+            $('h1').prepend('<span class="node">-</span>');
             $('h1').click(function () {
-                    var node = $(this).children('. node');
+                    var node = $(this).children('.node');
                     $(this)
                         .next()
                         .fadeToggle(500,
