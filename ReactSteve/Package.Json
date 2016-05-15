@@ -25,7 +25,8 @@
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "build:dev": "mkdir build && browserify -v -t [ babelify ] src/app.js -o build/bundle.js",
+    "build:env": "mkdir build",
+    "build:dev": "browserify -v -t [ babelify ] src/app.js -o build/bundle.js",
     "build:favicon": "cp -f src/favicon.ico build/favicon.ico",
     "build:indexhtml": "cp -f src/index.html build/index.html ",
     "build:bootstrap": "cp -f node_modules/bootstrap/dist/css/bootstrap.min.css build/bootstrap.min.css ",
