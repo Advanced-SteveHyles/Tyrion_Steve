@@ -1,4 +1,5 @@
 call npm install
+call npm run build:env
 call npm run build:dev
 call npm run build:favicon
 call npm run build:indexhtml
