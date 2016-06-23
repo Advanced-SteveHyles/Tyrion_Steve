@@ -85,6 +85,10 @@ Full Build/
 Log/
 *.tcCFGExtender
 
+#NodeModules
+node_modules/
+npm-debug.log
+
 _NCrunch*
 .vagrant
 *.suo
