@@ -69,7 +69,7 @@ render(
 					<Route path={Routes.summary} component={Summary} />
 					<Route path={Routes.ledger} component={Ledger} />
 					<Route path={Routes.documents} component={Documents} />
-					<IndexRoute component={ Planets } />
+					<Route path={Routes.planets} component={Planets} />}	
 				</Route>
 			</Route>
 		</Router>
