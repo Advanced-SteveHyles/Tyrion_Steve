@@ -17,6 +17,8 @@ import FindDebts from './findDebts/FindDebts'
 import LoginPage from './auth/LoginPage'
 import LoggedInApp from './auth/LoggedInApp'
 
+import Planets from './planets/Planets'
+
 import { appInit } from './appinit'
 
 import api from './middleware/api'
@@ -67,6 +69,7 @@ render(
 					<Route path={Routes.summary} component={Summary} />
 					<Route path={Routes.ledger} component={Ledger} />
 					<Route path={Routes.documents} component={Documents} />
+					<IndexRoute component={ Planets } />
 				</Route>
 			</Route>
 		</Router>
