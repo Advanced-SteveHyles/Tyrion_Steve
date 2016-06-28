@@ -19,6 +19,8 @@ const FindDebts = React.createClass({
 
 		return (
 			<div>
+				<Link to={Routes.planets}>Planets</Link>
+
 				{ Search(dispatch,loading) }
 				<SortableTable id="debtresults" dispatch={dispatch} results={results} loading={loading} error={error} > 
 					<SortableTableRow id="Reference" value={(x) => x.reference} sortable={SORTING}/>
@@ -34,7 +36,10 @@ const FindDebts = React.createClass({
 						<Link onClick={() => dispatch(updateMatterReference(x.reference))} to={Routes.documents}>Documents</Link>
 					}/>
 				</SortableTable>
+				
 			</div>
+
+			
 		)
 	}
 })

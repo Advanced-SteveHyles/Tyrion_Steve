@@ -37,6 +37,7 @@ import tokenReducer from './auth/tokenReducer'
 import loginPageReducer from './auth/loginPageReducer'
 import sortedTableReducer from './sortedTable/reducers'
 import ledgerReducer from './ledger/reducers'
+import planetsReducer from './planets/reducers'
 
 const store = createStore(
 	combineReducers({
@@ -50,7 +51,8 @@ const store = createStore(
 		login: loginPageReducer,
 		routing: routerReducer, 
 		sortedTable: sortedTableReducer,
-		ledger: ledgerReducer
+		ledger: ledgerReducer,
+		planetsStore: planetsReducer
 	}),
 	applyMiddleware(thunk, api, authapi, localStorage)
 )
