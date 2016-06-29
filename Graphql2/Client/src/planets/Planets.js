@@ -1,10 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import selector from './selectors'
+
 import { fetchPlanetsIfNeeded } from './actions'
+import selector from './selectors'
 
-const Planets = React.createClass({
 
+import Loading from '../components/Loading'
+import Error from '../components/Error'
+
+
+const SummaryPlanets = React.createClass({
     componentWillMount: function () {
         this.props.dispatch(fetchPlanetsIfNeeded)
     },
@@ -20,7 +25,7 @@ const Planets = React.createClass({
                 
         return (
             <div>            
-                <h1>Planet</h1>
+                <h1>Planets</h1>
 
                 <ul>
 
@@ -29,15 +34,14 @@ const Planets = React.createClass({
                 }
                 )
                 }
+                                    
+                </ul>           
 
-                    
-                </ul>
-                
-
+                <h1>End Of Planets</h1>     
              </div>
         )
 }
 }
 )
 
-export default connect(selector)(Planets)
+export default connect(selector)(SummaryPlanets)
