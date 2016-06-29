@@ -11,7 +11,7 @@ namespace DebtsModel
         {
             Name = "Query";
 
-            Field<ListGraphType<PlanetType>>("planet", "List of planets",
+            Field<ListGraphType<PlanetType>>("planets", "List of planets",
                 resolve: context => data.GetPlanets());
 
             Field<ListGraphType<ResourcesType>>("Resources", "List of all known resources",

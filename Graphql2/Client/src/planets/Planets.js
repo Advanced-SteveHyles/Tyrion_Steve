@@ -10,8 +10,6 @@ const Planets = React.createClass({
     },
 
 	render: function () {
-
-        const { planetList, dispatch, loading, error } = this.props
         
         if (this.props.loading)
                 return Loading()
@@ -19,7 +17,7 @@ const Planets = React.createClass({
         if (this.props.error)
                 return Error(this.props.error)
 
-
+                
         return (
             <div>            
                 <h1>Planet</h1>
