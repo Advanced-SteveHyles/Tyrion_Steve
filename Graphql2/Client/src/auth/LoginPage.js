@@ -4,6 +4,8 @@ import { hashHistory } from 'react-router'
 import loginPageSelector from './loginPageSelector'
 import { login, logout, usernameAssigned } from './actions'
 
+
+
 const LoginPage = React.createClass({
   componentWillMount: function () {
     this.props.dispatch(logout())
@@ -17,9 +19,15 @@ const LoginPage = React.createClass({
 
   render: function () {
     const { dispatch, isAuthenticated } = this.props
+    var colors = ['Red','Yellow','Orange'];
     return (
-      <div className="sitePad">
+      <div className="sitePad">        
         <form className="form-signin" onSubmit={e => AuthenticateUser(e, dispatch, isAuthenticated) }>
+        <h2>TextBefore</h2>
+        <DropdownList data={colors}> 
+        </DropdownList>
+        <h1>TextAfter</h1>
+
           <h2 className="form-signin-heading">Please sign in</h2>
           <label for="username" className="sr-only">Username</label>
           <input type="text" id="username" className="form-control" placeholder="Username" required="" autofocus=""></input>
