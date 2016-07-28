@@ -21,17 +21,6 @@ namespace Server.Controllers
                         
             return httpResponseMessage;
         }
-        
-        public class ClientToken
-        {
-            public string access_token { get; set; }
-            public string refresh_token { get; set; }
-            public string token_type { get; set; }
-
-            public int tokenIntData { get; set; }
-
-            public long TokenCreated { get; set; }
-        }
 
         ClientToken CreateToken(int id)
         {
@@ -44,7 +33,8 @@ namespace Server.Controllers
                     refresh_token = Guid.NewGuid().ToString(),
                     token_type = "bearer",
                     TokenCreated = DateTime.Now.Ticks,
-                    tokenIntData = id
+                    isClient = id ==1,
+                    FullName = "Mr " + id.ToString()
                 };
             }
             return token;

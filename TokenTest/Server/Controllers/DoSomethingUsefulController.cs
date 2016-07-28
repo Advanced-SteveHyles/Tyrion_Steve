@@ -3,9 +3,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using Server.Providers;
 
 namespace Server.Controllers
 {
+    [Authorize]
     public class DoSomethingUsefulController : ApiController
     {
 
@@ -32,12 +34,16 @@ namespace Server.Controllers
         //{
         //    return;
         //}
-
-       // [Authorize]
+       
         [HttpPost]
-        public void PostB([FromBody]string id)
+        public string PostB([FromBody]string id)
         {
-            return;
+
+            var identity = (OAuthIdentity)RequestContext.Principal.Identity;
+            
+            //FacadeSecurity.TokenStore(id)
+
+            return identity.Name;
         }
 
     }

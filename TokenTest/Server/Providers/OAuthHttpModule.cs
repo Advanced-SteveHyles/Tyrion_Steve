@@ -2,24 +2,25 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using Server.Controllers;
 
-namespace Server.Controllers
+namespace Server.Providers
 {
     public  class OAuthHttpModule : IHttpModule
     {
-        static volatile bool applicationStarted = false;
-        static object applicationStartLock = new object();
+        static volatile bool _applicationStarted = false;
+        static readonly object applicationStartLock = new object();
 
         public void Init(HttpApplication context)
         {
-            if (!applicationStarted)
+            if (!_applicationStarted)
             {
                 lock (applicationStartLock)
                 {
-                    if (!applicationStarted) // double check
+                    if (!_applicationStarted) // double check
                     {
                         // OnStart(context); // this will run only once per application start
-                        applicationStarted = true;
+                        _applicationStarted = true;
                     }
                 }
             }
@@ -34,7 +35,7 @@ namespace Server.Controllers
         public void Dispose()
         {         
         }
-
+        
         void ContextAuthenticateRequest(object sender, EventArgs e)
         {
             HttpApplication context = (HttpApplication)sender;
@@ -56,12 +57,13 @@ namespace Server.Controllers
 
             //var strippedObject =  jsonObject.Replace("%22", "").Replace("\"", "");
             var strippedObject = jsonObject.Replace("%22", "").Replace("\\", "");
-            var token = new JavaScriptSerializer().Deserialize<AuthController.ClientToken>(strippedObject);
+            var token = new JavaScriptSerializer().Deserialize<ClientToken>(strippedObject);
             
-            var x = token.tokenIntData;
-            
-         //   context.Context.User = new OAuthPrincipal(token);
-         
+            var x = token.isClient;
+
+         //   FacadeSecurity.TokenStore.AddOrUpdate(token.access_token , token, (k, v) => v);
+
+            context.Context.User = new OAuthPrincipal(token);            
         }
     }
 }

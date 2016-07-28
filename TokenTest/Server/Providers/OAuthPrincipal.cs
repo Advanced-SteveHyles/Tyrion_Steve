@@ -1,14 +1,13 @@
 ﻿using System.Security.Principal;
+using Server.Providers;
 
 namespace Server.Controllers
 {
     public class OAuthPrincipal : IPrincipal
-    {
-        public AuthController.ClientToken Token { get; }
-
-        public OAuthPrincipal(AuthController.ClientToken token)
+    {        
+        public OAuthPrincipal(ClientToken token)
         {
-            Token = token;
+            Identity = new OAuthIdentity(token);            
         }
 
         public bool IsInRole(string role)
