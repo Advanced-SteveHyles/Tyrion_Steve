@@ -1,4 +1,4 @@
-namespace Server.Controllers
+namespace Server.Providers
 {
     public class ClientToken
     {

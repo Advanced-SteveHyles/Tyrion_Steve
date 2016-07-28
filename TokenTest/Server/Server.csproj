@@ -159,7 +159,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\ClientToken.cs" />
+    <Compile Include="Providers\ClientToken.cs" />
     <Compile Include="Controllers\DoSomethingUsefulController.cs" />
     <Compile Include="Providers\OAuthHttpModule.cs" />
     <Compile Include="Providers\OAuthIdentity.cs" />

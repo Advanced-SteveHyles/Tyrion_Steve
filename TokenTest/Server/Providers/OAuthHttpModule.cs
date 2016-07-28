@@ -7,6 +7,7 @@ using Server.Controllers;
 
 namespace Server.Providers
 {
+    //This module is called first and intercepts all calls
     public  class OAuthHttpModule : IHttpModule
     {
         static volatile bool _applicationStarted = false;
@@ -69,10 +70,7 @@ namespace Server.Providers
                 //Token Expired
                 return;
             }
-
-            //var x = token.isClient;
-
-                context.Context.User = new OAuthPrincipal(token);
+            context.Context.User = new OAuthPrincipal(token);
         }
     }
 }
