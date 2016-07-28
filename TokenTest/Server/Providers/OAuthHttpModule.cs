@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
 using Server.Controllers;
 
 namespace Server.Providers
@@ -40,30 +41,38 @@ namespace Server.Providers
         {
             HttpApplication context = (HttpApplication)sender;
 
+            //This is needed because the Server is handling both controllers.
             if (!context.Request.Headers.AllKeys.Contains("Authorization"))
             {
                 return;
             }
 
-            //var headers = context.Request.Headers.AllKeys;
-            var authLine = context.Request.Headers["Authorization"];
-            if (!authLine.StartsWith("Bearer ")) return;
+            var authorization = context.Request.Headers["Authorization"];
+            if (!authorization.StartsWith("Bearer ")) return;
 
-            //Removed "Bearer "
-            var jsonObject = authLine.Substring(7);
+            CreateUserFromRequest(context, authorization);
+        }
+
+        private static void CreateUserFromRequest(HttpApplication context, string authorization)
+        {
+           //Removed "Bearer "
+            var jsonObject = authorization.Substring(7);
 
             //Remove outer quotes
-            jsonObject = jsonObject.Substring(1, jsonObject.Length- 2);
+            jsonObject = jsonObject.Substring(1, jsonObject.Length - 2);
 
-            //var strippedObject =  jsonObject.Replace("%22", "").Replace("\"", "");
             var strippedObject = jsonObject.Replace("%22", "").Replace("\\", "");
             var token = new JavaScriptSerializer().Deserialize<ClientToken>(strippedObject);
-            
-            var x = token.isClient;
 
-         //   FacadeSecurity.TokenStore.AddOrUpdate(token.access_token , token, (k, v) => v);
+            if ((int)DateTime.Now.TimeOfDay.TotalSeconds >  token.TokenCreated + 5 )
+            {
+                //Token Expired
+                return;
+            }
 
-            context.Context.User = new OAuthPrincipal(token);            
+            //var x = token.isClient;
+
+                context.Context.User = new OAuthPrincipal(token);
         }
     }
 }

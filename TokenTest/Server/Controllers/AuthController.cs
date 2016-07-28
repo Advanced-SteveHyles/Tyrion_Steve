@@ -32,7 +32,7 @@ namespace Server.Controllers
                     access_token = Guid.NewGuid().ToString(),
                     refresh_token = Guid.NewGuid().ToString(),
                     token_type = "bearer",
-                    TokenCreated = DateTime.Now.Ticks,
+                    TokenCreated = (int)DateTime.Now.TimeOfDay.TotalSeconds,
                     isClient = id ==1,
                     FullName = "Mr " + id.ToString()
                 };

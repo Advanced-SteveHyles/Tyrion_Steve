@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client
@@ -22,11 +24,17 @@ namespace Client
             Console.WriteLine("**** AUTH *****");
             Authenticate();
 
-            Console.WriteLine("**** CONSUME FAKE *****");
-            Consume("http://SteveLocal:31282/api/DoSomethingUseful");
+            //Console.WriteLine("**** CONSUME FAKE *****");
+            //Consume("http://SteveLocal:31282/api/DoSomethingUseful", true);
+
+            //Time Out
+            Thread.Sleep(10000);
 
             Console.WriteLine("**** CONSUME REAL *****");
-            Consume("http://localhost:31282/api/DoSomethingUseful");
+            Consume("http://localhost:31282/api/DoSomethingUseful", true);
+
+            //Console.WriteLine("**** CONSUME NOT AUTHORISED *****");
+            //Consume("http://localhost:31282/api/DoSomethingUseful", false);
         }
 
         private static async Task Authenticate()
@@ -50,13 +58,15 @@ namespace Client
             }
         }
 
-        private static void Consume(string url)
+        private static void Consume(string url, bool isSecure)
         {
             using (var Client = new HttpClient())
             {
                 Client.BaseAddress =  new Uri(url);
                 var auth = $"Bearer {_token}";
-                Client.DefaultRequestHeaders.Add("Authorization", auth);
+
+                if (isSecure)                    
+                    Client.DefaultRequestHeaders.Add("Authorization", auth);
 
                 HttpContent content = new StringContent("{\"id\": \"Bannana\"}", Encoding.UTF8);
                 content.Headers.Clear();
