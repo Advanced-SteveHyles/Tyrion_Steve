@@ -16,7 +16,7 @@ namespace Server.Providers
 
         public string Name => _clientToken.FullName;
 
-        public bool IsClient => _clientToken.isClient;
+        public bool IsClient => _clientToken.IsClient;
 
         public string AuthenticationType => "OAuth";
 

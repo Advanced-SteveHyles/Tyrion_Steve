@@ -34,10 +34,8 @@ namespace Server.Providers
             context.AuthenticateRequest += ContextAuthenticateRequest;
         }
 
-        public void Dispose()
-        {         
-        }
-        
+        public void Dispose() {}
+
         void ContextAuthenticateRequest(object sender, EventArgs e)
         {
             HttpApplication context = (HttpApplication)sender;
@@ -56,20 +54,25 @@ namespace Server.Providers
 
         private static void CreateUserFromRequest(HttpApplication context, string authorization)
         {
-           //Removed "Bearer "
+           //Remove "Bearer "
             var jsonObject = authorization.Substring(7);
 
             //Remove outer quotes
             jsonObject = jsonObject.Substring(1, jsonObject.Length - 2);
 
+            //Remove strange characters
             var strippedObject = jsonObject.Replace("%22", "").Replace("\\", "");
-            var token = new JavaScriptSerializer().Deserialize<ClientToken>(strippedObject);
 
+            //Convert to JSON
+            var token = new JavaScriptSerializer().Deserialize<ClientToken>(strippedObject);
+            
             if ((int)DateTime.Now.TimeOfDay.TotalSeconds >  token.TokenCreated + 5 )
             {
                 //Token Expired
                 return;
             }
+
+            //Create an authenticated principal
             context.Context.User = new OAuthPrincipal(token);
         }
     }

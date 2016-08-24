@@ -15,11 +15,10 @@ namespace Server.Controllers
         // POST: api/Authenticate
         public HttpResponseMessage Post([FromBody]int id)
         {            
-            ClientToken token = CreateToken(id);
+            var token = CreateToken(id);
             var jsonToken = new JavaScriptSerializer().Serialize(token);
             
-            var httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, jsonToken);
-                        
+            var httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, jsonToken);                        
             return httpResponseMessage;
         }
 
@@ -30,11 +29,10 @@ namespace Server.Controllers
             {
                 token = new ClientToken
                 {
-                    access_token = Guid.NewGuid().ToString(),
-                    refresh_token = Guid.NewGuid().ToString(),
-                    token_type = "bearer",
+                    UserId = Guid.NewGuid().ToString(),
+                    TokenType = "bearer",
                     TokenCreated = (int)DateTime.Now.TimeOfDay.TotalSeconds,
-                    isClient = id ==1,
+                    IsClient = id ==1,
                     FullName = "Mr " + id.ToString()
                 };
             }
