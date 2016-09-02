@@ -17,6 +17,7 @@ import loginPageReducer from './auth/loginPageReducer'
 
 const store = createStore(
 	combineReducers({
+		routing: routerReducer, 
 		loggedInUser: loggedInUserReducer,
 		login: loginPageReducer,
 	}),
