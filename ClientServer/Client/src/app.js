@@ -31,6 +31,7 @@ render(
 		<Router history={history}>
 			<Route path={Routes.root} component={ App }>
 				<Route path={Routes.login} component={LoginPage}/>
+				<IndexRoute component={ LoginPage } />
 				<Route component={LoggedInApp}>					
 				</Route>
 			</Route>
