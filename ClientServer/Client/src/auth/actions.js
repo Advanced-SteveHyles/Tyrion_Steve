@@ -6,7 +6,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 export const login = (username, password) => ({
   type: AUTH_CALL,
-  endpoint: DEBTSAUTHURI,
+  endpoint: AUTHURI,
   method: 'post',
   headers: {
       "Accept": "application/json",
