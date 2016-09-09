@@ -15,12 +15,15 @@ import LoggedInApp from './auth/LoggedInApp'
 import loggedInUserReducer from './auth/tokenReducer'
 import loginPageReducer from './auth/loginPageReducer'
 
+import authapi from './middleware/authapi'
+ 
 const store = createStore(
 	combineReducers({
 		routing: routerReducer, 
 		loggedInUser: loggedInUserReducer,
 		login: loginPageReducer,
 	}),
+	applyMiddleware(authapi)
 //	applyMiddleware(thunk, authapi, facadeApi, logging)
 )
 
