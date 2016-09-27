@@ -1,0 +1,45 @@
+ Volume in drive C is OSDisk
+ Volume Serial Number is D8EA-B525
+
+ Directory of C:\LEARNINGANDRAND\Tyrion_Steve
+
+27/09/2016  10:15    <DIR>          .
+27/09/2016  10:15    <DIR>          ..
+28/07/2016  07:44             2,581 .gitattributes
+23/06/2016  08:43               973 .gitignore
+09/02/2016  09:03    <DIR>          AbstractFactory
+09/02/2016  09:03    <DIR>          Animals
+31/08/2016  08:27    <DIR>          basicHtml
+05/09/2016  07:54    <DIR>          ClientServer
+09/02/2016  09:04    <DIR>          DesignPatterns
+09/02/2016  09:04    <DIR>          FSharp
+15/04/2016  08:01    <DIR>          Graphiql
+15/04/2016  07:46    <DIR>          Graphql
+16/06/2016  07:47    <DIR>          Graphql2
+02/07/2015  14:19    <DIR>          js
+09/02/2016  09:04    <DIR>          KATAS
+07/09/2015  08:53    <DIR>          LearningSolution1
+31/08/2016  08:23    <DIR>          MVC
+31/08/2016  08:23    <DIR>          MVCWithReact
+15/04/2016  08:02    <DIR>          node_modules
+16/05/2016  07:41               720 package.json
+10/11/2015  08:54    <DIR>          Payroll
+09/02/2016  09:04    <DIR>          PluraSite
+02/03/2016  08:44    <DIR>          PortfolioManager2
+04/12/2015  09:05    <DIR>          Powershell
+18/04/2016  10:35    <DIR>          React
+31/08/2016  08:23    <DIR>          ReactSteve
+04/05/2016  09:03    <DIR>          ReactWeb
+24/05/2016  14:54                 9 README.markdown
+07/07/2015  07:45                15 README.md
+31/08/2016  08:27    <DIR>          Restful
+10/07/2015  08:06    <DIR>          ScratchPad
+31/08/2016  08:27    <DIR>          SELFHOST
+31/08/2016  08:27    <DIR>          TestApp
+27/09/2016  10:15                 0 text.txt
+28/07/2016  11:34    <DIR>          TokenTest
+24/08/2016  07:35    <DIR>          Various
+16/10/2015  13:03    <DIR>          Xamarin
+09/02/2016  09:05    <DIR>          Xamarin1
+               6 File(s)          4,298 bytes
+              32 Dir(s)  24,415,158,272 bytes free
