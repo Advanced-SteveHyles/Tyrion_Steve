@@ -59,6 +59,7 @@
     <Compile Include="BDDTest.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabAggregate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

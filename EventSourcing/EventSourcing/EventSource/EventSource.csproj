@@ -43,6 +43,9 @@
     <Compile Include="A.cs" />
     <Compile Include="Agregates\a.cs" />
     <Compile Include="Agregates\Aggregate.cs" />
+    <Compile Include="Agregates\IApplyEvent.cs" />
+    <Compile Include="Agregates\IHandleCommand.cs" />
+    <Compile Include="Agregates\TabAggregate.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Events\TabOpened.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

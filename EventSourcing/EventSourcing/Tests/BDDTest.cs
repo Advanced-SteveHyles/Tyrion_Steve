@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Edument.CQRS;
 using EventSource.Agregates;
 using Xunit;
 
@@ -17,7 +18,7 @@ namespace EventSource.Edument.CQRS
     {
         private TAggregate sut;
                 
-        public void BddTestSetup()
+        public BDDTest()
         {
             sut = new TAggregate();
         }
@@ -59,18 +60,18 @@ namespace EventSource.Edument.CQRS
                             if (gotEvents[i].GetType() == expectedEvents[i].GetType())
                                 Assert.Equal(Serialize(expectedEvents[i]), Serialize(gotEvents[i]));
                             else
-                                Assert.NotEqual(string.Format(
+                                Assert.Equal("", string.Format(
                                     "Incorrect event in results; expected a {0} but got a {1}",
                                     expectedEvents[i].GetType().Name, gotEvents[i].GetType().Name));
                     else if (gotEvents.Length < expectedEvents.Length)
-                        Assert.NotEqual(string.Format("Expected event(s) missing: {0}",
+                        Assert.Equal("", string.Format("Expected event(s) missing: {0}",
                             string.Join(", ", EventDiff(expectedEvents, gotEvents))));
                     else
-                        Assert.NotEqual(string.Format("Unexpected event(s) emitted: {0}",
+                        Assert.Equal("", string.Format("Unexpected event(s) emitted: {0}",
                             string.Join(", ", EventDiff(gotEvents, expectedEvents))));
                 }
                 else if (got is CommandHandlerNotDefiendException)
-                    Assert.NotEqual((got as Exception).Message);
+                    Assert.Equal("", (got as Exception).Message);
                 else
                     Assert.NotEqual("Expected events, but got exception {0}",
                         got.GetType().Name);
@@ -90,15 +91,15 @@ namespace EventSource.Edument.CQRS
             return got =>
             {
                 if (got is TException)
-                    Assert.Equal("Got correct exception type");
+                    Assert.Equal("", "Got correct exception type");
                 else if (got is CommandHandlerNotDefiendException)
-                    Assert.NotEqual((got as Exception).Message);
+                    Assert.Equal("", (got as Exception).Message);
                 else if (got is Exception)
-                    Assert.NotEqual(string.Format(
+                    Assert.Equal("", string.Format(
                         "Expected exception {0}, but got exception {1}",
                         typeof(TException).Name, got.GetType().Name));
                 else
-                    Assert.NotEqual(string.Format(
+                    Assert.Equal("", string.Format(
                         "Expected exception {0}, but got event result",
                         typeof(TException).Name));
             };

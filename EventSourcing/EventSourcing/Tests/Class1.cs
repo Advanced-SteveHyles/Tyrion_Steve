@@ -45,10 +45,5 @@ namespace Tests
             ;
         }
     }
-
-    public class TabAggregate : Aggregate
-    {
-    }
-
 }
 
