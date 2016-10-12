@@ -47,7 +47,12 @@
     <Compile Include="Agregates\IHandleCommand.cs" />
     <Compile Include="Agregates\TabAggregate.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DrinksOrdered.cs" />
     <Compile Include="Events\TabOpened.cs" />
+    <Compile Include="Exceptions\TabNotOpen.cs" />
+    <Compile Include="FoodOrdered.cs" />
+    <Compile Include="OrderedItem.cs" />
+    <Compile Include="Events\PlaceOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

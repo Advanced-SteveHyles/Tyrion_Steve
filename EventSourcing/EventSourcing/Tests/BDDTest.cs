@@ -13,12 +13,12 @@ namespace EventSource.Edument.CQRS
     /// Provides infrastructure for a set of tests on a given aggregate.
     /// </summary>
     /// <typeparam name="TAggregate"></typeparam>
-    public class BDDTest<TAggregate>
+    public class BDDTest1<TAggregate>
         where TAggregate : Aggregate, new()
     {
         private TAggregate sut;
                 
-        public BDDTest()
+        public BDDTest1()
         {
             sut = new TAggregate();
         }

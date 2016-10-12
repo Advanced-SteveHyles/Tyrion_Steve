@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using Edument.CQRS;
+using EventSource;
 using EventSource.Agregates;
 using EventSource.Events;
+using EventSource.Exceptions;
 
 namespace Tests
 {
-    public class TabAggregate : Aggregate, IHandleCommand<OpenTab>
+    public class TabAggregate : Aggregate, 
+        IHandleCommand<OpenTab>,
+        IHandleCommand<PlaceOrder>
     {
         public IEnumerable Handle(OpenTab c)
         {
@@ -17,9 +21,10 @@ namespace Tests
             };
         }
 
-        public IEnumerable Handle(object command)
+        public IEnumerable Handle(PlaceOrder c)
         {
-            throw new System.NotImplementedException();
+           throw new TabNotOpen();
         }
+
     }
 }
